@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from wagtail.models import Page, Site
 
+from apps.accounts.roles import provision_default_roles
 from apps.content.models import HomePage, TharaaPage
 
 
@@ -100,6 +101,8 @@ class Command(BaseCommand):
             tharaa.save_revision().publish()
             self.stdout.write(self.style.SUCCESS("Created Tharaa marketing page."))
 
+        roles = provision_default_roles(home)
+        self.stdout.write(self.style.SUCCESS(f"Provisioned {len(roles)} staff roles."))
         self.stdout.write(self.style.SUCCESS("Ibtikar Tech bootstrap completed."))
         self.stdout.write(f"Control panel: http://{hostname}/control/")
         if generated_password:
