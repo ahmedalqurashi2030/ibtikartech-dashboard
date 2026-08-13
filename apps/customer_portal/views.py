@@ -1,9 +1,14 @@
 from django.contrib import messages
+from django.db.models import Prefetch
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from apps.crm.models import Store
+from apps.projects.choices import ProjectVisibility
+from apps.projects.forms import ApprovalResponseForm
+from apps.projects.models import Approval, Project, ProjectFile, ProjectStage, ProjectUpdate
+from apps.projects.services import ApprovalResponseError, respond_to_approval
 from apps.sales.models import Inquiry, Quote
 from apps.services.models import Service
 
@@ -27,6 +32,10 @@ def overview(request):
         Quote.objects.filter(contact=contact)
         .select_related("opportunity", "organization")[:4]
     )
+    projects = list(
+        Project.objects.filter(contact=contact)
+        .select_related("store", "manager")[:4]
+    )
     stores = list(
         Store.objects.filter(primary_contact=contact, status=Store.Status.ACTIVE)[:4]
     )
@@ -39,6 +48,8 @@ def overview(request):
         "inquiries_count": Inquiry.objects.filter(contact=contact).count(),
         "quotes": quotes,
         "quotes_count": Quote.objects.filter(contact=contact).count(),
+        "projects": projects,
+        "projects_count": Project.objects.filter(contact=contact).count(),
         "stores": stores,
         "stores_count": Store.objects.filter(
             primary_contact=contact,
@@ -105,6 +116,95 @@ def quotes(request):
         "portal/quotes.html",
         {"contact": request.portal_contact, "quotes": items},
     )
+
+
+@portal_contact_required
+def projects(request):
+    items = (
+        Project.objects.filter(contact=request.portal_contact)
+        .select_related("quote", "store", "manager")
+        .prefetch_related("stages")
+        .order_by("-updated_at")
+    )
+    return render(
+        request,
+        "portal/projects.html",
+        {"contact": request.portal_contact, "projects": items},
+    )
+
+
+@portal_contact_required
+def project_detail(request, project_id):
+    contact = request.portal_contact
+    project_queryset = (
+        Project.objects.filter(contact=contact)
+        .select_related("quote", "store", "manager", "organization")
+        .prefetch_related(
+            Prefetch(
+                "stages",
+                queryset=ProjectStage.objects.order_by("sort_order", "created_at"),
+            ),
+            Prefetch(
+                "updates",
+                queryset=ProjectUpdate.objects.filter(
+                    visibility=ProjectVisibility.CUSTOMER
+                ).select_related("stage", "author"),
+                to_attr="customer_updates",
+            ),
+            Prefetch(
+                "files",
+                queryset=ProjectFile.objects.filter(
+                    visibility=ProjectVisibility.CUSTOMER
+                ).select_related("uploaded_by"),
+                to_attr="customer_files",
+            ),
+            Prefetch(
+                "approvals",
+                queryset=Approval.objects.filter(
+                    requested_from_contact=contact
+                ).order_by("-requested_at"),
+                to_attr="customer_approvals",
+            ),
+        )
+    )
+    project = get_object_or_404(project_queryset, id=project_id)
+    return render(
+        request,
+        "portal/project_detail.html",
+        {
+            "contact": contact,
+            "project": project,
+            "approval_form": ApprovalResponseForm(),
+        },
+    )
+
+
+@require_POST
+@portal_contact_required
+def respond_project_approval(request, project_id, approval_id):
+    project = get_object_or_404(
+        Project,
+        id=project_id,
+        contact=request.portal_contact,
+    )
+    form = ApprovalResponseForm(request.POST)
+    if not form.is_valid():
+        messages.error(request, "تحقق من قرار الموافقة والملاحظة ثم حاول مرة أخرى.")
+        return redirect("customer_portal:project_detail", project_id=project.id)
+
+    try:
+        respond_to_approval(
+            approval_id=approval_id,
+            project=project,
+            contact=request.portal_contact,
+            decision=form.cleaned_data["decision"],
+            response_note=form.cleaned_data["response_note"],
+        )
+    except ApprovalResponseError:
+        messages.error(request, "تعذر تسجيل الرد. قد تكون الموافقة أُجيب عليها مسبقًا.")
+    else:
+        messages.success(request, "تم تسجيل ردك على الموافقة.")
+    return redirect("customer_portal:project_detail", project_id=project.id)
 
 
 @portal_contact_required
