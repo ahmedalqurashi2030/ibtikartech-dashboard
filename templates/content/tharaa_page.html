@@ -1,0 +1,18 @@
+{% extends "layouts/public_base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.seo_title|default:page.title }} — ابتكار تك{% endblock %}
+
+{% block content %}
+<section class="container section">
+  {% if page.eyebrow %}<p>{{ page.eyebrow }}</p>{% endif %}
+  <h1>{{ page.title }}</h1>
+  {% if page.short_description %}<p>{{ page.short_description }}</p>{% endif %}
+  {% if page.displayed_price %}<p>{{ page.displayed_price }}</p>{% endif %}
+  <div class="actions">
+    {% if page.demo_url %}<a href="{{ page.demo_url }}" rel="noopener">معاينة الثيم</a>{% endif %}
+    {% if page.marketplace_url %}<a href="{{ page.marketplace_url }}" rel="noopener">شراء من سلة</a>{% endif %}
+  </div>
+  {% if page.body %}<div class="richtext">{{ page.body|richtext }}</div>{% endif %}
+</section>
+{% endblock %}

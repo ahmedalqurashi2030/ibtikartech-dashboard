@@ -1,0 +1,20 @@
+{% load static wagtailcore_tags %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ar' }}" dir="{% if LANGUAGE_CODE == 'ar' %}rtl{% else %}ltr{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ابتكار تك{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
+  {% block header %}{% endblock %}
+  <main id="main">{% block content %}{% endblock %}</main>
+  {% block footer %}{% endblock %}
+  <script src="{% static 'js/core/app.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

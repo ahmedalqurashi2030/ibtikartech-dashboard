@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - "feat/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: ibtikartech
+          POSTGRES_USER: ibtikar
+          POSTGRES_PASSWORD: ibtikar
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ibtikar -d ibtikartech"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.test
+      DJANGO_SECRET_KEY: ci-only-secret
+      DATABASE_URL: postgresql://ibtikar:ibtikar@127.0.0.1:5432/ibtikartech
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: python -m pip install --upgrade pip && pip install -e ".[dev]"
+
+      - name: Generate bootstrap migrations
+        run: python manage.py makemigrations accounts core crm services content
+
+      - name: Apply migrations
+        run: python manage.py migrate --noinput
+
+      - name: Django system checks
+        run: python manage.py check
+
+      - name: Tests
+        run: pytest
+
+      - name: Verify model state
+        run: python manage.py makemigrations --check --dry-run
