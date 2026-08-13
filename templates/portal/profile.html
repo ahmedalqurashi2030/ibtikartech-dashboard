@@ -1,0 +1,55 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}الملف الشخصي{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <span class="portal-eyebrow">الحساب</span>
+    <h1>الملف الشخصي</h1>
+    <p>حدّث بيانات التواصل وتفضيلات البوابة. البريد الإلكتروني مرتبط بهوية تسجيل الدخول ولا يُعدّل من هنا.</p>
+  </div>
+</header>
+
+<div class="portal-grid portal-grid--two">
+  <section class="portal-panel">
+    <div class="portal-panel__header"><h2>البيانات الأساسية</h2></div>
+    <div class="portal-readonly-field">
+      <span>البريد الإلكتروني</span>
+      <strong>{{ request.user.email }}</strong>
+    </div>
+    <form class="portal-form" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="profile">
+      {{ profile_form.non_field_errors }}
+      {% for field in profile_form %}
+        <div class="portal-field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+          {% for error in field.errors %}<span class="portal-field__error">{{ error }}</span>{% endfor %}
+        </div>
+      {% endfor %}
+      <button class="portal-button" type="submit">حفظ البيانات</button>
+    </form>
+  </section>
+
+  <section class="portal-panel">
+    <div class="portal-panel__header"><h2>تفضيلات البوابة</h2></div>
+    <form class="portal-form" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="preferences">
+      {{ preference_form.non_field_errors }}
+      {% for field in preference_form %}
+        <div class="portal-field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+          {% for error in field.errors %}<span class="portal-field__error">{{ error }}</span>{% endfor %}
+        </div>
+      {% endfor %}
+      <button class="portal-button" type="submit">حفظ التفضيلات</button>
+    </form>
+  </section>
+</div>
+{% endblock %}
