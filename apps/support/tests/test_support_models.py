@@ -31,6 +31,14 @@ def staff_user(db):
 
 
 @pytest.fixture
+def regular_user(db):
+    return get_user_model().objects.create_user(
+        email="not-staff@example.com",
+        password="test-password-123",
+    )
+
+
+@pytest.fixture
 def ticket(contact):
     return SupportTicket.objects.create(
         contact=contact,
@@ -53,6 +61,21 @@ def test_ticket_project_must_belong_to_same_contact(contact, other_contact):
         ticket.full_clean()
 
     assert "project" in exc_info.value.message_dict
+
+
+@pytest.mark.django_db
+def test_ticket_assignee_must_be_staff(contact, regular_user):
+    ticket = SupportTicket(
+        contact=contact,
+        subject="تذكرة",
+        description="تفاصيل",
+        assigned_to=regular_user,
+    )
+
+    with pytest.raises(ValidationError) as exc_info:
+        ticket.full_clean()
+
+    assert "assigned_to" in exc_info.value.message_dict
 
 
 @pytest.mark.django_db
@@ -87,6 +110,20 @@ def test_ticket_message_requires_exactly_one_sender(ticket, contact, staff_user)
     )
     with pytest.raises(ValidationError):
         two_senders.full_clean()
+
+
+@pytest.mark.django_db
+def test_staff_message_sender_must_be_staff(ticket, regular_user):
+    message = TicketMessage(
+        ticket=ticket,
+        sender_user=regular_user,
+        body="رسالة من مستخدم غير موظف",
+    )
+
+    with pytest.raises(ValidationError) as exc_info:
+        message.full_clean()
+
+    assert "sender_user" in exc_info.value.message_dict
 
 
 @pytest.mark.django_db
