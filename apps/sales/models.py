@@ -323,7 +323,11 @@ class Quote(models.Model):
             value = getattr(self, field_name)
             if value is not None and value < 0:
                 errors[field_name] = "Amount cannot be negative."
-        if self.discount > self.subtotal:
+        if (
+            self.discount is not None
+            and self.subtotal is not None
+            and self.discount > self.subtotal
+        ):
             errors["discount"] = "Discount cannot exceed subtotal."
         if errors:
             raise ValidationError(errors)
@@ -444,6 +448,13 @@ class QuoteItem(models.Model):
                 self.description_snapshot = self.service.short_description
         self.total = self.calculate_total()
         super().save(*args, **kwargs)
+        self.quote.recalculate_totals()
+
+    def delete(self, *args, **kwargs):
+        quote = self.quote
+        result = super().delete(*args, **kwargs)
+        quote.recalculate_totals()
+        return result
 
     def __str__(self):
         return f"{self.quote.quote_number} — {self.service_name_snapshot}"
