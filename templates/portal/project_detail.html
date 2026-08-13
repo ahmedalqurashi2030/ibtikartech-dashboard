@@ -20,7 +20,16 @@
   </div>
   <div class="portal-progress__track"><span style="width: {{ project.progress_percentage }}%"></span></div>
   <dl class="portal-definition-grid">
-    <div><dt>مدير المشروع</dt><dd>{{ project.manager.get_full_name|default:project.manager.email|default:"غير محدد" }}</dd></div>
+    <div>
+      <dt>مدير المشروع</dt>
+      <dd>
+        {% if project.manager %}
+          {{ project.manager.get_full_name|default:project.manager.email }}
+        {% else %}
+          غير محدد
+        {% endif %}
+      </dd>
+    </div>
     <div><dt>المتجر</dt><dd>{{ project.store.name|default:"غير مرتبط" }}</dd></div>
     <div><dt>الموعد المستهدف</dt><dd>{{ project.target_completion_date|date:"Y/m/d"|default:"غير محدد" }}</dd></div>
   </dl>
