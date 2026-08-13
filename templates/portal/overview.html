@@ -1,0 +1,120 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}نظرة عامة{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <span class="portal-eyebrow">بوابة العميل</span>
+    <h1>مرحبًا {{ contact.full_name }}</h1>
+    <p>ملخص لما يخص حسابك وخدماتك وطلباتك الحالية لدى ابتكار تك.</p>
+  </div>
+</header>
+
+<div class="portal-stats" aria-label="ملخص الحساب">
+  <a class="portal-stat" href="{% url 'customer_portal:saved_services' %}">
+    <span>الخدمات المحفوظة</span>
+    <strong>{{ saved_services_count }}</strong>
+  </a>
+  <a class="portal-stat" href="{% url 'customer_portal:inquiries' %}">
+    <span>الطلبات والاستفسارات</span>
+    <strong>{{ inquiries_count }}</strong>
+  </a>
+  <a class="portal-stat" href="{% url 'customer_portal:quotes' %}">
+    <span>عروض الأسعار</span>
+    <strong>{{ quotes_count }}</strong>
+  </a>
+  <a class="portal-stat" href="{% url 'customer_portal:stores' %}">
+    <span>المتاجر</span>
+    <strong>{{ stores_count }}</strong>
+  </a>
+</div>
+
+<div class="portal-grid portal-grid--two">
+  <section class="portal-panel">
+    <div class="portal-panel__header">
+      <h2>أحدث الطلبات</h2>
+      <a href="{% url 'customer_portal:inquiries' %}">عرض الكل</a>
+    </div>
+    {% if inquiries %}
+      <div class="portal-list">
+        {% for inquiry in inquiries %}
+          <article class="portal-list-item">
+            <div>
+              <strong>{{ inquiry.service.name|default:inquiry.get_inquiry_type_display }}</strong>
+              <span>{{ inquiry.created_at|date:"Y/m/d" }}</span>
+            </div>
+            <span class="portal-badge">{{ inquiry.get_status_display }}</span>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">لا توجد طلبات أو استفسارات مسجلة في حسابك حتى الآن.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-panel">
+    <div class="portal-panel__header">
+      <h2>أحدث عروض الأسعار</h2>
+      <a href="{% url 'customer_portal:quotes' %}">عرض الكل</a>
+    </div>
+    {% if quotes %}
+      <div class="portal-list">
+        {% for quote in quotes %}
+          <article class="portal-list-item">
+            <div>
+              <strong>{{ quote.quote_number }}</strong>
+              <span>{{ quote.grand_total }} {{ quote.currency }}</span>
+            </div>
+            <span class="portal-badge">{{ quote.get_status_display }}</span>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">لا توجد عروض أسعار مرتبطة بحسابك حاليًا.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-panel">
+    <div class="portal-panel__header">
+      <h2>الخدمات المحفوظة</h2>
+      <a href="{% url 'customer_portal:saved_services' %}">عرض الكل</a>
+    </div>
+    {% if saved_services %}
+      <div class="portal-list">
+        {% for item in saved_services %}
+          <article class="portal-list-item">
+            <div>
+              <strong>{{ item.service.name }}</strong>
+              <span>{{ item.service.category.name }}</span>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">يمكنك حفظ الخدمات للرجوع إليها لاحقًا عندما نربط أزرار الحفظ بصفحات الخدمات.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-panel">
+    <div class="portal-panel__header">
+      <h2>متاجري</h2>
+      <a href="{% url 'customer_portal:stores' %}">عرض الكل</a>
+    </div>
+    {% if stores %}
+      <div class="portal-list">
+        {% for store in stores %}
+          <article class="portal-list-item">
+            <div>
+              <strong>{{ store.name }}</strong>
+              <span>{{ store.get_platform_display }}</span>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">لا يوجد متجر مرتبط بحسابك حتى الآن.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

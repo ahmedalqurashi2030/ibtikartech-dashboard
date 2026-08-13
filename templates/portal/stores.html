@@ -1,0 +1,37 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}متاجري{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <span class="portal-eyebrow">الأصول الرقمية</span>
+    <h1>متاجري</h1>
+    <p>المتاجر المرتبطة بملفك في ابتكار تك والتي نستخدمها في الطلبات والمشاريع.</p>
+  </div>
+</header>
+
+{% if stores %}
+  <div class="portal-card-grid">
+    {% for store in stores %}
+      <article class="portal-card">
+        <span class="portal-card__meta">{{ store.get_platform_display }}</span>
+        <h2>{{ store.name }}</h2>
+        {% if store.url %}
+          <p><a class="portal-text-link" href="{{ store.url }}" target="_blank" rel="noopener noreferrer">زيارة المتجر</a></p>
+        {% else %}
+          <p>لا يوجد رابط متجر مسجل.</p>
+        {% endif %}
+        <div class="portal-card__footer">
+          <span class="portal-badge">{{ store.get_status_display }}</span>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="portal-empty-state">
+    <h2>لا يوجد متجر مرتبط بالحساب</h2>
+    <p>سيظهر المتجر هنا بعد ربطه بملف العميل عند بدء طلب يحتاج بيانات المتجر.</p>
+  </div>
+{% endif %}
+{% endblock %}

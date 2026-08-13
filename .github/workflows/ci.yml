@@ -31,7 +31,9 @@ jobs:
         run: python -m pip install --upgrade pip && pip install -e ".[dev]"
 
       - name: Generate bootstrap migrations
-        run: python manage.py makemigrations accounts core crm services sales content --noinput
+        run: >-
+          python manage.py makemigrations
+          accounts core crm services sales customer_portal content --noinput
 
       - name: Apply migrations
         run: python manage.py migrate --noinput

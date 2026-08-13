@@ -1,0 +1,48 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}الطلبات والاستفسارات{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <span class="portal-eyebrow">المتابعة</span>
+    <h1>الطلبات والاستفسارات</h1>
+    <p>سجل الطلبات والاستفسارات المرتبطة بحسابك وحالتها الحالية.</p>
+  </div>
+</header>
+
+{% if inquiries %}
+  <div class="portal-table-wrap">
+    <table class="portal-table">
+      <thead>
+        <tr>
+          <th>الطلب</th>
+          <th>النوع</th>
+          <th>المتجر</th>
+          <th>الحالة</th>
+          <th>التاريخ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for inquiry in inquiries %}
+          <tr>
+            <td>
+              <strong>{{ inquiry.service.name|default:"طلب عام" }}</strong>
+              {% if inquiry.message %}<span>{{ inquiry.message|truncatechars:90 }}</span>{% endif %}
+            </td>
+            <td>{{ inquiry.get_inquiry_type_display }}</td>
+            <td>{{ inquiry.store.name|default:"—" }}</td>
+            <td><span class="portal-badge">{{ inquiry.get_status_display }}</span></td>
+            <td>{{ inquiry.created_at|date:"Y/m/d" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="portal-empty-state">
+    <h2>لا توجد طلبات مسجلة</h2>
+    <p>عند إرسال طلب خدمة أو استفسار مؤهل سيظهر هنا ويمكنك متابعة حالته.</p>
+  </div>
+{% endif %}
+{% endblock %}

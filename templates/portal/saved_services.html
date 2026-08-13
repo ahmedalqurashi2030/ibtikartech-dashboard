@@ -1,0 +1,41 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}الخدمات المحفوظة{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <span class="portal-eyebrow">الخدمات</span>
+    <h1>الخدمات المحفوظة</h1>
+    <p>الخدمات التي حفظتها للرجوع إليها ومقارنتها قبل بدء الطلب.</p>
+  </div>
+</header>
+
+{% if saved_services %}
+  <div class="portal-card-grid">
+    {% for item in saved_services %}
+      <article class="portal-card">
+        <span class="portal-card__meta">{{ item.service.category.name }}</span>
+        <h2>{{ item.service.name }}</h2>
+        <p>{{ item.service.short_description }}</p>
+        <div class="portal-card__footer">
+          {% if item.service.price %}
+            <strong>{{ item.service.price }} {{ item.service.currency }}</strong>
+          {% else %}
+            <strong>{{ item.service.get_price_type_display }}</strong>
+          {% endif %}
+          <form method="post" action="{% url 'customer_portal:toggle_saved_service' item.service.id %}">
+            {% csrf_token %}
+            <button class="portal-button portal-button--ghost" type="submit">إزالة من المحفوظات</button>
+          </form>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="portal-empty-state">
+    <h2>لا توجد خدمات محفوظة</h2>
+    <p>ستظهر هنا الخدمات التي تختار حفظها من كتالوج خدمات ابتكار تك.</p>
+  </div>
+{% endif %}
+{% endblock %}
