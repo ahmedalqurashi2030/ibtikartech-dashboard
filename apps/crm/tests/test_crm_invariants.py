@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 
-from ..models import Contact, ConsentRecord, Organization, OrganizationContact
+from ..models import ConsentRecord, Contact, Organization, OrganizationContact
 
 
 @pytest.fixture
