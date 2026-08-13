@@ -27,24 +27,3 @@ RETIRED_PLATFORM_PAGES = (
     "woocommerce.html",
     "wordpress.html",
 )
-
-CLEAN_ALIASES = {
-    "": "index.html",
-    "services/": "services.html",
-    "ecommerce/": "ecommerce.html",
-    "websites/": "websites.html",
-    "brand-content/": "brand-content.html",
-    "growth/": "growth.html",
-    "custom-systems/": "custom-systems.html",
-    "tharaa/": "tharaa.html",
-    "portfolio/": "portfolio.html",
-    "knowledge/": "knowledge.html",
-    "about/": "about.html",
-    "contact/": "contact.html",
-    "store-launch/": "store-launch.html",
-    "storefront-customization/": "storefront-customization.html",
-    "store-redesign/": "store-redesign.html",
-    "product-page-optimization/": "product-page-optimization.html",
-    "ecommerce-growth/": "ecommerce-growth.html",
-    "ecommerce-support/": "ecommerce-support.html",
-}
