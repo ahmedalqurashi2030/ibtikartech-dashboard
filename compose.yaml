@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: ibtikartech
+      POSTGRES_USER: ibtikar
+      POSTGRES_PASSWORD: ibtikar
+    ports:
+      - "5432:5432"
+    volumes:
+      - ibtikar_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ibtikar -d ibtikartech"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ibtikar_postgres_data:

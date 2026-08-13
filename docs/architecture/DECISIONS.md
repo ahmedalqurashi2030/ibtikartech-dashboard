@@ -86,3 +86,18 @@ Wagtail يدير صفحات Home / Solutions / Platforms / Tharaa / Articles / C
 ## ADR-012 — Financial snapshots
 
 `QuoteItem` يحتفظ بنسخة snapshot من الاسم والوصف والسعر وقت إنشاء العرض. تغيير Service لاحقًا لا يغير عرضًا سابقًا.
+
+## ADR-013 — Database environments
+
+**Decision:** استخدام SQLite للتطوير المحلي والاختبارات الأولية، مع PostgreSQL كقاعدة الإنتاج الإلزامية.
+
+```text
+local       -> SQLite (db.sqlite3)
+test / CI   -> SQLite in-memory
+production  -> PostgreSQL via DATABASE_URL
+```
+
+- لا يحتاج المطور إلى PostgreSQL أو Docker لبدء المشروع محليًا.
+- `production.py` لا يسمح بالرجوع تلقائيًا إلى SQLite، ويوقف التشغيل إذا لم يتم توفير `DATABASE_URL` صالح لـPostgreSQL.
+- يجب تجنب الاعتماد على سلوك خاص بـSQLite في منطق الأعمال، والحفاظ على Models/queries قابلة للعمل على PostgreSQL.
+- قبل الإطلاق الفعلي تضاف/تشغل دورة اختبار توافق PostgreSQL كاملة تشمل migrations وDjango checks والاختبارات ذات الحساسية لقواعد البيانات.

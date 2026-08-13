@@ -1,0 +1,24 @@
+{
+  "name": "Ibtikar Tech Dashboard",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Ibtikar Tech Preview",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "containerEnv": {
+    "DJANGO_SETTINGS_MODULE": "config.settings.local",
+    "DJANGO_SECRET_KEY": "codespaces-development-only"
+  },
+  "postCreateCommand": "bash scripts/codespaces-bootstrap.sh",
+  "postStartCommand": "bash scripts/codespaces-start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}
