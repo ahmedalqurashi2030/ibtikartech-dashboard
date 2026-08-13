@@ -8,7 +8,6 @@ from django.utils import timezone
 
 from apps.crm.models import Contact, Organization, Store
 from apps.services.models import Service
-
 from .choices import (
     FollowUpStatus,
     FollowUpType,
