@@ -1,0 +1,53 @@
+{% extends "layouts/public_base.html" %}
+{% load static %}
+
+{% block title %}{% block portal_title %}بوابة العميل{% endblock %} — ابتكار تك{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/portal/portal.css' %}">
+{% endblock %}
+
+{% block header %}
+<header class="portal-topbar">
+  <div class="container portal-topbar__inner">
+    <a class="portal-brand" href="/" aria-label="العودة إلى ابتكار تك">
+      <span class="portal-brand__mark" aria-hidden="true">IT</span>
+      <span>ابتكار تك</span>
+    </a>
+    <div class="portal-account">
+      <span class="portal-account__email">{{ request.user.email }}</span>
+      <a href="{% url 'account_logout' %}">تسجيل الخروج</a>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="container portal-shell">
+  <aside class="portal-sidebar" aria-label="تنقل بوابة العميل">
+    <div class="portal-sidebar__identity">
+      <span class="portal-eyebrow">حساب العميل</span>
+      <strong>{{ contact.full_name|default:request.user.email }}</strong>
+    </div>
+    <nav class="portal-nav">
+      <a href="{% url 'customer_portal:overview' %}" {% if request.resolver_match.url_name == 'overview' %}aria-current="page"{% endif %}>نظرة عامة</a>
+      <a href="{% url 'customer_portal:saved_services' %}" {% if request.resolver_match.url_name == 'saved_services' %}aria-current="page"{% endif %}>الخدمات المحفوظة</a>
+      <a href="{% url 'customer_portal:inquiries' %}" {% if request.resolver_match.url_name == 'inquiries' %}aria-current="page"{% endif %}>الطلبات والاستفسارات</a>
+      <a href="{% url 'customer_portal:quotes' %}" {% if request.resolver_match.url_name == 'quotes' %}aria-current="page"{% endif %}>عروض الأسعار</a>
+      <a href="{% url 'customer_portal:stores' %}" {% if request.resolver_match.url_name == 'stores' %}aria-current="page"{% endif %}>متاجري</a>
+      <a href="{% url 'customer_portal:profile' %}" {% if request.resolver_match.url_name == 'profile' %}aria-current="page"{% endif %}>الملف الشخصي</a>
+    </nav>
+  </aside>
+
+  <section class="portal-content">
+    {% if messages %}
+      <div class="portal-messages" aria-live="polite">
+        {% for message in messages %}
+          <div class="portal-message">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block portal_content %}{% endblock %}
+  </section>
+</div>
+{% endblock %}
