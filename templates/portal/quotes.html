@@ -1,0 +1,49 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}عروض الأسعار{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <span class="portal-eyebrow">المبيعات</span>
+    <h1>عروض الأسعار</h1>
+    <p>العروض المرتبطة بحسابك مع الحالة والقيمة وفترة الصلاحية.</p>
+  </div>
+</header>
+
+{% if quotes %}
+  <div class="portal-stack">
+    {% for quote in quotes %}
+      <article class="portal-panel portal-quote">
+        <div class="portal-panel__header">
+          <div>
+            <span class="portal-card__meta">{{ quote.quote_number }}</span>
+            <h2>{{ quote.opportunity.title }}</h2>
+          </div>
+          <span class="portal-badge">{{ quote.get_status_display }}</span>
+        </div>
+        <dl class="portal-definition-grid">
+          <div><dt>الإجمالي</dt><dd>{{ quote.grand_total }} {{ quote.currency }}</dd></div>
+          <div><dt>صالح حتى</dt><dd>{{ quote.valid_until|date:"Y/m/d"|default:"غير محدد" }}</dd></div>
+          <div><dt>تاريخ الإنشاء</dt><dd>{{ quote.created_at|date:"Y/m/d" }}</dd></div>
+        </dl>
+        {% if quote.items.all %}
+          <div class="portal-quote-items">
+            {% for item in quote.items.all %}
+              <div>
+                <span>{{ item.service_name_snapshot }}</span>
+                <strong>{{ item.total }} {{ quote.currency }}</strong>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="portal-empty-state">
+    <h2>لا توجد عروض أسعار</h2>
+    <p>عندما يرسل فريق ابتكار تك عرضًا مرتبطًا بحسابك سيظهر هنا.</p>
+  </div>
+{% endif %}
+{% endblock %}
