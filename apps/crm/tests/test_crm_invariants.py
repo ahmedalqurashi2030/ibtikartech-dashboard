@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 import pytest
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -79,7 +81,7 @@ def test_withdrawn_consent_requires_timestamp_and_valid_order(contact):
         source="MANUAL",
         policy_version="v1",
         granted_at=granted_at,
-        withdrawn_at=granted_at - timezone.timedelta(minutes=1),
+        withdrawn_at=granted_at - timedelta(minutes=1),
     )
 
     with pytest.raises(ValidationError) as exc_info:
