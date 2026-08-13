@@ -141,6 +141,22 @@ EMAIL_USE_TLS=true
 DEFAULT_FROM_EMAIL
 ```
 
+For S3-compatible persistent media storage, configure a bucket and credentials. Standard
+AWS S3 can omit the custom endpoint; S3-compatible providers can set it:
+
+```text
+AWS_STORAGE_BUCKET_NAME
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_S3_ENDPOINT_URL
+AWS_S3_REGION_NAME
+AWS_S3_ADDRESSING_STYLE
+AWS_MEDIA_LOCATION=media
+```
+
+If no bucket is configured, production falls back to local file storage, which must be on
+a persistent volume.
+
 Deployment sequence:
 
 ```bash
@@ -148,11 +164,12 @@ python -m pip install .
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 python manage.py bootstrap_ibtikar
+bash scripts/start-production.sh
 ```
 
-Use a production WSGI/ASGI process manager and a persistent/private media storage strategy
-appropriate for the hosting environment. Do not use Django `runserver` for an internet
-production deployment.
+`start-production.sh` starts the WSGI application with Gunicorn. Configure worker count and
+timeout with `GUNICORN_WORKERS` and `GUNICORN_TIMEOUT`. Django `runserver` remains for local
+and Codespaces development only.
 
 ## 7. Verification checklist
 

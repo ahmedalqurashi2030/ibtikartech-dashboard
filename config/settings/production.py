@@ -64,3 +64,25 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
     },
 }
+
+s3_bucket_name = os.getenv("AWS_STORAGE_BUCKET_NAME", "").strip()
+if s3_bucket_name:
+    s3_options = {
+        "bucket_name": s3_bucket_name,
+        "default_acl": None,
+        "file_overwrite": False,
+        "location": os.getenv("AWS_MEDIA_LOCATION", "media").strip("/"),
+        "querystring_auth": True,
+    }
+    optional_s3_settings = {
+        "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL", "").strip(),
+        "region_name": os.getenv("AWS_S3_REGION_NAME", "").strip(),
+        "addressing_style": os.getenv("AWS_S3_ADDRESSING_STYLE", "").strip(),
+    }
+    s3_options.update(
+        {key: value for key, value in optional_s3_settings.items() if value}
+    )
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": s3_options,
+    }

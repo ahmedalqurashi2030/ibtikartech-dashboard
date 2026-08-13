@@ -20,7 +20,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Validate shell scripts
-        run: bash -n scripts/codespaces-bootstrap.sh scripts/codespaces-start.sh
+        run: >-
+          bash -n
+          scripts/codespaces-bootstrap.sh
+          scripts/codespaces-start.sh
+          scripts/start-production.sh
 
       - uses: actions/setup-python@v5
         with:
