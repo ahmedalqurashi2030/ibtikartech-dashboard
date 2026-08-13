@@ -99,14 +99,15 @@ class TicketMessage(models.Model):
     )
     sender_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         null=True,
         blank=True,
         related_name="support_messages",
+        limit_choices_to={"is_staff": True},
     )
     sender_contact = models.ForeignKey(
         Contact,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         null=True,
         blank=True,
         related_name="support_messages",
