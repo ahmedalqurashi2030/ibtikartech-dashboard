@@ -58,7 +58,7 @@
           </td>
           <td>{% if contact.user %}مسجل{% else %}بدون حساب{% endif %}</td>
           <td><span class="ibt-badge">{{ contact.get_lifecycle_stage_display }}</span></td>
-          <td>{{ contact.owner.get_full_name|default:contact.owner.email|default:"غير معين" }}</td>
+          <td>{% if contact.owner %}{{ contact.owner.get_full_name|default:contact.owner.email }}{% else %}غير معين{% endif %}</td>
           <td>{{ contact.last_activity_at|date:"Y/m/d H:i"|default:"—" }}</td>
           <td><a class="button button-small" href="{% url 'customer_360:detail' contact.id %}">فتح 360</a></td>
         </tr>
