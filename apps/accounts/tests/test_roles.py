@@ -23,9 +23,10 @@ def bootstrapped(db):
 @pytest.mark.django_db
 def test_bootstrap_provisions_baseline_roles(bootstrapped):
     group_model = get_user_model()._meta.get_field("groups").remote_field.model
-    assert set(group_model.objects.filter(name__in=ROLE_NAMES).values_list("name", flat=True)) == set(
-        ROLE_NAMES
+    role_names = set(
+        group_model.objects.filter(name__in=ROLE_NAMES).values_list("name", flat=True)
     )
+    assert role_names == set(ROLE_NAMES)
 
 
 @pytest.mark.django_db
