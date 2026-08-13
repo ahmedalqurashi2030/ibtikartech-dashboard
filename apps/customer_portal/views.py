@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from apps.crm.models import Store
-from apps.projects.choices import ProjectVisibility
+from apps.projects.choices import ApprovalStatus, ProjectVisibility
 from apps.projects.forms import ApprovalResponseForm
 from apps.projects.models import Approval, Project, ProjectFile, ProjectStage, ProjectUpdate
 from apps.projects.services import ApprovalResponseError, respond_to_approval
@@ -168,14 +168,16 @@ def project_detail(request, project_id):
         )
     )
     project = get_object_or_404(project_queryset, id=project_id)
+    for approval in project.customer_approvals:
+        if approval.status == ApprovalStatus.PENDING:
+            approval.response_form = ApprovalResponseForm(
+                prefix=f"approval-{approval.id}"
+            )
+
     return render(
         request,
         "portal/project_detail.html",
-        {
-            "contact": contact,
-            "project": project,
-            "approval_form": ApprovalResponseForm(),
-        },
+        {"contact": contact, "project": project},
     )
 
 
@@ -187,7 +189,10 @@ def respond_project_approval(request, project_id, approval_id):
         id=project_id,
         contact=request.portal_contact,
     )
-    form = ApprovalResponseForm(request.POST)
+    form = ApprovalResponseForm(
+        request.POST,
+        prefix=f"approval-{approval_id}",
+    )
     if not form.is_valid():
         messages.error(request, "تحقق من قرار الموافقة والملاحظة ثم حاول مرة أخرى.")
         return redirect("customer_portal:project_detail", project_id=project.id)
