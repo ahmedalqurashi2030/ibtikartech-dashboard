@@ -1,6 +1,5 @@
 from django.contrib import messages
-from django.db.models import Prefetch
-from django.http import HttpResponseNotAllowed
+from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
@@ -157,7 +156,7 @@ def profile(request):
                 messages.success(request, "تم تحديث تفضيلات البوابة.")
                 return redirect("customer_portal:profile")
         else:
-            return HttpResponseNotAllowed(["POST"])
+            return HttpResponseBadRequest("Unknown portal form.")
 
     return render(
         request,
