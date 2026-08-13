@@ -6,7 +6,6 @@ from apps.projects.models import Project
 
 from .models import SupportTicket
 
-
 MAX_ATTACHMENT_SIZE = 10 * 1024 * 1024
 ALLOWED_ATTACHMENT_EXTENSIONS = {
     ".pdf",
