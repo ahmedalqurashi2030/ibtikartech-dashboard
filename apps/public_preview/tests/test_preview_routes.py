@@ -1,6 +1,7 @@
 import pytest
+from django.urls import reverse
 
-from apps.public_preview.manifest import CLEAN_ALIASES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
+from apps.public_preview.manifest import REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
 
 
 @pytest.mark.django_db
@@ -27,15 +28,9 @@ def test_root_renders_original_homepage(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    ("clean_path", "page_name"),
-    [(path, page) for path, page in CLEAN_ALIASES.items() if path],
-)
-def test_clean_preview_aliases_redirect_to_original_filenames(client, clean_path, page_name):
-    response = client.get(f"/{clean_path}")
-
-    assert response.status_code == 302
-    assert response.headers["Location"] == f"/{page_name}"
+def test_preview_does_not_shadow_dynamic_services_index(client):
+    response = client.get(reverse("services:index"))
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db
