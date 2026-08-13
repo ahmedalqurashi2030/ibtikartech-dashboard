@@ -13,6 +13,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("accounts/", include("allauth.urls")),
     path("analytics/", include("apps.analytics.urls")),
+    path("services/", include("apps.services.urls")),
     path("portal/support/", include("apps.support.portal_urls")),
     path("portal/", include("apps.customer_portal.urls")),
     path("", include(wagtail_urls)),

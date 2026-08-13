@@ -1,0 +1,32 @@
+{% extends "layouts/public_base.html" %}
+
+{% block title %}الخدمات — ابتكار تك{% endblock %}
+
+{% block content %}
+<section class="container section" dir="rtl">
+  <p>خدمات ابتكار تك</p>
+  <h1>اختر الخدمة المناسبة لهدفك</h1>
+  {% for category in categories %}
+    <section>
+      <h2>{{ category.name }}</h2>
+      {% if category.short_description %}<p>{{ category.short_description }}</p>{% endif %}
+      <div class="cards">
+        {% for service in category.services.all %}
+          <article>
+            <h3><a href="{% url 'services:detail' service.slug %}">{{ service.name }}</a></h3>
+            <p>{{ service.short_description }}</p>
+            {% if service.price_type == 'FIXED' %}<p>{{ service.price }} {{ service.currency }}</p>{% endif %}
+            {% if service.price_type == 'STARTING_FROM' %}<p>تبدأ من {{ service.price }} {{ service.currency }}</p>{% endif %}
+            {% if service.price_type == 'QUOTE' %}<p>السعر حسب نطاق العمل</p>{% endif %}
+            {% if service.price_type == 'FREE' %}<p>مجاني</p>{% endif %}
+          </article>
+        {% empty %}
+          <p>لا توجد خدمات منشورة في هذا التصنيف بعد.</p>
+        {% endfor %}
+      </div>
+    </section>
+  {% empty %}
+    <p>سيتم نشر الخدمات قريبًا.</p>
+  {% endfor %}
+</section>
+{% endblock %}

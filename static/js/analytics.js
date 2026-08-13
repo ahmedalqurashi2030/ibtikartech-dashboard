@@ -30,6 +30,12 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     track("page_view");
+
+    const servicePage = document.querySelector("[data-analytics-service-view]");
+    if (servicePage) {
+      track("service_view", {}, servicePage.dataset.analyticsServiceView || "");
+    }
+
     document.querySelectorAll("[data-analytics-event]").forEach((element) => {
       element.addEventListener("click", () => {
         track(

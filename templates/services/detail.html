@@ -1,0 +1,37 @@
+{% extends "layouts/public_base.html" %}
+
+{% block title %}{{ service.seo_title|default:service.name }} — ابتكار تك{% endblock %}
+
+{% block content %}
+<article class="container section" dir="rtl" data-analytics-service-view="{{ service.id }}">
+  <p><a href="{% url 'services:index' %}">الخدمات</a> / {{ service.category.name }}</p>
+  <h1>{{ service.name }}</h1>
+  <p>{{ service.short_description }}</p>
+
+  {% if service.price_type == 'FIXED' %}<p><strong>{{ service.price }} {{ service.currency }}</strong></p>{% endif %}
+  {% if service.price_type == 'STARTING_FROM' %}<p><strong>تبدأ من {{ service.price }} {{ service.currency }}</strong></p>{% endif %}
+  {% if service.price_type == 'QUOTE' %}<p><strong>السعر يحدد حسب نطاق العمل.</strong></p>{% endif %}
+  {% if service.price_type == 'FREE' %}<p><strong>مجاني</strong></p>{% endif %}
+  {% if service.delivery_time %}<p>مدة التنفيذ: {{ service.delivery_time }}</p>{% endif %}
+
+  <div>{{ service.description|linebreaks }}</div>
+  {% if service.scope %}<section><h2>نطاق العمل</h2>{{ service.scope|linebreaks }}</section>{% endif %}
+  {% if service.deliverables %}<section><h2>المخرجات</h2><ul>{% for item in service.deliverables %}<li>{{ item }}</li>{% endfor %}</ul></section>{% endif %}
+  {% if service.requirements %}<section><h2>المتطلبات</h2><ul>{% for item in service.requirements %}<li>{{ item }}</li>{% endfor %}</ul></section>{% endif %}
+  {% if service.process %}<section><h2>طريقة العمل</h2><ol>{% for item in service.process %}<li>{{ item }}</li>{% endfor %}</ol></section>{% endif %}
+  {% if service.exclusions %}<section><h2>خارج النطاق</h2>{{ service.exclusions|linebreaks }}</section>{% endif %}
+  {% if service.revision_policy %}<section><h2>سياسة التعديلات</h2>{{ service.revision_policy|linebreaks }}</section>{% endif %}
+
+  <div class="actions">
+    {% if service.action_type == 'WHATSAPP' and service.action_url %}
+      <a href="{{ service.action_url }}" rel="noopener" data-analytics-event="whatsapp_click" data-service-id="{{ service.id }}">تواصل عبر واتساب</a>
+    {% elif service.action_type == 'EXTERNAL_CHECKOUT' and service.action_url %}
+      <a href="{{ service.action_url }}" rel="noopener" data-analytics-event="external_checkout_click" data-service-id="{{ service.id }}">متابعة الطلب</a>
+    {% elif service.action_type != 'DISABLED' %}
+      <a href="{% url 'services:request' service.slug %}" data-analytics-event="quote_start" data-service-id="{{ service.id }}">اطلب الخدمة</a>
+    {% endif %}
+  </div>
+
+  {% if request.GET.sent %}<p role="status">تم استلام طلبك بنجاح.</p>{% endif %}
+</article>
+{% endblock %}
