@@ -1,10 +1,10 @@
 # Ibtikar Tech Dashboard
 
-منصة الباك إند ولوحة التشغيل الداخلية وCRM وبوابة العميل لمنصة **ابتكار تك للحلول والخدمات الرقمية**.
+منصة الباك إند، الموقع الديناميكي، CRM، بوابة العميل، ولوحة التشغيل الداخلية لمنصة **ابتكار تك للحلول والخدمات الرقمية**.
 
 > **Status:** Architecture baseline / pre-implementation foundation
 >
-> هذا الملف هو **المرجع الرئيسي الكامل لبنية المشروع** قبل وأثناء التنفيذ. أي مطور أو Agent يجب أن يبدأ منه ثم يراجع `AGENTS.md` و`docs/architecture/ERD.md` و`docs/architecture/DECISIONS.md` قبل تغيير أي قرار جوهري.
+> هذا الملف هو **المرجع الرئيسي الشامل لبنية المشروع كاملة**: الموقع العام، الصفحات، الخدمات، الحساب، بوابة العميل، لوحة الموظفين، الـCRM، المبيعات، المشاريع، المحتوى، التكاملات، والبيانات. أي مطور أو Agent يجب أن يبدأ من هذا الملف ثم يراجع `AGENTS.md` و`docs/architecture/ERD.md` و`docs/architecture/DECISIONS.md` قبل تغيير قرار جوهري.
 
 ---
 
@@ -12,25 +12,52 @@
 
 ابتكار تك ليست مجرد موقع وكالة، وليست متجر خدمات تقليديًا، وليست SaaS أو Marketplace في V1.
 
-نحن نبني **منصة تشغيل أعمال متخصصة للخدمات الرقمية** تجمع في نظام واحد:
+نحن نبني **منصة تشغيل أعمال متخصصة للخدمات الرقمية** تتكون من أربع واجهات/طبقات استخدام مترابطة فوق Backend واحد وقاعدة بيانات واحدة:
 
-- الموقع العام والمحتوى.
+```text
+                         IBTIKAR TECH PLATFORM
+                                  │
+        ┌─────────────────────────┼──────────────────────────┐
+        │                         │                          │
+  PUBLIC WEBSITE            CUSTOMER PORTAL             CONTROL PANEL
+  الموقع العام               بوابة العميل               لوحة الموظفين
+        │                         │                          │
+        └─────────────────────────┼──────────────────────────┘
+                                  │
+                         DJANGO DOMAIN LAYER
+                                  │
+              ┌───────────────────┼───────────────────┐
+              │                   │                   │
+             CRM                SALES              PROJECTS
+              │                   │                   │
+              └───────────────────┼───────────────────┘
+                                  │
+                             POSTGRESQL
+                                  │
+                           INTEGRATIONS
+                    WhatsApp / Email / Salla / Future
+```
+
+المنصة تجمع في نظام واحد:
+
+- الموقع العام وصفحات التسويق والمحتوى.
 - دليل الخدمات وأسعارها وتفاصيلها.
 - صفحة عرض ثيم **ثراء**.
-- CRM موحد للعملاء وجهات الاتصال والشركات والمتاجر.
+- حساب عميل اختياري.
+- بوابة عميل.
+- CRM موحد للعملاء والشركات والمتاجر.
 - استقبال الاستفسارات وتحويلها إلى فرص بيع.
-- المتابعة التجارية.
-- عروض الأسعار.
+- المتابعة التجارية وعروض الأسعار.
 - إدارة المشاريع والمراحل والملفات والموافقات.
-- بوابة عميل اختيارية.
 - الدعم الفني والتذاكر.
 - التسويق والمصادر وUTM والإسناد Attribution.
 - التحليلات والأحداث المهمة.
 - لوحة تشغيل موظفين واحدة تحت `/control/`.
+- إدارة المحتوى عبر Wagtail.
 - تكاملات واتساب والبريد وسلة وغيرها عند الحاجة.
-- إمكانية إضافة الطلبات والمدفوعات والفواتير مستقبلًا دون إعادة بناء CRM.
+- إمكانية إضافة الطلبات والمدفوعات والفواتير مستقبلًا دون إعادة بناء الـCRM.
 
-السوق الأساسي: **السعودية أولًا ثم الخليج**، مع دعم العربية وRTL كحالة استخدام أساسية.
+السوق الأساسي: **السعودية أولًا ثم الخليج**، مع العربية وRTL كحالة استخدام أساسية.
 
 ---
 
@@ -66,7 +93,7 @@ ServiceAddon ❌
 - لا توجد License / Inventory / Order خاصة بثراء داخل المنصة.
 - الشراء يتم خارجيًا عبر متجر ثيمات سلة.
 - يمكن للصفحة عرض خدمات مرتبطة من `Service`.
-- الضغط على المعاينة أو الشراء يسجل كـ`AnalyticsEvent`.
+- الضغط على المعاينة أو الشراء يسجل كـ`AnalyticsEvent` فقط.
 
 ## 2.3 الهوية والعميل
 
@@ -76,8 +103,8 @@ Contact = CRM Person
 ```
 
 - يمكن أن يوجد `Contact` بلا `User`.
-- يمكن ربط Contact بحساب لاحقًا دون فقدان تاريخه.
-- الحساب اختياري ولا يمنع تصفح الخدمات أو إرسال الاستفسار أو التواصل.
+- يمكن ربط Contact موجود بحساب لاحقًا دون فقدان التاريخ.
+- الحساب اختياري ولا يمنع التصفح أو مشاهدة الأسعار أو الاستفسار أو التواصل.
 
 ## 2.4 واتساب
 
@@ -93,7 +120,7 @@ Inquiry ❌
 Opportunity ❌
 ```
 
-إلا عند وجود تفاعل تجاري حقيقي: نموذج مرسل، رسالة مستلمة عبر تكامل موثوق، أو إدخال موظف موثق.
+إلا عند وجود تفاعل تجاري حقيقي قابل للإثبات.
 
 ## 2.5 مسار المبيعات
 
@@ -107,11 +134,11 @@ Quote
 Project
 ```
 
-حالة الحساب، وCRM lifecycle، وOpportunity stage ثلاثة مفاهيم مستقلة.
+Account status وCRM lifecycle وOpportunity stage مفاهيم مستقلة.
 
 ## 2.6 التجارة الإلكترونية
 
-`Order / Payment / Invoice / Refund` **ليست ضمن V1**. يتم توثيق حدودها فقط وإضافتها عند الحاجة الفعلية للدفع المباشر.
+`Order / Payment / Invoice / Refund` ليست ضمن V1. يتم توثيق حدودها فقط وإضافتها عندما يصبح الدفع المباشر مطلوبًا.
 
 ## 2.7 الأسلوب الهندسي
 
@@ -120,6 +147,7 @@ Project
 - لا React Admin منفصلة.
 - Wagtail هو shell لوحة التشغيل `/control/`.
 - Business models مستقلة عن Wagtail Page Tree.
+- الواجهة الحالية لابتكار تك تُدمج في Django Templates **مع الحفاظ على الهوية وأسلوب العرض** بدل إعادة تصميمها من الصفر.
 
 ---
 
@@ -130,46 +158,74 @@ Project
 - **Wagtail 7.4 LTS** بأحدث Patch مدعوم.
 - **PostgreSQL**.
 - **Django Templates**.
-- **HTMX / JavaScript خفيف** عند الحاجة.
+- **HTMX / JavaScript خفيف** للتفاعلات التي تستفيد منه.
 - **django-allauth** للمصادقة والتحقق واستعادة الحساب.
 - **S3-compatible storage** للصور والملفات في الإنتاج.
-- **Redis + Celery** فقط عندما توجد مهام خلفية حقيقية.
+- **Redis + Celery** فقط عند وجود مهام خلفية فعلية.
 - API endpoints محددة عند الحاجة، وليس API-first بلا سبب.
-- كل الأسرار والمفاتيح عبر Environment Variables.
+- Environment Variables للأسرار والمفاتيح.
 
 ---
 
-# 4. الصورة العليا للمنصة
+# 4. حدود الواجهات الثلاث
 
-```text
-                           IBTIKAR TECH
-                                │
-             ┌──────────────────┴──────────────────┐
-             │                                     │
-        PUBLIC WEBSITE                       CUSTOMER ACCOUNT
-             │                                     │
-    ┌────────┼────────┐                       Customer Portal
-    │        │        │
-Solutions Services  Tharaa
-             │        │
-      ServiceCategory │
-             │        └── Wagtail Presentation Page
-          Service
-             │
-      ┌──────┴──────┐
-      │             │
-WhatsApp Click    Inquiry
-      │             │
-AnalyticsEvent    Contact
-                    │
-                Opportunity
-                    │
-                   Quote
-                    │
-                  Project
-                    │
-             Delivery / Support
-```
+## 4.1 Public Website
+
+واجهة الزائر والتسويق والتحويل.
+
+مسؤولياتها:
+
+- الصفحة الرئيسية.
+- الحلول.
+- الخدمات والتصنيفات وصفحة الخدمة.
+- صفحات المنصات.
+- صفحة ثراء.
+- الأعمال ودراسات الحالة.
+- المعرفة والمقالات.
+- عن ابتكار تك.
+- التواصل وبدء المشروع.
+- الصفحات القانونية.
+- CTA واتساب / استشارة / طلب عرض سعر.
+
+لا تتطلب تسجيل دخول.
+
+## 4.2 Customer Portal
+
+واجهة العميل المسجل فقط.
+
+مسؤولياتها حسب ما هو مفعّل:
+
+- نظرة عامة.
+- بيانات الحساب.
+- المتاجر.
+- الخدمات المحفوظة.
+- الاستفسارات/الطلبات ذات الصلة به.
+- عروض الأسعار.
+- المشاريع والمراحل والتحديثات.
+- الملفات والموافقات.
+- الدعم.
+- تفضيلات التواصل والأمان.
+
+لا نظهر قسمًا فارغًا قبل تشغيل ميزته فعليًا.
+
+## 4.3 Control Panel `/control/`
+
+واجهة موظفي ابتكار تك فقط، وهي **Ibtikar OS** التشغيلية.
+
+تجمع:
+
+- Dashboard.
+- الخدمات.
+- CRM.
+- المبيعات.
+- المشاريع.
+- الدعم.
+- المحتوى.
+- التسويق.
+- التحليلات.
+- الإعدادات والصلاحيات.
+
+Wagtail Admin هو الـShell، مع ModelViewSets للشاشات القياسية وCustom Operational Views للشاشات المعقدة.
 
 ---
 
@@ -199,6 +255,7 @@ ibtikartech-dashboard/
 │
 ├── apps/
 │   ├── __init__.py
+│   │
 │   ├── core/
 │   ├── accounts/
 │   ├── crm/
@@ -213,21 +270,52 @@ ibtikartech-dashboard/
 │   └── integrations/
 │
 ├── templates/
-│   ├── base/
-│   ├── public/
+│   ├── layouts/
+│   │   ├── public_base.html
+│   │   ├── account_base.html
+│   │   └── portal_base.html
+│   │
+│   ├── components/
+│   │   ├── public/
+│   │   ├── portal/
+│   │   └── control/
+│   │
 │   ├── account/
 │   ├── portal/
+│   ├── errors/
 │   └── wagtailadmin/
 │
 ├── static/
 │   ├── css/
+│   │   ├── tokens.css
+│   │   ├── base.css
+│   │   ├── utilities.css
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── portal/
+│   │   └── control/
+│   │
 │   ├── js/
+│   │   ├── core/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── portal/
+│   │   └── control/
+│   │
 │   ├── images/
-│   └── fonts/
+│   └── icons/
+│
+├── media/                  # local development only
 │
 ├── locale/
 │   ├── ar/
 │   └── en/
+│
+├── tests/
+│   └── e2e/
+│       ├── public/
+│       ├── portal/
+│       └── control/
 │
 ├── docs/
 │   └── architecture/
@@ -240,25 +328,30 @@ ibtikartech-dashboard/
     └── deploy/
 ```
 
-## 5.1 الهيكل القياسي داخل كل Django App
+---
 
-كل App تشغيلي يتبع قدر الإمكان هذا النمط:
+# 6. الهيكل القياسي داخل كل Django App
 
 ```text
 app_name/
 ├── __init__.py
 ├── apps.py
-├── models.py            # أو models/ إذا كبر المجال
-├── choices.py           # enums/choices عند الحاجة
-├── services.py          # business operations / commands
-├── selectors.py         # read/query logic المعقد
+├── models.py                  # أو models/ عند كبر المجال
+├── choices.py                 # TextChoices / enums
+├── services.py                # write/business operations
+├── selectors.py               # read/query logic المعقد
 ├── forms.py
-├── urls.py              # إذا كان للتطبيق واجهات خاصة
+├── urls.py                    # إذا كان للتطبيق routes
 ├── views.py
-├── wagtail_hooks.py     # ModelViewSets / menu / custom admin integration
-├── permissions.py       # domain access helpers عند الحاجة
-├── signals.py           # فقط عند وجود سبب واضح
+├── permissions.py
+├── wagtail_hooks.py           # control panel integration
+├── signals.py                 # عند وجود سبب واضح فقط
 ├── migrations/
+│   └── __init__.py
+├── templates/
+│   └── app_name/
+├── static/
+│   └── app_name/              # فقط إذا كان الأصل خاصًا بالتطبيق
 └── tests/
     ├── test_models.py
     ├── test_services.py
@@ -266,1085 +359,524 @@ app_name/
     └── test_views.py
 ```
 
-**قاعدة:** لا نضع business logic ثقيل داخل views أو templates أو signals إذا كان يمكن وضعه في service واضح قابل للاختبار.
+**قاعدة:** لا نضع Business Logic ثقيلًا داخل Views أو Templates أو Signals.
 
 ---
 
-# 6. خريطة Apps والنماذج
+# 7. Frontend Architecture
+
+## 7.1 قاعدة الفصل
 
 ```text
-apps/
-│
-├── core/
-│   └── AuditLog
-│
-├── accounts/
-│   ├── User
-│   └── StaffProfile
-│
-├── crm/
-│   ├── Contact
-│   ├── Organization
-│   ├── OrganizationContact
-│   ├── Store
-│   ├── ConsentRecord
-│   └── ActivityEvent
-│
-├── services/
-│   ├── ServiceCategory
-│   └── Service
-│
-├── sales/
-│   ├── Inquiry
-│   ├── Opportunity
-│   ├── FollowUpTask
-│   ├── Quote
-│   └── QuoteItem
-│
-├── customer_portal/
-│   ├── SavedService
-│   └── CustomerPreference
-│
-├── projects/
-│   ├── Project
-│   ├── ProjectStage
-│   ├── ProjectUpdate
-│   ├── ProjectFile
-│   └── Approval
-│
-├── support/
-│   ├── SupportTicket
-│   └── TicketMessage
-│
-├── marketing/
-│   ├── Campaign
-│   └── AttributionTouch
-│
-├── analytics/
-│   └── AnalyticsEvent
-│
-├── content/
-│   ├── HomePage
-│   ├── SolutionPage
-│   ├── PlatformPage
-│   ├── TharaaPage
-│   ├── ArticlePage
-│   ├── CaseStudyPage
-│   ├── PortfolioPage
-│   ├── AboutPage
-│   ├── LandingPage
-│   └── LegalPage
-│
-└── integrations/
-    ├── WhatsApp
-    ├── Email
-    ├── Salla
-    └── Future adapters
+CONTENT DATA        → Wagtail Pages / Settings
+BUSINESS DATA       → Django Domain Models
+PRESENTATION        → Django Templates
+SHARED UI           → Template Components + CSS/JS
+INTERACTION         → HTMX / lightweight JS
 ```
+
+لا نكرر محتوى الصفحة داخل HTML إذا كان من المفترض أن يديره فريق ابتكار تك من `/control/`.
+
+## 7.2 Layouts
+
+### `public_base.html`
+
+يشمل:
+
+- `<head>` / SEO defaults.
+- Header.
+- Mega menu / mobile navigation.
+- Breadcrumb region.
+- Main content slot.
+- Global CTA.
+- Footer.
+- Cookie/consent UI عند الحاجة.
+- Scripts المشتركة.
+
+### `account_base.html`
+
+لصفحات:
+
+- تسجيل الدخول.
+- إنشاء الحساب.
+- التحقق من البريد.
+- استعادة كلمة المرور.
+
+يكون أبسط بصريًا من الموقع العام ويركز على المهمة.
+
+### `portal_base.html`
+
+يشمل:
+
+- Portal header.
+- Account navigation/sidebar.
+- Mobile navigation.
+- Alerts/notifications region.
+- Main content.
+
+## 7.3 Public UI Components
+
+```text
+templates/components/public/
+├── header.html
+├── mega_menu.html
+├── mobile_menu.html
+├── footer.html
+├── breadcrumbs.html
+├── section_heading.html
+├── hero.html
+├── service_card.html
+├── service_category_card.html
+├── related_service_card.html
+├── platform_card.html
+├── portfolio_card.html
+├── case_study_card.html
+├── article_card.html
+├── testimonial_card.html
+├── faq.html
+├── stats.html
+├── process_steps.html
+├── trust_strip.html
+├── pagination.html
+├── empty_state.html
+├── form_field.html
+├── form_errors.html
+├── whatsapp_cta.html
+└── global_cta.html
+```
+
+لا نكرر نفس Header/Footer/FAQ/Button markup بين الصفحات.
+
+## 7.4 Portal Components
+
+```text
+templates/components/portal/
+├── portal_nav.html
+├── page_header.html
+├── metric_card.html
+├── status_badge.html
+├── timeline.html
+├── project_progress.html
+├── project_stage.html
+├── quote_card.html
+├── file_row.html
+├── approval_card.html
+├── ticket_card.html
+├── empty_state.html
+└── confirmation_dialog.html
+```
+
+## 7.5 Control Components
+
+Custom control views تستخدم مكونات وظيفية متسقة:
+
+```text
+templates/components/control/
+├── page_header.html
+├── metric_card.html
+├── filter_bar.html
+├── status_badge.html
+├── timeline.html
+├── customer_summary.html
+├── activity_feed.html
+├── pipeline_column.html
+├── project_progress.html
+├── quick_actions.html
+└── empty_state.html
+```
+
+أما شاشات Wagtail الأصلية فلا نعيد بناءها دون حاجة؛ نستخدم امتدادات Wagtail الرسمية ونخصص فقط ما يخدم التجربة.
 
 ---
 
-# 7. قواعد عامة لكل Models
-
-ما لم يوجد سبب موثق خلاف ذلك:
-
-- المفاتيح الأساسية العامة: `UUIDField(primary_key=True, default=uuid.uuid4, editable=False)`.
-- كل العلاقات مع المستخدم تستخدم `settings.AUTH_USER_MODEL`.
-- التواريخ تخزن timezone-aware.
-- الحقول المالية تستخدم `DecimalField` وليس float.
-- `created_at` و`updated_at` في النماذج التشغيلية المهمة.
-- لا يتم حذف سجلات تجارية أو تدقيقية مهمة حذفًا متسلسلًا بلا قصد.
-- نستخدم `PROTECT` أو `SET_NULL` في العلاقات التاريخية حسب المجال.
-- الحقول التي تستخدم في الفلاتر اليومية تحصل على `db_index=True` أو index مركب مناسب.
-- لا نخزن Tokens أو Secrets أو Passwords كنص صريح.
-
----
-
-# 8. `core` — البنية المشتركة والتدقيق
-
-## 8.1 `AuditLog`
-
-سجل غير موجه للعميل، مخصص لتتبع التغييرات الحساسة.
-
-| الحقل | Django type | الملاحظات |
-|---|---|---|
-| `id` | UUIDField PK | معرف السجل |
-| `actor_user` | FK User, SET_NULL | الموظف/المستخدم الذي نفذ التغيير |
-| `action` | CharField(80) | create/update/delete/status_change/... |
-| `object_type` | CharField(120) | اسم النوع أو model label |
-| `object_id` | CharField(64) | يدعم UUID أو معرفات أخرى |
-| `before_data` | JSONField | الحالة قبل التغيير، nullable/blank |
-| `after_data` | JSONField | الحالة بعد التغيير، nullable/blank |
-| `metadata` | JSONField | سياق إضافي غير حساس |
-| `ip_address` | GenericIPAddressField | nullable |
-| `request_id` | UUIDField | nullable، للربط مع request tracing |
-| `created_at` | DateTimeField | auto_now_add، indexed |
-
-Indexes المقترحة:
+# 8. هيكل صفحات الموقع العام
 
 ```text
-(actor_user, created_at)
-(object_type, object_id, created_at)
-(action, created_at)
+PUBLIC WEBSITE
+│
+├── /
+│   └── الرئيسية
+│
+├── /solutions/
+│   └── صفحات الحلول التسويقية عند الحاجة
+│
+├── /services/
+│   ├── دليل الخدمات
+│   ├── /services/<category>/
+│   │   └── صفحة التصنيف
+│   └── /services/<category>/<service>/
+│       └── صفحة الخدمة
+│
+├── /platforms/
+│   ├── /platforms/salla/
+│   ├── /platforms/zid/
+│   ├── /platforms/shopify/
+│   ├── /platforms/wordpress/
+│   └── منصات مستقبلية
+│
+├── /tharaa/
+│   └── صفحة عرض ثراء
+│
+├── /portfolio/
+│   ├── الأعمال
+│   └── /portfolio/<slug>/
+│
+├── /case-studies/
+│   └── /case-studies/<slug>/
+│
+├── /knowledge/
+│   ├── المقالات/الأدلة
+│   └── /knowledge/<slug>/
+│
+├── /about/
+├── /contact/
+├── /start-project/
+│
+├── /legal/
+│   ├── /legal/privacy/
+│   ├── /legal/terms/
+│   └── صفحات قانونية إضافية
+│
+└── /accounts/
+    ├── login/
+    ├── signup/
+    ├── logout/
+    ├── password/reset/
+    └── email/verify/
 ```
 
-يستخدم خصوصًا لتغييرات الأسعار والصلاحيات والعروض والموافقات التسويقية وحالات المشاريع، والعمليات المالية مستقبلًا.
+## 8.1 الصفحة الرئيسية `HomePage`
 
----
+تدار عبر Wagtail وتحافظ على هوية الواجهة المعتمدة.
 
-# 9. `accounts` — الدخول وهوية المستخدم
-
-## 9.1 `User`
-
-Custom User مبني على Django `AbstractUser` مع إزالة username واستخدام البريد للدخول.
-
-| الحقل | Django type | الملاحظات |
-|---|---|---|
-| `id` | UUIDField PK | |
-| `email` | EmailField(unique=True) | `USERNAME_FIELD = "email"` |
-| `username` | removed | لا يستخدم |
-| `first_name` | CharField(150) | |
-| `last_name` | CharField(150) | |
-| `is_active` | BooleanField | |
-| `is_staff` | BooleanField | وصول الموظفين |
-| `is_superuser` | BooleanField | |
-| `email_verified_at` | DateTimeField | nullable |
-| `preferred_language` | CharField choices | `ar`, `en` |
-| `last_login` | DateTimeField | Django built-in |
-| `date_joined` | DateTimeField | |
-
-العلاقات:
+حقول/Blocks مقترحة:
 
 ```text
-User 1 ─── 0..1 Contact
-User 1 ─── 0..1 StaffProfile
+HomePage
+├── hero_eyebrow
+├── hero_title
+├── hero_description
+├── primary_cta_label
+├── primary_cta_url
+├── secondary_cta_label
+├── secondary_cta_url
+├── featured_services
+├── featured_platforms
+├── tharaa_promo
+├── portfolio_items
+├── case_studies
+├── testimonials
+├── trust_content
+├── faq
+├── final_cta
+├── seo_title
+├── search_description
+└── social_image
 ```
 
-**مهم:** إنشاء User لا يعني تلقائيًا إنشاء Customer جديد إذا وجد Contact سابق يمكن ربطه بأمان.
+## 8.2 الحلول `SolutionPage`
 
-## 9.2 `StaffProfile`
-
-| الحقل | Django type | الملاحظات |
-|---|---|---|
-| `id` | UUIDField PK | |
-| `user` | OneToOne User, CASCADE | يجب أن يكون staff |
-| `job_title` | CharField(150) | |
-| `department` | CharField(100) | sales/content/projects/marketing/... |
-| `phone` | CharField(32) | nullable |
-| `avatar` | Image/FK Wagtail Image | nullable |
-| `status` | CharField choices | ACTIVE / INACTIVE |
-| `created_at` | DateTimeField | |
-| `updated_at` | DateTimeField | |
-
-الصلاحيات لا تخزن كحقول مخصصة هنا؛ الأساس هو:
+صفحات تسويقية تبدأ من مشكلة/هدف العميل، وليست طبقة داخل Service.
 
 ```text
-Django Groups + Permissions
+SolutionPage
+├── title
+├── intro
+├── hero_media
+├── problem_statement
+├── outcomes
+├── related_services
+├── related_platforms
+├── case_studies
+├── faq
+├── cta
+└── SEO
 ```
 
----
+## 8.3 صفحة المنصة `PlatformPage`
 
-# 10. `crm` — Customer 360 وقاعدة العملاء
-
-هذا هو قلب المنصة التجاري.
-
-## 10.1 `Contact`
-
-يمثل الشخص داخل CRM سواء كان لديه حساب أم لا.
-
-| الحقل | Django type | الملاحظات |
-|---|---|---|
-| `id` | UUIDField PK | |
-| `user` | OneToOne User, SET_NULL | nullable, unique |
-| `full_name` | CharField(200) | required |
-| `email` | EmailField | nullable, indexed |
-| `phone` | CharField(32) | nullable, indexed |
-| `lifecycle_stage` | CharField choices | LEAD / QUALIFIED / CUSTOMER / REPEAT_CUSTOMER / INACTIVE |
-| `status` | CharField choices | ACTIVE / BLOCKED / ARCHIVED |
-| `preferred_language` | CharField choices | ar / en |
-| `owner` | FK User, SET_NULL | الموظف المسؤول، nullable |
-| `first_source` | CharField(120) | organic/referral/ads/whatsapp/manual/... |
-| `first_contact_at` | DateTimeField | nullable |
-| `last_activity_at` | DateTimeField | nullable, indexed |
-| `internal_notes` | TextField | nullable، موظفين فقط |
-| `created_at` | DateTimeField | indexed |
-| `updated_at` | DateTimeField | |
-
-قيود وقواعد:
-
-- لا نفرض `email unique` لأن بيانات CRM قد تكون ناقصة أو مشتركة؛ عملية المطابقة لها قواعد مستقلة.
-- لا نربط User تلقائيًا بمجرد تطابق غير موثوق.
-- Contact لا يحذف تاريخيًا إذا لديه Quotes/Projects؛ يطبق archival/anonymization policy عند الحاجة.
-
-Indexes:
+صفحة تجميع Editorial Landing Page.
 
 ```text
-(email)
-(phone)
-(lifecycle_stage, status)
-(owner, lifecycle_stage)
-(last_activity_at)
+PlatformPage
+├── title
+├── platform_name
+├── intro
+├── logo/media
+├── related_services
+├── featured_work
+├── related_articles
+├── faq
+├── cta
+└── SEO
 ```
 
-## 10.2 `Organization`
+مثال صفحة سلة تعرض خدمات سلة + ثراء + أعمال سلة + محتوى سلة.
 
-يمثل شركة/مؤسسة العميل.
+## 8.4 صفحة ثراء `TharaaPage`
 
-| الحقل | النوع | الملاحظات |
-|---|---|---|
-| `id` | UUIDField PK | |
-| `name` | CharField(200) | |
-| `legal_name` | CharField(250) | nullable |
-| `website` | URLField | nullable |
-| `industry` | CharField(150) | nullable |
-| `country` | CharField(2/100) | nullable |
-| `city` | CharField(120) | nullable |
-| `status` | CharField choices | ACTIVE / INACTIVE / ARCHIVED |
-| `notes` | TextField | nullable، داخلي |
-| `created_at` | DateTimeField | |
-| `updated_at` | DateTimeField | |
-
-## 10.3 `OrganizationContact`
-
-Bridge Many-to-Many بين Organization وContact.
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `organization` | FK Organization, CASCADE |
-| `contact` | FK Contact, CASCADE |
-| `role_title` | CharField(150), nullable |
-| `is_primary` | BooleanField(default=False) |
-| `created_at` | DateTimeField |
-
-Constraint:
+ثراء صفحة عرض وليست Product entity.
 
 ```text
-UNIQUE(organization, contact)
+TharaaPage
+├── title
+├── eyebrow
+├── hero_title
+├── hero_description
+├── hero_media
+├── demo_url
+├── marketplace_url
+├── displayed_price
+├── value_proposition
+├── features
+├── industries
+├── screenshots
+├── demo_sections
+├── trust_content
+├── related_services
+├── documentation_links
+├── faq
+├── changelog_content/links
+├── support_content
+├── final_cta
+├── seo_title
+├── search_description
+└── social_image
 ```
 
-## 10.4 `Store`
-
-يمثل متجر العميل أو الأصل الرقمي المرتبط بالخدمة.
-
-| الحقل | النوع | الملاحظات |
-|---|---|---|
-| `id` | UUIDField PK | |
-| `primary_contact` | FK Contact, PROTECT | |
-| `organization` | FK Organization, SET_NULL | nullable |
-| `name` | CharField(200) | |
-| `url` | URLField | nullable |
-| `platform` | CharField choices | SALLA / ZID / SHOPIFY / WOOCOMMERCE / WORDPRESS / CUSTOM / OTHER |
-| `external_store_id` | CharField(150) | nullable |
-| `status` | CharField choices | ACTIVE / PAUSED / CLOSED / UNKNOWN |
-| `notes` | TextField | nullable |
-| `created_at` | DateTimeField | |
-| `updated_at` | DateTimeField | |
-
-Index:
+Clicks المهمة:
 
 ```text
-(primary_contact, platform)
-(platform, external_store_id)
-```
-
-## 10.5 `ConsentRecord`
-
-الموافقة التسويقية **سجل تاريخي** وليست Boolean داخل Contact.
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `contact` | FK Contact, PROTECT |
-| `channel` | choices: EMAIL / WHATSAPP / SMS |
-| `purpose` | CharField(120) |
-| `status` | GRANTED / WITHDRAWN |
-| `source` | CharField(120) |
-| `policy_version` | CharField(50) |
-| `granted_at` | DateTimeField nullable |
-| `withdrawn_at` | DateTimeField nullable |
-| `ip_address` | GenericIPAddressField nullable |
-| `user_agent` | TextField nullable |
-| `created_at` | DateTimeField indexed |
-
-لا نمسح Grant القديم عند السحب؛ نحتفظ بالـaudit history.
-
-Index:
-
-```text
-(contact, channel, purpose, created_at)
-```
-
-## 10.6 `ActivityEvent`
-
-Timeline تشغيلي داخل CRM، وليس Web Analytics.
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `contact` | FK Contact, PROTECT |
-| `actor_user` | FK User, SET_NULL nullable |
-| `event_type` | CharField(100) |
-| `reference_type` | CharField(100) nullable |
-| `reference_id` | CharField(64) nullable |
-| `title` | CharField(200) |
-| `description` | TextField nullable |
-| `metadata` | JSONField default dict |
-| `created_at` | DateTimeField indexed |
-
-أمثلة:
-
-```text
-CONTACT_CREATED
-INQUIRY_RECEIVED
-OPPORTUNITY_QUALIFIED
-QUOTE_SENT
-QUOTE_ACCEPTED
-PROJECT_CREATED
-TICKET_OPENED
-```
-
----
-
-# 11. `services` — دليل الخدمات
-
-## 11.1 `ServiceCategory`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `name` | CharField(180) |
-| `slug` | SlugField(unique=True) |
-| `short_description` | TextField nullable |
-| `description` | RichText/TextField nullable |
-| `image` | FK Wagtail Image, SET_NULL nullable |
-| `icon` | CharField/Text field nullable |
-| `seo_title` | CharField(70) nullable |
-| `seo_description` | CharField(170) nullable |
-| `sort_order` | PositiveIntegerField(default=0) |
-| `is_active` | BooleanField(default=True) |
-| `created_at` | DateTimeField |
-| `updated_at` | DateTimeField |
-
-Ordering:
-
-```text
-sort_order, name
-```
-
-## 11.2 `Service`
-
-الوحدة التجارية الفعلية التي يطلبها العميل.
-
-| الحقل | النوع | الملاحظات |
-|---|---|---|
-| `id` | UUIDField PK | |
-| `category` | FK ServiceCategory, PROTECT | required |
-| `name` | CharField(220) | |
-| `slug` | SlugField(unique=True) | |
-| `short_description` | TextField | |
-| `description` | RichTextField/TextField | |
-| `price_type` | choices | FIXED / STARTING_FROM / QUOTE / FREE |
-| `price` | DecimalField(12,2) | nullable حسب price_type |
-| `currency` | CharField(3) | default `SAR` |
-| `delivery_time` | CharField(120) | nullable |
-| `scope` | RichText/StreamField | nullable |
-| `exclusions` | RichText/StreamField | nullable |
-| `deliverables` | StreamField/JSON structured | nullable |
-| `requirements` | StreamField/JSON structured | nullable |
-| `process_steps` | StreamField/JSON structured | nullable |
-| `revision_policy` | RichTextField | nullable |
-| `faq` | StreamField | nullable |
-| `featured_image` | FK Wagtail Image, SET_NULL | nullable |
-| `gallery` | StreamField | nullable |
-| `related_services` | M2M self | blank, symmetrical=False |
-| `action_type` | choices | WHATSAPP / REQUEST_QUOTE / INTERNAL_CHECKOUT / EXTERNAL_CHECKOUT / DISABLED |
-| `action_url` | URLField | nullable |
-| `is_featured` | BooleanField | default False |
-| `is_active` | BooleanField | default True |
-| `sort_order` | PositiveIntegerField | default 0 |
-| `seo_title` | CharField(70) | nullable |
-| `seo_description` | CharField(170) | nullable |
-| `created_at` | DateTimeField | |
-| `updated_at` | DateTimeField | |
-
-Validation:
-
-- `FIXED` و`STARTING_FROM` يتطلبان `price`.
-- `QUOTE` و`FREE` يسمحان بـ`price = NULL`.
-- `EXTERNAL_CHECKOUT` يتطلب `action_url`.
-- `INTERNAL_CHECKOUT` موجود كحالة future-ready فقط ولا يتم تشغيله قبل commerce.
-
-**لا توجد Models تجارية بين ServiceCategory وService.**
-
----
-
-# 12. `sales` — الاستفسارات وفرص البيع والعروض
-
-## 12.1 `Inquiry`
-
-أول تفاعل تجاري حقيقي.
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `contact` | FK Contact, PROTECT |
-| `service` | FK Service, SET_NULL nullable |
-| `store` | FK Store, SET_NULL nullable |
-| `inquiry_type` | SERVICE / CONSULTATION / QUOTE / GENERAL |
-| `channel` | FORM / WHATSAPP / EMAIL / PHONE / MANUAL |
-| `message` | TextField |
-| `requirements_data` | JSONField default dict |
-| `source` | CharField(120) nullable |
-| `status` | NEW / REVIEWING / RESPONDED / CONVERTED / CLOSED / SPAM |
-| `assigned_to` | FK User, SET_NULL nullable |
-| `created_at` | DateTimeField indexed |
-| `updated_at` | DateTimeField |
-
-Index:
-
-```text
-(status, assigned_to, created_at)
-(contact, created_at)
-```
-
-## 12.2 `Opportunity`
-
-فرصة البيع الفعلية داخل Pipeline.
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `contact` | FK Contact, PROTECT |
-| `organization` | FK Organization, SET_NULL nullable |
-| `store` | FK Store, SET_NULL nullable |
-| `inquiry` | OneToOne Inquiry, SET_NULL nullable |
-| `service` | FK Service, SET_NULL nullable |
-| `title` | CharField(220) |
-| `stage` | NEW / CONTACTED / QUALIFIED / QUOTE_SENT / NEGOTIATION / WON / LOST |
-| `estimated_value` | DecimalField(12,2) nullable |
-| `currency` | CharField(3), default SAR |
-| `assigned_to` | FK User, SET_NULL nullable |
-| `expected_close_date` | DateField nullable |
-| `lost_reason` | TextField nullable |
-| `created_at` | DateTimeField |
-| `updated_at` | DateTimeField |
-| `closed_at` | DateTimeField nullable |
-
-Indexes:
-
-```text
-(stage, assigned_to)
-(contact, stage)
-(expected_close_date)
-```
-
-## 12.3 `FollowUpTask`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `opportunity` | FK Opportunity, CASCADE |
-| `contact` | FK Contact, SET_NULL nullable |
-| `assigned_to` | FK User, PROTECT |
-| `title` | CharField(220) |
-| `description` | TextField nullable |
-| `task_type` | CALL / WHATSAPP / EMAIL / MEETING / REVIEW / OTHER |
-| `status` | OPEN / COMPLETED / CANCELLED |
-| `priority` | LOW / NORMAL / HIGH |
-| `due_at` | DateTimeField indexed |
-| `completed_at` | DateTimeField nullable |
-| `created_at` | DateTimeField |
-
-## 12.4 `Quote`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `quote_number` | CharField(unique=True) |
-| `public_token` | UUIDField(unique=True) | رابط عرض آمن للعميل عند الحاجة |
-| `opportunity` | FK Opportunity, PROTECT |
-| `contact` | FK Contact, PROTECT |
-| `organization` | FK Organization, SET_NULL nullable |
-| `status` | DRAFT / SENT / VIEWED / ACCEPTED / REJECTED / EXPIRED / CANCELLED |
-| `currency` | CharField(3), default SAR |
-| `subtotal` | DecimalField(12,2) |
-| `discount_total` | DecimalField(12,2) |
-| `tax_total` | DecimalField(12,2) |
-| `grand_total` | DecimalField(12,2) |
-| `valid_until` | DateField nullable |
-| `notes` | TextField nullable |
-| `terms` | TextField nullable |
-| `sent_at` | DateTimeField nullable |
-| `accepted_at` | DateTimeField nullable |
-| `rejected_at` | DateTimeField nullable |
-| `created_by` | FK User, PROTECT |
-| `created_at` | DateTimeField |
-| `updated_at` | DateTimeField |
-
-الأرقام المالية يعاد حسابها من QuoteItems داخل service layer، ولا تعتمد على قيم يرسلها المتصفح.
-
-## 12.5 `QuoteItem`
-
-يحفظ **snapshot مالي وتاريخي** مستقلًا عن السعر الحالي للخدمة.
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `quote` | FK Quote, CASCADE |
-| `service` | FK Service, SET_NULL nullable |
-| `service_name_snapshot` | CharField(220) |
-| `description_snapshot` | TextField nullable |
-| `quantity` | DecimalField(10,2), default 1 |
-| `unit_price` | DecimalField(12,2) |
-| `discount_total` | DecimalField(12,2), default 0 |
-| `tax_total` | DecimalField(12,2), default 0 |
-| `total` | DecimalField(12,2) |
-| `sort_order` | PositiveIntegerField(default=0) |
-
-تغيير سعر Service لاحقًا **لا يغير Quote قديمًا**.
-
----
-
-# 13. `customer_portal` — بوابة العميل
-
-## 13.1 `SavedService`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `contact` | FK Contact, CASCADE |
-| `service` | FK Service, CASCADE |
-| `created_at` | DateTimeField |
-
-Constraint:
-
-```text
-UNIQUE(contact, service)
-```
-
-## 13.2 `CustomerPreference`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `contact` | OneToOne Contact, CASCADE |
-| `default_store` | FK Store, SET_NULL nullable |
-| `language` | ar / en |
-| `timezone` | CharField(64) |
-| `portal_preferences` | JSONField default dict |
-| `created_at` | DateTimeField |
-| `updated_at` | DateTimeField |
-
-لا توضع الموافقات التسويقية هنا؛ مكانها `ConsentRecord`.
-
-## 13.3 واجهات Portal في V1
-
-```text
-/account/
-├── overview/
-├── saved-services/
-├── profile/
-├── stores/
-├── communication-preferences/
-└── security/
-```
-
-بعد تشغيل المشاريع:
-
-```text
-├── inquiries/
-├── quotes/
-├── projects/
-├── files/
-├── approvals/
-└── support/
-```
-
-لا نظهر أقسامًا فارغة قبل تشغيلها.
-
----
-
-# 14. `projects` — تنفيذ العمل بعد البيع
-
-## 14.1 `Project`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `project_number` | CharField(unique=True) |
-| `quote` | FK Quote, SET_NULL nullable |
-| `contact` | FK Contact, PROTECT |
-| `organization` | FK Organization, SET_NULL nullable |
-| `store` | FK Store, SET_NULL nullable |
-| `name` | CharField(250) |
-| `description` | TextField nullable |
-| `status` | PLANNING / WAITING_CLIENT / IN_PROGRESS / REVIEW / REVISION / COMPLETED / ON_HOLD / CANCELLED |
-| `progress_percentage` | PositiveSmallIntegerField 0..100 |
-| `manager` | FK User, SET_NULL nullable |
-| `start_date` | DateField nullable |
-| `due_date` | DateField nullable |
-| `completed_at` | DateTimeField nullable |
-| `created_at` | DateTimeField |
-| `updated_at` | DateTimeField |
-
-Indexes:
-
-```text
-(status, manager)
-(contact, status)
-(due_date, status)
-```
-
-## 14.2 `ProjectStage`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `project` | FK Project, CASCADE |
-| `name` | CharField(220) |
-| `description` | TextField nullable |
-| `status` | PENDING / ACTIVE / COMPLETED / SKIPPED |
-| `sort_order` | PositiveIntegerField |
-| `start_date` | DateField nullable |
-| `due_date` | DateField nullable |
-| `completed_at` | DateTimeField nullable |
-
-## 14.3 `ProjectUpdate`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `project` | FK Project, CASCADE |
-| `stage` | FK ProjectStage, SET_NULL nullable |
-| `author` | FK User, PROTECT |
-| `title` | CharField(220) |
-| `body` | TextField/RichTextField |
-| `visibility` | INTERNAL / CUSTOMER |
-| `created_at` | DateTimeField indexed |
-
-`INTERNAL` لا يظهر للعميل نهائيًا.
-
-## 14.4 `ProjectFile`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `project` | FK Project, CASCADE |
-| `uploaded_by` | FK User, SET_NULL nullable |
-| `file` | FileField/S3-backed |
-| `name` | CharField(255) |
-| `original_name` | CharField(255) nullable |
-| `file_type` | CharField(100) nullable |
-| `file_size` | PositiveBigIntegerField nullable |
-| `visibility` | INTERNAL / CUSTOMER |
-| `category` | REQUIREMENT / DESIGN / DELIVERABLE / CONTRACT / REFERENCE / OTHER |
-| `created_at` | DateTimeField |
-
-## 14.5 `Approval`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `project` | FK Project, CASCADE |
-| `title` | CharField(220) |
-| `description` | TextField nullable |
-| `requested_by` | FK User, PROTECT |
-| `requested_from_contact` | FK Contact, PROTECT |
-| `status` | PENDING / APPROVED / CHANGES_REQUESTED / REJECTED |
-| `requested_at` | DateTimeField |
-| `responded_at` | DateTimeField nullable |
-| `response_note` | TextField nullable |
-
----
-
-# 15. `support` — التذاكر والدعم
-
-## 15.1 `SupportTicket`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `ticket_number` | CharField(unique=True) |
-| `contact` | FK Contact, PROTECT |
-| `project` | FK Project, SET_NULL nullable |
-| `subject` | CharField(250) |
-| `description` | TextField |
-| `priority` | LOW / NORMAL / HIGH / URGENT |
-| `status` | OPEN / IN_PROGRESS / WAITING_CUSTOMER / RESOLVED / CLOSED |
-| `assigned_to` | FK User, SET_NULL nullable |
-| `created_at` | DateTimeField indexed |
-| `updated_at` | DateTimeField |
-| `closed_at` | DateTimeField nullable |
-
-## 15.2 `TicketMessage`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `ticket` | FK SupportTicket, CASCADE |
-| `sender_user` | FK User, SET_NULL nullable |
-| `sender_contact` | FK Contact, SET_NULL nullable |
-| `body` | TextField |
-| `attachment` | FileField nullable |
-| `is_internal` | BooleanField(default=False) |
-| `created_at` | DateTimeField indexed |
-
-`is_internal=True` لا يظهر للعميل.
-
----
-
-# 16. `marketing` — الحملات والإسناد
-
-## 16.1 `Campaign`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `name` | CharField(220) |
-| `channel` | ORGANIC / PAID_SEARCH / SOCIAL / EMAIL / WHATSAPP / REFERRAL / PARTNER / OTHER |
-| `status` | DRAFT / ACTIVE / PAUSED / COMPLETED |
-| `start_date` | DateField nullable |
-| `end_date` | DateField nullable |
-| `utm_source` | CharField(120) nullable |
-| `utm_medium` | CharField(120) nullable |
-| `utm_campaign` | CharField(180) nullable |
-| `budget` | DecimalField(12,2) nullable |
-| `notes` | TextField nullable |
-| `created_at` | DateTimeField |
-| `updated_at` | DateTimeField |
-
-## 16.2 `AttributionTouch`
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `campaign` | FK Campaign, SET_NULL nullable |
-| `contact` | FK Contact, SET_NULL nullable |
-| `anonymous_session_id` | CharField/UUID nullable |
-| `touch_type` | FIRST_TOUCH / TOUCH / CONVERSION_TOUCH |
-| `source` | CharField(120) nullable |
-| `medium` | CharField(120) nullable |
-| `campaign_name` | CharField(180) nullable |
-| `landing_page` | TextField nullable |
-| `referrer` | TextField nullable |
-| `occurred_at` | DateTimeField indexed |
-
-يسمح لاحقًا بفهم رحلة مثل:
-
-```text
-Google → Instagram → Direct → Inquiry
-```
-
----
-
-# 17. `analytics` — أحداث الاستخدام والتحويل
-
-## 17.1 `AnalyticsEvent`
-
-مختلف تمامًا عن `ActivityEvent`.
-
-| الحقل | النوع |
-|---|---|
-| `id` | UUIDField PK |
-| `anonymous_session_id` | CharField/UUID nullable, indexed |
-| `user` | FK User, SET_NULL nullable |
-| `contact` | FK Contact, SET_NULL nullable |
-| `event_name` | CharField(120), indexed |
-| `service` | FK Service, SET_NULL nullable |
-| `page_path` | TextField nullable |
-| `utm_source` | CharField(120) nullable |
-| `utm_medium` | CharField(120) nullable |
-| `utm_campaign` | CharField(180) nullable |
-| `referrer` | TextField nullable |
-| `metadata` | JSONField default dict |
-| `occurred_at` | DateTimeField indexed |
-
-أحداث أساسية:
-
-```text
-page_view
-service_view
-whatsapp_click
-inquiry_start
-inquiry_submit
-quote_view
-signup_start
-signup_complete
 tharaa_demo_click
 tharaa_marketplace_click
-saved_service
+tharaa_related_service_click
 ```
 
-لا تستخدم AnalyticsEvent كـCRM record.
+تسجل في `AnalyticsEvent`.
 
----
-
-# 18. `content` — صفحات Wagtail العامة
-
-هذه صفحات تحريرية. لا تتحول إلى Business Domain Models.
-
-## 18.1 `HomePage`
-
-الحقول الأساسية المتوقعة:
-
-- `hero_eyebrow`
-- `hero_title`
-- `hero_description`
-- `hero_primary_cta_label`
-- `hero_primary_cta_url`
-- `hero_secondary_cta_label`
-- `hero_secondary_cta_url`
-- `hero_media`
-- `body: StreamField`
-- أقسام الخدمات/الحلول/ثراء/الأعمال/المقالات عبر blocks أو علاقات واضحة.
-- Wagtail SEO fields.
-
-## 18.2 `SolutionPage`
-
-تمثل صفحات تبدأ من مشكلة/هدف العميل، وليست Service.
-
-- `intro`
-- `problem_statement`
-- `body: StreamField`
-- `related_services` علاقات إلى Service.
-- `related_case_studies` عند الحاجة.
-- CTA.
-- SEO.
-
-## 18.3 `PlatformPage`
-
-أمثلة:
+## 8.5 صفحة المقال `ArticlePage`
 
 ```text
-/platforms/salla/
-/platforms/zid/
-/platforms/shopify/
-/platforms/wordpress/
+ArticlePage
+├── title
+├── excerpt
+├── cover_image
+├── author/display_author
+├── published_at
+├── categories/tags
+├── body
+├── related_articles
+├── related_services
+├── CTA
+└── SEO
 ```
 
-الحقول:
+## 8.6 CaseStudyPage / PortfolioPage
 
-- `platform_key`
-- `intro`
-- `body`
-- `related_services`
-- `related_articles`
-- `related_case_studies`
-- CTA.
-- SEO.
+```text
+CaseStudyPage
+├── client_name
+├── title
+├── challenge
+├── solution
+├── scope
+├── platform
+├── services_used
+├── media/gallery
+├── verified_results
+├── testimonial optional
+├── CTA
+└── SEO
+```
 
-لا تنشئ نسخًا من Service لكل منصة دون حاجة حقيقية.
+لا نعرض نتائج أو أرقامًا غير مثبتة.
 
-## 18.4 `TharaaPage`
+## 8.7 LegalPage
 
-**صفحة عرض فقط**.
-
-الحقول المتوقعة:
-
-- `eyebrow`
-- `headline`
-- `short_description`
-- `long_description/body`
-- `marketplace_url`
-- `demo_url`
-- `displayed_price_label` — نص عرض فقط، وليس سعر تجارة داخلي.
-- `hero_media`
-- `features: StreamField`
-- `screenshots/gallery: StreamField`
-- `suitable_sectors: StreamField`
-- `comparison/value sections: StreamField`
-- `faq: StreamField`
-- `guide_url` أو علاقة إلى صفحة دليل.
-- `changelog_content` إذا أريد عرضه تحريريًا.
-- `related_services` علاقات إلى Service.
-- CTA للمعاينة والشراء الخارجي.
-- SEO.
-
-لا توجد جداول Product أو License أو Inventory لهذه الصفحة.
-
-## 18.5 `ArticlePage`
-
-- `intro`
-- `cover_image`
-- `body: StreamField`
-- `author`/editorial attribution.
-- `category/tags` حسب حاجة المحتوى.
-- `related_services` اختياري.
-- `related_articles` اختياري.
-- SEO + Wagtail publishing workflow.
-
-## 18.6 `CaseStudyPage`
-
-- `client_name` (يمكن إخفاؤه إذا تطلبت السرية).
-- `industry`
-- `platform`
-- `challenge`
-- `solution`
-- `results`
-- `cover_image`
-- `gallery/body`
-- `related_services`
-- CTA.
-
-لا نعرض نتائج أو أرقام غير مثبتة.
-
-## 18.7 `PortfolioPage`
-
-- عنوان المشروع.
-- وصف مختصر.
-- العميل/القطاع عند السماح.
-- المنصة.
-- الصور.
-- الخدمات المرتبطة.
-- رابط خارجي اختياري.
-- body/تفاصيل التنفيذ.
-
-## 18.8 `AboutPage`
-
-- نبذة ابتكار تك.
-- الرؤية.
-- الرسالة.
-- الوعد.
-- منهجية Build / Brand / Connect / Grow.
-- القيم.
-- CTA.
-
-## 18.9 `LandingPage`
-
-صفحة مرنة للحملات والعروض والاختبارات، مع `StreamField` وUTM-ready CTA tracking.
-
-## 18.10 `LegalPage`
-
-- نوع الوثيقة: Privacy / Terms / Cookies / Other.
-- body.
-- version/effective date عند الحاجة.
-- تاريخ آخر تحديث.
+```text
+LegalPage
+├── title
+├── effective_date
+├── last_updated
+├── body
+└── SEO/noindex control when appropriate
+```
 
 ---
 
-# 19. `integrations` — طبقة التكاملات الخارجية
+# 9. صفحات الخدمات
 
-التكاملات يجب أن تكون Adapters واضحة ولا يتسرب منطق API الخارجي إلى باقي المشروع.
+الخدمات Business Domain وليست Wagtail Page Tree.
 
-## 19.1 WhatsApp
+## 9.1 ServiceCategory
 
-V1:
+```text
+ServiceCategory
+├── id                  UUIDField PK
+├── name                CharField
+├── slug                SlugField unique
+├── short_description   TextField blank
+├── description         RichText/structured content blank
+├── icon                Image/File reference blank
+├── image               Image reference blank
+├── seo_title           CharField blank
+├── seo_description     TextField blank
+├── sort_order          PositiveIntegerField default 0
+├── is_active           BooleanField default True
+├── created_at          DateTimeField auto_now_add
+└── updated_at          DateTimeField auto_now
+```
 
-- توليد رابط واتساب prefilled.
-- تسجيل `whatsapp_click` في Analytics.
-- إضافة reference/session metadata قدر الإمكان دون بيانات حساسة في الرابط.
+Indexes:
 
-Future WhatsApp Business API:
+- `slug` unique.
+- `(is_active, sort_order)`.
 
-- Webhook receiver موثق.
-- التحقق من signature.
-- idempotency.
-- إنشاء/تحديث Inquiry فقط عند وصول رسالة فعلية قابلة للإثبات.
-- retry queue عبر Celery عند الحاجة.
+## 9.2 Service
 
-## 19.2 Email
+```text
+Service
+├── id                    UUIDField PK
+├── category              FK ServiceCategory PROTECT
+├── name                  CharField
+├── slug                  SlugField unique
+├── short_description     TextField
+├── description           RichText/StreamField
+├── price_type            CharField choices
+├── price                 DecimalField nullable
+├── currency              CharField default SAR
+├── delivery_time         CharField blank
+├── scope                 structured content
+├── exclusions            structured content
+├── deliverables          structured content
+├── requirements          structured content
+├── process               structured content
+├── revision_policy       structured content
+├── faq                   structured content
+├── featured_image        image nullable
+├── gallery               structured media blank
+├── related_services      M2M self blank
+├── action_type           CharField choices
+├── action_url            URLField blank
+├── is_featured           BooleanField default False
+├── is_active             BooleanField default True
+├── sort_order            PositiveIntegerField default 0
+├── seo_title             CharField blank
+├── seo_description       TextField blank
+├── social_image          image nullable
+├── created_at            DateTimeField auto_now_add
+└── updated_at            DateTimeField auto_now
+```
 
-يستخدم لـ:
+`price_type`:
 
-- التحقق من الحساب.
-- استعادة كلمة المرور.
-- إشعارات الطلبات/الاستفسارات.
-- إرسال عروض الأسعار.
-- تحديثات المشاريع.
-- الدعم.
+```text
+FIXED
+STARTING_FROM
+QUOTE
+FREE
+```
 
-التسويق عبر البريد يعتمد على Consent مستقل، ولا نخلطه مع transactional email.
+`action_type`:
 
-## 19.3 Salla
+```text
+WHATSAPP
+REQUEST_QUOTE
+INTERNAL_CHECKOUT   # future-ready; لا يستخدم قبل التجارة
+EXTERNAL_CHECKOUT
+DISABLED
+```
 
-V1 لا يحتاج تكاملًا عميقًا بالضرورة.
+صفحة الخدمة تعرض:
 
-مستقبلًا يمكن إضافة:
+1. النتيجة/الوعد.
+2. الوصف المختصر.
+3. السعر ونوعه.
+4. لمن تناسب.
+5. المخرجات.
+6. نطاق العمل.
+7. ما لا يشمله.
+8. المتطلبات.
+9. مدة التنفيذ.
+10. مراحل التنفيذ.
+11. سياسة التعديلات.
+12. أعمال/حالات مرتبطة عند توفرها.
+13. FAQ.
+14. خدمات مرتبطة.
+15. CTA واضح.
 
-- Store metadata sync بموافقة العميل.
-- Apps/API integration.
-- Webhooks.
-- Theme/store references.
-
-لا نربط الـCRM مباشرة ببنية سلة الداخلية؛ نستخدم adapter/service boundary.
+لا توجد Packages/Add-ons كطبقة تجارية مستقلة.
 
 ---
 
-# 20. العلاقات الأساسية — Cardinality
+# 10. Accounts
 
-| العلاقة | النوع |
-|---|---|
-| User ↔ Contact | 1 : 0..1 |
-| User ↔ StaffProfile | 1 : 0..1 |
-| Contact ↔ Organization | M:N عبر OrganizationContact |
-| Contact → Store | 1:N |
-| Organization → Store | 1:N |
-| ServiceCategory → Service | 1:N |
-| Contact → Inquiry | 1:N |
-| Inquiry → Opportunity | 0..1 : 0..1 |
-| Contact → Opportunity | 1:N |
-| Service → Opportunity | 1:N nullable |
-| Opportunity → FollowUpTask | 1:N |
-| Opportunity → Quote | 1:N |
-| Quote → QuoteItem | 1:N |
-| Service → QuoteItem | 1:N nullable |
-| Quote → Project | 1:N possible |
-| Contact → Project | 1:N |
-| Project → ProjectStage | 1:N |
-| Project → ProjectUpdate | 1:N |
-| Project → ProjectFile | 1:N |
-| Project → Approval | 1:N |
-| Contact → SupportTicket | 1:N |
-| SupportTicket → TicketMessage | 1:N |
-| Contact ↔ Service | M:N عبر SavedService |
-| Contact → ConsentRecord | 1:N |
-| Contact → ActivityEvent | 1:N |
-| Campaign → AttributionTouch | 1:N |
-| Contact → AttributionTouch | 1:N nullable |
+## 10.1 User
+
+هوية المصادقة فقط.
+
+```text
+User
+├── id                  UUIDField PK
+├── email               EmailField unique
+├── password            Django hash
+├── first_name          CharField blank
+├── last_name           CharField blank
+├── is_active           BooleanField
+├── is_staff            BooleanField
+├── is_superuser        BooleanField
+├── email_verified_at   DateTimeField nullable
+├── last_login          DateTimeField nullable
+└── date_joined         DateTimeField
+```
+
+- `USERNAME_FIELD = email`.
+- لا username تقليدي.
+
+## 10.2 StaffProfile
+
+```text
+StaffProfile
+├── id           UUIDField PK
+├── user         OneToOne User CASCADE
+├── job_title    CharField blank
+├── department   CharField blank
+├── phone        CharField blank
+├── avatar       ImageField blank
+├── status       CharField choices
+├── created_at   DateTimeField
+└── updated_at   DateTimeField
+```
+
+الأدوار الأساسية تعتمد على Django Groups + Permissions.
 
 ---
 
-# 21. Customer 360 داخل لوحة التحكم
+# 11. CRM
 
-صفحة العميل يجب أن تجمع في مكان واحد:
+## 11.1 Contact
+
+الشخص داخل CRM سواء لديه حساب أم لا.
 
 ```text
 Contact
-├── Identity & contact data
-├── Account link إن وجد
-├── Organizations
-├── Stores
-├── Lifecycle
-├── Owner
-├── Inquiries
-├── Opportunities
-├── Quotes
-├── Projects
-├── Support tickets
-├── Saved services
-├── Attribution
-├── Consent history
-├── Activity timeline
-└── Internal notes
+├── id                   UUIDField PK
+├── user                 OneToOne User SET_NULL nullable unique
+├── full_name            CharField
+├── email                EmailField blank/indexed
+├── phone                CharField blank/indexed
+├── lifecycle_stage      CharField choices/indexed
+├── status               CharField choices/indexed
+├── preferred_language   CharField default ar
+├── owner                FK User SET_NULL nullable
+├── first_source         CharField blank
+├── first_contact_at     DateTimeField nullable
+├── last_activity_at     DateTimeField nullable/indexed
+├── created_at           DateTimeField
+└── updated_at           DateTimeField
 ```
 
-لا يحتاج الموظف للتنقل بين أنظمة منفصلة لفهم العميل.
-
----
-
-# 22. مراحل الحالة منفصلة
-
-## Account status
-
-```text
-Guest / No User
-Registered
-Verified
-Disabled
-```
-
-## CRM lifecycle
+Lifecycle:
 
 ```text
 LEAD
@@ -1354,112 +886,760 @@ REPEAT_CUSTOMER
 INACTIVE
 ```
 
-## Opportunity pipeline
+## 11.2 Organization
+
+```text
+Organization
+├── id          UUIDField PK
+├── name        CharField indexed
+├── legal_name  CharField blank
+├── website     URLField blank
+├── industry    CharField blank
+├── status      CharField choices
+├── created_at  DateTimeField
+└── updated_at  DateTimeField
+```
+
+## 11.3 OrganizationContact
+
+```text
+OrganizationContact
+├── id              UUIDField PK
+├── organization    FK Organization CASCADE
+├── contact         FK Contact CASCADE
+├── role_title      CharField blank
+├── is_primary      BooleanField default False
+└── created_at      DateTimeField
+```
+
+Unique constraint: `(organization, contact)`.
+
+## 11.4 Store
+
+```text
+Store
+├── id                   UUIDField PK
+├── primary_contact      FK Contact SET_NULL nullable
+├── organization         FK Organization SET_NULL nullable
+├── name                 CharField
+├── url                  URLField
+├── platform             CharField choices/indexed
+├── external_store_id    CharField blank
+├── status               CharField choices
+├── notes                TextField blank
+├── created_at           DateTimeField
+└── updated_at           DateTimeField
+```
+
+Platforms:
+
+```text
+SALLA
+ZID
+SHOPIFY
+WOOCOMMERCE
+WORDPRESS
+CUSTOM
+OTHER
+```
+
+## 11.5 ConsentRecord
+
+سجل Append-only للموافقات.
+
+```text
+ConsentRecord
+├── id              UUIDField PK
+├── contact         FK Contact CASCADE
+├── channel         CharField choices/indexed
+├── purpose         CharField
+├── status          CharField choices/indexed
+├── source          CharField
+├── policy_version  CharField
+├── granted_at      DateTimeField nullable
+├── withdrawn_at    DateTimeField nullable
+├── ip_address      GenericIPAddressField nullable
+├── user_agent      TextField blank
+└── created_at      DateTimeField
+```
+
+Channels:
+
+```text
+EMAIL
+WHATSAPP
+SMS
+```
+
+Status:
+
+```text
+GRANTED
+WITHDRAWN
+```
+
+## 11.6 ActivityEvent
+
+Timeline تشغيلي للـCRM وليس Web Analytics.
+
+```text
+ActivityEvent
+├── id              UUIDField PK
+├── contact         FK Contact CASCADE
+├── actor_user      FK User SET_NULL nullable
+├── event_type      CharField indexed
+├── reference_type  CharField blank
+├── reference_id    UUID/Char blank
+├── title           CharField
+├── description     TextField blank
+├── metadata        JSONField default dict
+└── created_at      DateTimeField indexed
+```
+
+---
+
+# 12. Sales
+
+## 12.1 Inquiry
+
+أول تفاعل تجاري حقيقي.
+
+```text
+Inquiry
+├── id                 UUIDField PK
+├── contact            FK Contact CASCADE
+├── service            FK Service SET_NULL nullable
+├── store              FK Store SET_NULL nullable
+├── inquiry_type       CharField choices
+├── message            TextField
+├── requirements_data  JSONField default dict
+├── source             CharField blank/indexed
+├── status             CharField choices/indexed
+├── assigned_to        FK User SET_NULL nullable
+├── created_at         DateTimeField indexed
+└── updated_at         DateTimeField
+```
+
+Types:
+
+```text
+SERVICE
+CONSULTATION
+QUOTE
+GENERAL
+```
+
+Status:
 
 ```text
 NEW
-  ↓
-CONTACTED
-  ↓
-QUALIFIED
-  ↓
-QUOTE_SENT
-  ↓
-NEGOTIATION
-  ↓
-WON
+REVIEWING
+RESPONDED
+CONVERTED
+CLOSED
+SPAM
 ```
 
-أو:
+## 12.2 Opportunity
 
 ```text
+Opportunity
+├── id                    UUIDField PK
+├── contact               FK Contact CASCADE
+├── organization          FK Organization SET_NULL nullable
+├── store                 FK Store SET_NULL nullable
+├── inquiry               FK Inquiry SET_NULL nullable
+├── service               FK Service SET_NULL nullable
+├── title                 CharField
+├── stage                 CharField choices/indexed
+├── estimated_value       DecimalField nullable
+├── currency              CharField default SAR
+├── assigned_to           FK User SET_NULL nullable
+├── expected_close_date   DateField nullable
+├── lost_reason           TextField blank
+├── created_at            DateTimeField
+├── updated_at            DateTimeField
+└── closed_at             DateTimeField nullable
+```
+
+Pipeline:
+
+```text
+NEW
+CONTACTED
+QUALIFIED
+QUOTE_SENT
+NEGOTIATION
+WON
 LOST
 ```
 
-لا نستخدم `REGISTERED` كـCRM lifecycle stage.
-
----
-
-# 23. رحلة العميل بدون حساب
+## 12.3 FollowUpTask
 
 ```text
-Visitor
-  ↓
-Service Page
-  ↓
-WhatsApp Click / Inquiry Form
-  ↓
-Analytics + Real Inquiry
-  ↓
-Contact
-  ↓
-Opportunity
-  ↓
+FollowUpTask
+├── id              UUIDField PK
+├── opportunity     FK Opportunity CASCADE
+├── contact         FK Contact SET_NULL nullable
+├── assigned_to     FK User SET_NULL nullable
+├── title           CharField
+├── description     TextField blank
+├── task_type       CharField choices
+├── status          CharField choices/indexed
+├── due_at          DateTimeField indexed
+├── completed_at    DateTimeField nullable
+└── created_at      DateTimeField
+```
+
+## 12.4 Quote
+
+```text
 Quote
-  ↓
+├── id                UUIDField PK
+├── quote_number      CharField unique
+├── opportunity       FK Opportunity CASCADE
+├── contact           FK Contact PROTECT
+├── organization      FK Organization SET_NULL nullable
+├── status            CharField choices/indexed
+├── currency          CharField default SAR
+├── subtotal          DecimalField
+├── discount_total    DecimalField default 0
+├── tax_total         DecimalField default 0
+├── grand_total       DecimalField
+├── valid_until       DateField nullable
+├── notes             TextField blank
+├── terms             TextField blank
+├── sent_at           DateTimeField nullable
+├── accepted_at       DateTimeField nullable
+├── rejected_at       DateTimeField nullable
+├── created_by        FK User PROTECT
+├── created_at        DateTimeField
+└── updated_at        DateTimeField
+```
+
+Status:
+
+```text
+DRAFT
+SENT
+VIEWED
+ACCEPTED
+REJECTED
+EXPIRED
+CANCELLED
+```
+
+## 12.5 QuoteItem
+
+Financial snapshot.
+
+```text
+QuoteItem
+├── id                    UUIDField PK
+├── quote                 FK Quote CASCADE
+├── service               FK Service SET_NULL nullable
+├── service_name_snapshot CharField
+├── description_snapshot  TextField blank
+├── quantity              DecimalField default 1
+├── unit_price            DecimalField
+├── discount              DecimalField default 0
+├── tax                   DecimalField default 0
+├── total                 DecimalField
+└── sort_order            PositiveIntegerField default 0
+```
+
+تغيير سعر Service لاحقًا لا يغيّر العرض القديم.
+
+---
+
+# 13. Customer Portal
+
+## 13.1 Routes
+
+```text
+/portal/
+├── overview/
+├── profile/
+├── stores/
+├── saved-services/
+├── inquiries/
+├── quotes/
+├── projects/
+│   └── <project_id>/
+├── files/
+├── approvals/
+├── support/
+│   └── <ticket_id>/
+├── preferences/
+└── security/
+```
+
+لا تُفعّل route في الواجهة قبل تشغيل ميزتها.
+
+## 13.2 SavedService
+
+```text
+SavedService
+├── id          UUIDField PK
+├── contact     FK Contact CASCADE
+├── service     FK Service CASCADE
+└── created_at  DateTimeField
+```
+
+Unique constraint: `(contact, service)`.
+
+## 13.3 CustomerPreference
+
+```text
+CustomerPreference
+├── id                  UUIDField PK
+├── contact             OneToOne Contact CASCADE
+├── default_store       FK Store SET_NULL nullable
+├── language            CharField default ar
+├── timezone            CharField default Asia/Riyadh
+├── portal_preferences  JSONField default dict
+├── created_at          DateTimeField
+└── updated_at          DateTimeField
+```
+
+Consent لا يوضع هنا؛ له `ConsentRecord` مستقل.
+
+---
+
+# 14. Projects
+
+## 14.1 Project
+
+```text
 Project
+├── id                   UUIDField PK
+├── project_number       CharField unique
+├── quote                FK Quote SET_NULL nullable
+├── contact              FK Contact PROTECT
+├── organization         FK Organization SET_NULL nullable
+├── store                FK Store SET_NULL nullable
+├── name                 CharField
+├── description          TextField blank
+├── status               CharField choices/indexed
+├── progress_percentage  PositiveSmallIntegerField default 0
+├── manager              FK User SET_NULL nullable
+├── start_date           DateField nullable
+├── due_date             DateField nullable/indexed
+├── completed_at         DateTimeField nullable
+├── created_at           DateTimeField
+└── updated_at           DateTimeField
 ```
 
-إنشاء الحساب ليس شرطًا.
-
-إذا أنشأ العميل حسابًا لاحقًا:
+Status:
 
 ```text
-Existing Contact
-      ↓
-Link User
-      ↓
-Old history remains
+PLANNING
+WAITING_CLIENT
+IN_PROGRESS
+REVIEW
+REVISION
+COMPLETED
+ON_HOLD
+CANCELLED
+```
+
+## 14.2 ProjectStage
+
+```text
+ProjectStage
+├── id            UUIDField PK
+├── project       FK Project CASCADE
+├── name          CharField
+├── description   TextField blank
+├── status        CharField choices/indexed
+├── sort_order    PositiveIntegerField
+├── start_date    DateField nullable
+├── due_date      DateField nullable
+└── completed_at  DateTimeField nullable
+```
+
+Status:
+
+```text
+PENDING
+ACTIVE
+COMPLETED
+SKIPPED
+```
+
+## 14.3 ProjectUpdate
+
+```text
+ProjectUpdate
+├── id          UUIDField PK
+├── project     FK Project CASCADE
+├── stage       FK ProjectStage SET_NULL nullable
+├── author      FK User SET_NULL nullable
+├── title       CharField
+├── body        TextField
+├── visibility  CharField choices/indexed
+└── created_at  DateTimeField indexed
+```
+
+Visibility:
+
+```text
+INTERNAL
+CUSTOMER
+```
+
+## 14.4 ProjectFile
+
+```text
+ProjectFile
+├── id           UUIDField PK
+├── project      FK Project CASCADE
+├── uploaded_by  FK User SET_NULL nullable
+├── file         FileField
+├── name         CharField
+├── file_type    CharField blank
+├── visibility   CharField choices
+├── category     CharField choices/indexed
+└── created_at   DateTimeField
+```
+
+Categories:
+
+```text
+REQUIREMENT
+DESIGN
+DELIVERABLE
+CONTRACT
+REFERENCE
+OTHER
+```
+
+## 14.5 Approval
+
+```text
+Approval
+├── id                       UUIDField PK
+├── project                  FK Project CASCADE
+├── title                    CharField
+├── description              TextField blank
+├── requested_by             FK User SET_NULL nullable
+├── requested_from_contact   FK Contact PROTECT
+├── status                   CharField choices/indexed
+├── requested_at             DateTimeField
+├── responded_at             DateTimeField nullable
+└── response_note            TextField blank
+```
+
+Status:
+
+```text
+PENDING
+APPROVED
+CHANGES_REQUESTED
+REJECTED
 ```
 
 ---
 
-# 24. رحلة العميل بالحساب
+# 15. Support
+
+## 15.1 SupportTicket
 
 ```text
-Register
-  ↓
-Verify email
-  ↓
-Contact linked/created safely
-  ↓
-Customer Portal
-  ├── Saved services
-  ├── Stores
-  ├── Profile
-  ├── Quotes
-  ├── Projects
-  ├── Files
-  ├── Approvals
-  └── Support
+SupportTicket
+├── id             UUIDField PK
+├── ticket_number  CharField unique
+├── contact        FK Contact PROTECT
+├── project        FK Project SET_NULL nullable
+├── subject        CharField
+├── description    TextField
+├── priority       CharField choices/indexed
+├── status         CharField choices/indexed
+├── assigned_to    FK User SET_NULL nullable
+├── created_at     DateTimeField indexed
+├── updated_at     DateTimeField
+└── closed_at      DateTimeField nullable
 ```
 
-التسجيل الأولي يطلب أقل قدر ممكن من البيانات، وتجمع بيانات المتجر والهاتف عند الحاجة الفعلية.
+Status:
+
+```text
+OPEN
+IN_PROGRESS
+WAITING_CUSTOMER
+RESOLVED
+CLOSED
+```
+
+## 15.2 TicketMessage
+
+```text
+TicketMessage
+├── id                 UUIDField PK
+├── ticket             FK SupportTicket CASCADE
+├── sender_user        FK User SET_NULL nullable
+├── sender_contact     FK Contact SET_NULL nullable
+├── body               TextField
+├── attachment         FileField blank
+├── is_internal        BooleanField default False
+└── created_at         DateTimeField indexed
+```
+
+يجب التحقق من أن رسالة العميل لا يمكن تعليمها `is_internal=True` من واجهة العميل.
 
 ---
 
-# 25. لوحة الموظفين `/control/`
+# 16. Marketing
 
-Wagtail هو shell واحد للعمليات.
+## 16.1 Campaign
 
 ```text
-Dashboard
+Campaign
+├── id            UUIDField PK
+├── name          CharField
+├── channel       CharField choices/indexed
+├── status        CharField choices/indexed
+├── start_date    DateField nullable
+├── end_date      DateField nullable
+├── utm_source    CharField blank
+├── utm_medium    CharField blank
+├── utm_campaign  CharField blank/indexed
+└── created_at    DateTimeField
+```
+
+## 16.2 AttributionTouch
+
+```text
+AttributionTouch
+├── id                    UUIDField PK
+├── campaign              FK Campaign SET_NULL nullable
+├── contact               FK Contact SET_NULL nullable
+├── anonymous_session_id  CharField blank/indexed
+├── touch_type            CharField choices/indexed
+├── source                CharField blank
+├── medium                CharField blank
+├── campaign_name         CharField blank
+├── landing_page          URL/Text blank
+├── referrer              URL/Text blank
+└── occurred_at           DateTimeField indexed
+```
+
+Touch types:
+
+```text
+FIRST_TOUCH
+TOUCH
+CONVERSION_TOUCH
+```
+
+---
+
+# 17. Analytics
+
+## AnalyticsEvent
+
+Web/Product analytics منفصل عن CRM ActivityEvent.
+
+```text
+AnalyticsEvent
+├── id                    UUIDField PK
+├── anonymous_session_id  CharField blank/indexed
+├── user                  FK User SET_NULL nullable
+├── contact               FK Contact SET_NULL nullable
+├── event_name            CharField indexed
+├── service               FK Service SET_NULL nullable
+├── page_path             CharField indexed
+├── utm_source            CharField blank
+├── utm_medium            CharField blank
+├── utm_campaign          CharField blank
+├── referrer              TextField blank
+├── metadata              JSONField default dict
+└── occurred_at           DateTimeField indexed
+```
+
+أمثلة Events:
+
+```text
+page_view
+service_view
+whatsapp_click
+inquiry_start
+inquiry_submit
+signup_start
+signup_complete
+quote_view
+tharaa_demo_click
+tharaa_marketplace_click
+portal_login
+```
+
+---
+
+# 18. Core Audit
+
+## AuditLog
+
+```text
+AuditLog
+├── id          UUIDField PK
+├── actor_user  FK User SET_NULL nullable
+├── action      CharField indexed
+├── object_type CharField indexed
+├── object_id   CharField indexed
+├── before_data JSONField nullable
+├── after_data  JSONField nullable
+├── ip_address  GenericIPAddressField nullable
+└── created_at  DateTimeField indexed
+```
+
+يستخدم خصوصًا في:
+
+- الأسعار.
+- الصلاحيات.
+- عروض الأسعار.
+- Opportunity stages.
+- الموافقات التسويقية.
+- حالات المشاريع.
+- العمليات المالية مستقبلًا.
+
+---
+
+# 19. Content / Wagtail
+
+`apps/content/` مسؤول عن المحتوى التحريري، لا عن Business Domain.
+
+```text
+content/
+├── models/
+│   ├── home.py
+│   ├── solutions.py
+│   ├── platforms.py
+│   ├── tharaa.py
+│   ├── articles.py
+│   ├── portfolio.py
+│   ├── case_studies.py
+│   ├── about.py
+│   ├── landing.py
+│   └── legal.py
+│
+├── blocks/
+│   ├── common.py
+│   ├── hero.py
+│   ├── media.py
+│   ├── faq.py
+│   ├── cta.py
+│   └── proof.py
+│
+├── settings.py
+├── wagtail_hooks.py
+└── templates/content/
+```
+
+نستخدم Blocks مشتركة بدل نسخ نفس تعريف القسم بين الصفحات.
+
+## Site Settings المقترحة
+
+تدار عبر Wagtail Settings:
+
+```text
+BrandSettings
+├── company_name_ar
+├── company_name_en
+├── logo_light
+├── logo_dark
+├── favicon
+├── default_social_image
+└── footer_description
+
+ContactSettings
+├── email
+├── phone
+├── whatsapp_number
+├── address
+└── business_hours
+
+SocialSettings
+├── x_url
+├── instagram_url
+├── linkedin_url
+├── youtube_url
+├── tiktok_url
+└── other links
+
+SEOSettings
+├── default_title_suffix
+├── default_description
+├── default_og_image
+└── organization_schema fields
+
+AnalyticsSettings
+├── enabled integrations flags
+└── public-safe identifiers only
+```
+
+الأسرار لا تحفظ داخل Settings العامة؛ تبقى Environment Variables.
+
+---
+
+# 20. Integrations
+
+```text
+apps/integrations/
+├── whatsapp/
+│   ├── client.py
+│   ├── services.py
+│   ├── webhooks.py
+│   └── tests/
+│
+├── email/
+│   ├── services.py
+│   ├── templates/
+│   └── tests/
+│
+├── salla/
+│   ├── client.py
+│   ├── services.py
+│   ├── webhooks.py     # only when required
+│   └── tests/
+│
+└── common/
+    ├── exceptions.py
+    └── retry.py
+```
+
+قواعد:
+
+- لا نربط Domain Models مباشرة بمكتبة مزود خارجي.
+- كل Provider خلف service/client boundary.
+- Webhooks يتم التحقق من توقيعها، idempotency، والتكرار.
+- لا Tokens في Git أو Logs.
+
+---
+
+# 21. Control Panel Information Architecture
+
+```text
+/control/
+│
+├── Dashboard
+│
+├── Services
+│   ├── Categories
+│   └── Services
 │
 ├── CRM
 │   ├── Contacts
 │   ├── Organizations
 │   ├── Stores
-│   └── Customer 360
+│   ├── Customer 360
+│   └── Activity
 │
 ├── Sales
 │   ├── Inquiries
-│   ├── Opportunities / Pipeline
-│   ├── Follow-ups
-│   └── Quotes
-│
-├── Services
-│   ├── Categories
-│   └── Services
+│   ├── Opportunities
+│   ├── Pipeline
+│   ├── Quotes
+│   └── Follow-ups
 │
 ├── Projects
 │   ├── Projects
@@ -1472,276 +1652,448 @@ Dashboard
 │   ├── Tickets
 │   └── Messages
 │
-├── Marketing
-│   ├── Campaigns
-│   ├── Attribution
-│   ├── Consents
-│   └── Segmentation views لاحقًا
-│
-├── Analytics
-│   ├── Funnel
-│   ├── Service performance
-│   ├── Source performance
-│   └── Operational metrics
-│
 ├── Content
 │   ├── Pages
 │   ├── Articles
-│   ├── Case studies
 │   ├── Portfolio
-│   ├── Tharaa page
-│   └── Legal
+│   ├── Case Studies
+│   ├── Tharaa
+│   ├── Legal
+│   └── Media
+│
+├── Marketing
+│   ├── Campaigns
+│   ├── Attribution
+│   ├── Segments (when implemented)
+│   └── Consent / preferences views
+│
+├── Analytics
+│   ├── Funnel
+│   ├── Service Performance
+│   ├── Campaign Performance
+│   └── Sources
 │
 └── System
     ├── Staff
-    ├── Groups & Permissions
+    ├── Groups
+    ├── Permissions
+    ├── Site Settings
     ├── Integrations
-    ├── Site settings
-    └── Audit log
+    └── Audit Log
 ```
 
-التنفيذ داخل Wagtail:
+## 21.1 Dashboard الرئيسية
 
-- Native Pages للمحتوى.
-- ModelViewSets للنماذج التشغيلية البسيطة.
-- Custom operational views لـDashboard، CRM 360، Pipeline، Timeline، التقارير.
+تعرض فقط مؤشرات قابلة لاتخاذ إجراء:
+
+- طلبات/استفسارات تحتاج متابعة اليوم.
+- فرص جديدة.
+- Quotes المفتوحة.
+- Active Projects.
+- Projects المتأخرة.
+- Tickets المفتوحة.
+- متوسط زمن أول رد.
+- الخدمات الأكثر طلبًا.
+- Conversion من صفحة الخدمة إلى Inquiry/WhatsApp click.
+- أفضل مصادر العملاء.
+- آخر الأنشطة المهمة.
+
+لا نملأها Charts تجميلية بلا قرار تشغيلي.
+
+## 21.2 Customer 360
+
+صفحة العميل الموحدة:
+
+```text
+Contact Summary
+├── Identity / contact info
+├── Account link/status
+├── Organization
+├── Stores
+├── Lifecycle
+├── Owner
+├── Source / attribution
+├── Interests / saved services
+├── Inquiries
+├── Opportunities
+├── Quotes
+├── Projects
+├── Support
+├── Consents
+├── Internal notes (when implemented)
+└── Activity Timeline
+```
+
+## 21.3 Sales Pipeline
+
+Custom Operational View، وليست قائمة Wagtail عادية فقط.
+
+```text
+NEW → CONTACTED → QUALIFIED → QUOTE_SENT → NEGOTIATION → WON / LOST
+```
+
+مع:
+
+- filters.
+- owner.
+- service.
+- value.
+- due follow-up.
+- source.
 
 ---
 
-# 26. أدوار الموظفين
+# 22. Frontend Design System Rules
 
-الأدوار المنطقية المستهدفة:
+الهدف: دمج الواجهة الحالية **بدون تغيير أسلوب العرض المعتمد** مع جعلها قابلة لإدارة المحتوى.
+
+## 22.1 CSS Organization
+
+```text
+static/css/
+├── tokens.css
+├── base.css
+├── utilities.css
+│
+├── components/
+│   ├── buttons.css
+│   ├── forms.css
+│   ├── cards.css
+│   ├── navigation.css
+│   ├── modal.css
+│   ├── accordion.css
+│   └── slider.css
+│
+├── pages/
+│   ├── home.css
+│   ├── services.css
+│   ├── service-detail.css
+│   ├── platform.css
+│   ├── tharaa.css
+│   ├── portfolio.css
+│   ├── article.css
+│   └── legal.css
+│
+├── portal/
+│   ├── portal.css
+│   ├── projects.css
+│   └── support.css
+│
+└── control/
+    └── control-overrides.css
+```
+
+## 22.2 JS Organization
+
+```text
+static/js/
+├── core/
+│   ├── bootstrap.js
+│   ├── analytics.js
+│   └── accessibility.js
+│
+├── components/
+│   ├── navigation.js
+│   ├── accordion.js
+│   ├── modal.js
+│   └── slider.js
+│
+├── pages/
+│   ├── services.js
+│   └── tharaa.js
+│
+├── portal/
+│   └── portal.js
+│
+└── control/
+    └── control.js
+```
+
+لا نستخدم JavaScript لتوليد محتوى يمكن أن يكون HTML server-rendered بلا سبب.
+
+## 22.3 Design Tokens
+
+`tokens.css` هو المرجع للألوان والمسافات والـradius والظلال والطباعة والـz-index.
+
+- هوية ابتكار تك الداكنة مع Cyan/Pink accents.
+- IBM Plex Sans Arabic أو الخط المعتمد للهوية.
+- استخدام CSS logical properties لدعم RTL/LTR.
+- عدم تكرار قيم design system يدويًا في كل صفحة.
+
+## 22.4 Responsive / Accessibility
+
+- Mobile-first.
+- RTL first-class.
+- Keyboard navigation.
+- Visible focus states.
+- Semantic landmarks.
+- Form labels/errors واضحة.
+- Color contrast AA على الأقل.
+- دعم `prefers-reduced-motion`.
+- الصور بأبعاد واضحة وlazy-loading عند المناسب.
+- منع layout shift بقدر الإمكان.
+
+---
+
+# 23. Navigation Architecture
+
+## Public Header
+
+الهيكل المقترح:
+
+```text
+الحلول والخدمات
+المنصات
+ثراء
+أعمالنا
+المعرفة
+عن ابتكار تك
+[ابدأ مشروعك]
+[حسابي]
+```
+
+يمكن استخدام Mega Menu للحلول والخدمات والمنصات بدل ازدحام الـHeader.
+
+## Portal Navigation
+
+```text
+نظرة عامة
+عروض الأسعار
+مشاريعي
+الملفات
+الدعم
+الخدمات المحفوظة
+بياناتي ومتجري
+تفضيلات التواصل
+الأمان
+```
+
+يظهر فقط ما تم تشغيله فعليًا.
+
+## Control Navigation
+
+حسب الهيكل الموجود في القسم 21، مع صلاحيات تخفي العناصر التي لا يملك الموظف حق الوصول إليها.
+
+---
+
+# 24. URL Ownership
+
+كل Route له Owner واضح لتجنب الفوضى:
+
+```text
+/                       → content/Wagtail
+/solutions/*            → content/Wagtail
+/platforms/*            → content/Wagtail
+/tharaa/                 → content/Wagtail
+/knowledge/*             → content/Wagtail
+/portfolio/*             → content/Wagtail
+/case-studies/*          → content/Wagtail
+/about/*                 → content/Wagtail
+/legal/*                 → content/Wagtail
+
+/services/*              → services app
+/start-project/           → sales app
+/contact/                 → sales/content presentation + Inquiry creation
+
+/accounts/*               → django-allauth/accounts app
+/portal/*                 → customer_portal app
+/control/*                → Wagtail Admin + custom operational views
+
+/webhooks/*               → integrations app, secured
+```
+
+---
+
+# 25. Data Flows
+
+## 25.1 Service Inquiry
+
+```text
+Public Service Page
+      ↓
+Inquiry Form / CTA
+      ↓
+Validate
+      ↓
+Resolve/Create Contact
+      ↓
+Create Inquiry
+      ↓
+ActivityEvent
+      ↓
+Optional Opportunity
+      ↓
+Staff Notification
+```
+
+## 25.2 WhatsApp CTA
+
+```text
+Service Page
+   ↓
+whatsapp_click
+   ↓
+AnalyticsEvent
+   ↓
+Open WhatsApp
+```
+
+لا Opportunity تلقائية من click فقط.
+
+## 25.3 Account Creation
+
+```text
+Signup
+  ↓
+User
+  ↓
+Verify email
+  ↓
+Safely match existing Contact by verified identity rules
+  ↓
+Link User ↔ Contact
+  ↓
+Portal access
+```
+
+يجب منع duplicate Contact قدر الإمكان دون دمج خاطئ للأشخاص.
+
+## 25.4 Quote → Project
+
+```text
+Opportunity
+   ↓
+Quote
+   ↓
+Accepted
+   ↓
+Project created
+   ↓
+Stages
+   ↓
+Updates / Files / Approvals
+   ↓
+Delivery
+```
+
+---
+
+# 26. Permissions / Roles
+
+أدوار مبدئية:
 
 ```text
 System Administrator
 Content Manager
-Service & Pricing Manager
+Services & Pricing Manager
 Sales / CRM
-Project Manager
-Support
+Project Manager / Support
 Marketing
-Analyst (Read-only)
+Analyst (read-only)
+Customer
 ```
-
-الصلاحيات تطبق عبر Django Groups/Permissions مع object/business checks عند الحاجة.
 
 قواعد:
 
-- العميل لا يدخل `/control/`.
-- الموظف لا يرى أو يعدل ما لا يحتاجه دوره.
-- MFA للموظفين هدف إلزامي قبل الإنتاج.
-- Audit للتغييرات الحساسة.
+- Customer لا يصل `/control/`.
+- Staff لا يرى كل شيء لمجرد `is_staff=True`؛ تستخدم Permissions.
+- تغييرات السعر والصلاحيات والـQuote والـConsent والحالات الحساسة تُسجل في AuditLog.
+- MFA للموظفين عند تجهيز الإنتاج.
+- Object-level access مهم في Portal: العميل يرى بياناته فقط.
 
 ---
 
-# 27. الخصوصية وحماية البيانات
+# 27. Database General Rules
 
-- Consent التسويقي منفصل عن إنشاء الحساب.
-- لا يتم تفعيل checkbox تسويقي مسبقًا.
-- تسجيل grant/withdrawal تاريخيًا.
-- عدم تسجيل passwords/tokens في logs.
-- تقليل البيانات التي تجمع عند التسجيل.
-- فصل internal notes عن البيانات الظاهرة للعميل.
-- دعم حذف/إخفاء/تصدير البيانات وفق السياسة القانونية المعتمدة عند الإطلاق.
-- Cookies/advertising consent يعالج ضمن آلية Consent/Cookie مستقلة عن مجرد `ConsentRecord` التسويقي إذا تم تشغيل تتبع إعلاني يحتاج ذلك.
-
----
-
-# 28. الأمن
-
-الحد الأدنى المستهدف:
-
-- CSRF protection.
-- Secure/HttpOnly/SameSite cookies حسب البيئة.
-- HTTPS only في production.
-- Secure password hashing عبر Django.
-- Email verification.
-- MFA للموظفين.
-- Rate limiting على login/forms الحساسة.
-- File upload validation.
-- منع رفع الملفات التنفيذية الخطرة.
-- S3 private ACL للمخرجات الخاصة.
-- Signed/authorized downloads للملفات الخاصة.
-- Permission checks server-side دائمًا.
-- لا نعتمد على إخفاء أزرار الواجهة كحماية.
-- Security headers.
-- Secret rotation readiness.
-- Audit trail.
+- UUID للمفاتيح الأساسية العامة ما لم يوجد ADR يغير ذلك.
+- كل FK إلى User يستخدم `settings.AUTH_USER_MODEL`.
+- `PROTECT` للبيانات التي لا يجب حذف مرجعها تاريخيًا مثل Quote contact/service category عند الحاجة.
+- `SET_NULL` للروابط الاختيارية التي يجب ألا تمنع الاحتفاظ بالسجل.
+- `CASCADE` فقط عندما يكون السجل الفرعي بلا معنى مستقل.
+- timestamps موحدة.
+- indexes للحالات، التواريخ، المالك، slug، المصادر، وأعمدة البحث المتكررة.
+- Unique constraints في قواعد البيانات، لا في Form فقط.
+- Financial values تستخدم Decimal، لا Float.
+- Structured metadata يستخدم JSONField فقط عندما لا توجد فائدة حقيقية من التطبيع.
 
 ---
 
-# 29. الفهارس والأداء
+# 28. Search Architecture
 
-نركز الفهارس على أنماط البحث الفعلية:
+## Public Search
 
-- Contact email/phone/lifecycle/owner.
-- Opportunity stage/assignee/close date.
-- FollowUpTask due date/status.
-- Quote number/status/contact.
-- Project status/manager/due date.
-- Ticket status/assignee.
-- Analytics event/time/session.
-- Activity contact/time.
+عند الحاجة:
 
-لا ننشئ indexes عشوائية لكل حقل.
+- المقالات.
+- الأعمال.
+- الخدمات.
 
-نستخدم `select_related` / `prefetch_related` في Customer 360 وDashboards لتجنب N+1.
+## Control Global Search
+
+يستهدف:
+
+- Contact name/email/phone.
+- Organization.
+- Store URL/name.
+- Inquiry ID.
+- Opportunity.
+- Quote number.
+- Project number/name.
+- Ticket number.
+
+لا نبدأ بمحرك بحث خارجي قبل أن تتجاوز PostgreSQL/Wagtail Search الاحتياج.
 
 ---
 
-# 30. Search داخل `/control/`
+# 29. Notifications
 
-الهدف لاحقًا Search موحد في:
+Notifications ليست Domain رئيسيًا مستقلًا في البداية، لكن قواعدها موحدة:
 
 ```text
-Contacts
-Organizations
-Stores
-Services
-Inquiries
-Opportunities
-Quotes
-Projects
-Tickets
+Events
+├── New Inquiry
+├── Follow-up Due
+├── Quote Sent/Accepted
+├── Project Update
+├── Approval Requested
+├── Ticket Reply
+└── Staff operational alerts
 ```
 
-البداية يمكن أن تعتمد PostgreSQL search/filters؛ لا نضيف Elasticsearch أو خدمة بحث مستقلة دون حاجة مثبتة.
-
----
-
-# 31. Dashboard مؤشرات التشغيل
-
-الصفحة الرئيسية للموظفين تعرض ما يساعد القرار، لا Charts للزينة:
-
-- Inquiries الجديدة.
-- Follow-ups المستحقة اليوم والمتأخرة.
-- Opportunities حسب المرحلة.
-- Quotes المفتوحة والمنتهية قريبًا.
-- Active projects.
-- مشاريع متأخرة.
-- متوسط زمن أول رد عند توفر البيانات.
-- الخدمات الأكثر طلبًا.
-- التحويل Service View → WhatsApp Click → Inquiry → Opportunity → Won.
-- مصادر العملاء.
-- تسجيلات الحساب الجديدة.
-- حالات Support الحرجة.
-- Content drafts التي تنتظر النشر.
-
----
-
-# 32. URL Architecture المقترحة
-
-## Public
+التوصيل يمكن أن يكون:
 
 ```text
-/
-/services/
-/services/<category-slug>/
-/services/<category-slug>/<service-slug>/
-/solutions/<slug>/
-/platforms/salla/
-/platforms/zid/
-/platforms/shopify/
-/platforms/wordpress/
-/tharaa/
-/portfolio/
-/case-studies/<slug>/
-/articles/<slug>/
-/about/
-/contact/
-/legal/<slug>/
+In-app
+Email
+WhatsApp later
 ```
 
-## Auth / Portal
-
-```text
-/accounts/login/
-/accounts/signup/
-/accounts/password/reset/
-/account/
-/account/profile/
-/account/stores/
-/account/saved-services/
-/account/quotes/
-/account/projects/
-/account/support/
-```
-
-## Staff
-
-```text
-/control/
-```
+وعند ظهور Jobs حقيقية نضيف Redis/Celery.
 
 ---
 
-# 33. إعدادات الموقع Site Settings
+# 30. Privacy / Security
 
-يفضل استخدام Wagtail Settings أو نموذج إعدادات مركزي للأشياء غير التجارية مثل:
-
-- Brand/contact info.
-- WhatsApp public number.
-- Support email.
-- Social links.
-- Default SEO metadata.
-- Company legal information.
-- Footer links.
-- Global CTA labels.
-- Maintenance flags.
-
-لا نخزن أسرار API داخل Site Settings؛ تبقى في Environment Variables/secret manager.
+- إنشاء الحساب لا يعني موافقة تسويقية.
+- Consent مستقل حسب القناة والغرض.
+- لا secrets/tokens في Git.
+- Sensitive payloads لا تكتب في Logs.
+- ملفات المشاريع خاصة افتراضيًا.
+- Signed/authorized file access في الإنتاج عند الحاجة.
+- CSRF / secure cookies / HSTS / production security settings.
+- Rate limiting للنماذج الحساسة عند الحاجة.
+- Anti-spam للـInquiry/Contact forms.
+- Audit trail للتغييرات الحساسة.
+- فصل `ActivityEvent` التشغيلي عن `AnalyticsEvent` السلوكي.
 
 ---
 
-# 34. Notifications
+# 31. Future Commerce Boundary — غير منفذ في V1
 
-لا نحتاج App ضخم في أول يوم، لكن التصميم يدعم قنوات:
-
-```text
-IN_APP
-EMAIL
-WHATSAPP   # future integration
-```
-
-أحداث مرشحة:
-
-- Inquiry received.
-- Follow-up due.
-- Quote sent/accepted/expired.
-- Project update.
-- Approval requested/responded.
-- Support reply.
-
-عند زيادة الحجم يمكن إضافة notification model وCelery، لكن لا نبنيه لمجرد التوقع.
-
----
-
-# 35. ما لا نبنيه الآن
+عندما يصبح الدفع المباشر مطلوبًا نضيف:
 
 ```text
-Shopping Cart ❌
-Inventory ❌
-Shipping ❌
-Subscriptions ❌
-Usage Credits ❌
-Marketplace ❌
-Affiliate system ❌
-Community ❌
-Mobile App ❌
-Microservices ❌
-React Admin ❌
-Product catalog for Tharaa ❌
-License system for Tharaa ❌
-```
-
----
-
-# 36. Commerce Boundary — مستقبل فقط
-
-عند تشغيل الدفع المباشر نضيف App مستقل منطقيًا:
-
-```text
-commerce/
+apps/commerce/
 ├── Order
 ├── OrderItem
 ├── Payment
@@ -1749,402 +2101,328 @@ commerce/
 └── Refund
 ```
 
-العلاقة المتوقعة:
+العلاقات المستقبلية:
 
 ```text
-Quote
-  ↓
+Quote → Order → Payment → Project
+
+أو
+
+Service → Checkout → Order → Payment → Project
+```
+
+حقول مبدئية:
+
+```text
 Order
-  ↓
+├── id
+├── order_number
+├── contact
+├── quote nullable
+├── status
+├── currency
+├── subtotal
+├── discount_total
+├── tax_total
+├── grand_total
+├── created_at
+└── updated_at
+
+OrderItem
+├── order
+├── service nullable
+├── name_snapshot
+├── description_snapshot
+├── quantity
+├── unit_price
+├── tax
+└── total
+
 Payment
-  ↓
+├── order
+├── provider
+├── provider_reference
+├── amount
+├── currency
+├── status
+├── paid_at
+└── metadata
+
 Invoice
+├── order
+├── invoice_number
+├── status
+├── issued_at
+├── due_at
+└── totals snapshot
+
+Refund
+├── payment
+├── amount
+├── reason
+├── status
+└── created_at
 ```
 
-أو شراء مباشر مستقبلًا:
-
-```text
-Service
-  ↓
-Checkout
-  ↓
-Order
-  ↓
-Payment
-  ↓
-Project
-```
-
-## 36.1 حقول مستقبلية مبدئية
-
-### `Order`
-
-- id UUID.
-- order_number unique.
-- contact.
-- quote nullable.
-- status.
-- currency.
-- subtotal/discount/tax/total.
-- created_at/updated_at.
-
-### `OrderItem`
-
-- order.
-- service nullable.
-- name/description snapshot.
-- quantity.
-- unit_price.
-- totals.
-
-### `Payment`
-
-- order.
-- provider.
-- provider_reference.
-- amount.
-- currency.
-- status.
-- paid_at.
-- raw safe metadata فقط.
-
-### `Invoice`
-
-- order.
-- invoice_number.
-- totals/tax.
-- issued_at.
-- status.
-- document/file reference.
-
-### `Refund`
-
-- payment.
-- amount.
-- reason.
-- provider_reference.
-- status.
-- created_at/completed_at.
-
-**هذه الحدود موثقة فقط ولا تنفذ في V1.**
+لا ننشئ هذا App قبل الحاجة الفعلية.
 
 ---
 
-# 37. Data Flow الأساسي
+# 32. ما لن نبنيه الآن
+
+- Service Family.
+- Service Packages.
+- Service Add-ons كطبقات تجارية.
+- Product model لثراء.
+- متجر منتجات رقمية داخلي.
+- سلة مشتريات.
+- مخزون أو شحن.
+- اشتراكات شهرية.
+- أرصدة استخدام.
+- مجتمع تجار.
+- تطبيق جوال.
+- Microservices.
+- React Admin منفصلة.
+- أدوات SaaS لا تخدم التشغيل الحالي.
+
+---
+
+# 33. Testing Strategy
+
+داخل كل App:
+
+- Model tests.
+- Service/business logic tests.
+- Permission tests.
+- Form validation tests.
+- View tests.
+
+Integration tests:
+
+- Guest inquiry → Contact → Inquiry.
+- Existing Contact → account linking.
+- Opportunity → Quote.
+- Accepted Quote → Project.
+- Customer portal object isolation.
+- Consent grant/withdrawal history.
+- WhatsApp click does not create lead.
+
+E2E browser tests المهمة:
 
 ```text
-Public Page
-   ↓
-AnalyticsEvent
-   ↓  [real business action]
-Inquiry
-   ↓
-Contact / existing Contact match
-   ↓
-Opportunity
-   ↓
-Follow-up
-   ↓
-Quote + QuoteItems snapshots
-   ↓
-Accepted
-   ↓
-Project
-   ↓
-Stages / Updates / Files / Approvals
-   ↓
-Support
-   ↓
-Repeat opportunity / retention
+Public
+├── navigation
+├── service browsing
+├── inquiry form
+├── tharaa external CTAs
+└── responsive / RTL
+
+Portal
+├── auth
+├── quote visibility
+├── project visibility
+├── file permissions
+└── support
+
+Control
+├── permissions
+├── customer 360
+├── pipeline
+├── quote workflow
+└── project workflow
 ```
 
 ---
 
-# 38. Matching Contact مع User أو Inquiry
-
-الدمج التلقائي الخاطئ أخطر من وجود duplicate مؤقت.
-
-القاعدة:
-
-1. تطابق User↔Contact يتم بقواعد موثوقة.
-2. البريد/الجوال قد يكونان إشارات، لا قرار merge أعمى.
-3. عند الشك، الموظف يراجع.
-4. أي merge مستقبلي يجب أن يكون audited وقابلًا للتتبع.
-
----
-
-# 39. قواعد الحذف
-
-أمثلة مبدئية:
-
-- `ServiceCategory` مع Services → `PROTECT`.
-- `Contact` مع Quotes/Projects → لا cascade delete.
-- `Quote` مع QuoteItems → CASCADE للـitems لأنهم جزء منه.
-- `Project` مع stages/updates/files → CASCADE منطقي، لكن حذف Project نفسه يجب أن يكون مقيدًا/إداريًا؛ يفضل archival بدل الحذف في الإنتاج.
-- `User` المشار إليه تاريخيًا → غالبًا `SET_NULL` أو `PROTECT` حسب السياق.
-
-لا نعتمد CASCADE بشكل آلي دون مراجعة المعنى التجاري.
-
----
-
-# 40. Testing Strategy
-
-كل مرحلة يجب أن تغطي على الأقل:
-
-- Model constraints.
-- Status transitions.
-- permissions.
-- Guest flows.
-- User↔Contact linking.
-- Quote calculations/snapshots.
-- Visibility INTERNAL vs CUSTOMER.
-- Consent history.
-- Analytics لا ينشئ Lead تلقائيًا.
-- File authorization.
-- RTL/public forms عند إضافة UI.
-
-أنواع الاختبارات:
+# 34. Migration / Implementation Order
 
 ```text
-Unit tests
-Model tests
-Service/domain tests
-Permission tests
-Integration tests
-Critical browser flows
-```
-
----
-
-# 41. Quality Gates
-
-قبل اعتبار أي مرحلة مكتملة:
-
-1. مراجعة المتطلبات والـERD.
-2. مراجعة `git diff`.
-3. تشغيل migrations.
-4. تشغيل tests ذات الصلة.
-5. فحص permissions/data leakage.
-6. اختبار Guest وRegistered flows.
-7. اختبار الجوال وRTL والإتاحة لأي UI جديد.
-8. التحقق من error states.
-9. عدم الادعاء بنجاح اختبار لم يتم تشغيله.
-10. Git checkpoint واضح.
-
----
-
-# 42. ترتيب تأسيس قاعدة البيانات
-
-الترتيب المنطقي الأولي للمهاجرات:
-
-```text
+0. Django/Wagtail foundation
 1. accounts
-   ├── User
-   └── StaffProfile
-
 2. core
-   └── AuditLog
-
 3. crm
-   ├── Contact
-   ├── Organization
-   ├── OrganizationContact
-   ├── Store
-   ├── ConsentRecord
-   └── ActivityEvent
-
 4. services
-   ├── ServiceCategory
-   └── Service
-
-5. sales
-   ├── Inquiry
-   ├── Opportunity
-   ├── FollowUpTask
-   ├── Quote
-   └── QuoteItem
-
-6. customer_portal
-   ├── SavedService
-   └── CustomerPreference
-
-7. projects
-   ├── Project
-   ├── ProjectStage
-   ├── ProjectUpdate
-   ├── ProjectFile
-   └── Approval
-
-8. support
-   ├── SupportTicket
-   └── TicketMessage
-
-9. marketing
-   ├── Campaign
-   └── AttributionTouch
-
-10. analytics
-    └── AnalyticsEvent
-
-11. content
-    └── Wagtail Pages
+5. content + public frontend migration
+6. analytics
+7. sales
+8. customer_portal
+9. projects
+10. support
+11. marketing
+12. integrations
+13. control custom operational views
+14. hardening / tests / performance / deployment
 ```
 
-قد تتغير تفاصيل migration dependencies أثناء التنفيذ، لكن لا تتغير حدود المجال دون قرار معماري.
+ترتيب migrations التفصيلي يجب أن يحترم الاعتماد بين Apps، ولا ننشئ circular dependencies بلا حاجة.
 
 ---
 
-# 43. مراحل التنفيذ
+# 35. Phased Delivery
 
 ## Phase 0 — Foundation
 
 - Django/Wagtail/PostgreSQL.
-- settings split.
-- Custom User.
-- base templates.
-- environment config.
-- logging/security baseline.
+- Settings split.
+- Custom User قبل أول migration حقيقي.
+- Static/media/storage strategy.
+- Base templates.
+- CI checks الأساسية.
 
-## Phase 1 — CRM + Services
+## Phase 1 — Public Frontend + Content
+
+- تحويل الواجهة الحالية إلى Django Templates دون تغيير أسلوب العرض.
+- Header/Footer ومكونات مشتركة.
+- Home/Solutions/Platforms/Tharaa/Knowledge/About/Legal.
+- Design tokens.
+- RTL/mobile/accessibility.
+
+## Phase 2 — Service Catalog
+
+- ServiceCategory.
+- Service.
+- صفحات التصنيف والخدمة.
+- البحث/الفلاتر عند الحاجة.
+- Related services.
+
+## Phase 3 — CRM + Inquiry
 
 - Contact/Organization/Store.
-- ServiceCategory/Service.
-- Wagtail ModelViewSets.
-- basic Customer 360.
+- Inquiry.
+- Activity timeline.
+- WhatsApp analytics.
+- consent records.
 
-## Phase 2 — Public dynamic content
+## Phase 4 — Sales
 
-- ربط واجهة ابتكار تك الحالية بقوالب Django/Wagtail دون تغيير الهوية المعتمدة.
-- Services pages.
-- Platforms/Solutions.
-- TharaaPage.
-- Articles/Portfolio/Case Studies.
-
-## Phase 3 — Inquiry + Analytics + WhatsApp
-
-- Forms.
-- Analytics events.
-- UTM capture.
-- WhatsApp click tracking.
-- Inquiry creation.
-
-## Phase 4 — Sales CRM
-
-- Opportunity Pipeline.
+- Opportunity.
+- Pipeline.
 - Follow-ups.
-- Quotes + snapshots.
-- Customer activity timeline.
+- Quote/QuoteItem.
 
-## Phase 5 — Optional Account + Portal
+## Phase 5 — Accounts + Portal
 
 - allauth.
+- progressive registration.
 - Contact linking.
-- Saved services.
-- Profile/store/preferences.
+- saved services.
+- profile/stores/preferences.
+- quote visibility.
 
 ## Phase 6 — Projects
 
 - Project.
-- Stages.
-- Updates.
-- Files.
-- Approvals.
+- stages.
+- updates.
+- files.
+- approvals.
+- Portal project experience.
 
 ## Phase 7 — Support
 
-- Tickets/messages.
-- portal support view.
+- Tickets.
+- Messages.
+- Portal support.
 
-## Phase 8 — Marketing + Reporting
+## Phase 8 — Marketing + Analytics
 
 - Campaigns.
 - Attribution.
-- funnel reporting.
-- source/service performance.
+- Funnel dashboards.
+- service/campaign/source performance.
 
-## Phase 9 — Commerce عند الحاجة فقط
+## Phase 9 — Production Hardening
 
-- Orders.
-- Payments.
-- Invoices.
-- Refunds.
-
----
-
-# 44. تعريف V1 المكتملة
-
-V1 تعتبر مكتملة عندما يستطيع النظام فعليًا:
-
-1. إدارة تصنيفات الخدمات والخدمات.
-2. إدارة المحتوى وصفحة ثراء.
-3. استقبال Inquiry حقيقية.
-4. إنشاء/ربط Contact بدون إجبار حساب.
-5. تحويل Inquiry إلى Opportunity.
-6. إدارة Pipeline والمتابعات.
-7. إنشاء وإرسال Quote تحفظ Snapshot.
-8. تحويل العمل المقبول إلى Project.
-9. إدارة مراحل وتحديثات وملفات المشروع.
-10. توفير Portal أساسي للعميل عند إنشاء حساب.
-11. إدارة Support.
-12. تتبع Analytics وAttribution الأساسية.
-13. إدارة كل ذلك من `/control/` بصلاحيات مناسبة.
+- security.
+- MFA for staff.
+- storage.
+- backups.
+- monitoring.
+- accessibility.
+- performance.
+- deployment.
 
 ---
 
-# 45. قواعد Naming
+# 36. Definition of V1 Complete
 
-Python/Django:
+V1 تعتبر جاهزة عندما يستطيع:
 
-```text
-apps: snake_case
-models: PascalCase
-fields: snake_case
-URLs: kebab-case when public
-status values: UPPER_SNAKE_CASE
-```
+## الزائر
 
-Identifiers مثل quote/project/ticket numbers لها generator/service مركزي ولا تنشأ عشوائيًا في views.
+- تصفح الموقع والخدمات.
+- مشاهدة الأسعار.
+- مشاهدة ثراء.
+- إرسال استفسار.
+- التواصل عبر واتساب دون Account.
 
----
+## العميل المسجل
 
-# 46. مبدأ Source of Truth
+- تسجيل الدخول بأمان.
+- ربط حسابه ببيانات CRM الصحيحة.
+- إدارة بياناته ومتاجره.
+- حفظ خدمة.
+- مشاهدة ما يخصه فقط من Quotes/Projects/Files/Support عند تفعيلها.
 
-- `Service` هو مصدر الحقيقة لبيانات الخدمة الحالية.
-- `QuoteItem` هو مصدر الحقيقة لما تم عرضه ماليًا تاريخيًا.
-- `Contact` هو CRM identity.
-- `User` هو authentication identity.
-- `ActivityEvent` هو operational CRM timeline.
-- `AnalyticsEvent` هو behavioral analytics.
-- Wagtail Pages هي مصدر الحقيقة للمحتوى التحريري.
-- TharaaPage هي مصدر الحقيقة لعرض ثراء داخل الموقع، وليست Product entity.
+## الموظف
 
----
-
-# 47. ملفات المرجع
-
-- [`AGENTS.md`](./AGENTS.md) — قواعد التنفيذ الإلزامية لأي Agent/مطور.
-- [`docs/architecture/ERD.md`](./docs/architecture/ERD.md) — العلاقات الأساسية.
-- [`docs/architecture/DECISIONS.md`](./docs/architecture/DECISIONS.md) — القرارات المعمارية ADR baseline.
-
-إذا تعارض تنفيذ جديد مع هذا README أو ADRs، **يجب توثيق القرار الجديد أولًا قبل تغيير النماذج**.
+- إدارة المحتوى والخدمات.
+- إدارة Contact 360.
+- متابعة Inquiries وOpportunities.
+- إنشاء وإرسال Quotes.
+- إدارة Projects وStages وUpdates وFiles وApprovals.
+- إدارة Support.
+- مشاهدة المؤشرات التشغيلية.
+- العمل وفق صلاحيات واضحة وتدقيق للتغييرات الحساسة.
 
 ---
 
-# 48. الخلاصة المعتمدة
+# 37. قواعد الواجهة أثناء نقل الموقع الحالي
 
-```text
-Django 5.2 LTS
-+ Wagtail 7.4 LTS
-+ PostgreSQL
-+ Modular Monolith
-+ Unified /control/
-+ Optional Customer Account
-+ CRM-first architecture
-+ ServiceCategory → Service
-+ Tharaa = Wagtail Presentation Page
-+ Inquiry → Opportunity → Quote → Project
-+ Analytics separated from CRM Activity
-+ Commerce deferred until real need
-```
+1. لا نعيد تصميم الصفحات الموجودة لمجرد نقلها إلى Django.
+2. نحافظ على ترتيب الأقسام وأسلوب العرض المعتمد إلا بقرار تصميم مستقل.
+3. نحول المحتوى الثابت إلى Fields/Blocks فقط عندما يحتاج إدارة من `/control/`.
+4. لا نحول كل عنصر صغير إلى Model منفصل بلا فائدة.
+5. لا نضع Business Data داخل Wagtail StreamField إذا كانت تحتاج Query/CRM/Sales logic.
+6. لا نضع Editorial Content داخل Domain Models إذا كانت Page/SEO/Content concern.
+7. المكونات المشتركة تستخرج تدريجيًا بعد التحقق بصريًا من التطابق.
+8. RTL والجوال وحالات Dark/Light المعتمدة تُختبر فعليًا.
+9. Header/Footer/Mega Menu/FAQ/CTA وغيرها لها مكونات مشتركة ولا تنسخ بين الصفحات.
+10. كل صفحة جديدة يجب أن تحدد: Owner App، URL، Data Source، Template، Permissions، Analytics Events.
 
-هذه البنية هي **Architecture Baseline الرسمي لمنصة ابتكار تك Dashboard**، ويجب أن تكون نقطة البداية لكل تنفيذ لاحق.
+---
+
+# 38. Page Ownership Matrix
+
+| الصفحة/الواجهة | Owner | مصدر البيانات | Template/واجهة |
+|---|---|---|---|
+| الرئيسية | `content` | Wagtail | Public template |
+| Solution | `content` | Wagtail + related Services | Public template |
+| Services index | `services` | ServiceCategory/Service | Services template |
+| Service category | `services` | ServiceCategory + Services | Services template |
+| Service detail | `services` | Service | Services template |
+| Platform | `content` | Wagtail + related Services/Content | Public template |
+| Tharaa | `content` | Wagtail + related Services | Public template |
+| Portfolio/Case Study | `content` | Wagtail | Public template |
+| Knowledge/Article | `content` | Wagtail | Public template |
+| About/Legal | `content` | Wagtail | Public template |
+| Start Project/Inquiry | `sales` | Inquiry/Contact | Public form template |
+| Login/Signup | `accounts` | User/allauth | Account template |
+| Portal overview | `customer_portal` | Contact-related domain data | Portal template |
+| Portal project | `projects` + portal | Project scoped to Contact | Portal template |
+| Portal support | `support` + portal | Ticket scoped to Contact | Portal template |
+| Control Dashboard | custom control | Aggregated domain data | Wagtail custom view |
+| Customer 360 | `crm` | CRM + related domains | Wagtail custom view |
+| Sales Pipeline | `sales` | Opportunity | Wagtail custom view |
+| Content editing | `content` | Wagtail Pages | Native Wagtail UI |
+
+---
+
+# 39. Source of Truth
+
+- **هذا README:** الصورة الكاملة للمنتج، الواجهات، الصفحات، الملفات، النماذج، والحدود.
+- `docs/architecture/ERD.md`: علاقات الكيانات الرسمية.
+- `docs/architecture/DECISIONS.md`: القرارات المعمارية ولماذا اتخذناها.
+- `AGENTS.md`: قواعد التنفيذ الإلزامية لأي Agent/Developer.
+
+إذا تعارض التنفيذ مع هذه الوثائق، لا يتم تغيير الـDomain بصمت؛ يوثق القرار أولًا ثم تعدّل الوثائق والكود معًا.
