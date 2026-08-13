@@ -79,6 +79,8 @@ class SupportTicket(models.Model):
         errors = {}
         if self.project_id and self.contact_id and self.project.contact_id != self.contact_id:
             errors["project"] = "The project and ticket must belong to the same contact."
+        if self.assigned_to_id and not self.assigned_to.is_staff:
+            errors["assigned_to"] = "Support tickets can only be assigned to staff users."
         if self.status == TicketStatus.CLOSED and self.closed_at is None:
             errors["closed_at"] = "Closed tickets require a closed timestamp."
         if self.status != TicketStatus.CLOSED and self.closed_at is not None:
@@ -144,6 +146,8 @@ class TicketMessage(models.Model):
         if bool(self.sender_user_id) == bool(self.sender_contact_id):
             errors["sender_user"] = "A message must have exactly one sender."
             errors["sender_contact"] = "A message must have exactly one sender."
+        if self.sender_user_id and not self.sender_user.is_staff:
+            errors["sender_user"] = "Staff support messages require a staff user."
         if self.sender_contact_id and self.ticket_id:
             if self.sender_contact_id != self.ticket.contact_id:
                 errors["sender_contact"] = "Customer messages must come from the ticket contact."
