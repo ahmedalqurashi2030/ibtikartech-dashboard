@@ -68,6 +68,21 @@ def test_collect_event_rejects_invalid_event_names(client):
 
 
 @pytest.mark.django_db
+def test_collect_event_rejects_malformed_service_id(client):
+    response = client.post(
+        reverse("analytics:collect_event"),
+        data=json.dumps(
+            {"event_name": "service_view", "service_id": "not-a-valid-uuid"}
+        ),
+        content_type="application/json",
+    )
+
+    assert response.status_code == 400
+    assert response.json()["error"] == "unknown_service"
+    assert AnalyticsEvent.objects.count() == 0
+
+
+@pytest.mark.django_db
 def test_dashboard_requires_staff(client):
     user = get_user_model().objects.create_user(
         email="customer-dashboard@example.com",

@@ -2,6 +2,7 @@ import json
 import re
 import uuid
 
+from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -53,7 +54,10 @@ def collect_event(request):
     service = None
     service_id = payload.get("service_id")
     if service_id:
-        service = Service.objects.filter(pk=service_id).first()
+        try:
+            service = Service.objects.filter(pk=service_id).first()
+        except (ValidationError, ValueError):
+            service = None
         if service is None:
             return JsonResponse({"ok": False, "error": "unknown_service"}, status=400)
 
