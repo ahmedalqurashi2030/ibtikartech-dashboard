@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-from urllib.parse import urlparse
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
@@ -88,35 +87,14 @@ TEMPLATES = [
     }
 ]
 
-
-def database_config():
-    url = os.getenv("DATABASE_URL")
-    if not url:
-        return {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("POSTGRES_DB", "ibtikartech"),
-            "USER": os.getenv("POSTGRES_USER", "ibtikar"),
-            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "ibtikar"),
-            "HOST": os.getenv("POSTGRES_HOST", "127.0.0.1"),
-            "PORT": os.getenv("POSTGRES_PORT", "5432"),
-            "CONN_MAX_AGE": 60,
-        }
-
-    parsed = urlparse(url)
-    if parsed.scheme not in {"postgres", "postgresql"}:
-        raise ValueError("DATABASE_URL must use postgres or postgresql.")
-    return {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": parsed.path.lstrip("/"),
-        "USER": parsed.username or "",
-        "PASSWORD": parsed.password or "",
-        "HOST": parsed.hostname or "",
-        "PORT": parsed.port or 5432,
-        "CONN_MAX_AGE": 60,
+# Development and tests intentionally default to SQLite for zero-setup local work.
+# Production overrides this setting and requires PostgreSQL explicitly.
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-
-
-DATABASES = {"default": database_config()}
+}
 
 AUTH_USER_MODEL = "accounts.User"
 AUTHENTICATION_BACKENDS = [
