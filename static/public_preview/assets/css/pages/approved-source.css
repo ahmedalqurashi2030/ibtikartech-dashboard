@@ -1,0 +1,186 @@
+@import url("./frontend-final.css");
+
+/* Bridge layer for approved source pages. Page composition remains source-owned. */
+body.approved-source-page [data-approved-legacy-shell] {
+  display: none !important;
+}
+
+body.approved-source-page > .mobile-menu:not(.ibt-shell-mobile-menu),
+body.approved-source-page > .ibtx-drawer {
+  display: none !important;
+}
+
+body.approved-source-page {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+html:has(body.approved-source-page) {
+  scroll-padding-top: 118px;
+}
+
+body.approved-source-page main section[id],
+body.approved-source-page main [id][tabindex="-1"] {
+  scroll-margin-top: 118px;
+}
+
+body.approved-source-page .ibt-shell-header,
+body.approved-source-page .ibt-shell-footer,
+body.approved-source-page .ibt-shell-mobile-menu {
+  direction: rtl;
+  font-family: var(--ibt-font);
+}
+
+.approved-skip-link {
+  position: fixed;
+  top: -80px;
+  right: 16px;
+  z-index: 5000;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: #111a3b;
+  color: #fff;
+  font: 800 14px/1.4 var(--ibt-font);
+  text-decoration: none;
+  transition: top 180ms ease;
+}
+
+.approved-skip-link:focus {
+  top: 16px;
+}
+
+body.approved-source-page main,
+body.approved-source-page main section,
+body.approved-source-page main img,
+body.approved-source-page main video,
+body.approved-source-page main canvas,
+body.approved-source-page main svg {
+  max-width: 100%;
+}
+
+body.approved-source-page main input,
+body.approved-source-page main select,
+body.approved-source-page main textarea {
+  max-width: 100%;
+}
+
+body.approved-source-page :where(a, button, input, select, textarea, summary) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.approved-source-page :where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ibt-blue, #5d83ff) 58%, transparent);
+  outline-offset: 4px;
+}
+
+body.approved-source-page main :where(.btn, .button, .scope-toggle, .decision-tabs button, .faq button, .faq-item button) {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+body.approved-source-page main :where(p, li) {
+  text-wrap: pretty;
+}
+
+body.approved-source-page main :where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+@media (max-width: 760px) {
+  body.approved-source-page .ibt-shell-header {
+    top: 8px;
+  }
+
+  body.approved-source-page.source-tharaa .hero,
+  body.approved-source-page.source-tharaa .section,
+  body.approved-source-page.source-tharaa .journey,
+  body.approved-source-page.source-tharaa .final-cta {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  body.approved-source-page.source-tharaa .container,
+  body.approved-source-page.source-tharaa .nav-shell {
+    width: min(calc(100% - 28px), 1180px);
+    max-width: 100%;
+  }
+
+  html:has(body.approved-source-page) {
+    scroll-padding-top: 92px;
+  }
+
+  body.approved-source-page main section[id],
+  body.approved-source-page main [id][tabindex="-1"] {
+    scroll-margin-top: 92px;
+  }
+
+  body.approved-source-page.source-product-service .decision-tabs {
+    max-width: calc(100% - 24px);
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+  }
+
+  body.approved-source-page.source-product-service .decision-tabs button {
+    min-height: 44px;
+    scroll-snap-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .approved-skip-link {
+    transition: none;
+  }
+}
+
+/* Approved mobile repair: preserve the three-column comparison while containing it. */
+@media (max-width: 760px) {
+  body.approved-source-page.source-tharaa #v4-mobile {
+    overflow: hidden;
+  }
+
+  body.approved-source-page.source-tharaa .compare-wrap {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body.approved-source-page.source-tharaa .compare-head,
+  body.approved-source-page.source-tharaa .compare-row {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .9fr) minmax(0, .9fr);
+  }
+
+  body.approved-source-page.source-tharaa .compare-head div,
+  body.approved-source-page.source-tharaa .compare-row div {
+    min-width: 0;
+    padding: 14px 9px;
+    overflow-wrap: anywhere;
+  }
+
+  body.approved-source-page.source-tharaa .compare-head strong,
+  body.approved-source-page.source-tharaa .compare-row span {
+    font-size: 10px;
+    line-height: 1.55;
+  }
+}
+
+/* Homepage announcement ticker: scoped to the approved homepage only. */
+.approved-visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+body.approved-source-page.source-home>.announcement{display:none!important}
+body.approved-source-page.source-home>.ibtx-announcement{position:fixed;inset:0 0 auto;z-index:2300;height:34px;overflow:hidden;border:0;border-bottom:1px solid color-mix(in srgb,var(--ibt-border) 76%,transparent);background:color-mix(in srgb,var(--ibt-bg) 94%,transparent);color:var(--ibt-text);backdrop-filter:blur(18px) saturate(1.2)}
+body.approved-source-page.source-home .ibtx-announcement__inner{width:100%;min-height:34px;display:flex;align-items:center;gap:14px;padding-inline:max(14px,calc((100vw - var(--ibt-container))/2))}
+body.approved-source-page.source-home .ibtx-announcement__viewport{min-width:0;flex:1;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+body.approved-source-page.source-home .ibtx-announcement__track{width:max-content;display:flex;align-items:center;gap:0;white-space:nowrap;color:color-mix(in srgb,var(--ibt-text) 82%,var(--ibt-muted));font-size:12px;font-weight:700;animation:approved-home-announcement 24s linear infinite;will-change:transform}
+body.approved-source-page.source-home .ibtx-announcement__set{display:flex;align-items:center;gap:22px;padding-inline:11px;direction:rtl}
+body.approved-source-page.source-home .ibtx-announcement__track i{width:5px;height:5px;flex:0 0 5px;border-radius:50%;background:var(--ibt-gradient);box-shadow:0 0 12px color-mix(in srgb,var(--ibt-blue) 55%,transparent)}
+body.approved-source-page.source-home .ibtx-announcement__inner>a{flex:0 0 auto;color:var(--ibt-blue);font-size:11px;font-weight:900;text-decoration:none;white-space:nowrap}
+body.approved-source-page.source-home .ibtx-announcement__toggle{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;padding:0;border:1px solid color-mix(in srgb,var(--ibt-border) 82%,transparent);border-radius:9px;background:color-mix(in srgb,var(--ibt-surface) 76%,transparent);color:var(--ibt-text);font:800 10px/1 var(--ibt-font);cursor:pointer}
+body.approved-source-page.source-home .ibt-shell-header{top:34px}
+body.approved-source-page.source-home .ibtx-announcement:hover .ibtx-announcement__track,
+body.approved-source-page.source-home .ibtx-announcement:focus-within .ibtx-announcement__track,
+body.approved-source-page.source-home .ibtx-announcement.is-paused .ibtx-announcement__track,
+body.approved-source-page.source-home .ibtx-announcement.is-page-hidden .ibtx-announcement__track{animation-play-state:paused}
+body.approved-source-page.source-home .ibtx-announcement__inner>a:focus-visible{outline:3px solid color-mix(in srgb,var(--ibt-blue) 48%,transparent);outline-offset:3px;border-radius:5px}
+@keyframes approved-home-announcement{from{transform:translate3d(50%,0,0)}to{transform:translate3d(0,0,0)}}
+@media(max-width:760px){body.approved-source-page.source-home .ibt-shell-header{top:34px;padding-bottom:8px;background:linear-gradient(180deg,rgba(4,8,20,.98),rgba(4,8,20,.92) 82%,transparent)!important}body.approved-source-page.source-home .ibt-shell-mobile-menu{top:108px;max-height:calc(100svh - 124px)}body.approved-source-page.source-home .ibtx-announcement__inner{gap:10px;padding-inline:12px}body.approved-source-page.source-home .ibtx-announcement__track{font-size:10px;animation-duration:19s}body.approved-source-page.source-home .ibtx-announcement__set{gap:16px;padding-inline:8px}body.approved-source-page.source-home .ibtx-announcement__inner>a{font-size:9px}}
+@media(prefers-reduced-motion:reduce){body.approved-source-page.source-home .ibtx-announcement__track{animation:none;transform:none}body.approved-source-page.source-home .ibtx-announcement__set[aria-hidden="true"],body.approved-source-page.source-home .ibtx-announcement__toggle{display:none}}
