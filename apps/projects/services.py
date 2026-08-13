@@ -11,7 +11,7 @@ class ApprovalResponseError(Exception):
 
 
 @transaction.atomic
-def respond_to_approval(*, approval_id, contact, decision, response_note=""):
+def respond_to_approval(*, approval_id, project, contact, decision, response_note=""):
     if decision not in {
         ApprovalStatus.APPROVED,
         ApprovalStatus.CHANGES_REQUESTED,
@@ -22,10 +22,11 @@ def respond_to_approval(*, approval_id, contact, decision, response_note=""):
     try:
         approval = Approval.objects.select_for_update().get(
             id=approval_id,
+            project=project,
             requested_from_contact=contact,
         )
     except Approval.DoesNotExist as exc:
-        raise ApprovalResponseError("Approval not found for this contact.") from exc
+        raise ApprovalResponseError("Approval not found for this contact and project.") from exc
 
     if approval.status != ApprovalStatus.PENDING:
         raise ApprovalResponseError("This approval has already been answered.")
