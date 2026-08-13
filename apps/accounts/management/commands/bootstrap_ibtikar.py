@@ -66,7 +66,7 @@ class Command(BaseCommand):
 
         home = HomePage.objects.first()
         if home is None:
-            home = HomePage(title="ابتكار تك", slug="home", intro="")
+            home = HomePage(title="ابتكار تك", slug="ibtikar-tech", intro="")
             root.add_child(instance=home)
             home.save_revision().publish()
             self.stdout.write(self.style.SUCCESS("Created Ibtikar Tech HomePage."))

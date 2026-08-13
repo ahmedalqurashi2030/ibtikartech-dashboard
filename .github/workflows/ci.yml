@@ -8,9 +8,6 @@ on:
       - "feat/**"
       - "fix/**"
 
-permissions:
-  contents: write
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -33,34 +30,7 @@ jobs:
       - name: Install
         run: python -m pip install --upgrade pip && pip install -e ".[dev]"
 
-      - name: Generate V1 migrations
-        run: >-
-          python manage.py makemigrations
-          accounts core crm services sales customer_portal projects support
-          marketing analytics content --noinput
-
-      - name: Commit generated V1 migrations once
-        if: github.event_name == 'push' && github.ref == 'refs/heads/feat/v1-completion'
-        run: |
-          if [[ -n "$(git status --porcelain --untracked-files=all -- apps/*/migrations)" ]]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add apps/*/migrations/*.py
-            git commit -m "chore: commit V1 migrations"
-            git push
-          fi
-
-      - name: Capture generated migrations
-        uses: actions/upload-artifact@v4
-        with:
-          name: v1-migrations
-          path: |
-            apps/*/migrations/*.py
-            !apps/*/migrations/__pycache__/**
-          if-no-files-found: error
-          retention-days: 3
-
-      - name: Apply migrations
+      - name: Apply committed migrations
         run: python manage.py migrate --noinput
 
       - name: Django system checks
