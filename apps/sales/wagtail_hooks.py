@@ -9,7 +9,14 @@ class InquiryViewSet(ModelViewSet):
     model = Inquiry
     icon = "form"
     menu_label = "الاستفسارات والطلبات"
-    list_display = ("contact", "inquiry_type", "service", "status", "assigned_to", "created_at")
+    list_display = (
+        "contact",
+        "inquiry_type",
+        "service",
+        "status",
+        "assigned_to",
+        "created_at",
+    )
     list_filter = ("inquiry_type", "status", "assigned_to", "service")
     search_fields = ("contact__full_name", "contact__email", "message", "source")
     search_backend_name = None
@@ -43,7 +50,12 @@ class OpportunityViewSet(ModelViewSet):
         "expected_close_date",
     )
     list_filter = ("stage", "assigned_to", "service", "expected_close_date")
-    search_fields = ("title", "contact__full_name", "contact__email", "lost_reason")
+    search_fields = (
+        "title",
+        "contact__full_name",
+        "contact__email",
+        "lost_reason",
+    )
     search_backend_name = None
     ordering = ("-updated_at",)
     copy_view_enabled = False
@@ -69,9 +81,21 @@ class FollowUpTaskViewSet(ModelViewSet):
     model = FollowUpTask
     icon = "date"
     menu_label = "المتابعات"
-    list_display = ("title", "opportunity", "task_type", "status", "assigned_to", "due_at")
+    list_display = (
+        "title",
+        "opportunity",
+        "task_type",
+        "status",
+        "assigned_to",
+        "due_at",
+    )
     list_filter = ("task_type", "status", "assigned_to", "due_at")
-    search_fields = ("title", "description", "opportunity__title", "contact__full_name")
+    search_fields = (
+        "title",
+        "description",
+        "opportunity__title",
+        "contact__full_name",
+    )
     search_backend_name = None
     ordering = ("status", "due_at", "-created_at")
     copy_view_enabled = False
@@ -103,7 +127,12 @@ class QuoteViewSet(ModelViewSet):
         "created_at",
     )
     list_filter = ("status", "currency", "valid_until", "created_by")
-    search_fields = ("quote_number", "contact__full_name", "contact__email", "opportunity__title")
+    search_fields = (
+        "quote_number",
+        "contact__full_name",
+        "contact__email",
+        "opportunity__title",
+    )
     search_backend_name = None
     ordering = ("-created_at",)
     copy_view_enabled = False
@@ -157,7 +186,11 @@ class QuoteItemViewSet(ModelViewSet):
         "total",
     )
     list_filter = ("quote", "service")
-    search_fields = ("service_name_snapshot", "description_snapshot", "quote__quote_number")
+    search_fields = (
+        "service_name_snapshot",
+        "description_snapshot",
+        "quote__quote_number",
+    )
     search_backend_name = None
     ordering = ("quote", "sort_order", "created_at")
     copy_view_enabled = False
