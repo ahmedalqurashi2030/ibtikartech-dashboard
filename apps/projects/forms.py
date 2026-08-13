@@ -22,7 +22,11 @@ class ApprovalResponseForm(forms.Form):
         cleaned_data = super().clean()
         decision = cleaned_data.get("decision")
         response_note = (cleaned_data.get("response_note") or "").strip()
-        if decision in {ApprovalStatus.CHANGES_REQUESTED, ApprovalStatus.REJECTED} and not response_note:
+        requires_note = decision in {
+            ApprovalStatus.CHANGES_REQUESTED,
+            ApprovalStatus.REJECTED,
+        }
+        if requires_note and not response_note:
             self.add_error(
                 "response_note",
                 "اكتب ملاحظة عند طلب تعديلات أو رفض الموافقة.",
