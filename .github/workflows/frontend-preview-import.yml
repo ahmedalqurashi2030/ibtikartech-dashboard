@@ -1,0 +1,45 @@
+name: Frontend Preview Import
+
+on:
+  push:
+    branches:
+      - feat/frontend-preview-migration
+    paths:
+      - scripts/import_frontend_preview.py
+      - .github/workflows/frontend-preview-import.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Django platform
+        uses: actions/checkout@v4
+        with:
+          ref: feat/frontend-preview-migration
+          fetch-depth: 0
+
+      - name: Checkout approved frontend source
+        run: |
+          git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
+
+      - name: Import static preview
+        run: |
+          python scripts/import_frontend_preview.py \
+            --source /tmp/ibtikartech-source \
+            --destination "$GITHUB_WORKSPACE"
+
+      - name: Commit imported preview
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/public_preview/pages static/public_preview/assets docs/frontend-preview-manifest.json
+          if git diff --cached --quiet; then
+            echo "Frontend preview is already synchronized."
+            exit 0
+          fi
+          git commit -m "chore: import approved frontend preview"
+          git push origin HEAD:feat/frontend-preview-migration
