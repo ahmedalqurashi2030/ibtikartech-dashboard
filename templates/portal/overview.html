@@ -7,7 +7,7 @@
   <div>
     <span class="portal-eyebrow">بوابة العميل</span>
     <h1>مرحبًا {{ contact.full_name }}</h1>
-    <p>ملخص لما يخص حسابك وخدماتك وطلباتك الحالية لدى ابتكار تك.</p>
+    <p>ملخص لما يخص حسابك وخدماتك وطلباتك ومشاريعك لدى ابتكار تك.</p>
   </div>
 </header>
 
@@ -24,6 +24,10 @@
     <span>عروض الأسعار</span>
     <strong>{{ quotes_count }}</strong>
   </a>
+  <a class="portal-stat" href="{% url 'customer_portal:projects' %}">
+    <span>المشاريع</span>
+    <strong>{{ projects_count }}</strong>
+  </a>
   <a class="portal-stat" href="{% url 'customer_portal:stores' %}">
     <span>المتاجر</span>
     <strong>{{ stores_count }}</strong>
@@ -31,6 +35,28 @@
 </div>
 
 <div class="portal-grid portal-grid--two">
+  <section class="portal-panel">
+    <div class="portal-panel__header">
+      <h2>المشاريع</h2>
+      <a href="{% url 'customer_portal:projects' %}">عرض الكل</a>
+    </div>
+    {% if projects %}
+      <div class="portal-list">
+        {% for project in projects %}
+          <a class="portal-list-item portal-list-item--link" href="{% url 'customer_portal:project_detail' project.id %}">
+            <div>
+              <strong>{{ project.name }}</strong>
+              <span>{{ project.progress_percentage }}% مكتمل</span>
+            </div>
+            <span class="portal-badge">{{ project.get_status_display }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">لا توجد مشاريع مرتبطة بحسابك حاليًا.</p>
+    {% endif %}
+  </section>
+
   <section class="portal-panel">
     <div class="portal-panel__header">
       <h2>أحدث الطلبات</h2>
@@ -92,7 +118,7 @@
         {% endfor %}
       </div>
     {% else %}
-      <p class="portal-empty">يمكنك حفظ الخدمات للرجوع إليها لاحقًا عندما نربط أزرار الحفظ بصفحات الخدمات.</p>
+      <p class="portal-empty">يمكنك حفظ الخدمات للرجوع إليها لاحقًا.</p>
     {% endif %}
   </section>
 
