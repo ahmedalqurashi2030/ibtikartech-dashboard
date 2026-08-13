@@ -3,7 +3,7 @@ from io import BytesIO
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from ..forms import CustomerTicketMessageForm, MAX_ATTACHMENT_SIZE
+from ..forms import MAX_ATTACHMENT_SIZE, CustomerTicketMessageForm
 
 
 @pytest.mark.django_db
