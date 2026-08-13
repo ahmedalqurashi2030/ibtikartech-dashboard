@@ -5,7 +5,7 @@ python -m pip install --upgrade pip
 pip install -e ".[dev]"
 
 python manage.py makemigrations \
-  accounts core crm services sales customer_portal content --noinput
+  accounts core crm services sales customer_portal projects content --noinput
 python manage.py migrate --noinput
 python manage.py check
 

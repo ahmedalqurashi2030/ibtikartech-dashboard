@@ -33,7 +33,7 @@ jobs:
       - name: Generate bootstrap migrations
         run: >-
           python manage.py makemigrations
-          accounts core crm services sales customer_portal content --noinput
+          accounts core crm services sales customer_portal projects content --noinput
 
       - name: Apply migrations
         run: python manage.py migrate --noinput

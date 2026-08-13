@@ -1,0 +1,44 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}المشاريع{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <span class="portal-eyebrow">التنفيذ</span>
+    <h1>المشاريع</h1>
+    <p>تابع حالة التنفيذ ونسبة الإنجاز والمراحل الخاصة بمشاريعك.</p>
+  </div>
+</header>
+
+{% if projects %}
+  <div class="portal-card-grid">
+    {% for project in projects %}
+      <article class="portal-card">
+        <div class="portal-panel__header">
+          <span class="portal-card__meta">{{ project.project_number }}</span>
+          <span class="portal-badge">{{ project.get_status_display }}</span>
+        </div>
+        <h2>{{ project.name }}</h2>
+        {% if project.description %}<p>{{ project.description|truncatechars:150 }}</p>{% endif %}
+        <div class="portal-progress" aria-label="نسبة إنجاز المشروع {{ project.progress_percentage }}%">
+          <div class="portal-progress__meta">
+            <span>نسبة الإنجاز</span>
+            <strong>{{ project.progress_percentage }}%</strong>
+          </div>
+          <div class="portal-progress__track"><span style="width: {{ project.progress_percentage }}%"></span></div>
+        </div>
+        <div class="portal-card__footer">
+          <span>{{ project.target_completion_date|date:"Y/m/d"|default:"موعد الإنجاز غير محدد" }}</span>
+          <a class="portal-button portal-button--ghost" href="{% url 'customer_portal:project_detail' project.id %}">عرض المشروع</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="portal-empty-state">
+    <h2>لا توجد مشاريع مرتبطة بحسابك</h2>
+    <p>بعد تحويل عرض أو اتفاق إلى مشروع تنفيذ سيظهر هنا تلقائيًا.</p>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "layouts/portal_base.html" %}
+
+{% block portal_title %}{{ project.name }}{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header portal-project-header">
+  <div>
+    <a class="portal-text-link" href="{% url 'customer_portal:projects' %}">العودة إلى المشاريع</a>
+    <span class="portal-eyebrow">{{ project.project_number }}</span>
+    <h1>{{ project.name }}</h1>
+    {% if project.description %}<p>{{ project.description }}</p>{% endif %}
+  </div>
+  <span class="portal-badge">{{ project.get_status_display }}</span>
+</header>
+
+<section class="portal-panel portal-project-progress">
+  <div class="portal-progress__meta">
+    <span>نسبة الإنجاز</span>
+    <strong>{{ project.progress_percentage }}%</strong>
+  </div>
+  <div class="portal-progress__track"><span style="width: {{ project.progress_percentage }}%"></span></div>
+  <dl class="portal-definition-grid">
+    <div>
+      <dt>مدير المشروع</dt>
+      <dd>
+        {% if project.manager %}
+          {{ project.manager.get_full_name|default:project.manager.email }}
+        {% else %}
+          غير محدد
+        {% endif %}
+      </dd>
+    </div>
+    <div><dt>المتجر</dt><dd>{{ project.store.name|default:"غير مرتبط" }}</dd></div>
+    <div><dt>الموعد المستهدف</dt><dd>{{ project.target_completion_date|date:"Y/m/d"|default:"غير محدد" }}</dd></div>
+  </dl>
+</section>
+
+<div class="portal-grid portal-grid--two portal-project-grid">
+  <section class="portal-panel">
+    <div class="portal-panel__header"><h2>مراحل المشروع</h2></div>
+    {% if project.stages.all %}
+      <ol class="portal-timeline">
+        {% for stage in project.stages.all %}
+          <li>
+            <div>
+              <strong>{{ stage.name }}</strong>
+              {% if stage.description %}<p>{{ stage.description }}</p>{% endif %}
+            </div>
+            <span class="portal-badge">{{ stage.get_status_display }}</span>
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p class="portal-empty">لم تُضف مراحل للمشروع بعد.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-panel">
+    <div class="portal-panel__header"><h2>الموافقات المطلوبة</h2></div>
+    {% if project.customer_approvals %}
+      <div class="portal-stack">
+        {% for approval in project.customer_approvals %}
+          <article class="portal-approval">
+            <div class="portal-panel__header">
+              <div>
+                <strong>{{ approval.title }}</strong>
+                <span class="portal-card__meta">{{ approval.requested_at|date:"Y/m/d H:i" }}</span>
+              </div>
+              <span class="portal-badge">{{ approval.get_status_display }}</span>
+            </div>
+            {% if approval.description %}<p>{{ approval.description }}</p>{% endif %}
+            {% if approval.status == "PENDING" %}
+              <form class="portal-form" method="post" action="{% url 'customer_portal:respond_project_approval' project.id approval.id %}">
+                {% csrf_token %}
+                {% for field in approval.response_form %}
+                  <div class="portal-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}<span class="portal-field__error">{{ error }}</span>{% endfor %}
+                  </div>
+                {% endfor %}
+                <button class="portal-button" type="submit">إرسال الرد</button>
+              </form>
+            {% else %}
+              {% if approval.response_note %}<p class="portal-response-note">{{ approval.response_note }}</p>{% endif %}
+              <span class="portal-card__meta">تم الرد {{ approval.responded_at|date:"Y/m/d H:i" }}</span>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">لا توجد موافقات مطلوبة منك حاليًا.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-panel">
+    <div class="portal-panel__header"><h2>التحديثات</h2></div>
+    {% if project.customer_updates %}
+      <div class="portal-stack">
+        {% for update in project.customer_updates %}
+          <article class="portal-update">
+            <div class="portal-panel__header">
+              <strong>{{ update.title }}</strong>
+              <span class="portal-card__meta">{{ update.created_at|date:"Y/m/d H:i" }}</span>
+            </div>
+            <p>{{ update.body }}</p>
+            {% if update.stage %}<span class="portal-badge">{{ update.stage.name }}</span>{% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">لا توجد تحديثات منشورة للعميل بعد.</p>
+    {% endif %}
+  </section>
+
+  <section class="portal-panel">
+    <div class="portal-panel__header"><h2>الملفات</h2></div>
+    {% if project.customer_files %}
+      <div class="portal-list">
+        {% for project_file in project.customer_files %}
+          <a class="portal-list-item portal-list-item--link" href="{{ project_file.file.url }}" target="_blank" rel="noopener noreferrer">
+            <div>
+              <strong>{{ project_file.name }}</strong>
+              <span>{{ project_file.get_category_display }}{% if project_file.file_type %} · {{ project_file.file_type }}{% endif %}</span>
+            </div>
+            <span>فتح</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="portal-empty">لا توجد ملفات متاحة لك في هذا المشروع حاليًا.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
