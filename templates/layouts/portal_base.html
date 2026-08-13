@@ -36,6 +36,7 @@
       <a href="{% url 'customer_portal:inquiries' %}" {% if request.resolver_match.url_name == 'inquiries' %}aria-current="page"{% endif %}>الطلبات والاستفسارات</a>
       <a href="{% url 'customer_portal:quotes' %}" {% if request.resolver_match.url_name == 'quotes' %}aria-current="page"{% endif %}>عروض الأسعار</a>
       <a href="{% url 'customer_portal:projects' %}" {% if request.resolver_match.url_name == 'projects' or request.resolver_match.url_name == 'project_detail' %}aria-current="page"{% endif %}>المشاريع</a>
+      <a href="{% url 'support_portal:tickets' %}" {% if request.resolver_match.namespace == 'support_portal' %}aria-current="page"{% endif %}>الدعم</a>
       <a href="{% url 'customer_portal:stores' %}" {% if request.resolver_match.url_name == 'stores' %}aria-current="page"{% endif %}>متاجري</a>
       <a href="{% url 'customer_portal:profile' %}" {% if request.resolver_match.url_name == 'profile' %}aria-current="page"{% endif %}>الملف الشخصي</a>
     </nav>

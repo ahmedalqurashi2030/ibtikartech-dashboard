@@ -1,0 +1,39 @@
+{% extends "layouts/portal_base.html" %}
+{% load static %}
+
+{% block portal_title %}فتح تذكرة دعم{% endblock %}
+
+{% block extra_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/portal/support.css' %}">
+{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header">
+  <div>
+    <a class="portal-text-link" href="{% url 'support_portal:tickets' %}">العودة إلى الدعم</a>
+    <span class="portal-eyebrow">طلب جديد</span>
+    <h1>فتح تذكرة دعم</h1>
+    <p>اشرح المشكلة بوضوح، واربطها بالمشروع إن كانت مرتبطة بمشروع قائم.</p>
+  </div>
+</header>
+
+<section class="portal-panel portal-support-form-card">
+  <form class="portal-form" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class="portal-field">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+        {% for error in field.errors %}<span class="portal-field__error">{{ error }}</span>{% endfor %}
+      </div>
+    {% endfor %}
+    <div class="portal-form-actions">
+      <button class="portal-button" type="submit">إنشاء التذكرة</button>
+      <a class="portal-button portal-button--ghost" href="{% url 'support_portal:tickets' %}">إلغاء</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

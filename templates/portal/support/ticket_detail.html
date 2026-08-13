@@ -1,0 +1,88 @@
+{% extends "layouts/portal_base.html" %}
+{% load static %}
+
+{% block portal_title %}{{ ticket.subject }}{% endblock %}
+
+{% block extra_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/portal/support.css' %}">
+{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header portal-support-header">
+  <div>
+    <a class="portal-text-link" href="{% url 'support_portal:tickets' %}">العودة إلى الدعم</a>
+    <span class="portal-eyebrow">{{ ticket.ticket_number }}</span>
+    <h1>{{ ticket.subject }}</h1>
+    <p>{{ ticket.description }}</p>
+  </div>
+  <span class="portal-badge">{{ ticket.get_status_display }}</span>
+</header>
+
+<section class="portal-panel portal-ticket-summary">
+  <dl class="portal-definition-grid">
+    <div><dt>الأولوية</dt><dd>{{ ticket.get_priority_display }}</dd></div>
+    <div><dt>المشروع</dt><dd>{{ ticket.project.name|default:"غير مرتبط" }}</dd></div>
+    <div>
+      <dt>المسؤول</dt>
+      <dd>
+        {% if ticket.assigned_to %}
+          {{ ticket.assigned_to.get_full_name|default:"فريق الدعم" }}
+        {% else %}
+          فريق الدعم
+        {% endif %}
+      </dd>
+    </div>
+  </dl>
+</section>
+
+<section class="portal-panel portal-conversation">
+  <div class="portal-panel__header"><h2>المحادثة</h2></div>
+  {% if ticket.customer_messages %}
+    <div class="portal-message-thread">
+      {% for support_message in ticket.customer_messages %}
+        <article class="portal-chat-message {% if support_message.sender_contact %}portal-chat-message--customer{% else %}portal-chat-message--staff{% endif %}">
+          <div class="portal-chat-message__meta">
+            <strong>
+              {% if support_message.sender_contact %}
+                أنت
+              {% elif support_message.sender_user %}
+                {{ support_message.sender_user.get_full_name|default:"فريق الدعم" }}
+              {% endif %}
+            </strong>
+            <span>{{ support_message.created_at|date:"Y/m/d H:i" }}</span>
+          </div>
+          <p>{{ support_message.body|linebreaksbr }}</p>
+          {% if support_message.attachment %}
+            <a class="portal-text-link" href="{% url 'support_portal:download_attachment' ticket.id support_message.id %}">تنزيل المرفق</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="portal-empty">لا توجد رسائل إضافية في هذه التذكرة حتى الآن.</p>
+  {% endif %}
+</section>
+
+{% if ticket.status != "CLOSED" %}
+<section class="portal-panel portal-support-reply">
+  <div class="portal-panel__header"><h2>إرسال رسالة</h2></div>
+  <form class="portal-form" method="post" enctype="multipart/form-data" action="{% url 'support_portal:add_message' ticket.id %}">
+    {% csrf_token %}
+    {% for field in message_form %}
+      <div class="portal-field">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}<span class="portal-field__error">{{ error }}</span>{% endfor %}
+      </div>
+    {% endfor %}
+    <button class="portal-button" type="submit">إرسال الرسالة</button>
+  </form>
+</section>
+{% else %}
+<div class="portal-empty-state portal-support-closed">
+  <h2>هذه التذكرة مغلقة</h2>
+  <p>لا يمكن إضافة رسائل جديدة إلى تذكرة مغلقة.</p>
+</div>
+{% endif %}
+{% endblock %}
