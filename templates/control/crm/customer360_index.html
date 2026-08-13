@@ -1,0 +1,79 @@
+{% extends "control/crm/base.html" %}
+
+{% block titletag %}Customer 360{% endblock %}
+
+{% block crm_content %}
+<header class="ibt-page-head">
+  <div>
+    <span class="ibt-eyebrow">CRM</span>
+    <h1>Customer 360</h1>
+    <p>ابحث عن العميل وافتح ملفًا موحدًا يجمع الحساب والمتاجر والمبيعات والمشاريع والدعم والتايملاين.</p>
+  </div>
+</header>
+
+<form class="ibt-filters" method="get">
+  <div class="ibt-field ibt-field--grow">
+    <label for="id_q">البحث</label>
+    <input id="id_q" name="q" type="search" value="{{ query }}" placeholder="الاسم، البريد أو الجوال">
+  </div>
+  <div class="ibt-field">
+    <label for="id_lifecycle">مرحلة العميل</label>
+    <select id="id_lifecycle" name="lifecycle">
+      <option value="">الكل</option>
+      {% for value, label in lifecycle_choices %}
+        <option value="{{ value }}" {% if selected_lifecycle == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="ibt-field">
+    <label for="id_status">الحالة</label>
+    <select id="id_status" name="status">
+      <option value="">الكل</option>
+      {% for value, label in status_choices %}
+        <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button class="button button-longrunning" type="submit">تطبيق</button>
+</form>
+
+<div class="ibt-table-wrap">
+  <table class="ibt-table">
+    <thead>
+      <tr>
+        <th>العميل</th>
+        <th>الحساب</th>
+        <th>مرحلة CRM</th>
+        <th>المالك</th>
+        <th>آخر نشاط</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contact in page_obj %}
+        <tr>
+          <td>
+            <strong>{{ contact.full_name }}</strong>
+            <span>{{ contact.email|default:"—" }}{% if contact.phone %} · {{ contact.phone }}{% endif %}</span>
+          </td>
+          <td>{% if contact.user %}مسجل{% else %}بدون حساب{% endif %}</td>
+          <td><span class="ibt-badge">{{ contact.get_lifecycle_stage_display }}</span></td>
+          <td>{{ contact.owner.get_full_name|default:contact.owner.email|default:"غير معين" }}</td>
+          <td>{{ contact.last_activity_at|date:"Y/m/d H:i"|default:"—" }}</td>
+          <td><a class="button button-small" href="{% url 'customer_360:detail' contact.id %}">فتح 360</a></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="ibt-empty">لا توجد نتائج مطابقة.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="ibt-pagination" aria-label="صفحات النتائج">
+  {% if page_obj.has_previous %}<a class="button button-small" href="?q={{ query|urlencode }}&lifecycle={{ selected_lifecycle }}&status={{ selected_status }}&page={{ page_obj.previous_page_number }}">السابق</a>{% endif %}
+  <span>صفحة {{ page_obj.number }} من {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}<a class="button button-small" href="?q={{ query|urlencode }}&lifecycle={{ selected_lifecycle }}&status={{ selected_status }}&page={{ page_obj.next_page_number }}">التالي</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}
