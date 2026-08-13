@@ -1,0 +1,39 @@
+{% extends "layouts/public_base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.seo_title|default:page.title }} — ابتكار تك{% endblock %}
+
+{% block content %}
+<section class="container section">
+  {% if page.eyebrow %}<p>{{ page.eyebrow }}</p>{% endif %}
+  <h1>{{ page.title }}</h1>
+  {% if page.platform_name %}<p>{{ page.platform_name }}</p>{% endif %}
+  {% if page.client_name %}<p>{{ page.client_name }}</p>{% endif %}
+  {% if page.summary %}<p>{{ page.summary }}</p>{% endif %}
+  {% if page.excerpt %}<p>{{ page.excerpt }}</p>{% endif %}
+  {% if page.published_at %}<time>{{ page.published_at }}</time>{% endif %}
+
+  {% if page.body %}<div class="richtext">{{ page.body|richtext }}</div>{% endif %}
+  {% if page.challenge %}<section><h2>التحدي</h2>{{ page.challenge|richtext }}</section>{% endif %}
+  {% if page.solution %}<section><h2>الحل</h2>{{ page.solution|richtext }}</section>{% endif %}
+  {% if page.results %}<section><h2>النتائج</h2>{{ page.results|richtext }}</section>{% endif %}
+
+  {% if page.related_services.all %}
+  <section>
+    <h2>خدمات مرتبطة</h2>
+    <div class="cards">
+      {% for service in page.related_services.all %}
+      <article>
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.short_description }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if page.cta_url and page.cta_label %}
+  <p><a href="{{ page.cta_url }}">{{ page.cta_label }}</a></p>
+  {% endif %}
+</section>
+{% endblock %}
