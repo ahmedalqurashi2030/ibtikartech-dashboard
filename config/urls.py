@@ -9,6 +9,7 @@ urlpatterns = [
     path("control/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("accounts/", include("allauth.urls")),
+    path("analytics/", include("apps.analytics.urls")),
     path("portal/support/", include("apps.support.portal_urls")),
     path("portal/", include("apps.customer_portal.urls")),
     path("", include(wagtail_urls)),

@@ -1,0 +1,70 @@
+{% extends "wagtailadmin/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/control/analytics.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="ibt-analytics" id="main-content" dir="rtl">
+  <header class="ibt-analytics__header">
+    <p>التشغيل التجاري والتسويقي</p>
+    <h1>لوحة مؤشرات ابتكار تك</h1>
+    <span>ملخص آخر {{ period_days }} يومًا مع المؤشرات الحالية.</span>
+  </header>
+
+  <section class="ibt-kpi-grid" aria-label="المؤشرات الرئيسية">
+    <article><span>إجمالي جهات الاتصال</span><strong>{{ kpis.contacts }}</strong></article>
+    <article><span>جهات اتصال جديدة</span><strong>{{ kpis.new_contacts }}</strong></article>
+    <article><span>طلبات تحتاج متابعة</span><strong>{{ kpis.new_inquiries }}</strong></article>
+    <article><span>فرص نشطة</span><strong>{{ kpis.pipeline_count }}</strong></article>
+    <article><span>قيمة خط المبيعات</span><strong>{{ kpis.pipeline_value }} SAR</strong></article>
+    <article><span>قيمة عروض مقبولة</span><strong>{{ kpis.accepted_quote_value }} SAR</strong></article>
+    <article><span>مشاريع نشطة</span><strong>{{ kpis.active_projects }}</strong></article>
+    <article><span>تذاكر دعم مفتوحة</span><strong>{{ kpis.open_tickets }}</strong></article>
+    <article><span>أحداث الموقع</span><strong>{{ kpis.events }}</strong></article>
+    <article><span>نقرات واتساب</span><strong>{{ kpis.whatsapp_clicks }}</strong></article>
+    <article><span>نقرات شراء ثراء</span><strong>{{ kpis.tharaa_marketplace_clicks }}</strong></article>
+  </section>
+
+  <section class="ibt-analytics-grid">
+    <article class="ibt-panel">
+      <h2>أكثر الخدمات تفاعلًا</h2>
+      <ol>
+        {% for item in top_services %}
+          <li><span>{{ item.service__name }}</span><strong>{{ item.total }}</strong></li>
+        {% empty %}<li>لا توجد بيانات بعد.</li>{% endfor %}
+      </ol>
+    </article>
+    <article class="ibt-panel">
+      <h2>أكثر الأحداث تكرارًا</h2>
+      <ol>
+        {% for item in top_events %}
+          <li><span>{{ item.event_name }}</span><strong>{{ item.total }}</strong></li>
+        {% empty %}<li>لا توجد بيانات بعد.</li>{% endfor %}
+      </ol>
+    </article>
+  </section>
+
+  <section class="ibt-panel">
+    <h2>أحدث أحداث الموقع</h2>
+    <div class="ibt-table-wrap">
+      <table>
+        <thead><tr><th>الحدث</th><th>العميل</th><th>الخدمة</th><th>المسار</th><th>الوقت</th></tr></thead>
+        <tbody>
+          {% for event in recent_events %}
+          <tr>
+            <td>{{ event.event_name }}</td>
+            <td>{{ event.contact|default:"زائر" }}</td>
+            <td>{{ event.service|default:"—" }}</td>
+            <td>{{ event.page_path|default:"—" }}</td>
+            <td>{{ event.occurred_at }}</td>
+          </tr>
+          {% empty %}<tr><td colspan="5">لا توجد أحداث بعد.</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+{% endblock %}
