@@ -14,6 +14,7 @@
   },
   "postCreateCommand": "bash scripts/codespaces-bootstrap.sh",
   "postStartCommand": "bash scripts/codespaces-start.sh",
+  "postAttachCommand": "bash scripts/codespaces-start.sh",
   "customizations": {
     "vscode": {
       "extensions": [
