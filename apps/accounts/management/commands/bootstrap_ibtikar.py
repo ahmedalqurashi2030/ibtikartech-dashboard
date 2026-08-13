@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 user.set_password(password)
                 changed_fields.append("password")
             if changed_fields:
-                user.save(update_fields=[*changed_fields, "updated_at"] if hasattr(user, "updated_at") else changed_fields)
+                user.save(update_fields=changed_fields)
                 self.stdout.write(self.style.SUCCESS(f"Updated superuser: {email}"))
             else:
                 self.stdout.write(f"Superuser already ready: {email}")
