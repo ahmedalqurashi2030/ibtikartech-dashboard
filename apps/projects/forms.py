@@ -5,11 +5,12 @@ from .choices import ApprovalStatus
 
 class ApprovalResponseForm(forms.Form):
     decision = forms.ChoiceField(
+        label="القرار",
         choices=(
             (ApprovalStatus.APPROVED, "موافقة"),
             (ApprovalStatus.CHANGES_REQUESTED, "طلب تعديلات"),
             (ApprovalStatus.REJECTED, "رفض"),
-        )
+        ),
     )
     response_note = forms.CharField(
         required=False,
