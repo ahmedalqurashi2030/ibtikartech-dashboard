@@ -1,0 +1,47 @@
+{% extends "layouts/portal_base.html" %}
+{% load static %}
+
+{% block portal_title %}الدعم{% endblock %}
+
+{% block extra_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/portal/support.css' %}">
+{% endblock %}
+
+{% block portal_content %}
+<header class="portal-page-header portal-support-header">
+  <div>
+    <span class="portal-eyebrow">الدعم</span>
+    <h1>تذاكر الدعم</h1>
+    <p>تابع طلبات الدعم ومحادثاتك مع فريق ابتكار تك من مكان واحد.</p>
+  </div>
+  <a class="portal-button" href="{% url 'support_portal:create_ticket' %}">فتح تذكرة جديدة</a>
+</header>
+
+{% if tickets %}
+  <div class="portal-stack">
+    {% for ticket in tickets %}
+      <a class="portal-panel portal-ticket-card" href="{% url 'support_portal:ticket_detail' ticket.id %}">
+        <div class="portal-panel__header">
+          <div>
+            <span class="portal-card__meta">{{ ticket.ticket_number }}</span>
+            <h2>{{ ticket.subject }}</h2>
+          </div>
+          <span class="portal-badge">{{ ticket.get_status_display }}</span>
+        </div>
+        <div class="portal-ticket-meta">
+          <span>الأولوية: {{ ticket.get_priority_display }}</span>
+          <span>المشروع: {{ ticket.project.name|default:"غير مرتبط" }}</span>
+          <span>آخر تحديث: {{ ticket.updated_at|date:"Y/m/d H:i" }}</span>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="portal-empty-state">
+    <h2>لا توجد تذاكر دعم</h2>
+    <p>إذا احتجت مساعدة يمكنك فتح تذكرة جديدة وسيتم تسجيلها في حسابك.</p>
+    <a class="portal-button" href="{% url 'support_portal:create_ticket' %}">فتح أول تذكرة</a>
+  </div>
+{% endif %}
+{% endblock %}
