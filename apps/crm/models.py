@@ -1,6 +1,7 @@
 import uuid
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -58,6 +59,11 @@ class Contact(models.Model):
             models.Index(fields=["-last_activity_at"]),
         ]
 
+    def clean(self):
+        super().clean()
+        if self.owner_id and not self.owner.is_staff:
+            raise ValidationError({"owner": "CRM contacts can only be owned by staff users."})
+
     def __str__(self):
         return self.full_name
 
@@ -105,7 +111,12 @@ class OrganizationContact(models.Model):
             models.UniqueConstraint(
                 fields=["organization", "contact"],
                 name="crm_unique_organization_contact",
-            )
+            ),
+            models.UniqueConstraint(
+                fields=["organization"],
+                condition=models.Q(is_primary=True),
+                name="crm_unique_primary_contact_per_organization",
+            ),
         ]
 
     def __str__(self):
@@ -193,6 +204,28 @@ class ConsentRecord(models.Model):
             models.Index(fields=["status", "-created_at"]),
         ]
 
+    def clean(self):
+        super().clean()
+        errors = {}
+        if self.status == self.Status.GRANTED:
+            if self.granted_at is None:
+                errors["granted_at"] = "Granted consent records require a granted timestamp."
+            if self.withdrawn_at is not None:
+                errors["withdrawn_at"] = "A granted record cannot contain a withdrawal timestamp."
+        if self.status == self.Status.WITHDRAWN and self.withdrawn_at is None:
+            errors["withdrawn_at"] = "Withdrawn consent records require a withdrawal timestamp."
+        if (
+            self.granted_at is not None
+            and self.withdrawn_at is not None
+            and self.withdrawn_at < self.granted_at
+        ):
+            errors["withdrawn_at"] = "Withdrawal cannot occur before consent was granted."
+        if errors:
+            raise ValidationError(errors)
+
+    def __str__(self):
+        return f"{self.contact} — {self.channel} / {self.purpose} — {self.status}"
+
 
 class ActivityEvent(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -222,3 +255,6 @@ class ActivityEvent(models.Model):
             models.Index(fields=["contact", "-created_at"]),
             models.Index(fields=["event_type", "-created_at"]),
         ]
+
+    def __str__(self):
+        return f"{self.contact} — {self.title}"
