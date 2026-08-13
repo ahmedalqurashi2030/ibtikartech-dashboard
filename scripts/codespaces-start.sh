@@ -49,7 +49,6 @@ make_codespaces_port_public() {
     return 0
   fi
 
-  # The forwarded port can take a few seconds to appear in the Codespaces API.
   for _ in {1..12}; do
     if gh codespace ports --codespace "$CODESPACE_NAME" --json sourcePort \
       --jq ".[] | select(.sourcePort == ${PORT}) | .sourcePort" 2>/dev/null \
@@ -67,7 +66,10 @@ make_codespaces_port_public() {
   echo "Port ${PORT} was not visible to the Codespaces API yet; forwarding still works privately."
 }
 
-# Keep the local SQLite schema current when a Codespace resumes after new commits.
+# During the architecture-build phase migrations are generated on resume so new
+# domain models can be previewed immediately. Before production these migrations
+# will be committed and this step will be removed.
+python manage.py makemigrations accounts core crm services sales content --noinput
 python manage.py migrate --noinput
 python manage.py check
 
@@ -87,7 +89,6 @@ if ! wait_for_server; then
   exit 1
 fi
 
-# Printing a localhost URL lets Codespaces auto-detect/forward the port as a fallback.
 echo "Ibtikar Tech preview is READY: http://localhost:${PORT}"
 echo "Wagtail control: http://localhost:${PORT}/control/"
 echo "Preview log: ${LOG_FILE}"
