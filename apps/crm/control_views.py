@@ -148,7 +148,10 @@ def customer360_detail(request, contact_id):
     )
 
     organization_links = list(
-        contact.organization_links.select_related("organization").order_by("-is_primary", "created_at")
+        contact.organization_links.select_related("organization").order_by(
+            "-is_primary",
+            "created_at",
+        )
     )
     stores = list(contact.stores.select_related("organization").order_by("name"))
     saved_services = list(
