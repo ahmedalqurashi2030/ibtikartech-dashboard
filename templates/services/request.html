@@ -1,0 +1,23 @@
+{% extends "layouts/public_base.html" %}
+
+{% block title %}طلب {{ service.name }} — ابتكار تك{% endblock %}
+
+{% block content %}
+<section class="container section" dir="rtl">
+  <p><a href="{% url 'services:detail' service.slug %}">{{ service.name }}</a></p>
+  <h1>اطلب الخدمة</h1>
+  <p>لا تحتاج إلى إنشاء حساب. إذا كان لديك حساب مسجل فسيُربط الطلب به تلقائيًا.</p>
+  <form method="post" data-analytics-event="quote_form_view">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}
+        {{ field }}
+        {% for error in field.errors %}<span role="alert">{{ error }}</span>{% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit" data-analytics-event="quote_submit" data-service-id="{{ service.id }}">إرسال الطلب</button>
+  </form>
+</section>
+{% endblock %}

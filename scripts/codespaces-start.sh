@@ -66,12 +66,19 @@ make_codespaces_port_public() {
   echo "Port ${PORT} was not visible to the Codespaces API yet; forwarding still works privately."
 }
 
-# During the architecture-build phase migrations are generated on resume so new
-# domain models can be previewed immediately. Before production these migrations
-# will be committed and this step will be removed.
-python manage.py makemigrations accounts core crm services sales content --noinput
 python manage.py migrate --noinput
 python manage.py check
+
+if [[ -n "${IBTIKAR_ADMIN_EMAIL:-}" ]]; then
+  bootstrap_args=(--email "$IBTIKAR_ADMIN_EMAIL")
+  if [[ -n "${IBTIKAR_ADMIN_PASSWORD:-}" ]]; then
+    bootstrap_args+=(--password "$IBTIKAR_ADMIN_PASSWORD")
+  fi
+  if [[ -n "${IBTIKAR_SITE_HOSTNAME:-}" ]]; then
+    bootstrap_args+=(--hostname "$IBTIKAR_SITE_HOSTNAME")
+  fi
+  python manage.py bootstrap_ibtikar "${bootstrap_args[@]}"
+fi
 
 if server_is_running; then
   echo "Ibtikar Tech preview server is already running on port ${PORT}."
@@ -91,6 +98,7 @@ fi
 
 echo "Ibtikar Tech preview is READY: http://localhost:${PORT}"
 echo "Wagtail control: http://localhost:${PORT}/control/"
+echo "Health check: http://localhost:${PORT}/healthz/"
 echo "Preview log: ${LOG_FILE}"
 
 make_codespaces_port_public

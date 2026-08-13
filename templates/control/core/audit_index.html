@@ -1,0 +1,32 @@
+{% extends "wagtailadmin/base.html" %}
+
+{% block content %}
+<main class="nice-padding" id="main-content" dir="rtl">
+  <header style="margin-bottom:1.5rem">
+    <h1>سجل التدقيق</h1>
+    <p>سجل للقراءة فقط للعمليات الحساسة والتغييرات المسجلة في المنصة.</p>
+  </header>
+  <form method="get" style="margin-bottom:1rem">
+    <label for="audit-q">بحث</label>
+    <input id="audit-q" type="search" name="q" value="{{ query }}" placeholder="المستخدم، الإجراء، نوع الكائن أو المعرّف">
+    <button type="submit" class="button">بحث</button>
+  </form>
+  <div style="overflow:auto">
+    <table class="listing">
+      <thead><tr><th>الوقت</th><th>المستخدم</th><th>الإجراء</th><th>الكائن</th><th>المعرّف</th><th>IP</th></tr></thead>
+      <tbody>
+        {% for log in page_obj %}
+        <tr>
+          <td>{{ log.created_at }}</td>
+          <td>{{ log.actor_user.email|default:"System" }}</td>
+          <td>{{ log.action }}</td>
+          <td>{{ log.object_type }}</td>
+          <td>{{ log.object_id }}</td>
+          <td>{{ log.ip_address|default:"—" }}</td>
+        </tr>
+        {% empty %}<tr><td colspan="6">لا توجد سجلات بعد.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+{% endblock %}

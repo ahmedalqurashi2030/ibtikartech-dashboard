@@ -12,6 +12,8 @@ dependencies = [
   "wagtail>=7.4,<7.5",
   "django-allauth>=65,<66",
   "psycopg[binary]>=3.2,<4",
+  "django-storages[s3]>=1.14.6,<2",
+  "gunicorn>=26,<27",
 ]
 
 [project.optional-dependencies]

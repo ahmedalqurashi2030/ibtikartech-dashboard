@@ -62,6 +62,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "apps.core.audit.AuditContextMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -87,8 +88,6 @@ TEMPLATES = [
     }
 ]
 
-# Development and tests intentionally default to SQLite for zero-setup local work.
-# Production overrides this setting and requires PostgreSQL explicitly.
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -109,10 +108,7 @@ ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 LANGUAGE_CODE = "ar"
-LANGUAGES = [
-    ("ar", "العربية"),
-    ("en", "English"),
-]
+LANGUAGES = [("ar", "العربية"), ("en", "English")]
 TIME_ZONE = "Asia/Riyadh"
 USE_I18N = True
 USE_TZ = True
@@ -120,7 +116,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -129,13 +124,12 @@ WAGTAIL_SITE_NAME = "Ibtikar Tech"
 WAGTAILADMIN_BASE_URL = os.getenv("WAGTAILADMIN_BASE_URL", "")
 WAGTAIL_I18N_ENABLED = True
 
-DEFAULT_FROM_EMAIL = os.getenv(
-    "DEFAULT_FROM_EMAIL",
-    "Ibtikar Tech <no-reply@example.com>",
-)
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Ibtikar Tech <no-reply@example.com>")
 
 LOGIN_REDIRECT_URL = "/portal/"
 LOGOUT_REDIRECT_URL = "/"
 
 SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
 X_FRAME_OPTIONS = "DENY"

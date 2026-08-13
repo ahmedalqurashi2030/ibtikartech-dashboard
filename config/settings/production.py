@@ -7,6 +7,13 @@ from .base import *  # noqa: F403
 
 DEBUG = False
 
+production_secret = os.getenv("DJANGO_SECRET_KEY", "").strip()
+if len(production_secret) < 32 or production_secret == "unsafe-local-development-key":
+    raise ImproperlyConfigured(
+        "DJANGO_SECRET_KEY must be explicitly configured with at least 32 characters in production."
+    )
+SECRET_KEY = production_secret
+
 DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
 if not DATABASE_URL:
     raise ImproperlyConfigured(
@@ -33,6 +40,7 @@ DATABASES = {
     }
 }
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
@@ -42,11 +50,39 @@ SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "same-origin"
 
+EMAIL_HOST = os.getenv("EMAIL_HOST", "").strip()
+if EMAIL_HOST:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+    EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "true").lower() == "true"
+
 STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
     },
 }
+
+s3_bucket_name = os.getenv("AWS_STORAGE_BUCKET_NAME", "").strip()
+if s3_bucket_name:
+    s3_options = {
+        "bucket_name": s3_bucket_name,
+        "default_acl": None,
+        "file_overwrite": False,
+        "location": os.getenv("AWS_MEDIA_LOCATION", "media").strip("/"),
+        "querystring_auth": True,
+    }
+    optional_s3_settings = {
+        "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL", "").strip(),
+        "region_name": os.getenv("AWS_S3_REGION_NAME", "").strip(),
+        "addressing_style": os.getenv("AWS_S3_ADDRESSING_STYLE", "").strip(),
+    }
+    s3_options.update(
+        {key: value for key, value in optional_s3_settings.items() if value}
+    )
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": s3_options,
+    }

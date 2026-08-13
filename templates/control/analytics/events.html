@@ -1,0 +1,36 @@
+{% extends "wagtailadmin/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/control/analytics.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="ibt-analytics" id="main-content" dir="rtl">
+  <header class="ibt-analytics__header">
+    <p>سجل للقراءة فقط</p>
+    <h1>أحداث التحليلات</h1>
+    <span>آخر 250 حدثًا. لا يتم تعديل الأحداث التاريخية من لوحة التحكم.</span>
+  </header>
+  <section class="ibt-panel">
+    <div class="ibt-table-wrap">
+      <table>
+        <thead><tr><th>الحدث</th><th>العميل</th><th>الخدمة</th><th>المصدر</th><th>المسار</th><th>الوقت</th></tr></thead>
+        <tbody>
+          {% for event in events %}
+          <tr>
+            <td>{{ event.event_name }}</td>
+            <td>{{ event.contact|default:"زائر" }}</td>
+            <td>{{ event.service|default:"—" }}</td>
+            <td>{{ event.utm_source|default:"Direct" }}</td>
+            <td>{{ event.page_path|default:"—" }}</td>
+            <td>{{ event.occurred_at }}</td>
+          </tr>
+          {% empty %}<tr><td colspan="6">لا توجد أحداث بعد.</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+{% endblock %}
