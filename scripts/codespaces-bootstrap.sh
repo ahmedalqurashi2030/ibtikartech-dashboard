@@ -4,7 +4,8 @@ set -euo pipefail
 python -m pip install --upgrade pip
 pip install -e ".[dev]"
 
-python manage.py makemigrations accounts core crm services sales content --noinput
+python manage.py makemigrations \
+  accounts core crm services sales customer_portal content --noinput
 python manage.py migrate --noinput
 python manage.py check
 
