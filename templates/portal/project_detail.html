@@ -63,10 +63,11 @@
             {% if approval.status == "PENDING" %}
               <form class="portal-form" method="post" action="{% url 'customer_portal:respond_project_approval' project.id approval.id %}">
                 {% csrf_token %}
-                {% for field in approval_form %}
+                {% for field in approval.response_form %}
                   <div class="portal-field">
-                    <label for="{{ field.id_for_label }}-{{ approval.id }}">{{ field.label }}</label>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {{ field }}
+                    {% for error in field.errors %}<span class="portal-field__error">{{ error }}</span>{% endfor %}
                   </div>
                 {% endfor %}
                 <button class="portal-button" type="submit">إرسال الرد</button>
