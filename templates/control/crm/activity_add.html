@@ -1,0 +1,33 @@
+{% extends "control/crm/base.html" %}
+
+{% block titletag %}إضافة نشاط CRM{% endblock %}
+
+{% block crm_content %}
+<header class="ibt-page-head">
+  <div>
+    <a class="ibt-back" href="{% url 'crm_activity:index' %}">العودة إلى Timeline CRM</a>
+    <span class="ibt-eyebrow">CRM Activity</span>
+    <h1>إضافة نشاط</h1>
+    <p>يسجل النشاط على ملف العميل باسم الموظف الحالي ويظهر ضمن Customer 360.</p>
+  </div>
+</header>
+
+<section class="ibt-panel ibt-form-panel">
+  <form class="ibt-form" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class="ibt-field">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+        {% for error in field.errors %}<span class="ibt-field__error">{{ error }}</span>{% endfor %}
+      </div>
+    {% endfor %}
+    <div class="ibt-actions">
+      <button class="button" type="submit">حفظ النشاط</button>
+      <a class="button button-secondary" href="{% url 'crm_activity:index' %}">إلغاء</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

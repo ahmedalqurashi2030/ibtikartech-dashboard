@@ -1,0 +1,48 @@
+{% extends "control/crm/base.html" %}
+
+{% block titletag %}CRM Timeline{% endblock %}
+
+{% block crm_content %}
+<header class="ibt-page-head ibt-page-head--split">
+  <div>
+    <span class="ibt-eyebrow">CRM</span>
+    <h1>Timeline CRM</h1>
+    <p>أحداث CRM اليدوية والتشغيلية المسجلة على العملاء. هذا السجل يضيف أحداثًا جديدة ولا يعيد كتابة التاريخ.</p>
+  </div>
+  {% if perms.crm.add_activityevent %}<a class="button" href="{% url 'crm_activity:add' %}">إضافة نشاط</a>{% endif %}
+</header>
+
+<form class="ibt-filters" method="get">
+  <div class="ibt-field ibt-field--grow">
+    <label for="id_q">البحث</label>
+    <input id="id_q" name="q" type="search" value="{{ query }}" placeholder="العميل، العنوان أو نوع الحدث">
+  </div>
+  <button class="button" type="submit">بحث</button>
+</form>
+
+<div class="ibt-table-wrap">
+  <table class="ibt-table">
+    <thead><tr><th>العميل</th><th>الحدث</th><th>النوع</th><th>الموظف</th><th>المرجع</th><th>التاريخ</th></tr></thead>
+    <tbody>
+      {% for event in page_obj %}
+        <tr>
+          <td><strong>{{ event.contact.full_name }}</strong><span>{{ event.contact.email|default:"—" }}</span></td>
+          <td><strong>{{ event.title }}</strong>{% if event.description %}<span>{{ event.description|truncatechars:100 }}</span>{% endif %}</td>
+          <td><span class="ibt-badge">{{ event.event_type }}</span></td>
+          <td>{% if event.actor_user %}{{ event.actor_user.get_full_name|default:event.actor_user.email }}{% else %}System{% endif %}</td>
+          <td>{% if event.reference_type %}{{ event.reference_type }}{% if event.reference_id %} / {{ event.reference_id }}{% endif %}{% else %}—{% endif %}</td>
+          <td>{{ event.created_at|date:"Y/m/d H:i" }}</td>
+        </tr>
+      {% empty %}<tr><td colspan="6" class="ibt-empty">لا توجد أحداث.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="ibt-pagination">
+  {% if page_obj.has_previous %}<a class="button button-small" href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}">السابق</a>{% endif %}
+  <span>صفحة {{ page_obj.number }} من {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}<a class="button button-small" href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}">التالي</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

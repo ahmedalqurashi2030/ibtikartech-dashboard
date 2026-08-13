@@ -1,0 +1,51 @@
+{% extends "control/crm/base.html" %}
+
+{% block titletag %}سجل الموافقات{% endblock %}
+
+{% block crm_content %}
+<header class="ibt-page-head ibt-page-head--split">
+  <div>
+    <span class="ibt-eyebrow">CRM / Privacy</span>
+    <h1>سجل الموافقات</h1>
+    <p>سجل تاريخي append-only للموافقات والانسحابات. لا يتم تعديل أو حذف السجلات السابقة من هذه الواجهة.</p>
+  </div>
+  {% if perms.crm.add_consentrecord %}<a class="button" href="{% url 'consent_ledger:add' %}">إضافة سجل</a>{% endif %}
+</header>
+
+<form class="ibt-filters" method="get">
+  <div class="ibt-field ibt-field--grow">
+    <label for="id_q">البحث</label>
+    <input id="id_q" name="q" type="search" value="{{ query }}" placeholder="العميل، الغرض أو المصدر">
+  </div>
+  <button class="button" type="submit">بحث</button>
+</form>
+
+<div class="ibt-table-wrap">
+  <table class="ibt-table">
+    <thead><tr><th>العميل</th><th>القناة</th><th>الغرض</th><th>الحالة</th><th>المصدر</th><th>نسخة السياسة</th><th>التوقيت</th></tr></thead>
+    <tbody>
+      {% for record in page_obj %}
+        <tr>
+          <td><strong>{{ record.contact.full_name }}</strong><span>{{ record.contact.email|default:"—" }}</span></td>
+          <td>{{ record.get_channel_display }}</td>
+          <td>{{ record.purpose }}</td>
+          <td><span class="ibt-badge">{{ record.get_status_display }}</span></td>
+          <td>{{ record.source }}</td>
+          <td>{{ record.policy_version }}</td>
+          <td>
+            {% if record.status == "GRANTED" %}{{ record.granted_at|date:"Y/m/d H:i" }}{% else %}{{ record.withdrawn_at|date:"Y/m/d H:i" }}{% endif %}
+          </td>
+        </tr>
+      {% empty %}<tr><td colspan="7" class="ibt-empty">لا توجد سجلات.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<nav class="ibt-pagination">
+  {% if page_obj.has_previous %}<a class="button button-small" href="?q={{ query|urlencode }}&page={{ page_obj.previous_page_number }}">السابق</a>{% endif %}
+  <span>صفحة {{ page_obj.number }} من {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}<a class="button button-small" href="?q={{ query|urlencode }}&page={{ page_obj.next_page_number }}">التالي</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "control/crm/base.html" %}
+
+{% block titletag %}{{ contact.full_name }} — Customer 360{% endblock %}
+
+{% block crm_content %}
+<header class="ibt-page-head ibt-page-head--split">
+  <div>
+    <a class="ibt-back" href="{% url 'customer_360:index' %}">العودة إلى Customer 360</a>
+    <span class="ibt-eyebrow">ملف العميل الموحد</span>
+    <h1>{{ contact.full_name }}</h1>
+    <p>{{ contact.email|default:"لا يوجد بريد" }}{% if contact.phone %} · {{ contact.phone }}{% endif %}</p>
+  </div>
+  <div class="ibt-head-badges">
+    <span class="ibt-badge">{{ contact.get_lifecycle_stage_display }}</span>
+    <span class="ibt-badge">{{ contact.get_status_display }}</span>
+  </div>
+</header>
+
+<section class="ibt-stats" aria-label="ملخص العميل">
+  <div class="ibt-stat"><span>المتاجر</span><strong>{{ counts.stores }}</strong></div>
+  <div class="ibt-stat"><span>الطلبات</span><strong>{{ counts.inquiries }}</strong></div>
+  <div class="ibt-stat"><span>الفرص</span><strong>{{ counts.opportunities }}</strong></div>
+  <div class="ibt-stat"><span>عروض الأسعار</span><strong>{{ counts.quotes }}</strong></div>
+  <div class="ibt-stat"><span>المشاريع</span><strong>{{ counts.projects }}</strong></div>
+  <div class="ibt-stat"><span>الدعم</span><strong>{{ counts.tickets }}</strong></div>
+</section>
+
+<div class="ibt-grid ibt-grid--two">
+  <section class="ibt-panel">
+    <div class="ibt-panel__head"><h2>الهوية والحساب</h2></div>
+    <dl class="ibt-definition">
+      <div><dt>البريد</dt><dd>{{ contact.email|default:"—" }}</dd></div>
+      <div><dt>الجوال</dt><dd>{{ contact.phone|default:"—" }}</dd></div>
+      <div><dt>الحساب</dt><dd>{% if contact.user %}مسجل{% else %}بدون حساب{% endif %}</dd></div>
+      <div><dt>حالة الدخول</dt><dd>{% if contact.user and contact.user.is_active %}فعال{% elif contact.user %}معطل{% else %}—{% endif %}</dd></div>
+      <div><dt>البريد موثق</dt><dd>{% if contact.user and contact.user.email_verified_at %}نعم{% elif contact.user %}لا{% else %}—{% endif %}</dd></div>
+      <div><dt>اللغة</dt><dd>{{ contact.preferred_language }}</dd></div>
+      <div><dt>مصدر أول</dt><dd>{{ contact.first_source|default:"—" }}</dd></div>
+      <div><dt>مالك العميل</dt><dd>{% if contact.owner %}{{ contact.owner.get_full_name|default:contact.owner.email }}{% else %}غير معين{% endif %}</dd></div>
+      <div><dt>أول تواصل</dt><dd>{{ contact.first_contact_at|date:"Y/m/d H:i"|default:"—" }}</dd></div>
+      <div><dt>آخر نشاط</dt><dd>{{ contact.last_activity_at|date:"Y/m/d H:i"|default:"—" }}</dd></div>
+    </dl>
+  </section>
+
+  <section class="ibt-panel">
+    <div class="ibt-panel__head"><h2>المنظمات والمتاجر</h2></div>
+    {% if organization_links %}
+      <div class="ibt-list">
+        {% for link in organization_links %}
+          <div class="ibt-list-row">
+            <div><strong>{{ link.organization.name }}</strong><span>{{ link.role_title|default:"بدون مسمى" }}</span></div>
+            {% if link.is_primary %}<span class="ibt-badge">Primary</span>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if stores %}
+      <div class="ibt-list ibt-list--separated">
+        {% for store in stores %}
+          <div class="ibt-list-row">
+            <div><strong>{{ store.name }}</strong><span>{{ store.get_platform_display }}{% if store.url %} · {{ store.url }}{% endif %}</span></div>
+            <span class="ibt-badge">{{ store.get_status_display }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if not organization_links and not stores %}<p class="ibt-empty">لا توجد منظمة أو متجر مرتبط بالعميل.</p>{% endif %}
+  </section>
+
+  <section class="ibt-panel">
+    <div class="ibt-panel__head"><h2>الخدمات المحفوظة</h2></div>
+    {% if saved_services %}
+      <div class="ibt-list">
+        {% for item in saved_services %}
+          <div class="ibt-list-row"><div><strong>{{ item.service.name }}</strong><span>{{ item.service.category.name }}</span></div></div>
+        {% endfor %}
+      </div>
+    {% else %}<p class="ibt-empty">لا توجد خدمات محفوظة.</p>{% endif %}
+  </section>
+
+  <section class="ibt-panel">
+    <div class="ibt-panel__head"><h2>سجل الموافقات</h2><a href="{% url 'consent_ledger:index' %}?q={{ contact.email|urlencode }}">عرض السجل</a></div>
+    {% if consents %}
+      <div class="ibt-list">
+        {% for consent in consents %}
+          <div class="ibt-list-row">
+            <div><strong>{{ consent.get_channel_display }} · {{ consent.purpose }}</strong><span>{{ consent.source }} · {{ consent.created_at|date:"Y/m/d H:i" }}</span></div>
+            <span class="ibt-badge">{{ consent.get_status_display }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}<p class="ibt-empty">لا توجد سجلات موافقة.</p>{% endif %}
+  </section>
+</div>
+
+<section class="ibt-panel ibt-panel--wide">
+  <div class="ibt-panel__head"><h2>المسار التجاري والتنفيذي</h2></div>
+  <div class="ibt-columns">
+    <div>
+      <h3>الطلبات والاستفسارات</h3>
+      {% for item in inquiries %}<div class="ibt-mini"><strong>{{ item.service.name|default:item.get_inquiry_type_display }}</strong><span>{{ item.get_status_display }} · {{ item.created_at|date:"Y/m/d" }}</span></div>{% empty %}<p class="ibt-empty">لا يوجد.</p>{% endfor %}
+    </div>
+    <div>
+      <h3>الفرص</h3>
+      {% for item in opportunities %}<div class="ibt-mini"><strong>{{ item.title }}</strong><span>{{ item.get_stage_display }}{% if item.estimated_value %} · {{ item.estimated_value }} {{ item.currency }}{% endif %}</span></div>{% empty %}<p class="ibt-empty">لا يوجد.</p>{% endfor %}
+    </div>
+    <div>
+      <h3>عروض الأسعار</h3>
+      {% for item in quotes %}<div class="ibt-mini"><strong>{{ item.quote_number }}</strong><span>{{ item.get_status_display }} · {{ item.grand_total }} {{ item.currency }}</span></div>{% empty %}<p class="ibt-empty">لا يوجد.</p>{% endfor %}
+    </div>
+    <div>
+      <h3>المشاريع</h3>
+      {% for item in projects %}<div class="ibt-mini"><strong>{{ item.name }}</strong><span>{{ item.get_status_display }} · {{ item.progress_percentage }}%</span></div>{% empty %}<p class="ibt-empty">لا يوجد.</p>{% endfor %}
+    </div>
+    <div>
+      <h3>الدعم</h3>
+      {% for item in tickets %}<div class="ibt-mini"><strong>{{ item.subject }}</strong><span>{{ item.ticket_number }} · {{ item.get_status_display }}</span></div>{% empty %}<p class="ibt-empty">لا يوجد.</p>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="ibt-panel ibt-panel--wide">
+  <div class="ibt-panel__head">
+    <h2>Timeline العميل</h2>
+    <a href="{% url 'crm_activity:index' %}?q={{ contact.email|urlencode }}">فتح CRM Timeline</a>
+  </div>
+  {% if timeline %}
+    <ol class="ibt-timeline">
+      {% for event in timeline %}
+        <li>
+          <div class="ibt-timeline__dot" aria-hidden="true"></div>
+          <div class="ibt-timeline__body">
+            <div class="ibt-list-row">
+              <div><strong>{{ event.title }}</strong><span>{{ event.kind }} · {{ event.occurred_at|date:"Y/m/d H:i" }}</span></div>
+              <span class="ibt-badge">{{ event.status }}</span>
+            </div>
+            {% if event.description %}<p>{{ event.description|truncatechars:220 }}</p>{% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}<p class="ibt-empty">لا توجد أحداث حتى الآن.</p>{% endif %}
+</section>
+{% endblock %}

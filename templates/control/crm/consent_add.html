@@ -1,0 +1,33 @@
+{% extends "control/crm/base.html" %}
+
+{% block titletag %}إضافة سجل موافقة{% endblock %}
+
+{% block crm_content %}
+<header class="ibt-page-head">
+  <div>
+    <a class="ibt-back" href="{% url 'consent_ledger:index' %}">العودة إلى سجل الموافقات</a>
+    <span class="ibt-eyebrow">Append-only ledger</span>
+    <h1>إضافة سجل موافقة</h1>
+    <p>أنشئ حدث موافقة أو انسحاب جديدًا. السجل السابق يبقى محفوظًا ولا يتم استبداله.</p>
+  </div>
+</header>
+
+<section class="ibt-panel ibt-form-panel">
+  <form class="ibt-form" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class="ibt-field">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+        {% for error in field.errors %}<span class="ibt-field__error">{{ error }}</span>{% endfor %}
+      </div>
+    {% endfor %}
+    <div class="ibt-actions">
+      <button class="button" type="submit">حفظ السجل</button>
+      <a class="button button-secondary" href="{% url 'consent_ledger:index' %}">إلغاء</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
