@@ -1,6 +1,11 @@
 {% extends "layouts/public_base.html" %}
+{% load static %}
 
 {% block title %}مراجعة الحساب — ابتكار تك{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/portal/portal.css' %}">
+{% endblock %}
 
 {% block content %}
 <section class="container section">
