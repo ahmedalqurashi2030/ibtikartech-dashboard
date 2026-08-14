@@ -18,8 +18,7 @@
   if (nav) {
     const items = [
       ['#commerce-health', 'صحة المتجر'],
-      ['#performance-scene', 'السرعة'],
-      ['#store-anatomy', 'تشريح المتجر']
+      ['#performance-scene', 'السرعة']
     ];
     items.reverse().forEach(([href, label]) => {
       if (nav.querySelector(`a[href="${href}"]`)) return;
@@ -38,7 +37,6 @@
         <div class="container">
           <div class="commerce-expertise-heading reveal">
             <div><span class="section-kicker">COMMERCE HEALTH LAB</span><h2 id="commerceHealthTitle">المتجر القوي منظومة، وليس واجهة جميلة فقط.</h2></div>
-            <p>نراجع ثمانية محاور لأنها تؤثر على فهم العميل وثقته ووصوله إلى الشراء. اختر أي محور لتشاهد ما نراجعه، ولماذا يهم، وأي خدمة تعالجه.</p>
           </div>
           <div class="commerce-health-layout reveal">
             <div class="commerce-health-tabs" role="tablist" aria-label="محاور صحة المتجر">
@@ -107,24 +105,6 @@
         </div>
       </section>`);
     insertAfter(lab, compare);
-  }
-
-  const subservices = $('#subservices');
-  if (subservices) {
-    const anatomy = make(`
-      <section class="platform-section commerce-anatomy" id="store-anatomy" aria-labelledby="storeAnatomyTitle">
-        <div class="container">
-          <div class="commerce-expertise-heading reveal"><div><span class="section-kicker">STORE ANATOMY</span><h2 id="storeAnatomyTitle">ماذا نراجع داخل متجرك فعلًا؟</h2></div><p>اضغط على أي نقطة داخل المشهد. سترى لماذا تهم، ما الذي نفحصه، وأي خدمة فرعية ترتبط بها. بهذه الطريقة تتحول الخبرة إلى شيء يمكن للعميل رؤيته لا مجرد قراءة ادعاء عنه.</p></div>
-          <div class="commerce-anatomy-layout reveal">
-            <div class="commerce-anatomy-stage">
-              <div class="commerce-anatomy-browser" aria-hidden="true"><div class="commerce-anatomy-browser__bar"><i></i><i></i><i></i></div><div class="commerce-anatomy-store"><div class="anatomy-header"><b>BRAND</b><span></span></div><div class="anatomy-hero"></div><div class="anatomy-cats"><i></i><i></i><i></i><i></i><i></i></div><div class="anatomy-products"><i></i><i></i><i></i><i></i></div><div class="anatomy-footer"></div></div></div>
-              <button class="commerce-hotspot is-active" type="button" data-anatomy="header" aria-label="الهيدر والبحث">1</button><button class="commerce-hotspot" type="button" data-anatomy="hero" aria-label="الهيرو والقيمة">2</button><button class="commerce-hotspot" type="button" data-anatomy="category" aria-label="التصنيفات والاكتشاف">3</button><button class="commerce-hotspot" type="button" data-anatomy="product-card" aria-label="بطاقة المنتج">4</button><button class="commerce-hotspot" type="button" data-anatomy="product-page" aria-label="صفحة المنتج">5</button><button class="commerce-hotspot" type="button" data-anatomy="checkout" aria-label="السلة والدفع">6</button><button class="commerce-hotspot" type="button" data-anatomy="trust" aria-label="الثقة والسياسات">7</button>
-            </div>
-            <aside class="commerce-anatomy-panel" aria-live="polite"><small data-anatomy-kicker>01 / DISCOVERY</small><h3 data-anatomy-title>الهيدر، البحث والتنقل</h3><p data-anatomy-description>أول طبقة توجه العميل. إذا لم يفهم التصنيفات أو يجد البحث بسرعة، تصبح بقية التجربة أصعب مهما كان التصميم جميلًا.</p><ul data-anatomy-list><li>وضوح القائمة الرئيسية</li><li>الوصول للبحث</li><li>التصنيفات والروابط السريعة</li><li>توازن العلامة مع مساحة التنقل</li></ul><a href="#service-launch" data-anatomy-link>الخدمة المرتبطة: الإطلاق والهيكلة</a></aside>
-          </div>
-        </div>
-      </section>`);
-    insertAfter(subservices, anatomy);
   }
 
   const tabs = $$('[data-health-target]');

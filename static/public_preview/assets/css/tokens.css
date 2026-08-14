@@ -44,8 +44,8 @@
   --ibt-shadow-md: 0 18px 55px rgba(20, 31, 67, .14);
   --ibt-shadow-lg: 0 30px 90px rgba(5, 13, 45, .24);
   --ibt-shadow-glow: 0 0 40px rgba(79, 125, 243, .18);
-  --ibt-font: "IBM Plex Sans Arabic", "Tajawal", "Segoe UI", Tahoma, Arial, sans-serif;
-  --ibt-font-display: "El Messiri", "Tajawal", var(--ibt-font);
+  --ibt-font: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  --ibt-font-display: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
   --ibt-text-xs: clamp(.72rem, .69rem + .12vw, .78rem);
   --ibt-text-sm: clamp(.82rem, .78rem + .16vw, .92rem);
   --ibt-text-base: clamp(1rem, .95rem + .18vw, 1.08rem);
