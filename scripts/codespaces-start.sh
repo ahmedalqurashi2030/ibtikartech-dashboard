@@ -11,6 +11,11 @@ PORT="${IBTIKAR_PREVIEW_PORT:-8000}"
 HOST="0.0.0.0"
 LOG_FILE="/tmp/ibtikartech-preview.log"
 PID_FILE="/tmp/ibtikartech-preview.pid"
+REVISION_FILE="/tmp/ibtikartech-preview.revision"
+
+current_revision() {
+  git rev-parse HEAD 2>/dev/null || printf 'unknown'
+}
 
 server_is_running() {
   if [[ -f "$PID_FILE" ]]; then
@@ -22,6 +27,11 @@ server_is_running() {
   fi
 
   pgrep -f "manage.py runserver ${HOST}:${PORT}" >/dev/null 2>&1
+}
+
+server_revision_matches() {
+  [[ -f "$REVISION_FILE" ]] || return 1
+  [[ "$(cat "$REVISION_FILE" 2>/dev/null || true)" == "$(current_revision)" ]]
 }
 
 server_is_healthy() {
@@ -55,14 +65,15 @@ stop_preview_server() {
     kill "$pid" 2>/dev/null || true
   done < <(pgrep -f "manage.py runserver ${HOST}:${PORT}" || true)
 
-  rm -f "$PID_FILE"
+  rm -f "$PID_FILE" "$REVISION_FILE"
 }
 
 start_preview_server() {
-  rm -f "$PID_FILE"
+  rm -f "$PID_FILE" "$REVISION_FILE"
   : > "$LOG_FILE"
   nohup python manage.py runserver "${HOST}:${PORT}" --noreload >"$LOG_FILE" 2>&1 &
   echo $! > "$PID_FILE"
+  current_revision > "$REVISION_FILE"
   echo "Starting Ibtikar Tech preview server (PID $(cat "$PID_FILE"))..."
 }
 
@@ -133,11 +144,15 @@ if [[ -n "${IBTIKAR_ADMIN_EMAIL:-}" ]]; then
   python manage.py bootstrap_ibtikar "${bootstrap_args[@]}"
 fi
 
-if server_is_running && server_is_healthy; then
+if server_is_running && server_is_healthy && server_revision_matches; then
   echo "Ibtikar Tech preview server is already healthy on port ${PORT}."
 else
   if server_is_running; then
-    echo "A stale/unhealthy preview process was detected. Restarting it..."
+    if ! server_revision_matches; then
+      echo "Preview code revision changed. Restarting Django..."
+    else
+      echo "A stale/unhealthy preview process was detected. Restarting it..."
+    fi
     stop_preview_server
   fi
   start_preview_server
