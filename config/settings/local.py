@@ -6,8 +6,20 @@ DEBUG = True
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 
-# GitHub Codespaces exposes Django through a forwarded HTTPS domain.
-# Trust only the current codespace preview host instead of using a wildcard.
+# Local development and GitHub Codespaces can proxy HTTPS requests to Django as
+# https://localhost:8000. Trust only these explicit development origins here;
+# production settings remain unchanged.
+for origin in (
+    "http://localhost:8000",
+    "https://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://127.0.0.1:8000",
+):
+    if origin not in CSRF_TRUSTED_ORIGINS:  # noqa: F405
+        CSRF_TRUSTED_ORIGINS.append(origin)  # noqa: F405
+
+# GitHub Codespaces may expose Django through a forwarded HTTPS domain. When
+# Codespaces metadata is available, trust only that exact preview host.
 if os.getenv("CODESPACES") == "true":
     codespace_name = os.getenv("CODESPACE_NAME", "").strip()
     forwarding_domain = os.getenv(
