@@ -88,9 +88,10 @@
     const kicker = heading?.querySelector('.kicker');
     const title = heading?.querySelector('h2');
     const description = heading?.querySelector('p');
-    if (kicker) kicker.textContent = 'مشاهد الخدمات الإبداعية';
-    if (title) title.textContent = 'ستة محاور رئيسية. مشهد واحد يتبدل معك.';
-    if (description) description.textContent = 'مرّر بين المحاور الستة؛ يبقى المشهد ثابتًا ويتحوّل بصريًا مع كل خدمة، بينما يشرح النص ما الذي نقدمه وأين تبدأ.';
+    if (kicker) kicker.textContent = 'مجالات الخبرة';
+    if (title) title.textContent = 'ستة محاور رئيسية لبناء تجربة رقمية متكاملة.';
+    description?.remove();
+    lab.querySelector('.stage-caption small')?.remove();
 
     const items = [...lab.querySelectorAll('.service-item')];
     items.forEach((item, index) => {
@@ -162,7 +163,7 @@
     const description = heading?.querySelector('p');
     if (kicker) kicker.textContent = 'بعض خدماتنا المتنوعة';
     if (title) title.textContent = 'خدمات محددة عندما تعرف ما الذي تريد تحسينه.';
-    if (description) description.textContent = 'أمثلة عملية من خدمات ابتكار تك، بدون تكرار العائلات الرئيسية أعلاه. اسحب الشرائح أو استخدم الأسهم ثم افتح الخدمة المناسبة.';
+    description?.remove();
 
     catalogSection.querySelector('.strategy-filterbar')?.remove();
     catalogSection.querySelector('.strategy-scope-note')?.remove();

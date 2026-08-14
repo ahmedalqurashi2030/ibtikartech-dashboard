@@ -1,0 +1,31 @@
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" role="img" aria-label="المنتجات الثابتة">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0ea5a8"/>
+          <stop offset="1" stop-color="#4f7df3"/>
+        </linearGradient>
+        <linearGradient id="soft" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#0ea5a8" stop-opacity=".14"/>
+          <stop offset="1" stop-color="#4f7df3" stop-opacity=".08"/>
+        </linearGradient>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#0f1738" flood-opacity=".14"/>
+        </filter>
+      </defs>
+      <rect width="800" height="480" rx="30" fill="#ecfbfb"/>
+      <circle cx="80" cy="70" r="110" fill="#0ea5a8" opacity=".08"/>
+      <circle cx="728" cy="420" r="145" fill="#4f7df3" opacity=".07"/>
+      <g filter="url(#shadow)">
+        <rect x="34" y="34" width="732" height="412" rx="26" fill="#fff"/>
+        <rect x="34" y="34" width="732" height="44" rx="26" fill="#11182d"/>
+        <rect x="34" y="58" width="732" height="20" fill="#11182d"/>
+        <circle cx="60" cy="56" r="5" fill="#ff6684"/>
+        <circle cx="77" cy="56" r="5" fill="#ffc857"/>
+        <circle cx="94" cy="56" r="5" fill="#35d39a"/>
+        <rect x="300" y="48" width="200" height="16" rx="8" fill="#202945"/>
+        <g transform="translate(0 78)"><rect x="65" y="48" width="125" height="230" rx="14" fill="#ffffff" opacity="1" stroke="#dfe5ef" stroke-width="1"/><rect x="77" y="60" width="101" height="110.39999999999999" rx="12" fill="url(#g)" opacity="1"/><rect x="77" y="179.1" width="85.0" height="8" rx="4" fill="#d7dde8" opacity="1"/><rect x="77" y="202.10000000000002" width="58.75" height="7" rx="4" fill="#e6eaf0" opacity="1"/><rect x="77" y="229.70000000000002" width="42.5" height="10" rx="5" fill="#0ea5a8" opacity="1"/><circle cx="168" cy="258" r="9" fill="#4f7df3" opacity="0.18"/><rect x="225" y="48" width="125" height="230" rx="14" fill="#ffffff" opacity="1" stroke="#dfe5ef" stroke-width="1"/><rect x="237" y="60" width="101" height="110.39999999999999" rx="12" fill="url(#g)" opacity="1"/><rect x="237" y="179.1" width="85.0" height="8" rx="4" fill="#d7dde8" opacity="1"/><rect x="237" y="202.10000000000002" width="58.75" height="7" rx="4" fill="#e6eaf0" opacity="1"/><rect x="237" y="229.70000000000002" width="42.5" height="10" rx="5" fill="#0ea5a8" opacity="1"/><circle cx="328" cy="258" r="9" fill="#4f7df3" opacity="0.18"/><rect x="385" y="48" width="125" height="230" rx="14" fill="#ffffff" opacity="1" stroke="#dfe5ef" stroke-width="1"/><rect x="397" y="60" width="101" height="110.39999999999999" rx="12" fill="url(#g)" opacity="1"/><rect x="397" y="179.1" width="85.0" height="8" rx="4" fill="#d7dde8" opacity="1"/><rect x="397" y="202.10000000000002" width="58.75" height="7" rx="4" fill="#e6eaf0" opacity="1"/><rect x="397" y="229.70000000000002" width="42.5" height="10" rx="5" fill="#0ea5a8" opacity="1"/><circle cx="488" cy="258" r="9" fill="#4f7df3" opacity="0.18"/><rect x="545" y="48" width="125" height="230" rx="14" fill="#ffffff" opacity="1" stroke="#dfe5ef" stroke-width="1"/><rect x="557" y="60" width="101" height="110.39999999999999" rx="12" fill="url(#g)" opacity="1"/><rect x="557" y="179.1" width="85.0" height="8" rx="4" fill="#d7dde8" opacity="1"/><rect x="557" y="202.10000000000002" width="58.75" height="7" rx="4" fill="#e6eaf0" opacity="1"/><rect x="557" y="229.70000000000002" width="42.5" height="10" rx="5" fill="#0ea5a8" opacity="1"/><circle cx="648" cy="258" r="9" fill="#4f7df3" opacity="0.18"/></g>
+      </g>
+      <rect x="568" y="394" width="164" height="28" rx="14" fill="#10172d" opacity=".93"/>
+      <text x="650" y="413" fill="#fff" font-size="12" text-anchor="middle" font-family="Tahoma,Arial" direction="rtl">المنتجات الثابتة</text>
+    </svg>

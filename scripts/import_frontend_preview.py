@@ -25,6 +25,9 @@ REQUIRED_PAGES = (
     "tharaa.html",
     "portfolio.html",
     "knowledge.html",
+    "article-product-page.html",
+    "article-store-launch.html",
+    "article-store-redesign.html",
     "about.html",
     "contact.html",
     "store-launch.html",
@@ -106,8 +109,10 @@ def import_frontend(source_root: Path, destination_root: Path) -> dict[str, obje
     imported_pages = []
     for page_name in REQUIRED_PAGES:
         html = (source_root / page_name).read_text(encoding="utf-8")
-        html = replace_shell_slot(html, "data-shell-header", HEADER_INCLUDE)
-        html = replace_shell_slot(html, "data-shell-footer", FOOTER_INCLUDE)
+        if "data-shell-header" in html:
+            html = replace_shell_slot(html, "data-shell-header", HEADER_INCLUDE)
+        if "data-shell-footer" in html:
+            html = replace_shell_slot(html, "data-shell-footer", FOOTER_INCLUDE)
         html = rewrite_asset_urls(html)
         html = (
             "{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}\n"
@@ -120,7 +125,8 @@ def import_frontend(source_root: Path, destination_root: Path) -> dict[str, obje
         "source_repository": "ahmedalqurashi2030/ibtikartech",
         "source_ref": "main",
         "mode": "temporary-static-django-preview",
-        "header_footer": "django-includes",
+        "header_footer": "source-preserved-or-django-includes",
+        "source_commit": "999845f48ddaf3ed59f49b1515ff9b94474141a1",
         "business_model_binding": False,
         "required_pages": imported_pages,
         "retired_platform_pages": list(RETIRED_PLATFORM_PAGES),

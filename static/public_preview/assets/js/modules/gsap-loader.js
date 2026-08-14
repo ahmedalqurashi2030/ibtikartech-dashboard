@@ -1,9 +1,9 @@
 (function (global) {
   "use strict";
 
-  const CDN = {
-    gsap: "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js",
-    scrollTrigger: "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"
+  const ASSETS = {
+    gsap: "/static/public_preview/assets/vendor/gsap.min.js",
+    scrollTrigger: "/static/public_preview/assets/vendor/ScrollTrigger.min.js"
   };
 
   let loadPromise = null;
@@ -51,8 +51,8 @@
     if (!canUseGsap()) return Promise.resolve(null);
     if (global.gsap && global.ScrollTrigger) return Promise.resolve(global.gsap);
     if (!loadPromise) {
-      loadPromise = loadScript(CDN.gsap)
-        .then(() => loadScript(CDN.scrollTrigger))
+      loadPromise = loadScript(ASSETS.gsap)
+        .then(() => loadScript(ASSETS.scrollTrigger))
         .then(() => {
           global.gsap.registerPlugin(global.ScrollTrigger);
           return global.gsap;

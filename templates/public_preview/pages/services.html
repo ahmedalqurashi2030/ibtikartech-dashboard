@@ -7,12 +7,8 @@
 <meta name="description" content="خدمات ابتكار تك: المتاجر الإلكترونية، المواقع، التطبيقات والأنظمة، الهوية والمحتوى، تحسين الظهور والنمو، والربط والأتمتة.">
 <meta name="theme-color" content="#080d21">
 <title>خدمات ابتكار تك | منظومة رقمية من الفكرة إلى النمو</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+<script src="/static/public_preview/assets/vendor/gsap.min.js"></script>
+<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js"></script>
 <style>
 :root{
   --bg:#070b18;--bg2:#0b1126;--surface:#10182f;--surface2:#141f3d;--text:#f7f9ff;--muted:#a8b3ce;--line:rgba(255,255,255,.095);
@@ -90,10 +86,52 @@ body::before{content:"";position:fixed;inset:0;z-index:-4;background:radial-grad
 <link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 </head>
 <body class="approved-source-page source-services" data-section="services" data-approved-source="ai_studio_code - 2026-07-30T040101.270.html">
 <a class="approved-skip-link" href="#main">انتقل إلى المحتوى</a>
-{% include "public_preview/components/header.html" %}
+<header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
+  <div class="ibt-shell-nav">
+    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
+      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
+    </a>
+    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
+      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
+      <div class="ibt-shell-nav-group" data-ibt-mega-root>
+        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
+        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
+        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
+          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
+          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
+          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
+          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
+          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
+          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
+        </div></div>
+      </div>
+      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
+      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
+      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
+      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
+    </nav>
+    <div class="ibt-shell-actions">
+      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
+      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
+  <a data-nav-key="home" href="index.html">الرئيسية</a>
+  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
+  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
+  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
+  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
+  <a data-nav-key="about" href="about.html">عن ابتكار</a>
+  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
+</nav>
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
 <a class="skip" href="#main">انتقل إلى المحتوى</a>
@@ -106,7 +144,7 @@ body::before{content:"";position:fixed;inset:0;z-index:-4;background:radial-grad
 <nav data-approved-legacy-shell hidden inert class="mobile-menu" id="mobileMenu" aria-label="قائمة الجوال"><a href="#goals">حسب هدفك</a><a href="#services">الخدمات</a><a href="#solutions">الحلول المركبة</a><a href="#faq">الأسئلة الشائعة</a><a href="#contact">ابدأ مشروعك</a></nav>
 <main id="main">
 <section class="hero" id="top"><div class="container hero-grid">
-<div class="hero-copy reveal"><span class="eyebrow"><i></i>منظومة خدمات متكاملة</span><h1>لا نبيع خدمة منفصلة.<span>نبني منظومة رقمية تعمل معًا.</span></h1><p>من الاستراتيجية والهوية إلى المتجر والموقع والتطبيق، ثم الربط والقياس والنمو. نختار ما يحتاجه مشروعك فعلًا ونبنيه ضمن تجربة واحدة واضحة وقابلة للتوسع.</p><div class="hero-actions"><a class="btn btn-primary" href="#services">استكشف منظومة الخدمات</a><a class="btn btn-outline" href="#contact">اطلب تشخيص مشروعك</a></div><div class="hero-proof"><span class="proof-chip"><b>01</b>نطاق واضح</span><span class="proof-chip"><b>02</b>تنفيذ متكامل</span><span class="proof-chip"><b>03</b>تسليم قابل للتوسع</span></div></div>
+<div class="hero-copy reveal"><span class="eyebrow"><i></i>منظومة خدمات متكاملة</span><h1>حلول رقمية مترابطة.<span>تبدأ من هدف مشروعك.</span></h1><p>من الاستراتيجية والهوية إلى المتجر والموقع والتطبيق، ثم الربط والقياس والنمو. نختار ما يحتاجه مشروعك فعلًا ونبنيه ضمن تجربة واحدة واضحة وقابلة للتوسع.</p><div class="hero-actions"><a class="btn btn-primary" href="#services">استكشف منظومة الخدمات</a><a class="btn btn-outline" href="#contact">اطلب تشخيص مشروعك</a></div><div class="hero-proof"><span class="proof-chip"><b>01</b>نطاق واضح</span><span class="proof-chip"><b>02</b>تنفيذ متكامل</span><span class="proof-chip"><b>03</b>تسليم قابل للتوسع</span></div></div>
 <div class="hero-visual reveal" id="heroVisual"><canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas><div class="service-orbit"><div class="core"><span class="core-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="core-copy">منظومة ابتكار تك</span></div><div class="orbit-node n1"><span>مت</span><strong>المتاجر</strong><small>سلة · زد · WooCommerce</small></div><div class="orbit-node n2"><span>وب</span><strong>المواقع</strong><small>شركات · هبوط · منصات</small></div><div class="orbit-node n3"><span>تط</span><strong>التطبيقات</strong><small>جوال · لوحات · أنظمة</small></div><div class="orbit-node n4"><span>هو</span><strong>الهوية</strong><small>علامة · محتوى · تصميم</small></div><div class="orbit-node n5"><span>نم</span><strong>النمو</strong><small>SEO · قياس · حملات</small></div><div class="orbit-node n6"><span>رب</span><strong>الربط</strong><small>أتمتة · APIs · CRM</small></div></div></div>
 </div></section>
 <section class="section section-soft" id="goals"><div class="container"><div class="heading reveal"><span class="kicker">ابدأ من هدفك</span><h2>ما الذي تريد تحقيقه الآن؟</h2><p>بدل أن تختار خدمة تقنية لا تعرف إن كانت مناسبة، ابدأ بالنتيجة التي تريدها وسنقترح لك المسار الصحيح.</p></div><div class="goal-grid">
@@ -115,8 +153,8 @@ body::before{content:"";position:fixed;inset:0;z-index:-4;background:radial-grad
 <article class="goal reveal"><div class="goal-icon">⌁</div><h3>زيادة الظهور والمبيعات</h3><p>تهيئة SEO، أدوات Google، التتبع، صفحات الهبوط وتحسين رحلة اتخاذ القرار.</p><a href="#solutions">شاهد مسار النمو ←</a></article>
 <article class="goal reveal"><div class="goal-icon">⚙</div><h3>ربط العمليات وأتمتتها</h3><p>ربط الطلبات والعملاء والتحليلات والإشعارات لتقليل العمل اليدوي والأخطاء.</p><a href="#services">استكشف الأتمتة ←</a></article>
 </div></div></section>
-<section class="service-lab" id="services"><div class="container"><div class="heading reveal"><span class="kicker">مختبر الخدمات</span><h2>ستة محاور. تجربة واحدة.</h2><p>مرّر بين الخدمات لترى كيف يتحول كل محور إلى جزء فعلي داخل المنظومة الرقمية لمشروعك.</p></div><div class="lab-grid">
-<div class="lab-stage-wrap reveal"><div class="lab-stage"><canvas class="lab-canvas" id="labCanvas" aria-hidden="true"></canvas><div class="stage-top"><span class="stage-brand"><i id="stageDot"></i><b id="stageLabel">المتاجر الإلكترونية</b></span><span class="stage-count" id="stageCount">01 / 06</span></div><div class="stage-screen" id="stageScreen" data-mode="store"><div class="visual-shell" id="visualShell"><div class="visual-bar"><div class="dots"><i></i><i></i><i></i></div><span class="visual-title" id="visualTitle">تجربة متجر متكاملة</span></div><div class="visual-body store-ui" id="visualBody"></div></div></div><div class="stage-caption"><strong id="stageCaption">من الواجهة إلى إتمام الطلب</strong><small>مشهد مولّد برمجيًا يتبدل مع الخدمة</small></div></div></div>
+<section class="service-lab" id="services"><div class="container"><div class="heading reveal"><span class="kicker">مجالات الخبرة</span><h2>ستة محاور رئيسية لبناء تجربة رقمية متكاملة.</h2></div><div class="lab-grid">
+<div class="lab-stage-wrap reveal"><div class="lab-stage"><canvas class="lab-canvas" id="labCanvas" aria-hidden="true"></canvas><div class="stage-top"><span class="stage-brand"><i id="stageDot"></i><b id="stageLabel">المتاجر الإلكترونية</b></span><span class="stage-count" id="stageCount">01 / 06</span></div><div class="stage-screen" id="stageScreen" data-mode="store"><div class="visual-shell" id="visualShell"><div class="visual-bar"><div class="dots"><i></i><i></i><i></i></div><span class="visual-title" id="visualTitle">تجربة متجر متكاملة</span></div><div class="visual-body store-ui" id="visualBody"></div></div></div><div class="stage-caption"><strong id="stageCaption">من الواجهة إلى إتمام الطلب</strong></div></div></div>
 <div class="service-list">
 <article class="service-item active" data-mode="store" data-label="المتاجر الإلكترونية" data-title="تجربة متجر متكاملة" data-caption="من الواجهة إلى إتمام الطلب"><span class="service-no">01 — COMMERCE</span><h3>تصميم وتطوير المتاجر الإلكترونية</h3><p>نبني متجرًا يعكس العلامة، يسهّل اكتشاف المنتجات، ويقود الزائر بخطوات واضحة من الصفحة الرئيسية حتى السلة والشراء.</p><div class="outcomes"><span>تصميم واجهات المتجر</span><span>صفحة منتج محسّنة</span><span>تجربة جوال Mobile-first</span><span>ربط الدفع والشحن والتتبع</span></div><div class="service-chips"><b>سلة</b><b>زد</b><b>WooCommerce</b><b>Shopify</b><b>تخصيص الثيمات</b></div><a href="#contact">ناقش متجر مشروعك ←</a></article>
 <article class="service-item" data-mode="site" data-label="المواقع وصفحات الهبوط" data-title="حضور رقمي موثوق" data-caption="محتوى مقنع وتجربة تقود للتواصل"><span class="service-no">02 — WEB</span><h3>المواقع الإلكترونية وصفحات الهبوط</h3><p>مواقع شركات وخدمات ومنصات وصفحات حملات، بهيكل محتوى واضح وتصميم سريع ومتجاوب يساعد العميل على فهم العرض واتخاذ الإجراء.</p><div class="outcomes"><span>هندسة المعلومات</span><span>كتابة المحتوى</span><span>تصميم وتطوير متجاوب</span><span>نماذج واتساب واتصال</span></div><div class="service-chips"><b>WordPress</b><b>تطوير مخصص</b><b>Landing Pages</b><b>Webflow-ready</b></div><a href="#contact">ابدأ موقعك ←</a></article>
@@ -138,11 +176,20 @@ body::before{content:"";position:fixed;inset:0;z-index:-4;background:radial-grad
 <div class="faq reveal"><button aria-expanded="false">هل تشمل الخدمة كتابة المحتوى والربط؟ <i>+</i></button><div class="faq-answer"><p>يمكن أن تشمل ذلك حسب نطاق العرض. نوضح داخل العرض ما إذا كان المحتوى والربط والتهيئة والقياس ضمن المشروع أو خدمات إضافية.</p></div></div>
 <div class="faq reveal"><button aria-expanded="false">كيف تُحسب المدة والتكلفة؟ <i>+</i></button><div class="faq-answer"><p>تعتمد على عدد الصفحات والمزايا وحجم المحتوى والتخصيص والتكاملات. بعد التشخيص نقدّم نطاقًا ومراحل ومدة وتكلفة واضحة.</p></div></div>
 </div></div></section>
-<section class="cta" id="contact"><div class="container"><div class="cta-card reveal"><div class="cta-copy"><small>ابدأ من النتيجة التي تريدها</small><h2>دعنا نبني المسار المناسب لمشروعك.</h2><p>أرسل نشاطك وهدفك ووضعك الحالي، وسنقترح نقطة البداية والخدمات المطلوبة دون تعقيد.</p></div><div class="cta-actions"><a class="btn btn-white" href="https://wa.me/967000000000" target="_blank" rel="noopener">تواصل عبر واتساب</a><a class="btn btn-outline" href="mailto:hello@ibtikar-tech.com">أرسل تفاصيل المشروع</a></div></div></div></section>
+<section class="cta" id="contact"><div class="container"><div class="cta-card reveal"><div class="cta-copy"><small>ابدأ من النتيجة التي تريدها</small><h2>دعنا نبني المسار المناسب لمشروعك.</h2><p>أرسل نشاطك وهدفك ووضعك الحالي، وسنقترح نقطة البداية والخدمات المطلوبة دون تعقيد.</p></div><div class="cta-actions"><a class="btn btn-white" href="contact.html#quote">ابدأ مشروعك</a><a class="btn btn-outline" href="ecommerce.html">استكشف حلول المتاجر</a></div></div></div></section>
 </main>
 <footer data-approved-legacy-shell hidden inert aria-hidden="true" class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a class="brand" href="#top"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية متكاملة تساعد المشاريع على الظهور والعمل والنمو.</p></div><div><h3>الخدمات</h3><a href="#services">المتاجر الإلكترونية</a><a href="#services">المواقع وصفحات الهبوط</a><a href="#services">التطبيقات والأنظمة</a><a href="#services">الهوية والمحتوى</a></div><div><h3>الحلول</h3><a href="#solutions">إطلاق متجر</a><a href="#solutions">حضور الشركات</a><a href="#solutions">النمو الرقمي</a><a href="#solutions">الحلول المخصصة</a></div><div><h3>ابدأ</h3><a href="#faq">الأسئلة الشائعة</a><a href="#contact">طلب عرض سعر</a><a href="tharaa.html">ثيم ثراء</a></div></div><div class="footer-bottom"><span>© 2026 ابتكار تك. جميع الحقوق محفوظة.</span><span>استراتيجية · تصميم · تقنية · نمو</span></div></div></footer>
-{% include "public_preview/components/footer.html" %}
-<a class="whatsapp" href="https://wa.me/967000000000" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب">◉</a>
+<footer class="ibt-shell-footer">
+  <div class="ibt-shell-footer-grid">
+    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
+    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
+    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
+    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
+    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
+  </div>
+  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
+</footer>
+
 <script>
 (function(){
 'use strict';

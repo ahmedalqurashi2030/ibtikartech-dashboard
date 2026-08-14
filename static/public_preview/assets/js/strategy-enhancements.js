@@ -55,7 +55,6 @@
             <div class="strategy-head">
               <span class="strategy-kicker">بعض خدماتنا المتنوعة</span>
               <h2 id="strategyCatalogTitle">خدمات محددة عندما تعرف ما الذي تريد تحسينه.</h2>
-              <p>أمثلة عملية من خدمات ابتكار تك، بينما يبقى القسم السينمائي أعلاه للعائلات الرئيسية.</p>
             </div>
             <div class="strategy-service-catalog" aria-live="polite"></div>
           </div>

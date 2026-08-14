@@ -14,22 +14,6 @@
     };
   }
 
-  // Tharaa's preserved legacy animation script still references a removed
-  // horizontal-library track on desktop. Provide a non-visual compatibility
-  // target so ScrollTrigger never dereferences null; it is excluded from a11y.
-  if (document.body.classList.contains('source-tharaa') && !document.querySelector('#libraryTrack')) {
-    const guard = document.createElement('div');
-    guard.className = 'library ibt-legacy-animation-guard';
-    guard.dataset.ibtLegacyAnimationGuard = 'true';
-    guard.setAttribute('aria-hidden', 'true');
-    guard.style.cssText = 'position:absolute;inset:0 auto auto 0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1;';
-    const track = document.createElement('div');
-    track.id = 'libraryTrack';
-    track.style.cssText = 'width:calc(100vw + 320px);height:1px;';
-    guard.appendChild(track);
-    document.body.appendChild(guard);
-  }
-
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.querySelectorAll('main section:not(:first-child) img').forEach((image) => {
@@ -45,6 +29,17 @@
     rel.add('noreferrer');
     link.setAttribute('rel', [...rel].join(' '));
   });
+
+  if (document.body.classList.contains('source-tharaa')) {
+    [
+      '#v4-preview .section-head > p',
+      '#v4-preview .studio-note',
+      '#v4-experience .journey-copy > p',
+      '#sections .library-note',
+      '#previewModal .mhero p',
+      '#componentPreviewDialog .component-preview-dialog__head span'
+    ].forEach((selector) => document.querySelector(selector)?.remove());
+  }
 
   document.querySelectorAll('a[href="#"]').forEach((link) => {
     link.addEventListener('click', (event) => event.preventDefault());
@@ -241,7 +236,7 @@
     const platformSection = document.querySelector('#platforms');
     const platformIntro = platformSection?.querySelector('.platform-heading p');
     if (platformIntro) {
-      platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة. نحدد الأنسب وفق تشغيل مشروعك وحدود التخصيص، وتظهر خبرة المنصة داخل نطاق الخدمة نفسها.';
+      platformIntro.textContent = 'نختار المنصة وفق احتياج التشغيل، مستوى التخصيص، سهولة الإدارة، وخطط التوسع.';
     }
     platformSection?.querySelectorAll('.platform-card').forEach((card) => {
       const link = card.querySelector('a');

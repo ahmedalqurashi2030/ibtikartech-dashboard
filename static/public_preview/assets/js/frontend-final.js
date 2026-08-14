@@ -49,7 +49,7 @@
         if (!heading || !/خدمات سلة المتخصصة|حلول سلة ضمن المتاجر/.test(heading.textContent || '')) return;
         heading.textContent = 'حلول سلة ضمن المتاجر الإلكترونية';
         const paragraph = card.querySelector('p');
-        if (paragraph) paragraph.textContent = 'إطلاق وتخصيص وتجربة وقياس لمتاجر سلة داخل مسار التجارة الإلكترونية، دون صفحة منصة مستقلة في هذه المرحلة.';
+        if (paragraph) paragraph.textContent = 'إطلاق وتخصيص وتجربة وقياس لمتاجر سلة ضمن مسار تجارة إلكترونية متكامل.';
         const link = card.querySelector('a');
         if (link) { link.href = 'ecommerce.html#platforms'; link.textContent = 'استكشف سلة ضمن المتاجر ←'; }
       });
@@ -84,7 +84,7 @@
 
     const platformSection = document.getElementById('platforms');
     const platformIntro = platformSection?.querySelector('.platform-heading p');
-    if (platformIntro) platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة، وليست مسارًا منفصلًا حاليًا. نحدد ما يناسب مشروعك وفق التشغيل والتخصيص والقيود، ويمكن إضافة صفحات متخصصة للمنصات مستقبلًا عندما تصبح لها قيمة مستقلة.';
+    if (platformIntro) platformIntro.textContent = 'نختار المنصة وفق احتياج التشغيل، مستوى التخصيص، سهولة الإدارة، وخطط التوسع.';
     platformSection?.querySelectorAll('.platform-card').forEach((card) => {
       const link = card.querySelector('a');
       if (!link) return;
@@ -135,8 +135,6 @@
         </section>`
     };
 
-    const main = document.querySelector('main');
-    const hero = main?.querySelector('.platform-hero');
     const capabilities = document.getElementById('capabilities');
     if (capabilities && signatures[page] && !document.getElementById('category-signature')) capabilities.insertAdjacentHTML('beforebegin',signatures[page]);
 
@@ -152,42 +150,6 @@
       if (small) small.after(visual); else card.prepend(visual);
     });
 
-    const sections = [...(main?.querySelectorAll(':scope > section') || [])];
-    const method = sections.find((section) => section !== hero && section !== capabilities && section.querySelector('.timeline'));
-    const fit = sections.find((section) => section.querySelector('.platform-grid--2') && /مناسب|حدود/.test(section.textContent || ''));
-    const related = sections.find((section) => section.querySelector('.related-nav'));
-    const cta = sections.find((section) => section.classList.contains('page-cta'));
-    if (method && !method.id) method.id = 'method';
-    if (fit && !fit.id) fit.id = 'fit';
-    if (related && !related.id) related.id = 'related';
-    if (cta && !cta.id) cta.id = 'start';
-
-    if (hero && capabilities && !document.querySelector('.category-local-nav')) {
-      const nav = document.createElement('nav');
-      nav.className = 'category-local-nav';
-      nav.setAttribute('aria-label','التنقل داخل الصفحة');
-      const links = [
-        document.getElementById('category-signature') ? ['#category-signature','كيف نفكر'] : null,
-        ['#capabilities','ما ننفذ'],
-        method ? ['#method','طريقة العمل'] : null,
-        fit ? ['#fit','هل يناسبك؟'] : null,
-        related ? ['#related','مسارات مرتبطة'] : null,
-        cta ? ['#start','ابدأ مشروعك'] : null
-      ].filter(Boolean);
-      nav.innerHTML = `<div class="category-local-nav__inner">${links.map(([href,label],i) => `<a href="${href}"${i===0?' class="is-active"':''}>${label}</a>`).join('')}</div>`;
-      hero.insertAdjacentElement('afterend',nav);
-
-      const navLinks = [...nav.querySelectorAll('a')];
-      const targets = navLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
-      if ('IntersectionObserver' in window && targets.length) {
-        const observer = new IntersectionObserver((entries) => {
-          const visible = entries.filter((entry) => entry.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
-          if (!visible) return;
-          navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${visible.target.id}`));
-        },{rootMargin:'-28% 0px -58% 0px',threshold:[0,.1,.4,.7]});
-        targets.forEach((target) => observer.observe(target));
-      }
-    }
   }
 
   document.querySelectorAll('.related-nav a[href]').forEach((link) => {

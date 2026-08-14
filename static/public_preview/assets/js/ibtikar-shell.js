@@ -107,7 +107,7 @@
     const menu = document.getElementById(button.getAttribute('aria-controls'));
     if (!menu) return;
     let previousOverflow = '';
-    const focusables = () => [...menu.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')]
+   const focusables = () => [...menu.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')]
       .filter((item) => !item.hidden && item.getClientRects().length);
 
     const closeMenu = (restoreFocus = false) => {
@@ -127,7 +127,11 @@
       button.setAttribute('aria-expanded','true');
       document.body.classList.add('menu-open');
       document.body.style.overflow = 'hidden';
-      requestAnimationFrame(() => focusables()[0]?.focus());
+      const firstItem = menu.querySelector('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])');
+      firstItem?.focus({ preventScroll: true });
+      requestAnimationFrame(() => {
+        if (!menu.contains(document.activeElement)) firstItem?.focus({ preventScroll: true });
+      });
     };
 
     button.addEventListener('click',() => {
@@ -167,20 +171,177 @@
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
-    window.addEventListener('resize',() => { if (innerWidth > 1100 && menu.classList.contains('open')) closeMenu(); },{passive:true});
+    window.addEventListener('resize',() => { if (innerWidth > 1180 && menu.classList.contains('open')) closeMenu(); },{passive:true});
   });
 
   managedThemeButtons.forEach((button) => {
     try {
       const saved = localStorage.getItem('ibtikar-theme');
       if (saved) document.documentElement.dataset.theme = saved;
-    } catch (_) {}
+    } catch {}
     button.addEventListener('click',() => {
       const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = next;
-      try { localStorage.setItem('ibtikar-theme',next); } catch (_) {}
+      try { localStorage.setItem('ibtikar-theme',next); } catch {}
     });
   });
+
+  /* Shared mobile drawer ------------------------------------------------ */
+  const sharedMobileMenus = [...document.querySelectorAll('.ibt-shell-mobile-menu')];
+  if (sharedMobileMenus.length) {
+    const backdrop = document.createElement('button');
+    backdrop.type = 'button';
+    backdrop.className = 'ibt-mobile-backdrop';
+    backdrop.setAttribute('aria-label','إغلاق القائمة الجانبية');
+    backdrop.tabIndex = -1;
+    document.body.appendChild(backdrop);
+
+    const syncDrawer = (menu, toggle) => {
+      const open = menu.classList.contains('open') || menu.classList.contains('is-open');
+      backdrop.classList.toggle('is-open',open);
+      backdrop.tabIndex = open ? 0 : -1;
+      menu.toggleAttribute('inert',!open);
+      toggle?.setAttribute('aria-label',open ? 'إغلاق القائمة' : 'فتح القائمة');
+    };
+
+    sharedMobileMenus.forEach((menu) => {
+      const toggle = document.querySelector(`[aria-controls="${menu.id}"]`);
+      if (!menu.querySelector('.ibt-mobile-menu-head')) {
+        const head = document.createElement('div');
+        head.className = 'ibt-mobile-menu-head';
+        head.innerHTML = '<span><strong>القائمة</strong><small>ابتكار تك للحلول والخدمات الرقمية</small></span><button class="ibt-mobile-menu-close" type="button" aria-label="إغلاق القائمة">×</button>';
+        menu.prepend(head);
+        head.querySelector('button')?.addEventListener('click',() => {
+          if (toggle?.getAttribute('aria-expanded') === 'true') toggle.click();
+        });
+      }
+      syncDrawer(menu,toggle);
+      new MutationObserver(() => syncDrawer(menu,toggle)).observe(menu,{attributes:true,attributeFilter:['class','aria-hidden']});
+      backdrop.addEventListener('click',() => {
+        if (toggle?.getAttribute('aria-expanded') === 'true') toggle.click();
+      });
+    });
+  }
+
+  const enhancePageContent = () => {
+  /* One accordion behavior for every shared FAQ variant. */
+  const faqButtonItems = [...document.querySelectorAll('#faq .accordion-item, #faq .faq-item, #faq .accordion > .faq, #faq .faq-list > .faq')];
+  faqButtonItems.forEach((item) => {
+    const button = item.querySelector('button');
+    if (!button) return;
+    button.addEventListener('click',() => requestAnimationFrame(() => {
+      const open = item.classList.contains('open') || item.classList.contains('active');
+      if (!open) return;
+      faqButtonItems.forEach((other) => {
+        if (other === item || other.closest('#faq') !== item.closest('#faq')) return;
+        other.classList.remove('open','active');
+        other.querySelector('button')?.setAttribute('aria-expanded','false');
+        const answer = other.querySelector('.faq-answer,.accordion-content');
+        if (answer) answer.style.maxHeight = '0px';
+      });
+    }));
+  });
+
+  document.querySelectorAll('#faq details').forEach((details) => {
+    details.addEventListener('toggle',() => {
+      if (!details.open) return;
+      const list = details.parentElement;
+      list?.querySelectorAll(':scope > details[open]').forEach((other) => {
+        if (other !== details) other.open = false;
+      });
+    });
+  });
+
+  /* Product-like related-service sliders with a text-link fallback. */
+  const relatedData = {
+    'services.html': { eyebrow:'ابدأ من الهدف', title:'الحلول والخدمات', description:'اختر المسار حسب النتيجة التي يحتاجها مشروعك، ثم نحدد أقل نطاق صحيح.', image:'/static/public_preview/assets/images/showcase/services-experience-source.png' },
+    'ecommerce.html': { eyebrow:'تجارة إلكترونية', title:'حلول المتاجر الإلكترونية', description:'إطلاق وتخصيص وتحسين وقياس ضمن رحلة متجر مترابطة.', image:'/static/public_preview/assets/images/showcase/ecommerce-experience-source.png' },
+    'store-launch.html': { eyebrow:'بداية صحيحة', title:'إطلاق متجر جديد', description:'من المنصة والهيكل إلى المحتوى والاختبار قبل أول عملية شراء.', image:'/static/public_preview/assets/images/services/ecommerce/store-launch.svg' },
+    'storefront-customization.html': { eyebrow:'هوية وتجربة', title:'تخصيص واجهة المتجر', description:'واجهة تعكس العلامة وتحافظ على وضوح الاكتشاف والشراء.', image:'/static/public_preview/assets/images/services/ecommerce/storefront-customization.svg' },
+    'store-redesign.html': { eyebrow:'متجر قائم', title:'إعادة تصميم المتجر', description:'إعادة ترتيب الهيكل والتجربة عندما تصبح التعديلات الجزئية غير كافية.', image:'/static/public_preview/assets/images/services/ecommerce/store-redesign.svg' },
+    'product-page-optimization.html': { eyebrow:'قرار الشراء', title:'تحسين صفحة المنتج', description:'تنظيم الصور والمعلومات والخيارات والثقة حول الإجراء الأساسي.', image:'/static/public_preview/assets/images/services/ecommerce/product-experience.svg' },
+    'ecommerce-growth.html': { eyebrow:'قياس وتحسين', title:'الربط والقياس والنمو', description:'بيانات أوضح وفرضيات قابلة للاختبار بدل قرارات مبنية على التخمين.', image:'/static/public_preview/assets/images/services/ecommerce/connect-growth.svg' },
+    'ecommerce-support.html': { eyebrow:'استمرارية', title:'الدعم والتطوير المستمر', description:'طلبات وأولويات واختبارات موثقة تحافظ على سياق المتجر.', image:'/static/public_preview/assets/images/services/ecommerce/ongoing-support.svg' },
+    'websites.html': { eyebrow:'تجربة ويب', title:'المواقع وصفحات الهبوط', description:'مواقع توضح القيمة وتقود العميل إلى الخطوة التالية.', image:'/static/public_preview/assets/images/services/discovery/web-experience.svg' },
+    'brand-content.html': { eyebrow:'علامة متماسكة', title:'الهوية والمحتوى', description:'نظام بصري ولغوي يوحّد حضور العلامة عبر نقاط الاتصال.', image:'/static/public_preview/assets/images/services/discovery/brand-content.svg' },
+    'growth.html': { eyebrow:'ظهور وقرار', title:'القياس والنمو', description:'SEO ومحتوى وتحسينات تبدأ من سؤال تجاري قابل للقياس.', image:'/static/public_preview/assets/images/services/discovery/growth-measurement.svg' },
+    'custom-systems.html': { eyebrow:'ربط وأتمتة', title:'الأنظمة والحلول المخصصة', description:'ربط العمليات وتقليل العمل اليدوي عندما لا يكفي الحل الجاهز.', image:'/static/public_preview/assets/images/services/discovery/custom-systems.svg' },
+    'tharaa.html': { eyebrow:'منتج من ابتكار تك', title:'ثيم ثراء لمتاجر سلة', description:'تجربة متجر مرنة توازن بين الهوية والاكتشاف وقرار الشراء.', image:'/static/public_preview/assets/images/showcase/tharaa-experience-source.png' },
+    'portfolio.html': { eyebrow:'قرارات وتنفيذ', title:'أعمالنا', description:'حالات توضّح المشكلة والقرار والتنفيذ، لا لقطة الواجهة وحدها.', image:'/static/public_preview/assets/images/showcase/tharaa-product-source.png' },
+    'knowledge.html': { eyebrow:'معرفة عملية', title:'الأدلة والمعرفة', description:'محتوى يساعدك على فهم الخيارات وتجهيز القرار التالي.', image:'/static/public_preview/assets/images/showcase/services-experience-source.png' }
+  };
+
+  const relatedTracks = [...document.querySelectorAll('.related-nav, .service-related-grid, .related-grid')];
+  relatedTracks.forEach((track,index) => {
+    if (track.dataset.ibtRelatedReady === 'true') return;
+    const items = [...track.children].filter((item) => item.matches('a,article'));
+    if (!items.length) return;
+    track.dataset.ibtRelatedReady = 'true';
+    track.classList.add('ibt-related-track');
+    track.setAttribute('aria-label',track.getAttribute('aria-label') || 'خدمات ومسارات مرتبطة');
+
+    items.forEach((item) => {
+      item.classList.add('ibt-related-card');
+      if (!(item instanceof HTMLAnchorElement) || item.querySelector('.ibt-related-card__body')) return;
+      const route = (item.getAttribute('href') || '').split('#')[0].split('/').pop();
+      const data = relatedData[route];
+      if (!data) return;
+      item.textContent = '';
+      const media = document.createElement('span');
+      media.className = 'ibt-related-card__media';
+      media.innerHTML = `<img src="${data.image}" alt="" width="800" height="500" loading="lazy" decoding="async">`;
+      const body = document.createElement('span');
+      body.className = 'ibt-related-card__body';
+      body.innerHTML = `<small>${data.eyebrow}</small><strong>${data.title}</strong><em>${data.description}</em><span class="ibt-related-card__cta">استكشف المسار ←</span>`;
+      item.append(media,body);
+      item.setAttribute('aria-label',`استكشف ${data.title}`);
+    });
+
+    if (items.length < 2) return;
+    const controls = document.createElement('div');
+    controls.className = 'ibt-related-controls';
+    controls.setAttribute('aria-label','التنقل بين الخدمات المرتبطة');
+    controls.innerHTML = '<button class="ibt-related-control" type="button" data-related-move="previous" aria-label="الخدمة السابقة">→</button><button class="ibt-related-control" type="button" data-related-move="next" aria-label="الخدمة التالية">←</button>';
+    const sectionShell = track.parentElement;
+    const heading = sectionShell?.querySelector(':scope > .platform-heading, :scope > .service-detail-heading, :scope > .svc-heading');
+    if (heading) {
+      const title = heading.querySelector('h2');
+      const label = heading.querySelector(':scope > .section-kicker, :scope > span');
+      if (title) title.textContent = 'خدمات مرتبطة';
+      label?.remove();
+      heading.classList.add('ibt-related-heading');
+
+      const header = document.createElement('div');
+      header.className = 'ibt-related-header';
+      heading.before(header);
+      header.append(heading,controls);
+    } else {
+      track.before(controls);
+    }
+    let current = 0;
+    const syncControls = () => {
+      controls.querySelector('[data-related-move="previous"]').disabled = current === 0;
+      controls.querySelector('[data-related-move="next"]').disabled = current === items.length - 1;
+    };
+    const move = (delta) => {
+      current = Math.max(0,Math.min(items.length - 1,current + delta));
+      items[current].scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',block:'nearest',inline:'start'});
+      syncControls();
+    };
+    controls.querySelector('[data-related-move="previous"]').addEventListener('click',() => move(-1));
+    controls.querySelector('[data-related-move="next"]').addEventListener('click',() => move(1));
+    syncControls();
+    track.id ||= `related-services-${index + 1}`;
+    controls.querySelectorAll('button').forEach((button) => button.setAttribute('aria-controls',track.id));
+  });
+
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded',enhancePageContent,{once:true});
+  } else {
+    enhancePageContent();
+  }
 
   window.IBTIKAR_ANALYTICS?.init?.();
 })();
