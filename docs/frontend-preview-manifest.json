@@ -1,0 +1,35 @@
+{
+  "source_repository": "ahmedalqurashi2030/ibtikartech",
+  "source_ref": "main",
+  "mode": "temporary-static-django-preview",
+  "header_footer": "django-includes",
+  "business_model_binding": false,
+  "required_pages": [
+    "index.html",
+    "services.html",
+    "ecommerce.html",
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+    "tharaa.html",
+    "portfolio.html",
+    "knowledge.html",
+    "about.html",
+    "contact.html",
+    "store-launch.html",
+    "storefront-customization.html",
+    "store-redesign.html",
+    "product-page-optimization.html",
+    "ecommerce-growth.html",
+    "ecommerce-support.html",
+    "404.html"
+  ],
+  "retired_platform_pages": [
+    "salla.html",
+    "zid.html",
+    "shopify.html",
+    "woocommerce.html",
+    "wordpress.html"
+  ]
+}

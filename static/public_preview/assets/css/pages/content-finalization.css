@@ -1,0 +1,63 @@
+/* Production-content guardrails.
+   These selectors hide only content already identified as staging, duplicate,
+   unsupported, or not yet ready for public navigation. */
+
+body[data-page="index"] #testimonials,
+body[data-page="index"] .brief-modal,
+body[data-page="index"] .whatsapp-float,
+body[data-page="product-page-optimization"] [data-strategy-service-decision],
+body[data-page="product-page-optimization"] [data-strategy-service-scope],
+body[data-page="ecommerce"] #store-anatomy,
+body[data-page="tharaa"] [data-strategy-tharaa-decision],
+body[data-page="tharaa"] [data-strategy-tharaa-governance],
+body[data-page="tharaa"] #compare,
+body[data-page="tharaa"] #support,
+body[data-page="tharaa"] footer[data-approved-legacy-shell] {
+  display: none !important;
+}
+
+/* Tharaa compatibility target exists only so the preserved legacy ScrollTrigger
+   never dereferences a missing #libraryTrack. It must never participate in layout. */
+body[data-page="tharaa"] .ibt-legacy-animation-guard,
+body[data-page="tharaa"] .ibt-legacy-animation-guard #libraryTrack {
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  max-width:0 !important;
+  max-height:0 !important;
+  overflow:hidden !important;
+}
+
+/* The circular mobile showcase art intentionally extends beyond its inner column.
+   Clip only at the full section boundary so the composition remains visible but
+   never increases document width on tablet / RTL layouts. */
+body[data-page="tharaa"] #v4-mobile {
+  overflow:hidden !important;
+  overflow:clip !important;
+}
+
+/* The services discovery catalog stays visible: services-experience.js converts it
+   into the lightweight “بعض خدماتنا المتنوعة” image-card slider. Only old filters
+   and staging scope notes are suppressed. */
+body[data-page="services"] [data-strategy-service-catalog] .strategy-filterbar,
+body[data-page="services"] [data-strategy-service-catalog] .strategy-scope-note {
+  display:none !important;
+}
+
+/* Draft legal content remains in the repository but is intentionally kept out of
+   shared public navigation until official company/privacy data is approved. */
+.ibt-shell-footer a[href="legal.html"] {
+  display: none !important;
+}
+
+/* Knowledge hub: make in-page guides feel intentional within the shared inner-page system. */
+body.knowledge-page main section[id]{scroll-margin-top:110px}
+body.knowledge-page .center-action{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:32px;
+}

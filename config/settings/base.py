@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "apps.analytics",
     "apps.content",
     "apps.integrations",
+    "apps.public_preview",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
