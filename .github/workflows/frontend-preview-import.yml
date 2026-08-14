@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - scripts/import_frontend_preview.py
       - .github/workflows/frontend-preview-import.yml
   workflow_dispatch:
 
