@@ -24,19 +24,72 @@ server_is_running() {
   pgrep -f "manage.py runserver ${HOST}:${PORT}" >/dev/null 2>&1
 }
 
+server_is_healthy() {
+  curl --fail --silent --show-error --max-time 3 \
+    "http://127.0.0.1:${PORT}/healthz/" >/dev/null \
+    && curl --fail --silent --show-error --max-time 3 \
+      "http://127.0.0.1:${PORT}/" >/dev/null \
+    && curl --fail --silent --show-error --max-time 3 \
+      "http://127.0.0.1:${PORT}/control/login/" >/dev/null \
+    && curl --fail --silent --show-error --max-time 3 \
+      "http://127.0.0.1:${PORT}/django-admin/login/" >/dev/null
+}
+
+stop_preview_server() {
+  if [[ -f "$PID_FILE" ]]; then
+    local pid
+    pid="$(cat "$PID_FILE" 2>/dev/null || true)"
+    if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
+      kill "$pid" 2>/dev/null || true
+      for _ in {1..20}; do
+        if ! kill -0 "$pid" 2>/dev/null; then
+          break
+        fi
+        sleep 0.2
+      done
+    fi
+  fi
+
+  while read -r pid; do
+    [[ -z "$pid" ]] && continue
+    kill "$pid" 2>/dev/null || true
+  done < <(pgrep -f "manage.py runserver ${HOST}:${PORT}" || true)
+
+  rm -f "$PID_FILE"
+}
+
+start_preview_server() {
+  rm -f "$PID_FILE"
+  : > "$LOG_FILE"
+  nohup python manage.py runserver "${HOST}:${PORT}" --noreload >"$LOG_FILE" 2>&1 &
+  echo $! > "$PID_FILE"
+  echo "Starting Ibtikar Tech preview server (PID $(cat "$PID_FILE"))..."
+}
+
 wait_for_server() {
-  local attempts=40
+  local attempts=60
   local delay=0.5
 
   for ((i=1; i<=attempts; i++)); do
-    if curl --silent --show-error --output /dev/null \
-      "http://127.0.0.1:${PORT}/control/login/"; then
+    if server_is_healthy; then
       return 0
     fi
     sleep "$delay"
   done
 
   return 1
+}
+
+codespaces_preview_url() {
+  if [[ "${CODESPACES:-}" != "true" ]]; then
+    return 0
+  fi
+
+  local codespace_name="${CODESPACE_NAME:-}"
+  local forwarding_domain="${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}"
+  if [[ -n "$codespace_name" && -n "$forwarding_domain" ]]; then
+    printf 'https://%s-%s.%s' "$codespace_name" "$PORT" "$forwarding_domain"
+  fi
 }
 
 make_codespaces_port_public() {
@@ -80,25 +133,33 @@ if [[ -n "${IBTIKAR_ADMIN_EMAIL:-}" ]]; then
   python manage.py bootstrap_ibtikar "${bootstrap_args[@]}"
 fi
 
-if server_is_running; then
-  echo "Ibtikar Tech preview server is already running on port ${PORT}."
+if server_is_running && server_is_healthy; then
+  echo "Ibtikar Tech preview server is already healthy on port ${PORT}."
 else
-  rm -f "$PID_FILE"
-  : > "$LOG_FILE"
-  nohup python manage.py runserver "${HOST}:${PORT}" --noreload >"$LOG_FILE" 2>&1 &
-  echo $! > "$PID_FILE"
-  echo "Starting Ibtikar Tech preview server (PID $(cat "$PID_FILE"))..."
+  if server_is_running; then
+    echo "A stale/unhealthy preview process was detected. Restarting it..."
+    stop_preview_server
+  fi
+  start_preview_server
 fi
 
 if ! wait_for_server; then
-  echo "Preview server failed to become ready. Last log lines:"
-  tail -n 80 "$LOG_FILE" || true
+  echo "Preview server failed readiness checks. Last log lines:"
+  tail -n 100 "$LOG_FILE" || true
   exit 1
 fi
 
-echo "Ibtikar Tech preview is READY: http://localhost:${PORT}"
+echo "Ibtikar Tech preview is READY: http://localhost:${PORT}/"
 echo "Wagtail control: http://localhost:${PORT}/control/"
+echo "Django admin: http://localhost:${PORT}/django-admin/"
 echo "Health check: http://localhost:${PORT}/healthz/"
+
+REMOTE_URL="$(codespaces_preview_url || true)"
+if [[ -n "$REMOTE_URL" ]]; then
+  echo "Codespaces preview: ${REMOTE_URL}/"
+  echo "Codespaces control: ${REMOTE_URL}/control/"
+fi
+
 echo "Preview log: ${LOG_FILE}"
 
 make_codespaces_port_public
