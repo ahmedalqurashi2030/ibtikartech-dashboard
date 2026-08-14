@@ -43,3 +43,5 @@ jobs:
           fi
           git commit -m "chore: import approved frontend preview"
           git push origin HEAD:feat/frontend-preview-migration
+
+# Sync requested after frontend main commit 999845f48ddaf3ed59f49b1515ff9b94474141a1.
