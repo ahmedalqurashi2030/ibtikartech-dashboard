@@ -3,7 +3,7 @@ name: Frontend Preview Import
 on:
   push:
     branches:
-      - feat/frontend-preview-migration
+      - agent/sync-frontend-main-999845f
     paths:
       - scripts/import_frontend_preview.py
       - .github/workflows/frontend-preview-import.yml
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Django platform
         uses: actions/checkout@v4
         with:
-          ref: feat/frontend-preview-migration
+          ref: agent/sync-frontend-main-999845f
           fetch-depth: 0
 
       - name: Checkout approved frontend source
@@ -41,5 +41,5 @@ jobs:
             echo "Frontend preview is already synchronized."
             exit 0
           fi
-          git commit -m "chore: import approved frontend preview"
-          git push origin HEAD:feat/frontend-preview-migration
+          git commit -m "chore: import frontend 999845f"
+          git push origin HEAD:agent/sync-frontend-main-999845f
