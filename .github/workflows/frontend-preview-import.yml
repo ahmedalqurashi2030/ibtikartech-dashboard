@@ -1,11 +1,10 @@
 name: Frontend Preview Import
 
 on:
-  push:
+  pull_request:
     branches:
-      - agent/sync-frontend-main-999845f
+      - main
     paths:
-      - scripts/import_frontend_preview.py
       - .github/workflows/frontend-preview-import.yml
   workflow_dispatch:
 
