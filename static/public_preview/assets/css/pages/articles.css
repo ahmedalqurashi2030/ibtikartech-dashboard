@@ -518,6 +518,7 @@
 }
 
 .article-layout {
+  min-width: 0;
   display: grid;
   grid-template-columns: minmax(220px, .34fr) minmax(0, 1fr);
   gap: 72px;
@@ -576,6 +577,7 @@
 .copy-link[data-copied="true"] { color: var(--ibt-green); }
 
 .article-body {
+  min-width: 0;
   width: min(100%, 780px);
   color: color-mix(in srgb, var(--ibt-text) 88%, var(--ibt-muted));
   font-size: 1.08rem;

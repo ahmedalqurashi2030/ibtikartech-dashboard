@@ -59,7 +59,6 @@
     });
   });
 
-  document.querySelectorAll('[data-service-decision-tab="results"],[data-service-decision-panel="results"]').forEach((item) => item.remove());
   const tabs = [...document.querySelectorAll('[data-service-decision-tab]')];
   const panels = [...document.querySelectorAll('[data-service-decision-panel]')];
   const tablist = document.querySelector('[data-service-decision-tabs]');
