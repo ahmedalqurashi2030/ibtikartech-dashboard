@@ -113,6 +113,7 @@
     const closeMenu = (restoreFocus = false) => {
       menu.classList.remove('open','is-open');
       menu.setAttribute('aria-hidden','true');
+      menu.setAttribute('inert','');
       button.setAttribute('aria-expanded','false');
       document.body.classList.remove('menu-open');
       document.body.style.overflow = previousOverflow;
@@ -124,6 +125,7 @@
       previousOverflow = document.body.style.overflow;
       menu.classList.add('open','is-open');
       menu.setAttribute('aria-hidden','false');
+      menu.removeAttribute('inert');
       button.setAttribute('aria-expanded','true');
       document.body.classList.add('menu-open');
       document.body.style.overflow = 'hidden';

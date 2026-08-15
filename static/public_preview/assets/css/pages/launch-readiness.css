@@ -35,8 +35,10 @@
   --ibt-launch-reading:68ch;
 }
 
-html{scroll-padding-top:112px}
+html{max-width:100%;overflow-x:clip;scroll-padding-top:112px}
 body{
+  max-width:100%;
+  overflow-x:clip;
   font-family:var(--ibt-font);
   font-synthesis:none;
   font-kerning:normal;
@@ -78,7 +80,7 @@ img{height:auto}
 /* Approved homepage: retain the signature scenes, shorten the passive scroll. */
 body.source-home .hero__content h1{font-size:clamp(48px,6.6vw,86px);line-height:1.08;text-wrap:balance}
 body.source-home .hero__content>p{max-width:65ch;font-size:clamp(16px,1.35vw,19px);line-height:1.9}
-body.source-home .cinematic-story{height:330vh!important;min-height:2300px}
+body.source-home .cinematic-story{height:270vh!important;min-height:1900px}
 body.source-home .thx{height:390vh!important}
 body.source-home .services-cinema:not(.home-services-slider){height:500vh!important}
 body.source-home .strategy-layer{padding:var(--ibt-launch-section) 0}
@@ -861,11 +863,7 @@ body.source-services .hero-canvas{opacity:.36!important}
 .ibt-related-track>.ibt-related-card:not(a){padding-bottom:20px!important}
 .ibt-related-track>.ibt-related-card:not(a)>:not(img){margin-inline:20px}
 
-/* Deep service pages: remove duplicated outcome tabs and placeholder metadata. */
-[data-service-decision-tab="results"],
-[data-service-decision-panel="results"],
-[data-decision-tab="results"],
-[data-decision-panel="results"]{display:none!important}
+/* Deep service pages: keep quick decision metadata compact. */
 .service-detail-page .service-quick-info,
 body.source-product-service .quick-info{
   display:grid!important;
@@ -898,7 +896,7 @@ body.source-product-service .quick-info>span:nth-child(n+5){display:none!importa
     visibility:hidden;
     pointer-events:none;
     transform:translateX(104%);
-    transition:transform .3s var(--ibt-ease),opacity .22s,visibility .3s;
+    transition:transform .3s var(--ibt-ease),opacity .22s,visibility 0s linear .3s;
   }
   .ibt-shell-mobile-menu.open,
   .ibt-shell-mobile-menu.is-open,
@@ -908,6 +906,7 @@ body.source-product-service .quick-info>span:nth-child(n+5){display:none!importa
     visibility:visible;
     pointer-events:auto;
     transform:none;
+    transition:transform .3s var(--ibt-ease),opacity .22s,visibility 0s;
   }
   body.source-tharaa .float-chip{display:none!important}
   body.source-tharaa #heroCanvas{opacity:.1!important}
