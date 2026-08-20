@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import HttpResponseNotFound
 from django.urls import path, re_path
 
 from apps.public_preview.views import preview_page
@@ -8,7 +8,7 @@ app_name = "services"
 
 def _reject_unknown_public_service(request):
     """Stop unknown /services/* paths before the global Wagtail catch-all."""
-    raise Http404
+    return HttpResponseNotFound()
 
 
 # Public service pages are explicit website templates. They intentionally do not
