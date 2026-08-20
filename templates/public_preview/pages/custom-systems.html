@@ -21,7 +21,11 @@
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="منظومة رقمية مترابطة في ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>لا نبني شاشة إضافية إذا كان تكامل أبسط يزيل المشكلة من جذورها.</figcaption></figure></div></section>
 
-<section class="platform-section platform-section--soft" id="capabilities"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="أنواع الحلول" title="نختار أقل حل يحقق النتيجة المطلوبة" description="التقنية تأتي بعد فهم العملية والقيود والأنظمة التي يجب أن تعمل معها." %}<div class="route-grid">
+<section class="platform-section platform-section--soft" id="capabilities"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">أنواع الحلول</span>
+  <h2>نختار أقل حل يحقق النتيجة المطلوبة</h2>
+  <p>التقنية تأتي بعد فهم العملية والقيود والأنظمة التي يجب أن تعمل معها.</p>
+</div><div class="route-grid">
 <article class="route-card reveal" id="dashboards"><small>01 / DASHBOARDS</small><h3>لوحات التحكم</h3><p>رؤية وإدارة للحالات والبيانات والمهام التي يحتاجها الفريق يوميًا.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
 <article class="route-card reveal" id="portals"><small>02 / PORTALS</small><h3>بوابات العملاء</h3><p>طلبات وملفات وتحديثات وصلاحيات ضمن رحلة محددة.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
 <article class="route-card reveal" id="apps"><small>03 / APPS</small><h3>تطبيقات الجوال</h3><p>تدفقات أساسية مصممة للجهاز والمستخدم عندما تكون تجربة التطبيق مبررة فعليًا.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
@@ -37,7 +41,11 @@
 <article><h3>Handover</h3><p>اختبار السيناريوهات والتوثيق والتسليم وفق النطاق.</p></article>
 </div></div></section>
 
-<section class="platform-section platform-section--soft" id="continuity"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="الملكية والاستمرارية" title="لا نترك هذه التفاصيل إلى نهاية المشروع" description="يحدد عرض المشروع ما يخص الكود والبيانات والبيئات والتشغيل قبل بدء التنفيذ، حسب طبيعة الحل." %}<div class="platform-grid platform-grid--2">
+<section class="platform-section platform-section--soft" id="continuity"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">الملكية والاستمرارية</span>
+  <h2>لا نترك هذه التفاصيل إلى نهاية المشروع</h2>
+  <p>يحدد عرض المشروع ما يخص الكود والبيانات والبيئات والتشغيل قبل بدء التنفيذ، حسب طبيعة الحل.</p>
+</div><div class="platform-grid platform-grid--2">
 <article class="platform-card reveal"><h3>ما يجب حسمه في النطاق</h3><ul><li>ملكية الكود والمستودعات والحسابات</li><li>مكان الاستضافة والبيئات المتاحة</li><li>مصدر البيانات ومن يملك صلاحية الوصول</li><li>التكاملات الخارجية وحدود مسؤولية كل طرف</li><li>طريقة التسليم والتوثيق والقبول</li></ul></article>
 <article class="platform-card reveal"><h3>ما بعد التسليم</h3><ul><li>الدعم أو الصيانة إن كانت ضمن العرض</li><li>النسخ الاحتياطية والمراقبة حسب بيئة الاستضافة</li><li>معالجة تغييرات APIs الخارجية بنطاق منفصل عند الحاجة</li><li>تسليم المفاتيح والأسرار عبر قناة مناسبة لا عبر النماذج العامة</li><li>تحديد ما يعتبر إصلاحًا وما يعتبر تطويرًا جديدًا</li></ul></article>
 </div></div></section>
@@ -49,7 +57,21 @@
 
 <section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ من العملية، ثم اختر التقنية</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a></nav></div></section>
 
-{% include "public_preview/components/page_cta.html" with kicker="الأنظمة والأتمتة" title="ابدأ من العملية التي تريد تحسينها" description="صف لنا الخطوات الحالية والأدوات ونقطة التأخير أو الخطأ، وسنحدد هل تحتاج ربطًا أو أتمتة أو نظامًا مخصصًا." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ التشخيص" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="جميع الخدمات" %}
+<section class="page-cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div>
+        <span class="section-kicker">الأنظمة والأتمتة</span>
+        <h2>ابدأ من العملية التي تريد تحسينها</h2>
+        <p>صف لنا الخطوات الحالية والأدوات ونقطة التأخير أو الخطأ، وسنحدد هل تحتاج ربطًا أو أتمتة أو نظامًا مخصصًا.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a>
+        <a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 {% endblock %}
 
