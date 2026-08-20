@@ -28,7 +28,10 @@
     });
 
     document.querySelector('body.source-home > .announcement')?.remove();
-    document.querySelector('body.source-home > .skip-link')?.remove();
+    // The Django base owns the canonical skip link. Remove only accidental
+    // duplicate legacy copies after imports; never remove the shared first link.
+    const homepageSkipLinks = [...document.querySelectorAll('body.source-home > .skip-link')];
+    homepageSkipLinks.slice(1).forEach((node) => node.remove());
   };
 
   const normalizeProductionMetadata = () => {
