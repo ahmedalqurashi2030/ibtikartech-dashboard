@@ -20,7 +20,7 @@
 
 {% block body_attrs %} class="approved-source-page source-tharaa" data-section="tharaa" data-approved-source="Ibtikar_Tech_Tharaa_Theme_Page_Final_CTA_Replaced.html"{% endblock %}
 
-{% block content %}
+{% block body %}
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
 <a class="skip" href="#main">تجاوز إلى المحتوى</a>
@@ -251,9 +251,7 @@
 <section class="final-cta" id="request"><div class="container"><div class="final-card reveal"><div class="final-card__copy"><small>ابدأ بالمعاينة ثم حدد النطاق</small><h2>شاهد ثراء على تجربة تشبه نشاطك</h2><p>استكشف الواجهات والتخصيص، ثم حدد ما إذا كان احتياجك يقتصر على الترخيص أو يحتاج خدمة تركيب وتخصيص مستقلة.</p></div><div class="final-actions"><a class="btn btn--light" href="#v4-preview">شاهد المعاينة</a><a href="{% url 'public_preview:contact' %}#quote">جهّز طلبك ←</a></div></div></div></section>
 </main>
 <footer data-approved-legacy-shell hidden inert aria-hidden="true" class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-about"><a class="brand" href="#top"><span class="brand-mark"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ثراء × ابتكار تك</strong><small>THARAA THEME</small></span></a><p>ثيم تجارة إلكترونية لمنصة سلة، صمم لتقديم هوية أوضح وتجربة شراء مرنة وقابلة للتوسع.</p></div><div><h3>استكشف الثيم</h3><a href="#v4-experience">رحلة التجربة</a><a href="#v4-preview">مختبر المعاينة</a><a href="#features">المزايا</a><a href="#sections">الأقسام</a></div><div><h3>المساعدة</h3><a href="#faq">الأسئلة الشائعة</a><a href="#request">طلب المعاينة</a><a href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a href="{% url 'public_preview:contact' %}#quote">دعم تيليجرام</a></div><div><h3>ابتكار تك</h3><a href="{% url 'public_preview:home' %}">الرئيسية</a><a href="{% url 'services:index' %}">الخدمات</a><a href="{% url 'public_preview:portfolio' %}">الأعمال</a><a href="{% url 'public_preview:contact' %}#quote">تواصل معنا</a></div></div><div class="footer-bottom"><span>© 2026 ابتكار تك للحلول والخدمات الرقمية. جميع الحقوق محفوظة.</span><span>ثيم ثراء — تجربة متجر قابلة للنمو</span></div></div></footer>
-{% endblock %}
 
-{% block page_scripts %}
 <div class="sticky-cta"><button data-open-preview="">معاينة</button><a href="{% url 'public_preview:contact' %}#quote">ناقش ثراء</a></div>
 <div aria-labelledby="previewTitle" aria-modal="true" class="preview-modal" id="previewModal" role="dialog"><div class="modal-shell"><div class="modal-head"><strong id="previewTitle">معاينة ثيم ثراء</strong><button aria-label="إغلاق" id="closePreview">✕</button></div><div class="modal-body"><div class="modal-preview"><div class="mnav"></div><div class="mhero"><div><small>THARAA COLLECTION</small><h3>تجربة متجر تبدأ من الهوية</h3></div><i></i></div><div class="mcards"><i></i><i></i><i></i><i></i></div></div></div></div></div>
 <dialog aria-labelledby="componentPreviewTitle" class="component-preview-dialog" id="componentPreviewDialog">
@@ -264,8 +262,8 @@
 <div class="component-preview-dialog__body">
 <img alt="معاينة مكوّن ثراء" height="480" id="componentPreviewImage" src="/static/public_preview/assets/generated/cfe0270decff0292.svg" width="800"/>
 </div>
-</dialog><script src="/static/public_preview/assets/js/source-tharaa.js"></script>
+</dialog><script src="/static/public_preview/assets/js/source-tharaa.js" defer></script>
 
 
-<script src="/static/public_preview/assets/js/approved-source.js"></script>
+<script src="/static/public_preview/assets/js/approved-source.js" defer></script>
 {% endblock %}

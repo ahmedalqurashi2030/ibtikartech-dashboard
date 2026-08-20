@@ -10,7 +10,7 @@
 
 {% block body_attrs %} class="inner-page article-page" data-section="knowledge"{% endblock %}
 
-{% block content %}
+{% block body %}
 <div class="reading-progress" id="progressBar" aria-hidden="true"></div>
 
 
@@ -29,8 +29,6 @@
 <div class="article-end"><h2>ابدأ صغيرًا، لكن لا تبدأ ناقصًا</h2><p>يمكن أن ينطلق المتجر بعدد محدود من المنتجات والخصائص، بشرط أن تكون الرحلة الأساسية مكتملة وموثوقة. النطاق الأصغر يسهل اختباره وتحسينه، بينما النطاق الكبير الناقص يضاعف مصادر الخطأ.</p><a class="btn btn-primary" href="{% url 'services:store-launch' %}">استكشف خدمة إطلاق المتجر</a></div></div></div></section></article>
 <section class="related-articles"><div class="container"><div class="articles-heading"><div><span class="section-kicker">تابع القراءة</span><h2>مقالات مرتبطة بالمرحلة التالية</h2></div></div><div class="articles-grid"><article class="article-card article-card--product"><div class="article-card__visual" data-label="PRODUCT UX"><span class="article-card__number">02</span></div><div class="article-card__body"><span class="article-topic">تجربة المستخدم</span><h3>صفحة المنتج التي تجيب قبل أن يتردد العميل</h3><a class="article-link" href="{% url 'public_preview:article-product-page' %}">اقرأ المقال</a></div></article><article class="article-card article-card--strategy"><div class="article-card__visual" data-label="SCOPE"><span class="article-card__number">03</span></div><div class="article-card__body"><span class="article-topic">الاستراتيجية</span><h3>تخصيص الواجهة أم إعادة تصميم المتجر؟</h3><a class="article-link" href="{% url 'public_preview:article-store-redesign' %}">اقرأ المقال</a></div></article></div></div></section>
 </main>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script><script src="/static/public_preview/assets/js/articles.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/articles.js" defer></script>
 {% endblock %}

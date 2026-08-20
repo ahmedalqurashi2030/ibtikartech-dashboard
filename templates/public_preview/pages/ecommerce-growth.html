@@ -8,7 +8,7 @@
 
 {% block body_attrs %} class="inner-page service-detail-page" data-section="services"{% endblock %}
 
-{% block content %}
+{% block body %}
 <main id="main-content" class="service-detail-main">
 <div class="service-detail-shell"><nav class="service-detail-breadcrumb" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><span>←</span><b aria-current="page">الربط والقياس والنمو</b></nav></div>
 <section class="service-commerce-hero"><div class="service-detail-shell"><div class="service-commerce-hero__card" data-service-commerce-hero>
@@ -25,8 +25,6 @@
 <section class="service-detail-section service-detail-section--soft"><div class="service-detail-shell"><div class="service-detail-heading"><span>خدمات مرتبطة</span><h2>القياس يعمل أفضل عندما تكون التجربة جاهزة.</h2></div><nav class="related-nav"><a href="{% url 'services:store-launch' %}">إطلاق متجر</a><a href="{% url 'services:storefront-customization' %}">تخصيص الواجهة</a><a href="{% url 'services:store-redesign' %}">إعادة التصميم</a><a href="{% url 'services:product-page-optimization' %}">صفحة المنتج</a><a href="{% url 'services:ecommerce-support' %}">الدعم المستمر</a></nav></div></section>
 <section class="page-cta"><div class="service-detail-shell"><div class="cta-card"><div><span class="section-kicker">CONNECT + GROW</span><h2>ابدأ بالسؤال الذي لا تستطيع بياناتك الإجابة عنه.</h2><p>أرسل رابط المتجر والأدوات الحالية وما الذي تريد فهمه أو تحسينه.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ تشخيص القياس</a><a class="btn btn-outline" href="{% url 'public_preview:growth' %}">منظومة النمو الأوسع</a></div></div></div></section>
 </main>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script><script src="/static/public_preview/assets/js/commerce-service-detail.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
 {% endblock %}

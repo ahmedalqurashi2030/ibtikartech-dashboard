@@ -14,7 +14,7 @@
 
 {% block body_attrs %} class="inner-page platform-page approved-source-page source-ecommerce" data-section="services" data-approved-source="ecommerce.html"{% endblock %}
 
-{% block content %}
+{% block body %}
 <main id="main-content">
 
 <section class="platform-hero">
@@ -160,13 +160,11 @@
 </section>
 
   </main>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script>
-  <script src="/static/public_preview/assets/js/site-config.js"></script>
-  <script src="/static/public_preview/assets/js/modules/analytics.js"></script>
-  <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
-  <script src="/static/public_preview/assets/js/app.js"></script>
-  <script src="/static/public_preview/assets/js/approved-source.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
+  <script src="/static/public_preview/assets/js/site-config.js" defer></script>
+  <script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
+  <script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
+  <script src="/static/public_preview/assets/js/app.js" defer></script>
+  <script src="/static/public_preview/assets/js/approved-source.js" defer></script>
 {% endblock %}

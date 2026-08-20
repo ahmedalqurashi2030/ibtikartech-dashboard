@@ -16,7 +16,7 @@
 
 {% block body_attrs %} class="inner-page service-detail-page approved-source-page source-product-service" data-section="services" data-approved-source="Ibtikar_Tech_Product_Page_Optimization-2.html"{% endblock %}
 
-{% block content %}
+{% block body %}
 <main id="main-content" class="service-detail-main">
   <div class="service-detail-shell">
     <nav class="service-detail-breadcrumb" aria-label="مسار الصفحة">
@@ -140,15 +140,13 @@
 </main>
 
 <div class="sticky-service-cta"><a class="button" href="#service-contact">ابدأ تقييم صفحة المنتج</a></div>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script>
-<script src="/static/public_preview/assets/js/site-config.js"></script>
-<script src="/static/public_preview/assets/js/modules/analytics.js"></script>
-<script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
-<script src="/static/public_preview/assets/js/app.js"></script>
-<script src="/static/public_preview/assets/js/commerce-service-detail.js"></script>
-<script src="/static/public_preview/assets/js/source-product-page.js"></script>
-<script src="/static/public_preview/assets/js/approved-source.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/site-config.js" defer></script>
+<script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
+<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/app.js" defer></script>
+<script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
+<script src="/static/public_preview/assets/js/source-product-page.js" defer></script>
+<script src="/static/public_preview/assets/js/approved-source.js" defer></script>
 {% endblock %}

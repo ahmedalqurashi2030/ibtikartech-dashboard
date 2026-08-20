@@ -46,7 +46,7 @@ Ibtikar Tech Homepage V7 — cinematic hero + customer voices
 
 {% block body_attrs %} class="approved-source-page source-home" data-section="home" data-approved-source="Ibtikar_Tech_Homepage_Cinematic_Native_Fixed.html"{% endblock %}
 
-{% block content %}
+{% block body %}
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
 <div aria-hidden="true" class="cinematic-ambient-bg"></div>
@@ -503,9 +503,7 @@ Ibtikar Tech Homepage V7 — cinematic hero + customer voices
     </div>
   </div>
 </footer>
-{% endblock %}
 
-{% block page_scripts %}
 <nav aria-label="إجراءات سريعة" class="quick-dock">
 <a aria-label="العودة للأعلى" href="#home"><svg viewbox="0 0 24 24"><path d="m18 15-6-6-6 6"></path></svg><span>الأعلى</span></a>
 <button aria-label="البحث السريع" class="dock-search" type="button"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span>بحث</span></button>
@@ -526,8 +524,8 @@ Ibtikar Tech Homepage V7 — cinematic hero + customer voices
 </div>
 </div>
 </div>
-<script src="/static/public_preview/assets/js/approved-source.js"></script>
-<script src="/static/public_preview/assets/vendor/gsap.min.js"></script>
-<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js"></script>
-<script src="/static/public_preview/assets/js/source-home.js"></script>
+<script src="/static/public_preview/assets/js/approved-source.js" defer></script>
+<script src="/static/public_preview/assets/vendor/gsap.min.js" defer></script>
+<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/static/public_preview/assets/js/source-home.js" defer></script>
 {% endblock %}

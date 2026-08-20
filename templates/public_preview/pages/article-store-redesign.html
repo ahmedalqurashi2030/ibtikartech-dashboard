@@ -7,7 +7,7 @@
 
 {% block body_attrs %} class="inner-page article-page" data-section="knowledge"{% endblock %}
 
-{% block content %}
+{% block body %}
 <div class="reading-progress" id="progressBar" aria-hidden="true"></div>
 
 
@@ -22,8 +22,6 @@
 <h2 id="decision">اتخذ القرار بأقل نطاق صحيح</h2><ol><li>وثّق المشكلات دون اقتراح الحل أولًا.</li><li>صنّفها: محتوى، تجربة، هوية، تقنية، تشغيل أو قياس.</li><li>حدد الصفحات والحالات التي تتكرر فيها المشكلة.</li><li>افحص ما إذا كانت بنية الثيم والمنصة تسمح بالإصلاح المركز.</li><li>اختر أصغر نطاق يعالج السبب، لا العرض الظاهر فقط.</li><li>ضع معيار قبول واختبار لكل تغيير قبل البدء.</li></ol>
 <div class="article-end"><h2>لا تهدم ما يعمل، ولا ترقّع ما يحتاج إعادة بناء</h2><p>القرار المهني يحافظ على الأجزاء السليمة ويغير ما يمنع النتيجة. ابدأ بالتشخيص، ثم اجعل النطاق انعكاسًا لحجم المشكلة الحقيقي.</p><div class="articles-hero__actions"><a class="btn btn-primary" href="{% url 'services:storefront-customization' %}">خدمة تخصيص الواجهة</a><a class="btn btn-outline" href="{% url 'services:store-redesign' %}">خدمة إعادة التصميم</a></div></div></div></div></section></article>
 <section class="related-articles"><div class="container"><div class="articles-heading"><div><span class="section-kicker">تابع القراءة</span><h2>أدلة تساعدك قبل التنفيذ</h2></div></div><div class="articles-grid"><article class="article-card"><div class="article-card__visual" data-label="LAUNCH"><span class="article-card__number">01</span></div><div class="article-card__body"><span class="article-topic">المتاجر الإلكترونية</span><h3>دليل إطلاق متجر إلكتروني من الفكرة إلى أول طلب</h3><a class="article-link" href="{% url 'public_preview:article-store-launch' %}">اقرأ المقال</a></div></article><article class="article-card article-card--product"><div class="article-card__visual" data-label="PRODUCT UX"><span class="article-card__number">02</span></div><div class="article-card__body"><span class="article-topic">تجربة المستخدم</span><h3>صفحة المنتج التي تجيب قبل أن يتردد العميل</h3><a class="article-link" href="{% url 'public_preview:article-product-page' %}">اقرأ المقال</a></div></article></div></div></section></main>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script><script src="/static/public_preview/assets/js/articles.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/articles.js" defer></script>
 {% endblock %}
