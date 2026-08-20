@@ -31,6 +31,19 @@ const routes = [
   '/404/',
 ];
 
+const relatedServiceRoutes = new Set([
+  '/websites/',
+  '/brand-content/',
+  '/growth/',
+  '/custom-systems/',
+  '/services/store-launch/',
+  '/services/storefront-customization/',
+  '/services/store-redesign/',
+  '/services/product-page-optimization/',
+  '/services/ecommerce-growth/',
+  '/services/ecommerce-support/',
+]);
+
 const viewports = [
   { name: 'desktop', width: 1440, height: 960, mobile: false, deviceScaleFactor: 1 },
   { name: 'tablet', width: 820, height: 1180, mobile: false, deviceScaleFactor: 1 },
@@ -216,7 +229,7 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
       internalHrefs,
       servicesAxes: document.querySelectorAll('.service-item').length,
       servicesCinema: Boolean(document.querySelector('.services-primary-cinema')),
-      productRelatedHrefs: [...document.querySelectorAll('.related-grid article a[href]')]
+      relatedServiceHrefs: [...document.querySelectorAll('.service-related-cards .service-related-card__link[href]')]
         .map((a) => a.getAttribute('href') || ''),
       todoVisible: document.body.innerText.includes('[TODO:'),
       contactSubmitLabel: document.querySelector('#quote-form button[type="submit"]')?.textContent?.trim() || '',
@@ -268,14 +281,18 @@ function validate(result, failures, internalLinks) {
     if (metrics.servicesAxes !== 6) failures.push(`${prefix}: expected 6 service axes, found ${metrics.servicesAxes}`);
   }
 
-  if (route === '/services/product-page-optimization/') {
-    if (metrics.productRelatedHrefs.length !== 4) {
-      failures.push(`${prefix}: expected 4 related service cards, found ${metrics.productRelatedHrefs.length}`);
+  if (relatedServiceRoutes.has(route)) {
+    if (metrics.relatedServiceHrefs.length < 2) {
+      failures.push(`${prefix}: expected related service cards, found ${metrics.relatedServiceHrefs.length}`);
     }
-    const legacyRelated = metrics.productRelatedHrefs.filter((href) => /\\.html(?:[?#]|$)/i.test(href));
+    const legacyRelated = metrics.relatedServiceHrefs.filter((href) => /\\.html(?:[?#]|$)/i.test(href));
     if (legacyRelated.length) {
       failures.push(`${prefix}: related cards expose .html URLs: ${legacyRelated.join(', ')}`);
     }
+  }
+
+  if (route === '/services/product-page-optimization/' && metrics.relatedServiceHrefs.length !== 4) {
+    failures.push(`${prefix}: expected 4 related service cards, found ${metrics.relatedServiceHrefs.length}`);
   }
 
   if (route === '/contact/') {
