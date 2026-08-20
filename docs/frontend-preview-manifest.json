@@ -3,7 +3,7 @@
   "source_ref": "main",
   "mode": "temporary-static-django-preview",
   "header_footer": "source-preserved-or-django-includes",
-  "source_commit": "5d355fd1eccad3f170fdf3c2edf6feeb4bd1c316",
+  "source_commit": "4497d13c8aeb1a8d69315c09e46e4b656cc3f963",
   "business_model_binding": false,
   "required_pages": [
     "index.html",
