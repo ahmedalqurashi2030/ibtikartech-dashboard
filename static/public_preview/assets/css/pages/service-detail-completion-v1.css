@@ -1,0 +1,27 @@
+@import url("./homepage-production-qa-v1.css");
+@import url("./article-utility-refinement-v1.css");
+@import url("./article-utility-completion-v1.css");
+
+/* Service detail completion: RTL/logical-property corrections after legacy source CSS. */
+body.service-detail-page .service-assurance li::before,
+body.service-detail-page :is(.service-fit-card li,.service-check-list li)::before{
+  inset-inline-start:0!important;
+  inset-inline-end:auto!important;
+}
+
+/* Keep generated list markers aligned with reading direction. */
+body.service-detail-page .service-deliverable-grid li::before{
+  margin-inline-start:auto!important;
+  margin-left:0!important;
+}
+
+@media(max-width:760px){
+  body.service-detail-page .service-decision-tabs,
+  body[data-page="product-page-optimization"] .decision-tabs{
+    scroll-snap-type:inline proximity;
+  }
+  body.service-detail-page .service-decision-tabs button,
+  body[data-page="product-page-optimization"] .decision-tabs button{
+    scroll-snap-align:start;
+  }
+}

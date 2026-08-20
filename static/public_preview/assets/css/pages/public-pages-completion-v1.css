@@ -1,0 +1,152 @@
+/* Ibtikar Tech — public pages completion layer.
+   Completes editorial rhythm, CTAs and responsive details for public pages. */
+
+body:is([data-page="portfolio"],[data-page="about"],[data-page="contact"],[data-page="knowledge"]){
+  --ibt-page-accent:var(--ibt-blue);
+  --ibt-page-accent-2:var(--ibt-cyan);
+}
+body[data-page="portfolio"],body[data-page="about"]{--ibt-page-accent:var(--ibt-cyan);--ibt-page-accent-2:var(--ibt-blue)}
+
+body:is([data-page="portfolio"],[data-page="about"],[data-page="contact"],[data-page="knowledge"]) .section-kicker{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--ibt-page-accent)!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  letter-spacing:.03em;
+}
+
+/* About: turn the process into an editorial timeline instead of stacked cards. */
+body[data-page="about"] .timeline{display:grid!important;gap:0!important;border-top:1px solid var(--public-line)}
+body[data-page="about"] .timeline article{
+  position:relative;
+  min-height:112px!important;
+  padding-block:23px!important;
+  padding-inline-start:68px!important;
+  padding-inline-end:0!important;
+  display:block!important;
+  border:0!important;
+  border-bottom:1px solid var(--public-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body[data-page="about"] .timeline article::before{
+  position:absolute!important;
+  inset-inline-start:0!important;
+  top:23px!important;
+  width:42px!important;
+  height:42px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid var(--public-line)!important;
+  border-radius:10px!important;
+  background:color-mix(in srgb,var(--ibt-page-accent) 7%,var(--ibt-bg-soft))!important;
+  color:var(--ibt-page-accent)!important;
+  box-shadow:none!important;
+}
+body[data-page="about"] .timeline article h3{margin:0 0 5px!important;font-size:clamp(21px,2vw,27px)!important}
+body[data-page="about"] .timeline article p{margin:0!important;max-width:50ch!important;line-height:1.78!important}
+
+/* About: product proof panels should read as evidence, not generic cards. */
+body[data-page="about"] .platform-grid--2{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important}
+body[data-page="about"] .platform-grid--2 .platform-card{
+  min-height:0!important;
+  padding:clamp(24px,3vw,34px)!important;
+  border:1px solid var(--public-line)!important;
+  border-radius:18px!important;
+  background:color-mix(in srgb,var(--ibt-surface) 86%,transparent)!important;
+  box-shadow:none!important;
+}
+body[data-page="about"] .platform-grid--2 .platform-card:hover{transform:translateY(-2px)!important;box-shadow:0 16px 40px rgba(0,0,0,.07)!important}
+
+/* Portfolio: related links become a calm decision rail. */
+body[data-page="portfolio"] .related-nav{display:flex!important;flex-wrap:wrap!important;gap:0!important;border-block:1px solid var(--public-line)}
+body[data-page="portfolio"] .related-nav a{
+  min-height:50px!important;
+  padding:0 16px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  border:0!important;
+  border-inline-end:1px solid var(--public-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  font-weight:800!important;
+}
+body[data-page="portfolio"] .related-nav a:last-child{border-inline-end:0!important}
+body[data-page="portfolio"] .related-nav a:hover{background:color-mix(in srgb,var(--ibt-page-accent) 5%,transparent)!important;color:var(--ibt-page-accent)!important}
+
+/* Knowledge: the three knowledge paths are navigation, not another card wall. */
+body[data-page="knowledge"] .route-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;border-block:1px solid var(--public-line)}
+body[data-page="knowledge"] .route-card{
+  min-height:218px!important;
+  padding:clamp(22px,2.6vw,30px)!important;
+  border:0!important;
+  border-inline-end:1px solid var(--public-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body[data-page="knowledge"] .route-card:last-child{border-inline-end:0!important}
+body[data-page="knowledge"] .route-card:hover{transform:none!important;background:color-mix(in srgb,var(--ibt-page-accent) 4%,transparent)!important}
+body[data-page="knowledge"] .route-card small{color:var(--ibt-page-accent)!important;font:800 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace!important;letter-spacing:.07em!important}
+body[data-page="knowledge"] .route-card h3{margin:17px 0 9px!important;font-size:clamp(22px,2vw,29px)!important;line-height:1.25!important}
+body[data-page="knowledge"] .route-card p{line-height:1.8!important}
+body[data-page="knowledge"] .route-card a{margin-top:16px!important;display:inline-flex;font-weight:900!important}
+
+/* Shared final CTA for editorial pages. */
+body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta{padding:clamp(64px,7vw,90px) 0!important}
+body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-card{
+  min-height:228px;
+  padding:clamp(30px,4.5vw,52px)!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:30px 48px!important;
+  border:1px solid rgba(255,255,255,.1)!important;
+  border-radius:24px!important;
+  background:radial-gradient(circle at 86% 18%,color-mix(in srgb,var(--ibt-page-accent) 12%,transparent),transparent 30%),linear-gradient(145deg,#0c1733 0%,#11152f 70%,#17132d 100%)!important;
+  box-shadow:0 26px 76px rgba(3,8,24,.2)!important;
+}
+body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-card>div:first-child{max-width:700px}
+body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta h2{margin:10px 0 12px!important;font-size:clamp(34px,4vw,52px)!important;line-height:1.12!important}
+body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta p{max-width:52ch!important;line-height:1.85!important}
+body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-actions{display:grid!important;gap:9px!important;min-width:220px}
+body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-actions .btn{width:100%;min-height:48px!important;border-radius:12px!important}
+
+/* Contact: status copy should not jump the form when JS updates it. */
+body[data-page="contact"] .form-message{min-height:1.6em;margin-top:4px!important;color:var(--ibt-muted)!important;line-height:1.7!important}
+
+@media(max-width:760px){
+  body[data-page="about"] .platform-grid--2{grid-template-columns:1fr!important}
+  body[data-page="knowledge"] .route-grid{grid-template-columns:1fr!important}
+  body[data-page="knowledge"] .route-card{min-height:0!important;border-inline-end:0!important;border-block-end:1px solid var(--public-line)!important}
+  body[data-page="knowledge"] .route-card:last-child{border-block-end:0!important}
+  body[data-page="portfolio"] .related-nav{display:grid!important;grid-template-columns:1fr!important}
+  body[data-page="portfolio"] .related-nav a{border-inline-end:0!important;border-block-end:1px solid var(--public-line)!important}
+  body[data-page="portfolio"] .related-nav a:last-child{border-block-end:0!important}
+  body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-card{grid-template-columns:1fr!important;min-height:0!important}
+  body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-actions{width:min(100%,420px);min-width:0}
+}
+
+@media(max-width:520px){
+  body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-card{padding:26px 20px!important;border-radius:20px!important}
+  body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) .page-cta .cta-actions{width:100%}
+  body[data-page="contact"] .form-stepper{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  body[data-page="contact"] .form-stepper span{
+    min-height:44px!important;
+    padding:8px 6px!important;
+    justify-content:center!important;
+    border-inline-end:1px solid var(--public-line)!important;
+    border-block-end:0!important;
+    text-align:center;
+    font-size:11px!important;
+  }
+  body[data-page="contact"] .form-stepper span:last-child{border-inline-end:0!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body:is([data-page="portfolio"],[data-page="about"],[data-page="knowledge"]) :is(.platform-card,.cta-card){animation:none!important;transition:none!important}
+}
