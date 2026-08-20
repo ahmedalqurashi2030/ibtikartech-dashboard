@@ -7,8 +7,6 @@ on:
       - "apps/services/urls.py"
       - "templates/public_preview/**"
       - "scripts/refactor_public_preview_templates.py"
-      - "scripts/componentize_public_preview_templates.py"
-      - "scripts/componentize_page_cta.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
       - "scripts/verify_public_section_preservation.py"
@@ -21,8 +19,6 @@ on:
       - "apps/services/urls.py"
       - "templates/public_preview/**"
       - "scripts/refactor_public_preview_templates.py"
-      - "scripts/componentize_public_preview_templates.py"
-      - "scripts/componentize_page_cta.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
       - "scripts/verify_public_section_preservation.py"
@@ -47,8 +43,6 @@ jobs:
       - name: Validate transformation scripts
         run: |
           python -m py_compile scripts/refactor_public_preview_templates.py
-          python -m py_compile scripts/componentize_public_preview_templates.py
-          python -m py_compile scripts/componentize_page_cta.py
           python -m py_compile scripts/normalize_public_preview_metadata.py
           python -m py_compile scripts/patch_public_runtime_accessibility.py
           python -m py_compile scripts/verify_public_section_preservation.py
@@ -56,8 +50,6 @@ jobs:
       - name: Verify transformations are reproducible and committed
         run: |
           python scripts/refactor_public_preview_templates.py
-          python scripts/componentize_public_preview_templates.py
-          python scripts/componentize_page_cta.py
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
           git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
@@ -65,7 +57,7 @@ jobs:
       - name: Checkout approved frontend source
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
 
-      - name: Verify every approved section is preserved
+      - name: Verify every approved section and content block is preserved
         run: python scripts/verify_public_section_preservation.py --source /tmp/ibtikartech-source
 
       - name: Template architecture guards
@@ -76,10 +68,19 @@ jobs:
             grep -q 'extends "public_preview/base.html"' "$page"
             ! grep -q 'id="ibtikarSiteHeader"' "$page"
             ! grep -q 'class="ibt-shell-footer"' "$page"
+            ! grep -q 'public_preview/components/' "$page"
           done
+
+          grep -q 'id="ibtikarSiteHeader"' templates/public_preview/base.html
+          grep -q 'class="ibt-shell-footer"' templates/public_preview/base.html
+          ! grep -q 'public_preview/components/' templates/public_preview/base.html
+
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
-          grep -R -q 'include "public_preview/components/breadcrumbs.html"' templates/public_preview/pages
-          grep -R -q 'include "public_preview/components/section_heading.html"' templates/public_preview/pages
-          grep -R -q 'include "public_preview/components/page_cta.html"' templates/public_preview/pages
+
+          # Public service routing must stay explicit and template-backed.
+          ! grep -n '<slug:' apps/services/urls.py
+          ! grep -n 'views\.service_' apps/services/urls.py
+          ! grep -R -n '/services/catalog/' templates/public_preview
+
           grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
