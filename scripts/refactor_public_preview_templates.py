@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Convert imported static preview documents into maintainable Django templates.
+"""Convert imported static preview documents into Django page templates.
 
 The approved frontend source remains the content authority. This post-import step
-only changes template architecture: shared document shell, named Django URLs, and
-clean-route runtime identity. It never removes page content sections.
+only changes document architecture and URLs: the global document shell moves to
+base.html, while every page keeps the complete HTML for all of its own sections.
+No section is replaced by a reusable include or database-backed model.
 """
 
 from __future__ import annotations
@@ -56,9 +57,6 @@ IMPORT_COMMENT_RE = re.compile(
 )
 DATA_PAGE_RE = re.compile(r'\s+data-page=(?:"[^"]*"|\'[^\']*\')', re.IGNORECASE)
 
-HEADER_INCLUDE = '{% include "public_preview/components/header.html" %}'
-FOOTER_INCLUDE = '{% include "public_preview/components/footer.html" %}'
-
 
 def rewrite_named_urls(source: str) -> str:
     """Replace local *.html href/action attributes with namespaced Django URLs."""
@@ -87,10 +85,9 @@ def clean_body_attrs(attrs: str) -> str:
     return DATA_PAGE_RE.sub("", attrs).rstrip()
 
 
-def remove_shared_shell(before_footer: str) -> str:
-    updated = before_footer.replace(HEADER_INCLUDE, "")
-    updated = updated.replace(FOOTER_INCLUDE, "")
-    updated = HEADER_RE.sub("", updated, count=1)
+def remove_shared_shell(source: str) -> str:
+    """Remove only the global shell imported from the approved static source."""
+    updated = HEADER_RE.sub("", source, count=1)
     updated = MOBILE_NAV_RE.sub("", updated, count=1)
     updated = SKIP_LINK_RE.sub("", updated, count=1)
     return updated.strip()
@@ -117,14 +114,11 @@ def convert_page(page_name: str) -> None:
     body = document.group("body")
 
     footer = FOOTER_RE.search(body)
-    if footer:
-        before_footer = body[: footer.start()]
-        after_footer = body[footer.end() :]
-    elif FOOTER_INCLUDE in body:
-        before_footer, after_footer = body.split(FOOTER_INCLUDE, 1)
-    else:
+    if not footer:
         raise RuntimeError(f"Shared footer boundary not found: {page_name}")
 
+    before_footer = body[: footer.start()]
+    after_footer = body[footer.end() :]
     content = rewrite_named_urls(remove_shared_shell(before_footer))
     scripts = rewrite_named_urls(after_footer.strip())
 
@@ -152,6 +146,9 @@ def convert_page(page_name: str) -> None:
     )
     if leftover_shell:
         raise RuntimeError(f"Shared shell duplication remains after conversion: {page_name}")
+
+    if "public_preview/components/" in child:
+        raise RuntimeError(f"Section component include introduced unexpectedly: {page_name}")
 
     unresolved = [
         match.group("page")
@@ -191,7 +188,7 @@ def main() -> None:
         convert_page(page_name)
     patch_page_shell_runtime()
     print(
-        f"Refactored {len(REQUIRED_PAGES)} public templates to Django extends/include architecture."
+        f"Refactored {len(REQUIRED_PAGES)} public templates while preserving full page section HTML."
     )
 
 
