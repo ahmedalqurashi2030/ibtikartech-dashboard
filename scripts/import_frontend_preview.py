@@ -54,6 +54,12 @@ STATIC_PREFIX = "/static/public_preview/assets/"
 UX_STYLESHEET_RELATIVE = Path("css/pages/ux-system-v1.css")
 UX_STYLESHEET_URL = f"{STATIC_PREFIX}{UX_STYLESHEET_RELATIVE.as_posix()}"
 UX_STYLESHEET_ID = "ibtikar-ux-system-v1"
+DASHBOARD_GLOBAL_STYLESHEETS = (
+    (
+        "/static/public_preview/dashboard/service-category-refinement-v1.css",
+        "ibtikar-service-category-refinement-v1",
+    ),
+)
 DASHBOARD_REFINEMENT_LOADERS = (
     (
         "source-home",
@@ -143,9 +149,16 @@ def patch_dashboard_ux_loaders(assets_dir: Path) -> None:
             [
                 "  // Dashboard-owned final UI/UX layer; presentation only.",
                 f"  ensureStylesheet('{UX_STYLESHEET_URL}', '{UX_STYLESHEET_ID}');",
-                "",
             ]
         )
+
+    for url, stylesheet_id in DASHBOARD_GLOBAL_STYLESHEETS:
+        if stylesheet_id in js:
+            continue
+        loader_lines.append(f"  ensureStylesheet('{url}', '{stylesheet_id}');")
+
+    if loader_lines:
+        loader_lines.append("")
 
     for body_class, url, stylesheet_id in DASHBOARD_REFINEMENT_LOADERS:
         if stylesheet_id in js:
