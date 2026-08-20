@@ -5,7 +5,6 @@
   const pageKey = pathname.replace(/\.html$/, '') || 'index';
   const productPages = new Set(['tharaa.html']);
   const knowledgePages = new Set(['knowledge.html']);
-  const serviceCategoryPages = new Set(['websites', 'brand-content', 'growth', 'custom-systems']);
   const retiredRoutes = new Map([
     ['salla.html', 'ecommerce.html#platforms'],
     ['zid.html', 'ecommerce.html#platforms'],
@@ -69,11 +68,13 @@
     document.body.appendChild(script);
   };
 
-  // Load the shared UI/UX system without changing imported backend-facing contracts.
+  // Shared presentation layers. The category layer is safely scoped by data-page,
+  // so loading it globally avoids fragile page-specific loader state after imports.
   ensureStylesheet('/static/public_preview/assets/css/pages/ux-system-v1.css', 'ibtikar-ux-system-v1');
+  ensureStylesheet('/static/public_preview/dashboard/service-category-refinement-v1.css', 'ibtikar-service-category-refinement-v1');
 
   // Dashboard-owned page refinements live outside imported assets so source syncs
-  // cannot delete them. Scope each layer to the relevant page family.
+  // cannot delete them. Scope each special layer to the relevant approved-source page.
   if (document.body.classList.contains('source-home')) {
     ensureStylesheet('/static/public_preview/dashboard/homepage-refinement-v1.css', 'ibtikar-homepage-refinement-v1');
   }
@@ -82,9 +83,6 @@
   }
   if (document.body.classList.contains('source-ecommerce')) {
     ensureStylesheet('/static/public_preview/dashboard/ecommerce-refinement-v1.css', 'ibtikar-ecommerce-refinement-v1');
-  }
-  if (serviceCategoryPages.has(pageKey)) {
-    ensureStylesheet('/static/public_preview/dashboard/service-category-refinement-v1.css', 'ibtikar-service-category-refinement-v1');
   }
 
   const loadEnhancements = () => {
