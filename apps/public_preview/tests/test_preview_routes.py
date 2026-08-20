@@ -101,7 +101,8 @@ def test_repeated_sections_keep_canonical_html_inside_each_page():
         r'<nav class="breadcrumbs" aria-label="مسار التنقل">\s*'
         r'<a href="\{% url \'public_preview:home\' %\}">الرئيسية</a>\s*'
         r'<span aria-hidden="true">←</span>\s*'
-        r'<span aria-current="page">[^<]+</span>\s*'</n        r'</nav>',
+        r'<span aria-current="page">[^<]+</span>\s*'
+        r'</nav>',
         re.DOTALL,
     )
     assert breadcrumb_openings >= 3
