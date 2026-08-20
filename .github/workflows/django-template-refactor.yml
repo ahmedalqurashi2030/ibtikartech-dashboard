@@ -9,6 +9,7 @@ on:
       - scripts/componentize_public_preview_templates.py
       - scripts/componentize_page_cta.py
       - scripts/normalize_public_preview_metadata.py
+      - scripts/patch_public_runtime_accessibility.py
       - templates/public_preview/components/**
       - .github/workflows/django-template-refactor.yml
   workflow_dispatch:
@@ -38,6 +39,7 @@ jobs:
           python -m py_compile scripts/componentize_public_preview_templates.py
           python -m py_compile scripts/componentize_page_cta.py
           python -m py_compile scripts/normalize_public_preview_metadata.py
+          python -m py_compile scripts/patch_public_runtime_accessibility.py
 
       - name: Refactor imported templates
         run: |
@@ -45,6 +47,7 @@ jobs:
           python scripts/componentize_public_preview_templates.py
           python scripts/componentize_page_cta.py
           python scripts/normalize_public_preview_metadata.py
+          python scripts/patch_public_runtime_accessibility.py
 
       - name: Architecture guards
         shell: bash
@@ -61,6 +64,7 @@ jobs:
           grep -R -q 'include "public_preview/components/section_heading.html"' templates/public_preview/pages
           grep -R -q 'include "public_preview/components/page_cta.html"' templates/public_preview/pages
           grep -q 'Django clean URLs are canonical' static/public_preview/assets/js/page-shell.js
+          grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
 
       - name: Commit generated Django templates
         shell: bash
@@ -73,5 +77,5 @@ jobs:
             echo "Django template architecture is already synchronized."
             exit 0
           fi
-          git commit -m "refactor(templates): normalize reusable Django components"
+          git commit -m "refactor(templates): preserve clean URL runtime accessibility"
           git push origin HEAD:refactor/django-clean-urls-template-architecture-2026-08-20
