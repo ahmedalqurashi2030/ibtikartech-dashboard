@@ -34,68 +34,45 @@ jobs:
             -o "$PROD"
 
           python3 - "$SRC" "$PROD" <<'PY'
-          import re, sys, html
+          import sys, html
           from html.parser import HTMLParser
 
           class AuditParser(HTMLParser):
               def __init__(self):
-                  super().__init__()
-                  self.stack=[]
-                  self.sections=[]
-                  self.current_section=None
-                  self.capture=None
-                  self.buf=[]
-                  self.headings=[]
+                  super().__init__(); self.stack=[]; self.sections=[]; self.current_section=None; self.capture=None; self.buf=[]; self.headings=[]
               def handle_starttag(self, tag, attrs):
                   d=dict(attrs)
                   if tag=='section':
-                      sec={'id':d.get('id',''), 'class':d.get('class',''), 'headings':[]}
-                      self.sections.append(sec)
-                      self.stack.append(self.current_section)
-                      self.current_section=sec
+                      sec={'id':d.get('id',''),'class':d.get('class',''),'headings':[]}
+                      self.sections.append(sec); self.stack.append(self.current_section); self.current_section=sec
                   if tag in ('h1','h2','h3'):
-                      self.capture=tag
-                      self.buf=[]
+                      self.capture=tag; self.buf=[]
               def handle_data(self, data):
-                  if self.capture:
-                      self.buf.append(data)
+                  if self.capture: self.buf.append(data)
               def handle_endtag(self, tag):
                   if self.capture==tag:
                       text=' '.join(''.join(self.buf).split())
                       if text:
-                          item=(tag, html.unescape(text))
-                          self.headings.append(item)
-                          if self.current_section is not None:
-                              self.current_section['headings'].append(item)
-                      self.capture=None
-                      self.buf=[]
-                  if tag=='section':
-                      self.current_section=self.stack.pop() if self.stack else None
+                          item=(tag,html.unescape(text)); self.headings.append(item)
+                          if self.current_section is not None: self.current_section['headings'].append(item)
+                      self.capture=None; self.buf=[]
+                  if tag=='section': self.current_section=self.stack.pop() if self.stack else None
 
           def parse(path):
               p=AuditParser()
-              with open(path, encoding='utf-8', errors='replace') as f:
-                  p.feed(f.read())
+              with open(path,encoding='utf-8',errors='replace') as f: p.feed(f.read())
               return p
 
           src=parse(sys.argv[1]); prod=parse(sys.argv[2])
-          print('SOURCE_SECTION_COUNT', len(src.sections))
-          print('PROD_SECTION_COUNT', len(prod.sections))
-          print('SOURCE_HEADING_COUNT', len(src.headings))
-          print('PROD_HEADING_COUNT', len(prod.headings))
-          print('HEADINGS_IDENTICAL', src.headings == prod.headings)
+          print('SOURCE_SECTION_COUNT',len(src.sections)); print('PROD_SECTION_COUNT',len(prod.sections)); print('SOURCE_HEADING_COUNT',len(src.headings)); print('PROD_HEADING_COUNT',len(prod.headings)); print('HEADINGS_IDENTICAL',src.headings==prod.headings)
           print('--- SOURCE HEADINGS ---')
-          for i,(tag,text) in enumerate(src.headings,1):
-              print(f'{i:02d}|{tag}|{text}')
+          for i,(tag,text) in enumerate(src.headings,1): print(f'{i:02d}|{tag}|{text}')
           print('--- PRODUCTION HEADINGS ---')
-          for i,(tag,text) in enumerate(prod.headings,1):
-              print(f'{i:02d}|{tag}|{text}')
+          for i,(tag,text) in enumerate(prod.headings,1): print(f'{i:02d}|{tag}|{text}')
           print('--- SECTION MAP SOURCE ---')
           for i,s in enumerate(src.sections,1):
-              lead=' / '.join(t for _,t in s['headings'][:2])
-              print(f'{i:02d}|id={s["id"]}|class={s["class"]}|{lead}')
+              lead=' / '.join(t for _,t in s['headings'][:2]); print(f'{i:02d}|id={s["id"]}|class={s["class"]}|{lead}')
           print('--- SECTION MAP PROD ---')
           for i,s in enumerate(prod.sections,1):
-              lead=' / '.join(t for _,t in s['headings'][:2])
-              print(f'{i:02d}|id={s["id"]}|class={s["class"]}|{lead}')
+              lead=' / '.join(t for _,t in s['headings'][:2]); print(f'{i:02d}|id={s["id"]}|class={s["class"]}|{lead}')
           PY
