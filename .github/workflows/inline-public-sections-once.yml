@@ -1,0 +1,50 @@
+name: Inline Public Sections Once
+
+on:
+  push:
+    branches:
+      - refactor/django-clean-urls-template-architecture-2026-08-20
+    paths:
+      - scripts/inline_public_sections_once.py
+      - .github/workflows/inline-public-sections-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  inline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: refactor/django-clean-urls-template-architecture-2026-08-20
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inline section HTML into every page
+        run: python scripts/inline_public_sections_once.py
+
+      - name: Verify no page component includes remain
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -R -n 'public_preview/components/' templates/public_preview/pages
+          git diff --check
+
+      - name: Commit normalized page templates
+        shell: bash
+        run: |
+          if git diff --quiet -- templates/public_preview/pages; then
+            echo "No page changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/public_preview/pages
+          git commit -m "Inline repeated section HTML in public pages"
+          git push origin HEAD:refactor/django-clean-urls-template-architecture-2026-08-20
