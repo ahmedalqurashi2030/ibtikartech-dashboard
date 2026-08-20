@@ -54,6 +54,23 @@ STATIC_PREFIX = "/static/public_preview/assets/"
 UX_STYLESHEET_RELATIVE = Path("css/pages/ux-system-v1.css")
 UX_STYLESHEET_URL = f"{STATIC_PREFIX}{UX_STYLESHEET_RELATIVE.as_posix()}"
 UX_STYLESHEET_ID = "ibtikar-ux-system-v1"
+DASHBOARD_REFINEMENT_LOADERS = (
+    (
+        "source-home",
+        "/static/public_preview/dashboard/homepage-refinement-v1.css",
+        "ibtikar-homepage-refinement-v1",
+    ),
+    (
+        "source-services",
+        "/static/public_preview/dashboard/services-refinement-v1.css",
+        "ibtikar-services-refinement-v1",
+    ),
+    (
+        "source-ecommerce",
+        "/static/public_preview/dashboard/ecommerce-refinement-v1.css",
+        "ibtikar-ecommerce-refinement-v1",
+    ),
+)
 
 
 def replace_shell_slot(source: str, attribute: str, replacement: str) -> str:
@@ -95,37 +112,56 @@ def restore_dashboard_ux_stylesheet(assets_dir: Path, content: str | None) -> No
     stylesheet.write_text(content, encoding="utf-8")
 
 
-def patch_ux_system_loader(assets_dir: Path) -> None:
-    """Ensure imported pages keep loading the dashboard-owned final UX layer."""
+def patch_dashboard_ux_loaders(assets_dir: Path) -> None:
+    """Restore shared and page-specific dashboard UX loaders after source imports."""
     js_path = assets_dir / "js" / "page-shell.js"
     if not js_path.is_file():
-        raise RuntimeError("page-shell.js is missing; refusing to drop the UX system loader.")
+        raise RuntimeError("page-shell.js is missing; refusing to drop dashboard UX loaders.")
 
     js = js_path.read_text(encoding="utf-8")
-    if UX_STYLESHEET_ID in js:
-        return
-
     script_marker = "  const ensureScript = (src, datasetKey) => {"
     load_marker = "  const loadEnhancements = () => {"
     if script_marker not in js or load_marker not in js:
         raise RuntimeError("page-shell.js changed; refusing an unsafe UX loader patch.")
 
-    stylesheet_helper = f'''  const ensureStylesheet = (href, id) => {{
-    if (document.getElementById(id) || document.querySelector(`link[href="${{href}}"]`)) return;
+    if "const ensureStylesheet = (href, id) =>" not in js:
+        stylesheet_helper = '''  const ensureStylesheet = (href, id) => {
+    if (document.getElementById(id) || document.querySelector(`link[href="${href}"]`)) return;
     const link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
     link.href = href;
     document.head.appendChild(link);
-  }};
+  };
 
 '''
-    stylesheet_call = (
-        "  // Dashboard-owned final UI/UX layer; presentation only.\n"
-        f"  ensureStylesheet('{UX_STYLESHEET_URL}', '{UX_STYLESHEET_ID}');\n\n"
-    )
-    js = js.replace(script_marker, stylesheet_helper + script_marker, 1)
-    js = js.replace(load_marker, stylesheet_call + load_marker, 1)
+        js = js.replace(script_marker, stylesheet_helper + script_marker, 1)
+
+    loader_lines: list[str] = []
+    if UX_STYLESHEET_ID not in js:
+        loader_lines.extend(
+            [
+                "  // Dashboard-owned final UI/UX layer; presentation only.",
+                f"  ensureStylesheet('{UX_STYLESHEET_URL}', '{UX_STYLESHEET_ID}');",
+                "",
+            ]
+        )
+
+    for body_class, url, stylesheet_id in DASHBOARD_REFINEMENT_LOADERS:
+        if stylesheet_id in js:
+            continue
+        loader_lines.extend(
+            [
+                f"  if (document.body.classList.contains('{body_class}')) {{",
+                f"    ensureStylesheet('{url}', '{stylesheet_id}');",
+                "  }",
+            ]
+        )
+
+    if loader_lines:
+        loader_block = "\n".join(loader_lines).rstrip() + "\n\n"
+        js = js.replace(load_marker, loader_block + load_marker, 1)
+
     js_path.write_text(js, encoding="utf-8")
 
 
@@ -229,7 +265,7 @@ def import_frontend(
     shutil.copytree(source_assets, assets_dir)
     restore_dashboard_ux_stylesheet(assets_dir, preserved_ux_stylesheet)
     patch_runtime_assets(assets_dir)
-    patch_ux_system_loader(assets_dir)
+    patch_dashboard_ux_loaders(assets_dir)
     patch_dashboard_journey_alignment(assets_dir)
 
     imported_pages = []

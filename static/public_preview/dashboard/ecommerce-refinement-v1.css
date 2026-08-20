@@ -1,0 +1,826 @@
+/*
+ * Ibtikar Tech — Ecommerce Category Refinement V1
+ * Frontend-only. Scoped to the approved ecommerce category page.
+ */
+
+body.source-ecommerce[data-page="ecommerce"] {
+  --commerce-section-y: clamp(72px, 7vw, 102px);
+  --commerce-line: color-mix(in srgb, var(--ibt-border) 76%, transparent);
+  --commerce-reading: 64ch;
+}
+
+body.source-ecommerce[data-page="ecommerce"] main p {
+  max-width: var(--commerce-reading);
+}
+
+/* HERO ------------------------------------------------------------------ */
+body.source-ecommerce[data-page="ecommerce"] .platform-hero {
+  padding: clamp(126px, 12vw, 168px) 0 clamp(72px, 7vw, 96px) !important;
+  min-height: auto !important;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(16, 200, 232, .11), transparent 30%),
+    radial-gradient(circle at 18% 82%, rgba(79, 125, 243, .09), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--ibt-bg-soft) 78%, transparent), var(--ibt-bg)) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-hero__grid {
+  grid-template-columns: minmax(0, .9fr) minmax(440px, 1.1fr) !important;
+  gap: clamp(44px, 6vw, 84px) !important;
+  align-items: center !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-hero .hero-copy {
+  max-width: 700px;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .breadcrumbs {
+  margin-bottom: 22px !important;
+  color: var(--ibt-muted) !important;
+  font-size: 12px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-kicker {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--ibt-cyan) !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-hero h1 {
+  max-width: 760px !important;
+  margin: 14px 0 18px !important;
+  font-size: clamp(42px, 5vw, 68px) !important;
+  line-height: 1.09 !important;
+  letter-spacing: -.035em !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-hero .hero-copy > p {
+  max-width: 58ch !important;
+  font-size: clamp(16px, 1.25vw, 18px) !important;
+  line-height: 1.9 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-actions {
+  gap: 10px !important;
+  margin-top: 26px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-actions .btn {
+  min-height: 48px !important;
+  padding-inline: 20px !important;
+  border-radius: 12px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-actions .btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-hero .source-visual {
+  border-radius: 22px !important;
+  border-color: var(--commerce-line) !important;
+  box-shadow: 0 26px 76px rgba(0, 0, 0, .16) !important;
+  transform: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-hero .source-visual:hover,
+body.source-ecommerce[data-page="ecommerce"] .platform-hero .source-visual:hover img {
+  transform: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-hero .source-visual figcaption {
+  color: var(--ibt-muted) !important;
+  font-size: 11px !important;
+}
+
+/* CATEGORY NAV ---------------------------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-nav {
+  position: sticky !important;
+  top: var(--ibt-header-h) !important;
+  z-index: 420 !important;
+  border-block: 1px solid var(--commerce-line) !important;
+  background: color-mix(in srgb, var(--ibt-bg) 94%, transparent) !important;
+  backdrop-filter: blur(16px) saturate(1.15);
+  box-shadow: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-nav__inner {
+  min-height: 54px !important;
+  gap: 2px !important;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-nav__inner::-webkit-scrollbar {
+  display: none;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-nav a {
+  min-height: 42px !important;
+  padding: 0 12px !important;
+  display: inline-flex !important;
+  align-items: center;
+  flex: 0 0 auto;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-nav a:hover,
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-nav a:focus-visible {
+  background: color-mix(in srgb, var(--ibt-blue) 7%, transparent) !important;
+}
+
+/* SHARED SECTION RHYTHM ------------------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] .platform-section {
+  padding: var(--commerce-section-y) 0 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-heading {
+  max-width: 780px !important;
+  margin-bottom: clamp(34px, 4vw, 48px) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-heading h2,
+body.source-ecommerce[data-page="ecommerce"] .commerce-subservices__intro h2 {
+  font-size: clamp(33px, 3.9vw, 52px) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -.025em !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .platform-heading p,
+body.source-ecommerce[data-page="ecommerce"] .commerce-subservices__intro > p {
+  line-height: 1.9 !important;
+}
+
+/* STARTING PATHS — editorial 2x2 instead of card wall ------------------- */
+body.source-ecommerce[data-page="ecommerce"] #paths .route-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border-block: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card {
+  min-height: 230px !important;
+  padding: clamp(24px, 3vw, 34px) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card:nth-child(odd) {
+  border-inline-end: 1px solid var(--commerce-line) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card:nth-child(-n+2) {
+  border-block-end: 1px solid var(--commerce-line) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card:hover {
+  transform: none !important;
+  background: color-mix(in srgb, var(--ibt-cyan) 4%, transparent) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card small {
+  color: var(--ibt-cyan) !important;
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  letter-spacing: .08em !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card h3 {
+  margin: 18px 0 10px !important;
+  font-size: clamp(23px, 2.2vw, 30px) !important;
+  line-height: 1.22 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card p {
+  max-width: 46ch !important;
+  line-height: 1.82 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #paths .route-card a {
+  margin-top: 18px !important;
+  display: inline-flex;
+  font-weight: 900 !important;
+}
+
+/* SUBSERVICES — keep rich content but flatten internal nesting ----------- */
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .7fr) !important;
+  align-items: end !important;
+  gap: 30px 56px !important;
+  margin-bottom: 42px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro > p {
+  margin: 0 !important;
+  max-width: 46ch !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card,
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card--featured {
+  grid-column: auto !important;
+  min-height: 0 !important;
+  border: 1px solid var(--commerce-line) !important;
+  border-radius: 18px !important;
+  background: color-mix(in srgb, var(--ibt-surface) 86%, transparent) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: color-mix(in srgb, var(--ibt-cyan) 28%, var(--ibt-border)) !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .08) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__media {
+  height: clamp(190px, 20vw, 250px) !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: color-mix(in srgb, var(--ibt-bg-soft) 82%, transparent) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__stage {
+  inset-block-start: 14px !important;
+  inset-inline-start: 14px !important;
+  padding: 6px 9px !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__body {
+  padding: clamp(20px, 2.4vw, 28px) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__eyebrow {
+  gap: 10px !important;
+  color: var(--ibt-muted) !important;
+  font-size: 10px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card h3 {
+  margin: 12px 0 9px !important;
+  font-size: clamp(24px, 2.3vw, 31px) !important;
+  line-height: 1.2 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__body > p {
+  margin: 0 0 18px !important;
+  line-height: 1.82 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__fit {
+  margin: 0 !important;
+  padding: 16px 0 !important;
+  border-block: 1px solid var(--commerce-line) !important;
+  border-inline: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__fit small {
+  margin-bottom: 4px !important;
+  color: var(--ibt-muted) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__meta {
+  margin-top: 14px !important;
+  gap: 7px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__meta span {
+  padding: 5px 8px !important;
+  border-radius: 7px !important;
+  background: var(--ibt-bg-soft) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__footer {
+  margin-top: 18px !important;
+  padding-top: 16px !important;
+  border-top: 1px solid var(--commerce-line) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__footer a {
+  font-weight: 900 !important;
+}
+
+/* Category explanation — editorial ------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-principle {
+  margin-top: clamp(46px, 5vw, 66px) !important;
+  padding: clamp(26px, 3.5vw, 38px) 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .9fr) !important;
+  gap: 32px 60px !important;
+  border-block: 1px solid var(--commerce-line) !important;
+  border-inline: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-principle h3 {
+  margin: 12px 0 10px !important;
+  font-size: clamp(27px, 3vw, 38px) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-principle__rules {
+  display: grid !important;
+  gap: 0 !important;
+  border-top: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] .commerce-category-principle__rules span {
+  padding: 14px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--commerce-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+/* PLATFORMS — quieter comparison --------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] #platforms .platform-grid--4 {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border-block: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card {
+  min-height: 245px !important;
+  padding: 26px 22px !important;
+  border: 0 !important;
+  border-inline-end: 1px solid var(--commerce-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card:last-child {
+  border-inline-end: 0 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card:hover {
+  transform: none !important;
+  background: color-mix(in srgb, var(--ibt-blue) 4%, transparent) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card h3 {
+  margin: 14px 0 10px !important;
+  font-size: 26px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card p {
+  line-height: 1.8 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card .btn {
+  margin-top: 18px !important;
+  border-radius: 9px !important;
+}
+
+/* THARAA CROSSSELL ------------------------------------------------------ */
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product.commerce-product-crosssell {
+  background:
+    radial-gradient(circle at 84% 20%, rgba(236, 72, 153, .08), transparent 30%),
+    radial-gradient(circle at 14% 78%, rgba(16, 200, 232, .07), transparent 34%),
+    var(--ibt-bg) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__grid {
+  grid-template-columns: minmax(440px, 1.08fr) minmax(0, .92fr) !important;
+  gap: clamp(44px, 6vw, 82px) !important;
+  align-items: center !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__visual {
+  border-radius: 22px !important;
+  overflow: hidden;
+  box-shadow: 0 28px 82px rgba(0, 0, 0, .17) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__copy h2 {
+  margin: 12px 0 14px !important;
+  font-size: clamp(34px, 3.8vw, 50px) !important;
+  line-height: 1.14 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__copy p {
+  line-height: 1.9 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__facts {
+  margin-top: 22px !important;
+  gap: 0 !important;
+  border-block: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__facts span {
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-inline-end: 1px solid var(--commerce-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__facts span:last-child {
+  border-inline-end: 0 !important;
+}
+
+/* PRODUCT PAGE FEATURE -------------------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] #product-page .split-layout {
+  gap: clamp(42px, 6vw, 76px) !important;
+  align-items: center !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #product-page .content-copy h2 {
+  margin: 12px 0 14px !important;
+  font-size: clamp(33px, 3.7vw, 48px) !important;
+  line-height: 1.15 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #product-page .check-list {
+  margin-top: 22px !important;
+  display: grid !important;
+  gap: 0 !important;
+  border-top: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] #product-page .check-list li {
+  padding: 11px 0 !important;
+  border-bottom: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] #product-page .source-visual {
+  border-radius: 22px !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .14) !important;
+  transform: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #product-page .source-visual:hover,
+body.source-ecommerce[data-page="ecommerce"] #product-page .source-visual:hover img {
+  transform: none !important;
+}
+
+/* JOURNEY — keep signature connected process, tighten it ---------------- */
+body.source-ecommerce[data-page="ecommerce"] #process.commerce-journey {
+  padding: clamp(78px, 7vw, 104px) 0 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #process .platform-heading {
+  margin-bottom: 50px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__timeline {
+  max-width: 1120px;
+  margin-inline: auto !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__step {
+  padding-inline: 14px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__step h3 {
+  margin-top: 16px !important;
+  font-size: clamp(19px, 1.8vw, 24px) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__step p {
+  font-size: 13px !important;
+  line-height: 1.75 !important;
+}
+
+/* DELIVERABLES — flat 3x2 matrix --------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-grid--3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border-block: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-card {
+  min-height: 190px !important;
+  padding: 26px 22px !important;
+  border: 0 !important;
+  border-inline-end: 1px solid var(--commerce-line) !important;
+  border-block-end: 1px solid var(--commerce-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-card:nth-child(3n) {
+  border-inline-end: 0 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-card:nth-last-child(-n+3) {
+  border-block-end: 0 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-card:hover {
+  transform: none !important;
+  background: color-mix(in srgb, var(--ibt-cyan) 4%, transparent) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-card h3 {
+  font-size: 23px !important;
+  margin-bottom: 9px !important;
+}
+
+/* FAQ ------------------------------------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] #faq .container {
+  display: grid !important;
+  grid-template-columns: minmax(260px, .7fr) minmax(0, 1.3fr) !important;
+  gap: clamp(44px, 6vw, 82px) !important;
+  align-items: start !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #faq .platform-heading {
+  position: sticky;
+  top: 128px;
+  margin: 0 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #faq .faq-list {
+  border-top: 1px solid var(--commerce-line);
+}
+
+body.source-ecommerce[data-page="ecommerce"] #faq .faq {
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--commerce-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #faq .faq button {
+  min-height: 70px !important;
+  padding: 18px 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font-size: clamp(15px, 1.25vw, 17px) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] #faq .faq-answer p {
+  max-width: 58ch !important;
+  padding-bottom: 20px !important;
+  line-height: 1.85 !important;
+}
+
+/* FINAL CTA ------------------------------------------------------------- */
+body.source-ecommerce[data-page="ecommerce"] .page-cta {
+  padding: clamp(64px, 7vw, 90px) 0 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-card {
+  min-height: 240px;
+  padding: clamp(30px, 4.5vw, 52px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 30px 48px !important;
+  border: 1px solid rgba(255, 255, 255, .1) !important;
+  border-radius: 24px !important;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(16, 200, 232, .1), transparent 30%),
+    linear-gradient(145deg, #0c1733 0%, #11152f 70%, #17132d 100%) !important;
+  box-shadow: 0 26px 76px rgba(3, 8, 24, .22) !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-card > div:first-child {
+  max-width: 700px;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-card h2 {
+  margin: 10px 0 12px !important;
+  font-size: clamp(34px, 4vw, 52px) !important;
+  line-height: 1.12 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-card p {
+  max-width: 52ch !important;
+  line-height: 1.85 !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-actions {
+  display: grid !important;
+  min-width: 220px;
+  gap: 9px !important;
+}
+
+body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-actions .btn {
+  width: 100%;
+  min-height: 48px !important;
+  border-radius: 12px !important;
+}
+
+/* TABLET / MOBILE ------------------------------------------------------- */
+@media (max-width: 980px) {
+  body.source-ecommerce[data-page="ecommerce"] .platform-hero__grid,
+  body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 34px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #platforms .platform-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card:nth-child(2) {
+    border-inline-end: 0 !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card:nth-child(-n+2) {
+    border-block-end: 1px solid var(--commerce-line) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  body.source-ecommerce[data-page="ecommerce"] {
+    --commerce-section-y: clamp(56px, 12vw, 74px);
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .platform-hero {
+    padding: 112px 0 58px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .platform-hero__grid,
+  body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__grid,
+  body.source-ecommerce[data-page="ecommerce"] #product-page .split-layout {
+    grid-template-columns: 1fr !important;
+    gap: 34px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .platform-hero h1 {
+    font-size: clamp(37px, 10.7vw, 50px) !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .commerce-category-nav {
+    top: 64px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #paths .route-grid,
+  body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-grid,
+  body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro,
+  body.source-ecommerce[data-page="ecommerce"] .commerce-category-principle,
+  body.source-ecommerce[data-page="ecommerce"] #faq .container {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #paths .route-card {
+    min-height: 0 !important;
+    border-inline-end: 0 !important;
+    border-block-end: 1px solid var(--commerce-line) !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #paths .route-card:last-child {
+    border-block-end: 0 !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro {
+    gap: 16px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__media {
+    height: 220px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .commerce-category-principle {
+    gap: 24px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #platforms .platform-grid--4,
+  body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-grid--3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card,
+  body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-card {
+    min-height: 0 !important;
+    border-inline-end: 0 !important;
+    border-block-end: 1px solid var(--commerce-line) !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #platforms .platform-card:last-child,
+  body.source-ecommerce[data-page="ecommerce"] #deliverables .platform-card:last-child {
+    border-block-end: 0 !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__visual {
+    order: 2;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #faq .platform-heading {
+    position: static !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__timeline {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, .1);
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__timeline::before {
+    display: none !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__step {
+    min-height: 0 !important;
+    padding: 20px 0 !important;
+    display: grid !important;
+    grid-template-columns: 52px minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 14px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    text-align: start !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__number {
+    margin: 0 !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #process .commerce-journey__step h3 {
+    margin: 0 0 4px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-card {
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-actions {
+    width: min(100%, 420px);
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  body.source-ecommerce[data-page="ecommerce"] .platform-actions,
+  body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100%;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .platform-actions .btn,
+  body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-actions .btn {
+    width: 100%;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card {
+    border-radius: 15px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__media {
+    height: 188px !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__facts {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__facts span {
+    border-inline-end: 0 !important;
+    border-block-end: 1px solid var(--commerce-line) !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] #tharaa-product .commerce-product-crosssell__facts span:last-child {
+    border-block-end: 0 !important;
+  }
+
+  body.source-ecommerce[data-page="ecommerce"] .page-cta .cta-card {
+    padding: 26px 20px !important;
+    border-radius: 20px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.source-ecommerce[data-page="ecommerce"] :where(.route-card, .commerce-service-card, .platform-card, .source-visual) {
+    animation: none !important;
+    transition: none !important;
+  }
+}
