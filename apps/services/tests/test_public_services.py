@@ -26,18 +26,26 @@ def service(db):
 
 
 @pytest.mark.django_db
-def test_public_service_index_and_detail(client, service):
-    index_response = client.get(reverse("services:index"))
+def test_public_marketing_index_and_dynamic_catalog_are_separate(client, service):
+    marketing_response = client.get(reverse("services:index"))
+    catalog_response = client.get(reverse("services:catalog"))
     detail_response = client.get(reverse("services:detail", args=[service.slug]))
 
-    assert index_response.status_code == 200
-    assert service.name in index_response.content.decode()
+    assert marketing_response.status_code == 200
+    assert reverse("services:index") == "/services/"
+    assert reverse("services:catalog") == "/services/catalog/"
+    assert reverse("services:detail", args=[service.slug]) == (
+        f"/services/catalog/{service.slug}/"
+    )
+
+    assert catalog_response.status_code == 200
+    assert service.name in catalog_response.content.decode()
     assert detail_response.status_code == 200
     assert service.name in detail_response.content.decode()
 
 
 @pytest.mark.django_db
-def test_inactive_service_is_not_public(client, service):
+def test_inactive_service_is_not_public_in_catalog(client, service):
     service.is_active = False
     service.save(update_fields=["is_active", "updated_at"])
 
@@ -59,10 +67,18 @@ def test_guest_can_request_service_without_account(client, service):
     )
 
     assert response.status_code == 302
+    assert response.url == f"{reverse('services:detail', args=[service.slug])}?sent=1"
     contact = Contact.objects.get(email="guest@example.com")
     inquiry = Inquiry.objects.get(contact=contact)
     assert inquiry.service_id == service.id
     assert inquiry.source == "WEB_SERVICE"
+
+
+@pytest.mark.django_db
+def test_legacy_dynamic_request_alias_is_preserved(client, service):
+    response = client.get(reverse("services:legacy-request", args=[service.slug]))
+    assert response.status_code == 200
+    assert service.name in response.content.decode()
 
 
 @pytest.mark.django_db
