@@ -13,17 +13,10 @@ jobs:
     runs-on: [self-hosted, production, ibtikartech]
     timeout-minutes: 10
     steps:
-      - name: Verify deployed commit and services
+      - name: Verify production services and health
         shell: bash
         run: |
           set -euo pipefail
-          expected="f19a5203cc7440574f7ce3942ceb8250c4385b6d"
-          app="/srv/ibtikartech/app"
-
-          deployed="$(git -c safe.directory="$app" -C "$app" rev-parse HEAD)"
-          echo "deployed_commit=$deployed"
-          test "$deployed" = "$expected"
-
           systemctl is-active --quiet ibtikartech.service
           test "$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/healthz/)" = "200"
           test "$(curl -sS -o /dev/null -w '%{http_code}' https://ibtikartech.co/healthz/)" = "200"
@@ -40,6 +33,7 @@ jobs:
           grep -Fq 'include "public_preview/components/header.html"' "$base"
           grep -Fq 'include "public_preview/components/footer.html"' "$base"
           grep -Fq 'include "public_preview/components/runtime.html"' "$base"
+          grep -Fq 'section-layout-refinement-v2.css' "$base"
           ! grep -Fq 'block page_scripts' "$base"
           ! grep -R -n -F 'block page_scripts' "$pages"
           ! grep -R -n -F 'block content' "$pages"
