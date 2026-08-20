@@ -9,6 +9,7 @@ on:
       - "templates/public_preview/**"
       - "static/public_preview/assets/js/**"
       - "static/public_preview/assets/css/**"
+      - "scripts/browser_qa_clean_urls.cjs"
       - "config/settings/test.py"
       - ".github/workflows/django-clean-url-browser-qa.yml"
 
@@ -118,88 +119,14 @@ jobs:
           grep -Fq 'data-ibt-mega-toggle' <<<"$homepage"
           grep -Fq 'aria-controls="solutionsServicesMega"' <<<"$homepage"
 
-      - name: Checkout frontend QA harness
-        run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikar-frontend-qa
-
-      - name: Adapt frontend QA assertions to Django clean URLs
-        working-directory: /tmp/ibtikar-frontend-qa
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path("scripts/browser-qa.cjs")
-          source = path.read_text(encoding="utf-8")
-
-          replacements = (
-              (
-                  "servicesDiscoveryCount: document.querySelectorAll('.fast-discovery-slide').length,",
-                  "servicesServiceCount: document.querySelectorAll('.service-item').length,",
-              ),
-              (
-                  "      productRelatedHrefs: [...document.querySelectorAll('.related-grid article a')].map((a) => a.getAttribute('href'))",
-                  "      currentPath: window.location.pathname,\n"
-                  "      productRelatedHrefs: [...document.querySelectorAll('.related-grid article a')].map((a) => a.getAttribute('href'))",
-              ),
-              (
-                  "    if (metrics.servicesDiscoveryCount !== 8) failures.push(`${prefix}: expected 8 discovery cards, found ${metrics.servicesDiscoveryCount}`);",
-                  "    if (metrics.servicesServiceCount !== 6) failures.push(`${prefix}: expected 6 service axes, found ${metrics.servicesServiceCount}`);",
-              ),
-          )
-          for old, new in replacements:
-              if old not in source:
-                  raise SystemExit(f"Expected QA marker not found: {old}")
-              source = source.replace(old, new, 1)
-
-          old_product_assertion = """  if (page === 'product-page-optimization.html' && metrics.productRelatedHrefs.length) {
-            const required = ['storefront-customization.html','brand-content.html','ecommerce-growth.html','store-redesign.html'];
-            required.forEach((href) => {
-              if (!metrics.productRelatedHrefs.includes(href)) failures.push(`${prefix}: expected related-service route ${href}`);
-            });
-          }"""
-          new_product_assertion = """  if (page === 'product-page-optimization.html' && metrics.productRelatedHrefs.length) {
-            const cleanDjangoPage = !String(metrics.currentPath || '').endsWith('.html');
-            if (cleanDjangoPage) {
-              if (metrics.productRelatedHrefs.length !== 4) failures.push(`${prefix}: expected 4 related-service cards, found ${metrics.productRelatedHrefs.length}`);
-              const legacyHtmlHrefs = metrics.productRelatedHrefs.filter((href) => /\\.html(?:[?#]|$)/.test(String(href || '')));
-              if (legacyHtmlHrefs.length) failures.push(`${prefix}: clean Django page still exposes legacy .html links: ${legacyHtmlHrefs.join(', ')}`);
-            } else {
-              const required = ['storefront-customization.html','brand-content.html','ecommerce-growth.html','store-redesign.html'];
-              required.forEach((href) => {
-                if (!metrics.productRelatedHrefs.includes(href)) failures.push(`${prefix}: expected related-service route ${href}`);
-              });
-            }
-          }"""
-          if old_product_assertion not in source:
-              raise SystemExit("Expected legacy product related-route assertion was not found")
-          source = source.replace(old_product_assertion, new_product_assertion, 1)
-          path.write_text(source, encoding="utf-8")
-          PY
-
-      - name: Headless Chrome on clean output with page-specific assertions
-        working-directory: /tmp/ibtikar-frontend-qa
+      - name: Dashboard-owned headless browser QA on canonical clean URLs
         env:
           BASE_URL: http://127.0.0.1:8000
-          # Historic filenames are only QA keys. Django redirects them to the
-          # canonical clean route before the page is inspected.
-          QA_PAGES: >-
-            index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
-            custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
-            article-product-page.html,article-store-redesign.html,about.html,contact.html,
-            store-launch.html,storefront-customization.html,store-redesign.html,
-            product-page-optimization.html,ecommerce-growth.html,ecommerce-support.html,404.html
         shell: bash
-        run: |
-          set +e
-          last_status=1
-          for attempt in 1 2; do
-            timeout 240s node scripts/browser-qa-ci.cjs
-            status=$?
-            if [ "$status" -eq 0 ]; then exit 0; fi
-            last_status="$status"
-            if [ "$attempt" -lt 2 ]; then sleep 2; fi
-          done
-          exit "$last_status"
+        run: timeout 420s node scripts/browser_qa_clean_urls.cjs
+
+      - name: Checkout frontend interaction QA harness
+        run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikar-frontend-qa
 
       - name: Deep interaction QA through Django redirects
         working-directory: /tmp/ibtikar-frontend-qa
@@ -209,12 +136,12 @@ jobs:
         run: |
           set +e
           last_status=1
-          for attempt in 1 2 3; do
-            timeout 90s node scripts/interaction-qa.cjs
+          for attempt in 1 2; do
+            timeout 150s node scripts/interaction-qa.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
             last_status="$status"
-            if [ "$attempt" -lt 3 ]; then sleep 2; fi
+            if [ "$attempt" -lt 2 ]; then sleep 2; fi
           done
           exit "$last_status"
 
@@ -225,4 +152,4 @@ jobs:
           if [ -f /tmp/ibtikar-django.pid ]; then
             kill "$(cat /tmp/ibtikar-django.pid)" 2>/dev/null || true
           fi
-          tail -n 100 /tmp/ibtikar-django.log 2>/dev/null || true
+          tail -n 120 /tmp/ibtikar-django.log 2>/dev/null || true
