@@ -14,6 +14,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
 
+BREADCRUMB_INCLUDE = 'include "public_preview/components/breadcrumbs.html"'
+HEADING_INCLUDE = 'include "public_preview/components/section_heading.html"'
+
 SIMPLE_BREADCRUMB_RE = re.compile(
     r'<nav class="breadcrumbs" aria-label="مسار التنقل">\s*'
     r'<a href="\{% url \'public_preview:home\' %\}">الرئيسية</a>\s*'
@@ -78,22 +81,26 @@ def componentize(source: str) -> tuple[str, int, int]:
 def main() -> None:
     total_breadcrumbs = 0
     total_headings = 0
+    combined_after = []
+
     for path in sorted(PAGES_DIR.glob("*.html")):
         source = path.read_text(encoding="utf-8")
         updated, breadcrumbs, headings = componentize(source)
         if updated != source:
             path.write_text(updated, encoding="utf-8")
+        combined_after.append(updated)
         total_breadcrumbs += breadcrumbs
         total_headings += headings
 
-    if total_breadcrumbs == 0:
-        raise RuntimeError("No reusable breadcrumb structures were found; review the matcher.")
-    if total_headings == 0:
-        raise RuntimeError("No reusable section headings were found; review the matcher.")
+    combined = "\n".join(combined_after)
+    if total_breadcrumbs == 0 and BREADCRUMB_INCLUDE not in combined:
+        raise RuntimeError("No reusable breadcrumb structures or includes were found.")
+    if total_headings == 0 and HEADING_INCLUDE not in combined:
+        raise RuntimeError("No reusable section headings or includes were found.")
 
     print(
-        "Componentized repeated structures: "
-        f"{total_breadcrumbs} breadcrumbs, {total_headings} section headings."
+        "Reusable structures synchronized: "
+        f"{total_breadcrumbs} new breadcrumbs, {total_headings} new section headings."
     )
 
 
