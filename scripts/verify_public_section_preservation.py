@@ -10,11 +10,14 @@ from __future__ import annotations
 
 import argparse
 import re
+import sys
 from pathlib import Path
 
-from apps.public_preview.manifest import REQUIRED_PAGES
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from apps.public_preview.manifest import REQUIRED_PAGES  # noqa: E402
+
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
 COMPONENTS_DIR = ROOT / "templates" / "public_preview" / "components"
 SECTION_RE = re.compile(r"<section\b", re.IGNORECASE)
