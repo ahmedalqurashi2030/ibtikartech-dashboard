@@ -21,7 +21,11 @@
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع بصري لمنظومة خدمات ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>نحافظ على هوية واضحة ونستخدم الحركة عندما تخدم الفهم، لا لمجرد الإبهار.</figcaption></figure></div></section>
 
-<section class="platform-section platform-section--soft" id="capabilities"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="ما الذي نبنيه" title="أنواع مواقع مرتبطة بهدف واضح" description="نحدد نوع الموقع من القرار المطلوب من الزائر، لا من قالب جاهز." %}<div class="route-grid">
+<section class="platform-section platform-section--soft" id="capabilities"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">ما الذي نبنيه</span>
+  <h2>أنواع مواقع مرتبطة بهدف واضح</h2>
+  <p>نحدد نوع الموقع من القرار المطلوب من الزائر، لا من قالب جاهز.</p>
+</div><div class="route-grid">
 <article class="route-card reveal"><small>01 / CORPORATE</small><h3>مواقع الشركات</h3><p>تموضع وخدمات وثقة ومحتوى يقود إلى تواصل أو طلب واضح.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
 <article class="route-card reveal"><small>02 / LANDING</small><h3>صفحات الهبوط</h3><p>رسالة مركزة لخدمة أو منتج أو حملة مع تقليل التشتيت ووضوح التحويل.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
 <article class="route-card reveal"><small>03 / REDESIGN</small><h3>إعادة تصميم موقع قائم</h3><p>إعادة ترتيب الرسالة والتجربة مع الحفاظ على المحتوى والروابط المهمة قدر الإمكان.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
@@ -37,7 +41,11 @@
 <article><h3>تحقق وتسليم</h3><p>فحص الجوال والروابط والنماذج والأداء ضمن النطاق.</p></article>
 </div></div></section>
 
-<section class="platform-section platform-section--soft" id="delivery"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="النطاق والتسليم" title="ماذا تستلم، وماذا نحتاج منك؟" description="تثبت التفاصيل النهائية في عرض المشروع، لكن هذه هي العناصر التي تحدد نطاق الموقع عادة." %}<div class="platform-grid platform-grid--2">
+<section class="platform-section platform-section--soft" id="delivery"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">النطاق والتسليم</span>
+  <h2>ماذا تستلم، وماذا نحتاج منك؟</h2>
+  <p>تثبت التفاصيل النهائية في عرض المشروع، لكن هذه هي العناصر التي تحدد نطاق الموقع عادة.</p>
+</div><div class="platform-grid platform-grid--2">
 <article class="platform-card reveal"><h3>مخرجات محتملة حسب النطاق</h3><ul><li>خريطة صفحات وهيكل محتوى</li><li>تصميم واجهات Responsive وRTL</li><li>تطوير الصفحات والمكونات المتفق عليها</li><li>إعداد CMS أو طريقة إدارة المحتوى عند الحاجة</li><li>SEO تقني أساسي وقياس عندما يكون ضمن النطاق</li><li>تسليم منظم للحسابات والأصول المتفق عليها</li></ul></article>
 <article class="platform-card reveal"><h3>ما نحتاجه قبل التنفيذ</h3><ul><li>هدف الموقع والجمهور والإجراء الأساسي</li><li>الهوية أو قرار إدراجها ضمن المشروع</li><li>المحتوى والصور المتاحة وحقوق استخدامها</li><li>الدومين والاستضافة أو متطلبات البيئة</li><li>اللغات والتكاملات والنماذج المطلوبة</li><li>جهة واضحة لاعتماد المحتوى والتصميم</li></ul></article>
 </div></div></section>
@@ -49,7 +57,21 @@
 
 <section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياجك</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
-{% include "public_preview/components/page_cta.html" with kicker="المواقع وصفحات الهبوط" title="حوّل محتوى شركتك إلى تجربة مفهومة ومقنعة" description="أرسل نوع الموقع والهدف والمحتوى المتاح، وسنحدد نقطة البداية والنطاق المناسب." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ التشخيص" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="جميع الخدمات" %}
+<section class="page-cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div>
+        <span class="section-kicker">المواقع وصفحات الهبوط</span>
+        <h2>حوّل محتوى شركتك إلى تجربة مفهومة ومقنعة</h2>
+        <p>أرسل نوع الموقع والهدف والمحتوى المتاح، وسنحدد نقطة البداية والنطاق المناسب.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a>
+        <a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 {% endblock %}
 
