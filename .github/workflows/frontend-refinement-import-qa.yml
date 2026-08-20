@@ -1,0 +1,80 @@
+name: Frontend Refinement Import QA
+
+on:
+  pull_request:
+    paths:
+      - "scripts/import_frontend_preview.py"
+      - "static/public_preview/assets/js/page-shell.js"
+      - "static/public_preview/assets/css/pages/*-v1.css"
+      - "static/public_preview/dashboard/*.css"
+      - ".github/workflows/frontend-refinement-import-qa.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/import_frontend_preview.py"
+      - "static/public_preview/assets/js/page-shell.js"
+      - "static/public_preview/assets/css/pages/*-v1.css"
+      - "static/public_preview/dashboard/*.css"
+      - ".github/workflows/frontend-refinement-import-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  importer-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate importer syntax
+        run: python -m py_compile scripts/import_frontend_preview.py
+
+      - name: Verify committed refinement mirror
+        shell: bash
+        run: |
+          set -euo pipefail
+          for source in static/public_preview/dashboard/*.css; do
+            filename="$(basename "$source")"
+            target="static/public_preview/assets/css/pages/$filename"
+            test -f "$target"
+            cmp --silent "$source" "$target"
+          done
+
+      - name: Checkout current frontend source
+        run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
+
+      - name: Run real frontend importer
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_commit="$(git -C /tmp/ibtikartech-source rev-parse HEAD)"
+          python scripts/import_frontend_preview.py \
+            --source /tmp/ibtikartech-source \
+            --destination "$GITHUB_WORKSPACE" \
+            --source-commit "$source_commit"
+
+      - name: Verify import-safe production paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          for source in static/public_preview/dashboard/*.css; do
+            filename="$(basename "$source")"
+            target="static/public_preview/assets/css/pages/$filename"
+            test -f "$target"
+            cmp --silent "$source" "$target"
+          done
+          ! grep -q "/static/public_preview/dashboard/" static/public_preview/assets/js/page-shell.js
+          grep -q "/static/public_preview/assets/css/pages/service-category-refinement-v1.css" static/public_preview/assets/js/page-shell.js
+          grep -q "/static/public_preview/assets/css/pages/homepage-refinement-v1.css" static/public_preview/assets/js/page-shell.js
+          grep -q "/static/public_preview/assets/css/pages/services-refinement-v1.css" static/public_preview/assets/js/page-shell.js
+          grep -q "/static/public_preview/assets/css/pages/ecommerce-refinement-v1.css" static/public_preview/assets/js/page-shell.js
+          grep -q "/static/public_preview/assets/css/pages/tharaa-refinement-v1.css" static/public_preview/assets/js/page-shell.js
