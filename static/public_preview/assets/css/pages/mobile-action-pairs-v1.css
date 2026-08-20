@@ -1,0 +1,102 @@
+/*
+ * Ibtikar Tech — Mobile Action Pairs V1
+ * Keeps intentional two-action groups side-by-side on phones instead of
+ * stacking them vertically. Frontend-only, shared across public pages.
+ */
+
+@media (max-width: 760px) {
+  :is(
+    .hero__actions,
+    .cta-actions,
+    .tharaa-actions,
+    .ibtx-tharaa-split__actions,
+    .platform-actions,
+    .service-commerce-actions,
+    .service-detail-actions,
+    .service-hero-actions,
+    .commerce-hero__actions,
+    .contact-actions,
+    .page-actions
+  ) {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100%;
+  }
+
+  :is(
+    .hero__actions,
+    .cta-actions,
+    .tharaa-actions,
+    .ibtx-tharaa-split__actions,
+    .platform-actions,
+    .service-commerce-actions,
+    .service-detail-actions,
+    .service-hero-actions,
+    .commerce-hero__actions,
+    .contact-actions,
+    .page-actions
+  ) > :is(a, button, .btn, .button) {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 44px;
+    padding-inline: clamp(10px, 3.2vw, 15px) !important;
+    text-align: center;
+    justify-content: center;
+    white-space: normal !important;
+    line-height: 1.35;
+    font-size: clamp(11px, 3.25vw, 13px);
+  }
+
+  /* Productized service pages sometimes use a text-style secondary action.
+     Give it the same tap target and visual footprint without changing its skin. */
+  .service-commerce-actions > .service-text-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 10px !important;
+    text-align: center;
+  }
+}
+
+/* Very narrow devices still keep the pair on one row, but reduce spacing and
+   typography enough to prevent overflow at 320px. */
+@media (max-width: 360px) {
+  :is(
+    .hero__actions,
+    .cta-actions,
+    .tharaa-actions,
+    .ibtx-tharaa-split__actions,
+    .platform-actions,
+    .service-commerce-actions,
+    .service-detail-actions,
+    .service-hero-actions,
+    .commerce-hero__actions,
+    .contact-actions,
+    .page-actions
+  ) {
+    gap: 6px !important;
+  }
+
+  :is(
+    .hero__actions,
+    .cta-actions,
+    .tharaa-actions,
+    .ibtx-tharaa-split__actions,
+    .platform-actions,
+    .service-commerce-actions,
+    .service-detail-actions,
+    .service-hero-actions,
+    .commerce-hero__actions,
+    .contact-actions,
+    .page-actions
+  ) > :is(a, button, .btn, .button) {
+    padding-inline: 8px !important;
+    font-size: 11px !important;
+  }
+}
