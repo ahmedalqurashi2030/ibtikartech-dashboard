@@ -23,8 +23,8 @@ REQUIRED_PAGES = (
     "404.html",
 )
 
-# Public marketing pages owned by the website layer. Template filenames remain
-# .html (normal Django convention); only public browser URLs are extensionless.
+# Public website pages use explicit named Django routes. Template filenames stay
+# .html as an internal file convention; browser URLs are extensionless.
 PUBLIC_PAGE_ROUTES = {
     "index.html": ("", "home"),
     "ecommerce.html": ("ecommerce/", "ecommerce"),
@@ -43,9 +43,9 @@ PUBLIC_PAGE_ROUTES = {
     "404.html": ("404/", "not-found-preview"),
 }
 
-# These pages belong under the real Django services namespace so /services/
-# remains the canonical public service family while the generic database-backed
-# service routes continue to exist for any other service slug.
+# Public service pages are also explicit website templates. This mapping is a
+# route/content manifest only; it is not a database slug resolver and does not
+# depend on Service models. New public service pages should be added by name.
 SERVICE_PAGE_ROUTES = {
     "store-launch.html": ("store-launch/", "store-launch"),
     "storefront-customization.html": ("storefront-customization/", "storefront-customization"),
