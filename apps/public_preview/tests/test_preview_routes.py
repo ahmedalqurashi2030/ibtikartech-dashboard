@@ -8,6 +8,26 @@ from django.urls import reverse
 from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
 
 
+PLATFORM_FAMILY_PAGES = (
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+    "about.html",
+)
+
+SERVICE_DETAIL_PAGES = (
+    "store-launch.html",
+    "storefront-customization.html",
+    "store-redesign.html",
+    "product-page-optimization.html",
+    "ecommerce-growth.html",
+    "ecommerce-support.html",
+)
+
+SERVICE_DECISION_KEYS = ("problems", "fit", "scope", "deliverables", "exclusions")
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("page_name,pattern_name", PAGE_URL_NAMES.items())
 def test_clean_named_public_routes_render(client, page_name, pattern_name):
@@ -67,11 +87,15 @@ def test_public_pages_use_django_static_asset_prefix(client):
     assert 'href="assets/' not in html
 
 
-def test_imported_pages_extend_shared_base_without_duplicate_shell():
-    pages_dir = Path(settings.BASE_DIR) / "templates" / "public_preview" / "pages"
+def _page_source(page_name: str) -> str:
+    return (
+        Path(settings.BASE_DIR) / "templates" / "public_preview" / "pages" / page_name
+    ).read_text(encoding="utf-8")
 
+
+def test_imported_pages_extend_shared_base_without_duplicate_shell():
     for page_name in REQUIRED_PAGES:
-        source = (pages_dir / page_name).read_text(encoding="utf-8")
+        source = _page_source(page_name)
         assert source.lstrip().startswith('{% extends "public_preview/base.html" %}')
         assert 'id="ibtikarSiteHeader"' not in source
         assert 'class="ibt-shell-footer"' not in source
@@ -88,45 +112,84 @@ def test_global_shell_html_lives_directly_in_base_template():
     assert "public_preview/components/" not in base
 
 
-def test_repeated_sections_keep_canonical_html_inside_each_page():
-    pages_dir = Path(settings.BASE_DIR) / "templates" / "public_preview" / "pages"
-    combined = "\n".join(
-        (pages_dir / page_name).read_text(encoding="utf-8") for page_name in REQUIRED_PAGES
+def test_platform_family_pages_share_one_section_structure_contract():
+    """Same-function sections in the platform/service-family pages use one DOM vocabulary."""
+    for page_name in PLATFORM_FAMILY_PAGES:
+        source = _page_source(page_name)
+        assert '<main id="main-content">' in source
+        assert '<section class="platform-hero">' in source
+        assert 'class="container platform-hero__grid"' in source
+        assert 'class="platform-heading reveal"' in source
+        assert 'class="section-kicker"' in source
+        assert '<section class="page-cta">' in source
+        assert 'class="cta-card reveal"' in source
+        assert 'class="cta-actions"' in source
+
+
+def test_service_detail_pages_share_one_structural_contract():
+    """All explicit commerce service pages use the same shell, hero, tabs and panel DOM."""
+    forbidden_legacy_markers = (
+        'class="service-page"',
+        'class="svc-container"',
+        'class="svc-breadcrumb"',
+        'class="svc-hero',
+        'class="quick-info"',
+        'class="decision-tabs',
+        'data-decision-tab=',
+        'data-decision-panel=',
+        'class="svc-section',
+        'class="svc-heading',
     )
+
+    for page_name in SERVICE_DETAIL_PAGES:
+        source = _page_source(page_name)
+
+        assert '<main id="main-content" class="service-detail-main">' in source
+        assert 'class="service-detail-shell"' in source
+        assert 'class="service-detail-breadcrumb"' in source
+        assert 'class="service-commerce-hero"' in source
+        assert 'class="service-commerce-hero__card" data-service-commerce-hero' in source
+        assert 'class="service-gallery"' in source
+        assert 'class="service-gallery__main" data-service-gallery-main' in source
+        assert 'data-service-gallery-src=' in source
+        assert 'class="service-commerce-copy"' in source
+        assert 'class="service-detail-badge"' in source
+        assert 'class="service-platform-chips"' in source
+        assert 'class="service-purchase-box"' in source
+        assert 'class="service-assurance"' in source
+        assert 'class="service-commerce-actions"' in source
+        assert 'class="service-quick-info"' in source
+        assert 'class="service-decision-nav"' in source
+        assert 'class="service-detail-shell service-decision-tabs" data-service-decision-tabs' in source
+        assert 'class="service-detail-heading"' in source
+        assert 'class="page-cta"' in source
+        assert 'commerce-service-detail.js' in source
+
+        for key in SERVICE_DECISION_KEYS:
+            assert f'data-service-decision-tab="{key}"' in source
+            assert f'data-service-decision-panel="{key}"' in source
+
+        for marker in forbidden_legacy_markers:
+            assert marker not in source
+
+
+def test_service_detail_pages_keep_equivalent_panel_grid_vocabulary():
+    """Equivalent decision sections use the same grid/list class names across services."""
+    expected_markers = (
+        'class="service-problem-grid"',
+        'class="service-fit-grid"',
+        'class="service-scope-grid"',
+        'class="service-deliverable-grid"',
+        'class="service-exclusion-list"',
+    )
+    for page_name in SERVICE_DETAIL_PAGES:
+        source = _page_source(page_name)
+        for marker in expected_markers:
+            assert marker in source
+
+
+def test_page_sections_are_inline_not_component_includes():
+    combined = "\n".join(_page_source(page_name) for page_name in REQUIRED_PAGES)
 
     assert "public_preview/components/" not in combined
-
-    breadcrumb_openings = combined.count('<nav class="breadcrumbs" aria-label="مسار التنقل">')
-    breadcrumb_contract = re.compile(
-        r'<nav class="breadcrumbs" aria-label="مسار التنقل">\s*'
-        r'<a href="\{% url \'public_preview:home\' %\}">الرئيسية</a>\s*'
-        r'<span aria-hidden="true">←</span>\s*'
-        r'<span aria-current="page">[^<]+</span>\s*'
-        r'</nav>',
-        re.DOTALL,
-    )
-    assert breadcrumb_openings >= 3
-    assert len(breadcrumb_contract.findall(combined)) == breadcrumb_openings
-
-    heading_openings = combined.count('<div class="platform-heading reveal">')
-    heading_contract = re.compile(
-        r'<div class="platform-heading reveal">\s*'
-        r'<span class="section-kicker">[^<]+</span>\s*'
-        r'<h2>[^<]+</h2>\s*'
-        r'<p>[^<]+</p>\s*'
-        r'</div>',
-        re.DOTALL,
-    )
-    assert heading_openings >= 3
-    assert len(heading_contract.findall(combined)) == heading_openings
-
-    cta_openings = combined.count('<section class="page-cta">')
-    cta_contract = re.compile(
-        r'<section class="page-cta">\s*<div class="container">\s*'
-        r'<div class="cta-card reveal">\s*<div>\s*'
-        r'<span class="section-kicker">.*?</span>\s*<h2>.*?</h2>\s*<p>.*?</p>\s*'
-        r'</div>\s*<div class="cta-actions">.*?</div>\s*</div>\s*</div>\s*</section>',
-        re.DOTALL,
-    )
-    assert cta_openings >= 1
-    assert len(cta_contract.findall(combined)) == cta_openings
+    assert "{% include " not in combined
