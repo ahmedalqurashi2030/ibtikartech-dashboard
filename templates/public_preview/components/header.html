@@ -1,0 +1,52 @@
+<header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
+  <div class="ibt-shell-nav">
+    <a class="ibt-shell-brand" href="{% url 'public_preview:home' %}" aria-label="ابتكار تك - الرئيسية">
+      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
+    </a>
+
+    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
+      <a class="ibt-shell-nav-link" data-nav-key="home" href="{% url 'public_preview:home' %}">الرئيسية</a>
+
+      <div class="ibt-shell-nav-group" data-ibt-mega-root>
+        <a class="ibt-shell-nav-link" data-nav-key="services" href="{% url 'services:index' %}">الحلول والخدمات</a>
+        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" data-ibt-mega-menu>
+          <div class="ibt-shell-mega-grid">
+            <a class="ibt-shell-mega-lead" href="{% url 'services:index' %}#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
+            <a class="ibt-shell-mega-link" href="{% url 'public_preview:ecommerce' %}"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
+            <a class="ibt-shell-mega-link" href="{% url 'public_preview:websites' %}"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
+            <a class="ibt-shell-mega-link" href="{% url 'public_preview:brand-content' %}"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
+            <a class="ibt-shell-mega-link" href="{% url 'public_preview:growth' %}"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
+            <a class="ibt-shell-mega-link" href="{% url 'public_preview:custom-systems' %}"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="ibt-shell-nav-group" data-ibt-mega-root>
+        <a class="ibt-shell-nav-link" data-nav-key="products" href="{% url 'public_preview:tharaa' %}">منتجاتنا</a>
+        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض منتجات ابتكار تك" aria-expanded="false" aria-controls="productsMega" data-ibt-mega-toggle>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div class="ibt-shell-mega" id="productsMega" aria-hidden="true" data-ibt-mega-menu>
+          <div class="ibt-shell-mega-grid">
+            <a class="ibt-shell-mega-lead" href="{% url 'public_preview:tharaa' %}"><span>منتج أصلي من ابتكار تك</span><strong>ثيم ثراء لمتاجر سلة</strong><p>مزايا وتجربة جوال وتخصيص ومعاينات تفاعلية في صفحة منتج مستقلة.</p></a>
+          </div>
+        </div>
+      </div>
+
+      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
+      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="{% url 'public_preview:knowledge' %}">المعرفة</a>
+      <a class="ibt-shell-nav-link" data-nav-key="about" href="{% url 'public_preview:about' %}">عن ابتكار</a>
+    </nav>
+
+    <div class="ibt-shell-actions">
+      <a class="ibt-shell-cta" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
+      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+{% include "public_preview/components/mobile_menu.html" %}
