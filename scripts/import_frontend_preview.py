@@ -54,31 +54,46 @@ STATIC_PREFIX = "/static/public_preview/assets/"
 UX_STYLESHEET_RELATIVE = Path("css/pages/ux-system-v1.css")
 UX_STYLESHEET_URL = f"{STATIC_PREFIX}{UX_STYLESHEET_RELATIVE.as_posix()}"
 UX_STYLESHEET_ID = "ibtikar-ux-system-v1"
+DASHBOARD_STYLESHEET_RELATIVE_DIR = Path("css/pages")
+DASHBOARD_STYLESHEET_FILENAMES = (
+    "article-utility-completion-v1.css",
+    "article-utility-refinement-v1.css",
+    "ecommerce-refinement-v1.css",
+    "homepage-production-qa-v1.css",
+    "homepage-refinement-v1.css",
+    "public-pages-completion-v1.css",
+    "public-pages-refinement-v1.css",
+    "service-category-refinement-v1.css",
+    "service-detail-completion-v1.css",
+    "service-detail-refinement-v1.css",
+    "services-refinement-v1.css",
+    "tharaa-refinement-v1.css",
+)
 DASHBOARD_GLOBAL_STYLESHEETS = (
     (
-        "/static/public_preview/dashboard/service-category-refinement-v1.css",
+        f"{STATIC_PREFIX}css/pages/service-category-refinement-v1.css",
         "ibtikar-service-category-refinement-v1",
     ),
 )
 DASHBOARD_REFINEMENT_LOADERS = (
     (
         "source-home",
-        "/static/public_preview/dashboard/homepage-refinement-v1.css",
+        f"{STATIC_PREFIX}css/pages/homepage-refinement-v1.css",
         "ibtikar-homepage-refinement-v1",
     ),
     (
         "source-services",
-        "/static/public_preview/dashboard/services-refinement-v1.css",
+        f"{STATIC_PREFIX}css/pages/services-refinement-v1.css",
         "ibtikar-services-refinement-v1",
     ),
     (
         "source-ecommerce",
-        "/static/public_preview/dashboard/ecommerce-refinement-v1.css",
+        f"{STATIC_PREFIX}css/pages/ecommerce-refinement-v1.css",
         "ibtikar-ecommerce-refinement-v1",
     ),
     (
         "source-tharaa",
-        "/static/public_preview/dashboard/tharaa-refinement-v1.css",
+        f"{STATIC_PREFIX}css/pages/tharaa-refinement-v1.css",
         "ibtikar-tharaa-refinement-v1",
     ),
 )
@@ -121,6 +136,24 @@ def restore_dashboard_ux_stylesheet(assets_dir: Path, content: str | None) -> No
     stylesheet = assets_dir / UX_STYLESHEET_RELATIVE
     stylesheet.parent.mkdir(parents=True, exist_ok=True)
     stylesheet.write_text(content, encoding="utf-8")
+
+
+def sync_dashboard_stylesheets(destination_root: Path, assets_dir: Path) -> None:
+    """Mirror dashboard-owned refinement CSS into the production-served assets tree.
+
+    The canonical copies remain outside imported assets so a frontend source sync cannot
+    overwrite them. Production Nginx serves ``staticfiles/public_preview/assets`` with
+    normal traversal permissions, so the runtime copies must live under that tree.
+    """
+    source_dir = destination_root / "static" / "public_preview" / "dashboard"
+    target_dir = assets_dir / DASHBOARD_STYLESHEET_RELATIVE_DIR
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    for filename in DASHBOARD_STYLESHEET_FILENAMES:
+        source = source_dir / filename
+        if not source.is_file():
+            raise RuntimeError(f"Dashboard stylesheet is missing: {source}")
+        shutil.copy2(source, target_dir / filename)
 
 
 def patch_dashboard_ux_loaders(assets_dir: Path) -> None:
@@ -207,15 +240,15 @@ def patch_dashboard_journey_alignment(assets_dir: Path) -> None:
     const lead=.22;
     return clamp(lead+raw*(1-lead));
   };'''
-    if 'JOURNEY_REFERENCE_ALIGNMENT' not in js:
+    if "JOURNEY_REFERENCE_ALIGNMENT" not in js:
         if old_progress not in js:
-            raise RuntimeError('Journey progress engine changed; refusing unsafe patch.')
+            raise RuntimeError("Journey progress engine changed; refusing unsafe patch.")
         js = js.replace(old_progress, new_progress, 1)
         js_path.write_text(js, encoding="utf-8")
 
     css_path = assets_dir / "css" / "pages" / "source-home.css"
     css = css_path.read_text(encoding="utf-8")
-    css_marker = 'DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20'
+    css_marker = "DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20"
     if css_marker not in css:
         css += """
 
@@ -282,6 +315,7 @@ def import_frontend(
         shutil.rmtree(assets_dir)
     shutil.copytree(source_assets, assets_dir)
     restore_dashboard_ux_stylesheet(assets_dir, preserved_ux_stylesheet)
+    sync_dashboard_stylesheets(destination_root, assets_dir)
     patch_runtime_assets(assets_dir)
     patch_dashboard_ux_loaders(assets_dir)
     patch_dashboard_journey_alignment(assets_dir)
