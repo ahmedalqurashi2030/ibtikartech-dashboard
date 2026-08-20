@@ -56,47 +56,53 @@ jobs:
             printf '%s %s\n' "$code" "$route"
           done
 
-          echo "=== static asset HTTP status ==="
+          echo "=== production-served refinement assets ==="
+          failed=0
           for asset in \
-            /static/public_preview/assets/js/page-shell.js \
-            /static/public_preview/assets/css/pages/ux-system-v1.css \
-            /static/public_preview/dashboard/homepage-refinement-v1.css \
-            /static/public_preview/dashboard/services-refinement-v1.css \
-            /static/public_preview/dashboard/ecommerce-refinement-v1.css \
-            /static/public_preview/dashboard/tharaa-refinement-v1.css \
-            /static/public_preview/dashboard/public-pages-refinement-v1.css \
-            /static/public_preview/dashboard/service-detail-completion-v1.css \
-            /static/public_preview/dashboard/homepage-production-qa-v1.css; do
+            /static/public_preview/assets/css/pages/article-utility-completion-v1.css \
+            /static/public_preview/assets/css/pages/article-utility-refinement-v1.css \
+            /static/public_preview/assets/css/pages/ecommerce-refinement-v1.css \
+            /static/public_preview/assets/css/pages/homepage-production-qa-v1.css \
+            /static/public_preview/assets/css/pages/homepage-refinement-v1.css \
+            /static/public_preview/assets/css/pages/public-pages-completion-v1.css \
+            /static/public_preview/assets/css/pages/public-pages-refinement-v1.css \
+            /static/public_preview/assets/css/pages/service-category-refinement-v1.css \
+            /static/public_preview/assets/css/pages/service-detail-completion-v1.css \
+            /static/public_preview/assets/css/pages/service-detail-refinement-v1.css \
+            /static/public_preview/assets/css/pages/services-refinement-v1.css \
+            /static/public_preview/assets/css/pages/tharaa-refinement-v1.css; do
             code="$(curl --max-time 15 --silent --show-error --output /dev/null --write-out '%{http_code}' "https://ibtikartech.co${asset}" || printf '000')"
             printf '%s %s\n' "$code" "$asset"
+            if [ "$code" != "200" ]; then failed=1; fi
           done
 
-          echo "=== deployed production QA marker ==="
+          echo "=== deployed page-shell loaders ==="
           shell_js="$(curl --max-time 15 --silent --show-error https://ibtikartech.co/static/public_preview/assets/js/page-shell.js || true)"
           if printf '%s' "$shell_js" | grep -q "const productionOrigin = 'https://ibtikartech.co'"; then
-            echo "PASS page-shell production metadata marker"
+            echo "PASS production metadata marker"
           else
-            echo "FAIL page-shell production metadata marker"
+            echo "FAIL production metadata marker"
+            failed=1
+          fi
+          if printf '%s' "$shell_js" | grep -q "/static/public_preview/assets/css/pages/service-category-refinement-v1.css"; then
+            echo "PASS served refinement loader marker"
+          else
+            echo "FAIL served refinement loader marker"
+            failed=1
+          fi
+          if printf '%s' "$shell_js" | grep -q "/static/public_preview/dashboard/"; then
+            echo "FAIL legacy dashboard static path still loaded"
+            failed=1
+          else
+            echo "PASS no legacy dashboard static loader path"
           fi
 
-          echo "=== source static permissions ==="
-          for target in \
-            /srv/ibtikartech/app/static/public_preview/dashboard \
-            /srv/ibtikartech/app/static/public_preview/dashboard/homepage-refinement-v1.css \
-            /srv/ibtikartech/app/static/public_preview/dashboard/service-detail-completion-v1.css \
-            /srv/ibtikartech/app/static/public_preview/dashboard/homepage-production-qa-v1.css; do
-            stat -c '%A %a %U:%G %n' "$target" 2>/dev/null || echo "MISSING $target"
-          done
+          echo "=== legacy inaccessible path (informational) ==="
+          legacy_code="$(curl --max-time 15 --silent --show-error --output /dev/null --write-out '%{http_code}' https://ibtikartech.co/static/public_preview/dashboard/homepage-refinement-v1.css || printf '000')"
+          echo "$legacy_code /static/public_preview/dashboard/homepage-refinement-v1.css"
 
-          echo "=== collected static permissions ==="
-          for target in \
-            /srv/ibtikartech/app/staticfiles/public_preview/dashboard \
-            /srv/ibtikartech/app/staticfiles/public_preview/dashboard/homepage-refinement-v1.css \
-            /srv/ibtikartech/app/staticfiles/public_preview/dashboard/service-detail-completion-v1.css \
-            /srv/ibtikartech/app/staticfiles/public_preview/dashboard/homepage-production-qa-v1.css; do
-            stat -c '%A %a %U:%G %n' "$target" 2>/dev/null || echo "MISSING $target"
-          done
-
-          echo "=== nginx static mapping ==="
-          grep -R -n -E 'location[[:space:]]+/static|alias[[:space:]].*static|root[[:space:]].*static' \
-            /etc/nginx/sites-enabled /etc/nginx/conf.d 2>/dev/null || true
+          if [ "$failed" -ne 0 ]; then
+            echo "PRODUCTION REFINEMENT DELIVERY CHECK FAILED"
+            exit 1
+          fi
+          echo "PRODUCTION REFINEMENT DELIVERY CHECK PASSED"
