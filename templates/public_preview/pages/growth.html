@@ -21,7 +21,11 @@
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/ecommerce-experience-source.png" alt="تجربة تجارة رقمية قابلة للقياس" width="1200" height="800" fetchpriority="high"><figcaption>القياس لا يعوض تجربة ضعيفة؛ لذلك نربط البيانات بسرعة الموقع والمحتوى ورحلة المستخدم.</figcaption></figure></div></section>
 
-<section class="platform-section platform-section--soft" id="capabilities"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="مكوّنات المسار" title="ظهور وقياس وتحسين داخل دورة واحدة" description="ننفذ ما يحتاجه المشروع فعلًا، ولا نركب أدوات لمجرد زيادة عدد التقارير." %}<div class="route-grid">
+<section class="platform-section platform-section--soft" id="capabilities"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">مكوّنات المسار</span>
+  <h2>ظهور وقياس وتحسين داخل دورة واحدة</h2>
+  <p>ننفذ ما يحتاجه المشروع فعلًا، ولا نركب أدوات لمجرد زيادة عدد التقارير.</p>
+</div><div class="route-grid">
 <article class="route-card reveal"><small>01 / TECHNICAL SEO</small><h3>SEO تقني</h3><p>فهرسة وبنية وروابط وعناوين وعوامل تقنية أساسية تؤثر في قابلية الاكتشاف.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
 <article class="route-card reveal"><small>02 / CONTENT SEO</small><h3>SEO للمحتوى</h3><p>نية بحث وهيكل صفحات وروابط داخلية وفرص محتوى مرتبطة بما يبحث عنه العميل.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
 <article class="route-card reveal"><small>03 / ANALYTICS</small><h3>GA4 وTag Manager</h3><p>خطة أحداث وتحويلات وأسماء موثقة، ثم تحقق من وصول البيانات ضمن النطاق.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
@@ -44,7 +48,21 @@
 
 <section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ بما يمنعك من اتخاذ القرار</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
-{% include "public_preview/components/page_cta.html" with kicker="الظهور والقياس والنمو" title="حوّل البيانات إلى أولويات واضحة" description="أرسل الرابط والأدوات الحالية والسؤال الذي تريد الإجابة عنه، وسنحدد هل المشكلة في الظهور أو القياس أو التجربة." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ التشخيص" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="جميع الخدمات" %}
+<section class="page-cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div>
+        <span class="section-kicker">الظهور والقياس والنمو</span>
+        <h2>حوّل البيانات إلى أولويات واضحة</h2>
+        <p>أرسل الرابط والأدوات الحالية والسؤال الذي تريد الإجابة عنه، وسنحدد هل المشكلة في الظهور أو القياس أو التجربة.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a>
+        <a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 {% endblock %}
 
