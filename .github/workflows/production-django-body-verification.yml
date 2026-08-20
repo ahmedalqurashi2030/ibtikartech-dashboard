@@ -39,10 +39,10 @@ jobs:
           homepage="$(curl --fail --silent --show-error "$origin/")"
           services_html="$(curl --fail --silent --show-error "$origin/services/")"
 
-          header_count="$(grep -o 'id="ibtikarSiteHeader"' <<<"$homepage" | wc -l)"
-          footer_count="$(grep -o 'class="ibt-shell-footer"' <<<"$homepage" | wc -l)"
-          layout_count="$(grep -o 'section-layout-refinement-v2.css' <<<"$homepage" | wc -l)"
-          mega_count="$(grep -o 'data-ibt-mega-toggle' <<<"$homepage" | wc -l)"
+          header_count="$(grep -o 'id="ibtikarSiteHeader"' <<<"$homepage" | wc -l || true)"
+          footer_count="$(grep -o 'class="ibt-shell-footer"' <<<"$homepage" | wc -l || true)"
+          layout_count="$(grep -o 'section-layout-refinement-v2.css' <<<"$homepage" | wc -l || true)"
+          mega_count="$(grep -o 'data-ibt-mega-toggle' <<<"$homepage" | wc -l || true)"
           source_services_tag="$(grep -o '<script[^>]*source-services\.js[^>]*>' <<<"$services_html" | head -n1 || true)"
           approved_source_tag="$(grep -o '<script[^>]*approved-source\.js[^>]*>' <<<"$services_html" | head -n1 || true)"
 
