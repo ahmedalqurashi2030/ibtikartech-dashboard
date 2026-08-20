@@ -1,0 +1,52 @@
+name: Production Diagnostics
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/production-diagnostics.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostics:
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
+    timeout-minutes: 5
+
+    steps:
+      - name: Read-only production diagnostics
+        shell: bash
+        run: |
+          set +e
+
+          echo "=== runner ==="
+          date -u
+          hostname
+
+          echo "=== deployed app commit ==="
+          sudo -u deploy -H git -C /srv/ibtikartech/app rev-parse HEAD || true
+          sudo -u deploy -H git -C /srv/ibtikartech/app status --short --branch || true
+
+          echo "=== relevant services ==="
+          systemctl list-units --type=service --all --no-pager \
+            | grep -Ei 'ibtikar|gunicorn|nginx' || true
+
+          echo "=== listeners ==="
+          ss -ltn | grep -E ':(8000|80|443)\\b' || true
+
+          echo "=== direct gunicorn health ==="
+          curl --max-time 10 --silent --show-error --include \
+            http://127.0.0.1:8000/healthz/ || true
+
+          echo "=== local nginx health ==="
+          curl --max-time 10 --silent --show-error --include --insecure \
+            -H 'Host: ibtikartech.co' https://127.0.0.1/healthz/ || true
+
+          echo "=== public health ==="
+          curl --max-time 15 --silent --show-error --include \
+            https://ibtikartech.co/healthz/ || true
