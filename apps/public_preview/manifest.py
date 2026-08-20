@@ -23,6 +23,63 @@ REQUIRED_PAGES = (
     "404.html",
 )
 
+# Public website pages use explicit named Django routes. Template filenames stay
+# .html as an internal file convention; browser URLs are extensionless.
+PUBLIC_PAGE_ROUTES = {
+    "index.html": ("", "home"),
+    "ecommerce.html": ("ecommerce/", "ecommerce"),
+    "websites.html": ("websites/", "websites"),
+    "brand-content.html": ("brand-content/", "brand-content"),
+    "growth.html": ("growth/", "growth"),
+    "custom-systems.html": ("custom-systems/", "custom-systems"),
+    "tharaa.html": ("tharaa/", "tharaa"),
+    "portfolio.html": ("portfolio/", "portfolio"),
+    "knowledge.html": ("knowledge/", "knowledge"),
+    "article-product-page.html": ("knowledge/product-page/", "article-product-page"),
+    "article-store-launch.html": ("knowledge/store-launch/", "article-store-launch"),
+    "article-store-redesign.html": ("knowledge/store-redesign/", "article-store-redesign"),
+    "about.html": ("about/", "about"),
+    "contact.html": ("contact/", "contact"),
+    "404.html": ("404/", "not-found-preview"),
+}
+
+# Public service pages are also explicit website templates. This mapping is a
+# route/content manifest only; it is not a database slug resolver and does not
+# depend on Service models. New public service pages should be added by name.
+SERVICE_PAGE_ROUTES = {
+    "store-launch.html": ("store-launch/", "store-launch"),
+    "storefront-customization.html": ("storefront-customization/", "storefront-customization"),
+    "store-redesign.html": ("store-redesign/", "store-redesign"),
+    "product-page-optimization.html": ("product-page-optimization/", "product-page-optimization"),
+    "ecommerce-growth.html": ("ecommerce-growth/", "ecommerce-growth"),
+    "ecommerce-support.html": ("ecommerce-support/", "ecommerce-support"),
+}
+
+PAGE_URL_NAMES = {
+    "index.html": "public_preview:home",
+    "services.html": "services:index",
+    "ecommerce.html": "public_preview:ecommerce",
+    "websites.html": "public_preview:websites",
+    "brand-content.html": "public_preview:brand-content",
+    "growth.html": "public_preview:growth",
+    "custom-systems.html": "public_preview:custom-systems",
+    "tharaa.html": "public_preview:tharaa",
+    "portfolio.html": "public_preview:portfolio",
+    "knowledge.html": "public_preview:knowledge",
+    "article-product-page.html": "public_preview:article-product-page",
+    "article-store-launch.html": "public_preview:article-store-launch",
+    "article-store-redesign.html": "public_preview:article-store-redesign",
+    "about.html": "public_preview:about",
+    "contact.html": "public_preview:contact",
+    "store-launch.html": "services:store-launch",
+    "storefront-customization.html": "services:storefront-customization",
+    "store-redesign.html": "services:store-redesign",
+    "product-page-optimization.html": "services:product-page-optimization",
+    "ecommerce-growth.html": "services:ecommerce-growth",
+    "ecommerce-support.html": "services:ecommerce-support",
+    "404.html": "public_preview:not-found-preview",
+}
+
 RETIRED_PLATFORM_PAGES = (
     "salla.html",
     "zid.html",

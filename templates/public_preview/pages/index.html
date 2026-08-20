@@ -1,9 +1,8 @@
-{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}
-<!DOCTYPE html>
+{% extends "public_preview/base.html" %}
 
-<html dir="rtl" lang="ar" data-theme="dark">
-<head> Ibtikar Tech Homepage V7 — cinematic hero + customer voices 
-<meta charset="utf-8"/>
+{% block head %}
+Ibtikar Tech Homepage V7 — cinematic hero + customer voices 
+
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="ابتكار تك للحلول والخدمات الرقمية — نبني المتاجر والمواقع والهوية والربط والتحليلات ضمن منظومة رقمية متكاملة مصممة للنمو." name="description"/>
 <meta content="#0b1026" name="theme-color"/>
@@ -43,49 +42,11 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-</head>
-<body class="approved-source-page source-home" data-section="home" data-approved-source="Ibtikar_Tech_Homepage_Cinematic_Native_Fixed.html">
-<a class="approved-skip-link" href="#main-content">انتقل إلى المحتوى</a>
-<header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
-  <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-    </a>
-    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
-      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
-      <div class="ibt-shell-nav-group" data-ibt-mega-root>
-        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
-        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
-          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
-          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
-          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
-          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
-          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
-          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
-        </div></div>
-      </div>
-      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
-    </nav>
-    <div class="ibt-shell-actions">
-      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
-  <a data-nav-key="home" href="index.html">الرئيسية</a>
-  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
-  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-  <a data-nav-key="about" href="about.html">عن ابتكار</a>
-  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-</nav>
+{% endblock %}
+
+{% block body_attrs %} class="approved-source-page source-home" data-section="home" data-approved-source="Ibtikar_Tech_Homepage_Cinematic_Native_Fixed.html"{% endblock %}
+
+{% block content %}
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
 <div aria-hidden="true" class="cinematic-ambient-bg"></div>
@@ -165,12 +126,12 @@
         <button class="ibtx-menu-trigger" type="button" aria-expanded="false">المنصات <span>⌄</span></button>
         <div class="ibtx-mega ibtx-mega--compact">
           <div class="ibtx-mega__links">
-            <a href="websites.html#capabilities"><strong>WordPress</strong><small>مواقع مرنة وسهلة الإدارة.</small></a>
-            <a href="ecommerce.html#platforms"><strong>Salla</strong><small>متاجر سعودية وتجارب مخصصة.</small></a>
-            <a href="ecommerce.html#platforms"><strong>Zid</strong><small>تجارة إلكترونية للسوق المحلي.</small></a>
-            <a href="ecommerce.html#platforms"><strong>WooCommerce</strong><small>متاجر مرنة مبنية على WordPress.</small></a>
-            <a href="ecommerce.html#platforms"><strong>Shopify</strong><small>تجارة قابلة للتوسع عالميًا.</small></a>
-            <a href="custom-systems.html"><strong>حلول مخصصة</strong><small>أنظمة حسب الاحتياج.</small></a>
+            <a href="{% url 'public_preview:websites' %}#capabilities"><strong>WordPress</strong><small>مواقع مرنة وسهلة الإدارة.</small></a>
+            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>Salla</strong><small>متاجر سعودية وتجارب مخصصة.</small></a>
+            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>Zid</strong><small>تجارة إلكترونية للسوق المحلي.</small></a>
+            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>WooCommerce</strong><small>متاجر مرنة مبنية على WordPress.</small></a>
+            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>Shopify</strong><small>تجارة قابلة للتوسع عالميًا.</small></a>
+            <a href="{% url 'public_preview:custom-systems' %}"><strong>حلول مخصصة</strong><small>أنظمة حسب الاحتياج.</small></a>
           </div>
         </div>
       </div>
@@ -180,8 +141,8 @@
         <div class="ibtx-mega ibtx-mega--compact">
           <div class="ibtx-mega__links">
             <a href="#tharaa"><strong>ثيم ثراء</strong><small>متجر يبدو كعلامة لا كقالب.</small></a>
-            <a href="knowledge.html"><strong>الأدوات المجانية</strong><small>موارد مفيدة للمشاريع الرقمية.</small></a>
-            <a href="tharaa.html"><strong>منتجات مستقبلية</strong><small>إضافات وقوالب وحلول قادمة.</small></a>
+            <a href="{% url 'public_preview:knowledge' %}"><strong>الأدوات المجانية</strong><small>موارد مفيدة للمشاريع الرقمية.</small></a>
+            <a href="{% url 'public_preview:tharaa' %}"><strong>منتجات مستقبلية</strong><small>إضافات وقوالب وحلول قادمة.</small></a>
           </div>
         </div>
       </div>
@@ -192,9 +153,9 @@
         <button class="ibtx-menu-trigger" type="button" aria-expanded="false">المعرفة <span>⌄</span></button>
         <div class="ibtx-mega ibtx-mega--compact">
           <div class="ibtx-mega__links">
-            <a href="knowledge.html"><strong>المدونة</strong><small>مقالات تقنية وتسويقية.</small></a>
-            <a href="portfolio.html"><strong>دراسات الحالة</strong><small>المشكلة والحل والنتيجة.</small></a>
-            <a href="knowledge.html"><strong>الأدلة</strong><small>مواد قابلة للتطبيق.</small></a>
+            <a href="{% url 'public_preview:knowledge' %}"><strong>المدونة</strong><small>مقالات تقنية وتسويقية.</small></a>
+            <a href="{% url 'public_preview:portfolio' %}"><strong>دراسات الحالة</strong><small>المشكلة والحل والنتيجة.</small></a>
+            <a href="{% url 'public_preview:knowledge' %}"><strong>الأدلة</strong><small>مواد قابلة للتطبيق.</small></a>
             <a href="#faq"><strong>الأسئلة الشائعة</strong><small>إجابات قبل بدء المشروع.</small></a>
           </div>
         </div>
@@ -228,10 +189,10 @@
       <a href="#home">الرئيسية</a>
       <details><summary>الحلول</summary><a href="#services">أطلق</a><a href="#services">طوّر</a><a href="#services">اربط</a><a href="#services">انمُ</a></details>
       <details><summary>الخدمات</summary><a href="#services">مواقع الشركات</a><a href="#services">المتاجر الإلكترونية</a><a href="#services">الهوية الرقمية</a><a href="#services">الظهور والقياس والنمو</a><a href="#services">الأنظمة المخصصة</a></details>
-      <details><summary>المنصات</summary><a href="websites.html#capabilities">WordPress</a><a href="ecommerce.html#platforms">Salla</a><a href="ecommerce.html#platforms">Zid</a><a href="ecommerce.html#platforms">WooCommerce</a><a href="ecommerce.html#platforms">Shopify</a></details>
-      <details><summary>منتجاتنا</summary><a href="#tharaa">ثيم ثراء</a><a href="knowledge.html">الأدوات المجانية</a></details>
+      <details><summary>المنصات</summary><a href="{% url 'public_preview:websites' %}#capabilities">WordPress</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Salla</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Zid</a><a href="{% url 'public_preview:ecommerce' %}#platforms">WooCommerce</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Shopify</a></details>
+      <details><summary>منتجاتنا</summary><a href="#tharaa">ثيم ثراء</a><a href="{% url 'public_preview:knowledge' %}">الأدوات المجانية</a></details>
       
-      <details><summary>المقالات</summary><a href="knowledge.html">المدونة</a><a href="#faq">الأسئلة الشائعة</a></details>
+      <details><summary>المقالات</summary><a href="{% url 'public_preview:knowledge' %}">المدونة</a><a href="#faq">الأسئلة الشائعة</a></details>
       
       <a class="ibtx-primary-button ibtx-primary-button--full" href="#contact">اطلب عرض سعر</a>
     </nav>
@@ -265,7 +226,7 @@
 <a class="btn btn--gradient magnetic" href="#services">استكشف منظومة الحلول
           <svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg>
 </a>
-<a class="btn btn--ghost-light" data-open-brief="" href="contact.html#quote">ابدأ بتشخيص مشروعك
+<a class="btn btn--ghost-light" data-open-brief="" href="{% url 'public_preview:contact' %}#quote">ابدأ بتشخيص مشروعك
           <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
 </a>
 </div>
@@ -400,7 +361,7 @@
       </div>
 
       <div class="ibtx-tharaa-split__actions">
-        <a class="ibtx-tharaa-summary__primary" href="tharaa.html">استكشف صفحة ثراء</a>
+        <a class="ibtx-tharaa-summary__primary" href="{% url 'public_preview:tharaa' %}">استكشف صفحة ثراء</a>
         <a class="ibtx-tharaa-summary__secondary" href="#contact">اطلب التركيب والتخصيص</a>
       </div>
 
@@ -428,7 +389,7 @@
 
           <div class="ibtx-preview-toolbar__actions">
             <span>تجربة حية للواجهة</span>
-            <a href="tharaa.html#v4-preview" aria-label="فتح معاينات ثيم ثراء">↗</a>
+            <a href="{% url 'public_preview:tharaa' %}#v4-preview" aria-label="فتح معاينات ثيم ثراء">↗</a>
           </div>
         </div>
 
@@ -503,7 +464,7 @@
 
 <section class="section section--soft faq-section" id="faq">
 <div class="container faq-grid">
-<div class="faq-intro reveal"><span class="section-kicker">الأسئلة الشائعة</span><h2>إجابات قبل أن تبدأ</h2><p>أهم الأسئلة المتعلقة بالخدمات، المدة، المنصات، الأسعار، والدعم.</p><a class="btn btn--outline" href="contact.html#quote">لدي سؤال عن مشروعي</a></div>
+<div class="faq-intro reveal"><span class="section-kicker">الأسئلة الشائعة</span><h2>إجابات قبل أن تبدأ</h2><p>أهم الأسئلة المتعلقة بالخدمات، المدة، المنصات، الأسعار، والدعم.</p><a class="btn btn--outline" href="{% url 'public_preview:contact' %}#quote">لدي سؤال عن مشروعي</a></div>
 <div class="accordion reveal">
 <article class="accordion-item open"><button aria-expanded="true" type="button"><span>هل تعملون على سلة فقط؟</span><i></i></button><div class="accordion-content"><p>لا. نقدم خدمات على سلة وزد وWooCommerce وWordPress، إضافة إلى مواقع وحلول مخصصة حسب المشروع.</p></div></article>
 <article class="accordion-item"><button aria-expanded="false" type="button"><span>هل تشمل الخدمة رسوم المنصة والدومين؟</span><i></i></button><div class="accordion-content"><p>رسوم المنصات والدومين والتطبيقات الخارجية لا تدخل ضمن سعر التنفيذ إلا إذا ذُكرت صراحة في عرض السعر.</p></div></article>
@@ -517,7 +478,7 @@
 <div class="container cta-card reveal">
 <div class="cta-shape cta-shape--one"></div><div class="cta-shape cta-shape--two"></div>
 <div><span>خطوتك القادمة تبدأ هنا</span><h2>جاهز تبني مشروعك الرقمي؟</h2><p>شاركنا فكرتك أو رابط متجرك، وسنقترح عليك المسار الأقرب لهدفك.</p></div>
-<div class="cta-actions"><a class="btn btn--light magnetic" href="contact.html#quote">ابدأ مشروعك</a><a class="btn btn--ghost-light" href="services.html">استكشف الحلول والخدمات</a></div>
+<div class="cta-actions"><a class="btn btn--light magnetic" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a class="btn btn--ghost-light" href="{% url 'services:index' %}">استكشف الحلول والخدمات</a></div>
 </div>
 </section></main>
 
@@ -533,8 +494,8 @@
       </div>
       <div><h3>الحلول</h3><a href="#services">أطلق</a><a href="#services">طوّر</a><a href="#services">اربط</a><a href="#services">انمُ</a></div>
       <div><h3>الخدمات</h3><a href="#services">المواقع</a><a href="#services">المتاجر</a><a href="#services">الهوية</a><a href="#services">الأتمتة</a></div>
-      <div><h3>المنصات</h3><a href="websites.html#capabilities">WordPress</a><a href="ecommerce.html#platforms">Salla</a><a href="ecommerce.html#platforms">Shopify</a><a href="custom-systems.html">حلول مخصصة</a></div>
-      <div><h3>المقالات</h3><a href="knowledge.html">المدونة</a><a href="#faq">الأسئلة الشائعة</a><a href="#contact">تواصل معنا</a></div>
+      <div><h3>المنصات</h3><a href="{% url 'public_preview:websites' %}#capabilities">WordPress</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Salla</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Shopify</a><a href="{% url 'public_preview:custom-systems' %}">حلول مخصصة</a></div>
+      <div><h3>المقالات</h3><a href="{% url 'public_preview:knowledge' %}">المدونة</a><a href="#faq">الأسئلة الشائعة</a><a href="#contact">تواصل معنا</a></div>
     </div>
     <div class="ibtx-footer__bottom">
       <span>© <span id="legacy-year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span>
@@ -542,21 +503,13 @@
     </div>
   </div>
 </footer>
-<footer class="ibt-shell-footer">
-  <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
-  </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
-</footer>
+{% endblock %}
 
+{% block page_scripts %}
 <nav aria-label="إجراءات سريعة" class="quick-dock">
 <a aria-label="العودة للأعلى" href="#home"><svg viewbox="0 0 24 24"><path d="m18 15-6-6-6 6"></path></svg><span>الأعلى</span></a>
 <button aria-label="البحث السريع" class="dock-search" type="button"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span>بحث</span></button>
-<a class="dock-primary" data-open-brief="" href="contact.html#quote"><svg viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg><span>ابدأ مشروعك</span></a>
+<a class="dock-primary" data-open-brief="" href="{% url 'public_preview:contact' %}#quote"><svg viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg><span>ابدأ مشروعك</span></a>
 </nav>
 <div aria-hidden="true" aria-label="البحث السريع" aria-modal="true" class="command-palette" role="dialog">
 <div class="command-panel">
@@ -577,18 +530,4 @@
 <script src="/static/public_preview/assets/vendor/gsap.min.js"></script>
 <script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js"></script>
 <script src="/static/public_preview/assets/js/source-home.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body>
-</html>
+{% endblock %}

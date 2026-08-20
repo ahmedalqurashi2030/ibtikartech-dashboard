@@ -1,0 +1,162 @@
+name: Django Clean URL Browser QA
+
+on:
+  pull_request:
+    paths:
+      - "apps/public_preview/**"
+      - "apps/services/urls.py"
+      - "apps/services/public_views.py"
+      - "templates/public_preview/**"
+      - "static/public_preview/assets/js/**"
+      - "static/public_preview/assets/css/**"
+      - "scripts/browser_qa_clean_urls.cjs"
+      - "scripts/interaction_qa_clean_urls.cjs"
+      - "config/settings/test.py"
+      - ".github/workflows/django-clean-url-browser-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.test
+      DJANGO_SECRET_KEY: ci-only-secret
+      DJANGO_TEST_DATABASE_NAME: /tmp/ibtikar-browser-qa.sqlite3
+
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dashboard
+        run: python -m pip install --upgrade pip && pip install -e ".[dev]"
+
+      - name: Prepare Django
+        run: |
+          rm -f "$DJANGO_TEST_DATABASE_NAME"
+          python manage.py migrate --noinput
+
+      - name: Start Django server with test static files
+        shell: bash
+        run: |
+          python manage.py runserver 127.0.0.1:8000 --noreload --insecure > /tmp/ibtikar-django.log 2>&1 &
+          echo $! > /tmp/ibtikar-django.pid
+          for i in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then exit 0; fi
+            sleep 0.25
+          done
+          cat /tmp/ibtikar-django.log
+          exit 1
+
+      - name: Verify clean, legacy, explicit-service, and static route contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          clean_routes=(
+            / /services/ /ecommerce/ /websites/ /brand-content/ /growth/
+            /custom-systems/ /tharaa/ /portfolio/ /knowledge/
+            /knowledge/store-launch/ /knowledge/product-page/ /knowledge/store-redesign/
+            /about/ /contact/ /services/store-launch/ /services/storefront-customization/
+            /services/store-redesign/ /services/product-page-optimization/
+            /services/ecommerce-growth/ /services/ecommerce-support/ /404/
+          )
+          for route in "${clean_routes[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${route}")"
+            test "$code" = "200" || { echo "$code $route"; exit 1; }
+          done
+
+          forbidden_dynamic_routes=(
+            /services/catalog/
+            /services/example-database-slug/
+            /services/example-database-slug/request/
+          )
+          for route in "${forbidden_dynamic_routes[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${route}")"
+            test "$code" = "404" || { echo "$code $route expected 404"; exit 1; }
+          done
+
+          legacy_routes=(
+            index.html services.html ecommerce.html websites.html brand-content.html growth.html
+            custom-systems.html tharaa.html portfolio.html knowledge.html article-store-launch.html
+            article-product-page.html article-store-redesign.html about.html contact.html store-launch.html
+            storefront-customization.html store-redesign.html product-page-optimization.html
+            ecommerce-growth.html ecommerce-support.html 404.html
+          )
+          for route in "${legacy_routes[@]}"; do
+            location="$(curl -sS -o /dev/null -w '%{redirect_url}' "http://127.0.0.1:8000/${route}")"
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000/${route}")"
+            test "$code" = "301" || { echo "$code /$route expected 301"; exit 1; }
+            test -n "$location" || { echo "/$route missing redirect target"; exit 1; }
+            ! grep -q '\.html' <<<"$location" || {
+              echo "/$route redirects to another .html URL: $location"
+              exit 1
+            }
+          done
+
+          static_assets=(
+            /static/public_preview/assets/js/page-shell.js
+            /static/public_preview/assets/css/ibtikar-shell.css
+            /static/public_preview/assets/css/pages/frontend-final.css
+          )
+          for asset in "${static_assets[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${asset}")"
+            test "$code" = "200" || { echo "$code $asset expected 200"; exit 1; }
+          done
+
+          homepage="$(curl --fail --silent --show-error http://127.0.0.1:8000/)"
+          grep -Fq 'data-ibt-mega-toggle' <<<"$homepage"
+          grep -Fq 'aria-controls="solutionsServicesMega"' <<<"$homepage"
+
+      - name: Dashboard-owned headless browser QA on canonical clean URLs
+        env:
+          BASE_URL: http://127.0.0.1:8000
+        shell: bash
+        run: |
+          set +e
+          last_status=1
+          for attempt in 1 2; do
+            timeout 420s node scripts/browser_qa_clean_urls.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then exit 0; fi
+            last_status="$status"
+            if [ "$attempt" -lt 2 ]; then sleep 2; fi
+          done
+          exit "$last_status"
+
+      - name: Canonical Django deep interaction QA
+        env:
+          BASE_URL: http://127.0.0.1:8000
+        shell: bash
+        run: |
+          set +e
+          last_status=1
+          for attempt in 1 2; do
+            timeout 210s node scripts/interaction_qa_clean_urls.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then exit 0; fi
+            last_status="$status"
+            if [ "$attempt" -lt 2 ]; then sleep 2; fi
+          done
+          exit "$last_status"
+
+      - name: Stop Django server
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/ibtikar-django.pid ]; then
+            kill "$(cat /tmp/ibtikar-django.pid)" 2>/dev/null || true
+          fi
+          tail -n 120 /tmp/ibtikar-django.log 2>/dev/null || true

@@ -1,0 +1,119 @@
+name: Django Public Architecture QA
+
+on:
+  pull_request:
+    paths:
+      - "apps/public_preview/**"
+      - "apps/services/urls.py"
+      - "apps/services/public_views.py"
+      - "templates/public_preview/**"
+      - "scripts/refactor_public_preview_templates.py"
+      - "scripts/normalize_public_preview_metadata.py"
+      - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_public_section_preservation.py"
+      - ".github/workflows/django-public-architecture-qa.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/public_preview/**"
+      - "apps/services/urls.py"
+      - "apps/services/public_views.py"
+      - "templates/public_preview/**"
+      - "scripts/refactor_public_preview_templates.py"
+      - "scripts/normalize_public_preview_metadata.py"
+      - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_public_section_preservation.py"
+      - ".github/workflows/django-public-architecture-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate transformation scripts
+        run: |
+          python -m py_compile scripts/refactor_public_preview_templates.py
+          python -m py_compile scripts/normalize_public_preview_metadata.py
+          python -m py_compile scripts/patch_public_runtime_accessibility.py
+          python -m py_compile scripts/verify_public_section_preservation.py
+
+      - name: Verify transformations are reproducible and committed
+        run: |
+          python scripts/refactor_public_preview_templates.py
+          python scripts/normalize_public_preview_metadata.py
+          python scripts/patch_public_runtime_accessibility.py
+          git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
+
+      - name: Checkout approved frontend source
+        run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
+
+      - name: Verify every approved section and content block is preserved
+        run: python scripts/verify_public_section_preservation.py --source /tmp/ibtikartech-source
+
+      - name: Template architecture guards
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Every public page owns only page-specific blocks and inherits the
+          # global document shell. Shared shell fragments must never be copied
+          # back into individual pages.
+          for page in templates/public_preview/pages/*.html; do
+            grep -q 'extends "public_preview/base.html"' "$page"
+            ! grep -q 'id="ibtikarSiteHeader"' "$page"
+            ! grep -q 'class="ibt-shell-footer"' "$page"
+            ! grep -q 'public_preview/components/' "$page"
+          done
+
+          # base.html composes the reusable shell through Django includes.
+          grep -q 'include "public_preview/components/document_head.html"' templates/public_preview/base.html
+          grep -q 'include "public_preview/components/header.html"' templates/public_preview/base.html
+          grep -q 'include "public_preview/components/footer.html"' templates/public_preview/base.html
+          ! grep -q 'id="ibtikarSiteHeader"' templates/public_preview/base.html
+          ! grep -q 'class="ibt-shell-footer"' templates/public_preview/base.html
+
+          # Header owns desktop navigation and composes the shared mobile menu;
+          # footer remains a single reusable component for every route.
+          grep -q 'id="ibtikarSiteHeader"' templates/public_preview/components/header.html
+          grep -q 'include "public_preview/components/mobile_menu.html"' templates/public_preview/components/header.html
+          grep -q 'id="ibtikarMobileMenu"' templates/public_preview/components/mobile_menu.html
+          grep -q 'class="ibt-shell-footer"' templates/public_preview/components/footer.html
+
+          # Progressive enhancement must switch out of no-js before CSS can
+          # hide JS-owned controls such as the desktop mega-menu toggle.
+          grep -q "classList.remove('no-js')" templates/public_preview/components/document_head.html
+          grep -q "classList.add('js-ready')" templates/public_preview/components/document_head.html
+
+          # Canonical navigation must be native Django URLs everywhere in the
+          # reusable shell and page content; legacy .html URLs are redirects only.
+          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components
+          ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages templates/public_preview/components
+
+          # Browser routes must resolve through explicit Python view functions.
+          ! grep -n 'preview_page' apps/public_preview/urls.py
+          ! grep -n 'preview_page' apps/services/urls.py
+          grep -q 'path("", views.home, name="home")' apps/public_preview/urls.py
+          grep -q 'path("", public_views.services, name="index")' apps/services/urls.py
+          grep -q '^def home(request):' apps/public_preview/views.py
+          grep -q '^def portfolio(request):' apps/public_preview/views.py
+          grep -q '^def services(request):' apps/services/public_views.py
+          grep -q '^def product_page_optimization(request):' apps/services/public_views.py
+
+          # Public service routing must stay explicit and never fall back to DB slugs.
+          ! grep -n '<slug:' apps/services/urls.py
+          ! grep -n 'views\.service_' apps/services/urls.py
+          ! grep -R -n '/services/catalog/' templates/public_preview
+
+          grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js

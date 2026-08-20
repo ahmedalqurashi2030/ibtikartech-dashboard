@@ -1,58 +1,31 @@
-{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}
-<!doctype html><html lang="ar" dir="rtl" data-theme="dark" class="no-js"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+{% extends "public_preview/base.html" %}
+
+{% block head %}
 <title>أعمال ابتكار تك | ثيم ثراء ودراسات الحالة</title><meta name="description" content="أعمال ابتكار تك ودراسات الحالة الموثقة. ابدأ بدراسة تطوير ثيم ثراء كمنتج أصلي لمتاجر سلة، من التحدي إلى قرارات التصميم والتقنية.">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-</head>
-<body class="inner-page platform-page" data-section="portfolio"><a class="skip-link" href="#main-content">انتقل إلى المحتوى</a><header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
-  <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-    </a>
-    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
-      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
-      <div class="ibt-shell-nav-group" data-ibt-mega-root>
-        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
-        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
-          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
-          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
-          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
-          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
-          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
-          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
-        </div></div>
-      </div>
-      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
-    </nav>
-    <div class="ibt-shell-actions">
-      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
-  <a data-nav-key="home" href="index.html">الرئيسية</a>
-  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
-  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-  <a data-nav-key="about" href="about.html">عن ابتكار</a>
-  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-</nav><main id="main-content">
+{% endblock %}
+
+{% block body_attrs %} class="inner-page platform-page" data-section="portfolio"{% endblock %}
+
+{% block content %}
+<main id="main-content">
 <section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
-<nav class="breadcrumbs" aria-label="مسار التنقل"><a href="index.html">الرئيسية</a><span>←</span><span aria-current="page">أعمالنا</span></nav><span class="platform-kicker">SELECTED WORK</span>
+<nav class="breadcrumbs" aria-label="مسار التنقل">
+  <a href="{% url 'public_preview:home' %}">الرئيسية</a>
+  <span aria-hidden="true">←</span>
+  <span aria-current="page">أعمالنا</span>
+</nav><span class="platform-kicker">SELECTED WORK</span>
 <h1>نعرض القرار والتنفيذ. <span>لا صورة الواجهة وحدها.</span></h1><p>كل حالة نعرضها توضح ما كان يجب حله، ما الذي بنيناه، ولماذا اتخذنا القرارات الأساسية. ولا نضيف أرقام أداء أو نتائج تجارية ما لم تكن قابلة للتوثيق.</p>
-<div class="platform-actions"><a class="btn btn-primary" href="#tharaa-case">شاهد حالة ثراء</a><a class="btn btn-outline" href="contact.html#quote">ناقش مشروعك</a></div></div>
+<div class="platform-actions"><a class="btn btn-primary" href="#tharaa-case">شاهد حالة ثراء</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}#quote">ناقش مشروعك</a></div></div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/tharaa-experience-source.png" alt="معاينة من تجربة ثيم ثراء لمتاجر سلة" width="1200" height="800" fetchpriority="high"><figcaption>ثراء — منتج أصلي من ابتكار تك لمنصة سلة.</figcaption></figure></div></section>
 
-<section class="platform-section platform-section--soft" id="tharaa-case"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">CASE 01 · THARAA</span><h2>ثيم ثراء — بناء منتج، لا مجرد واجهة متجر</h2><p>بدأ المشروع بهدف بناء ثيم لمنصة سلة يمنح العلامة مساحة أكبر للهوية والعرض البصري، مع الحفاظ على قابلية الاستخدام والتجاوب والعمل داخل بنية المنصة.</p></div><div class="route-grid">
+<section class="platform-section platform-section--soft" id="tharaa-case"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">CASE 01 · THARAA</span>
+  <h2>ثيم ثراء — بناء منتج، لا مجرد واجهة متجر</h2>
+  <p>بدأ المشروع بهدف بناء ثيم لمنصة سلة يمنح العلامة مساحة أكبر للهوية والعرض البصري، مع الحفاظ على قابلية الاستخدام والتجاوب والعمل داخل بنية المنصة.</p>
+</div><div class="route-grid">
 <article class="route-card reveal"><small>01 / CHALLENGE</small><h3>التحدي</h3><p>تقديم تجربة Premium قابلة للتخصيص دون تحويل الثيم إلى مجموعة خيارات مشتتة أو واجهة ثقيلة يصعب إدارتها.</p></article>
 <article class="route-card reveal"><small>02 / PRODUCT</small><h3>قرار المنتج</h3><p>تموضع أقوى للمتاجر التي تعتمد على الصورة والهوية وتجربة المنتج، خصوصًا العطور والعناية والجمال والهدايا الراقية.</p></article>
 <article class="route-card reveal"><small>03 / EXPERIENCE</small><h3>قرار التجربة</h3><p>Mobile-first، عرض منتجات أوضح، مكونات رئيسية قابلة للترتيب، وتخصيص منظم للألوان والهيدر والأقسام.</p></article>
@@ -62,24 +35,46 @@
 <section class="platform-section"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">ما تم بناؤه</span><h2>من نظام الواجهة إلى رحلة المنتج</h2><p>ثراء يجمع عدة قرارات داخل منتج واحد بدل التعامل مع كل صفحة أو مكوّن كقطعة منفصلة.</p><ul class="check-list"><li>نظام واجهة وهوية قابل للتخصيص</li><li>مكتبة أقسام للصفحة الرئيسية</li><li>تجربة منتج وجوال مرتبة حول قرار الشراء</li><li>Light / Dark ودعم RTL / LTR</li><li>قوائم وتنقل ومكونات متجر ضمن بيئة سلة</li></ul></div>
 <div class="evidence-panel reveal"><span class="section-kicker">حدود الدليل</span><h2>ما الذي لا ندعيه هنا؟</h2><ul class="check-list"><li>لا ننشر رقم مبيعات غير موثق</li><li>لا ننسب تحسن تحويل دون قياس قبل وبعد</li><li>لا نستخدم أسماء متاجر أو شعارات دون حق نشر</li><li>البيانات التجارية للثيم تعرض فقط عند اعتمادها رسميًا</li></ul></div></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">قرارات مختارة</span><h2>لماذا اتخذنا هذه القرارات؟</h2><p>هذه أمثلة على التفكير الذي نطبقه عند بناء منتج أو إعادة تصميم تجربة قائمة.</p></div><div class="route-grid">
+<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">قرارات مختارة</span>
+  <h2>لماذا اتخذنا هذه القرارات؟</h2>
+  <p>هذه أمثلة على التفكير الذي نطبقه عند بناء منتج أو إعادة تصميم تجربة قائمة.</p>
+</div><div class="route-grid">
 <article class="route-card reveal"><small>MOBILE</small><h3>الجوال ليس نسخة مصغرة</h3><p>ترتيب المحتوى والإجراء الأساسي والمسافات يعالج الشاشة الصغيرة كرحلة مستقلة، لا مجرد ضغط تخطيط سطح المكتب.</p></article>
 <article class="route-card reveal"><small>CUSTOMIZATION</small><h3>حرية ضمن نظام</h3><p>التخصيص يخدم شخصية المتجر مع الحفاظ على تناسق القراءة والبطاقات والمكونات الأساسية.</p></article>
 <article class="route-card reveal"><small>COMPONENTS</small><h3>المكونات تخدم سيناريوهات</h3><p>الأقسام لا توجد لزيادة العدد؛ لكل مكوّن وظيفة محتوى أو عرض أو ثقة أو اكتشاف داخل المتجر.</p></article>
 <article class="route-card reveal"><small>PLATFORM</small><h3>احترام حدود سلة</h3><p>المنتج يُبنى حول بنية المنصة ومكوناتها وتدفقاتها، بدل فرض تجربة لا تتناسب مع البيئة التي سيعمل داخلها.</p></article>
 </div></div></section>
 
-<section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">استكشف المنتج</span><h2>شاهد ثراء كما يراه التاجر</h2><p>صفحة المنتج تعرض المعاينات والمكونات والتخصيص وتجربة الجوال بصورة أعمق من دراسة الحالة.</p></div><nav class="related-nav" aria-label="روابط ثراء والخدمات"><a href="tharaa.html">ثيم ثراء</a><a href="ecommerce.html">حلول المتاجر</a><a href="storefront-customization.html">تخصيص الواجهات</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></nav></div></section>
+<section class="platform-section"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">استكشف المنتج</span>
+  <h2>شاهد ثراء كما يراه التاجر</h2>
+  <p>صفحة المنتج تعرض المعاينات والمكونات والتخصيص وتجربة الجوال بصورة أعمق من دراسة الحالة.</p>
+</div><nav class="related-nav" aria-label="روابط ثراء والخدمات"><a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a><a href="{% url 'public_preview:ecommerce' %}">حلول المتاجر</a><a href="{% url 'services:storefront-customization' %}">تخصيص الواجهات</a><a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a></nav></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">معيار نشر الأعمال</span><h2>الحالات القادمة تتبع نفس مستوى الإثبات</h2><p>عندما نضيف مشروعًا جديدًا سنوضح دوره ونطاقه وقراراته، ونضيف النتائج فقط عندما يكون مصدرها وفترة قياسها واضحين.</p></div><div class="route-grid"><article class="route-card reveal"><small>CONTEXT</small><h3>السياق</h3><p>ما المشكلة ومن المستخدم وما القيود الفعلية؟</p></article><article class="route-card reveal"><small>SCOPE</small><h3>النطاق</h3><p>ما الذي نفذته ابتكار تك فعلًا وما الذي لم يكن ضمن المشروع؟</p></article><article class="route-card reveal"><small>DECISIONS</small><h3>القرارات</h3><p>كيف أثرت المنصة والمحتوى والتجربة والتقنية في الحل؟</p></article><article class="route-card reveal"><small>EVIDENCE</small><h3>الدليل</h3><p>نتائج أو قياس فقط عندما توجد بيانات قابلة للإسناد.</p></article></div></div></section>
+<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">معيار نشر الأعمال</span>
+  <h2>الحالات القادمة تتبع نفس مستوى الإثبات</h2>
+  <p>عندما نضيف مشروعًا جديدًا سنوضح دوره ونطاقه وقراراته، ونضيف النتائج فقط عندما يكون مصدرها وفترة قياسها واضحين.</p>
+</div><div class="route-grid"><article class="route-card reveal"><small>CONTEXT</small><h3>السياق</h3><p>ما المشكلة ومن المستخدم وما القيود الفعلية؟</p></article><article class="route-card reveal"><small>SCOPE</small><h3>النطاق</h3><p>ما الذي نفذته ابتكار تك فعلًا وما الذي لم يكن ضمن المشروع؟</p></article><article class="route-card reveal"><small>DECISIONS</small><h3>القرارات</h3><p>كيف أثرت المنصة والمحتوى والتجربة والتقنية في الحل؟</p></article><article class="route-card reveal"><small>EVIDENCE</small><h3>الدليل</h3><p>نتائج أو قياس فقط عندما توجد بيانات قابلة للإسناد.</p></article></div></div></section>
 
-<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">مشروع جديد</span><h2>لديك تحدٍ يحتاج قرارًا وتنفيذًا منظمًا؟</h2><p>شاركنا الوضع الحالي والهدف، وسنحدد المسار والنطاق المناسب قبل بدء التنفيذ.</p></div><div class="cta-actions"><a class="btn btn-white" href="contact.html#quote">ابدأ مشروعك</a><a class="btn btn-outline" href="services.html">استكشف الخدمات</a></div></div></div></section></main><footer class="ibt-shell-footer">
-  <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
+<section class="page-cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div>
+        <span class="section-kicker">مشروع جديد</span>
+        <h2>لديك تحدٍ يحتاج قرارًا وتنفيذًا منظمًا؟</h2>
+        <p>شاركنا الوضع الحالي والهدف، وسنحدد المسار والنطاق المناسب قبل بدء التنفيذ.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
+        <a class="btn btn-outline" href="{% url 'services:index' %}">استكشف الخدمات</a>
+      </div>
+    </div>
   </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
-</footer><script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script></body></html>
+</section></main>
+{% endblock %}
+
+{% block page_scripts %}
+<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script>
+{% endblock %}

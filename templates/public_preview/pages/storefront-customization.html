@@ -1,10 +1,7 @@
-{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}
-<!doctype html>
-<html lang="ar" dir="rtl" data-theme="dark" class="no-js">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>تخصيص واجهة المتجر | ابتكار تك</title>
+{% extends "public_preview/base.html" %}
+
+{% block head %}
+<title>تخصيص واجهة المتجر | ابتكار تك</title>
   <meta name="description" content="خدمة تخصيص واجهة المتجر من ابتكار تك: تطبيق الهوية على الثيم، تنظيم الأقسام والبنرات والبطاقات، تحسين تجربة الجوال واختبار الواجهة ضمن إمكانات المنصة.">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
@@ -12,54 +9,16 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-</head>
-<body class="inner-page service-detail-page" data-section="services">
-<a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
-<header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
-  <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-    </a>
-    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
-      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
-      <div class="ibt-shell-nav-group" data-ibt-mega-root>
-        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
-        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
-          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
-          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
-          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
-          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
-          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
-          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
-        </div></div>
-      </div>
-      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
-    </nav>
-    <div class="ibt-shell-actions">
-      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
-  <a data-nav-key="home" href="index.html">الرئيسية</a>
-  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
-  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-  <a data-nav-key="about" href="about.html">عن ابتكار</a>
-  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-</nav>
+{% endblock %}
+
+{% block body_attrs %} class="inner-page service-detail-page" data-section="services"{% endblock %}
+
+{% block content %}
 <main id="main-content" class="service-detail-main">
 
 <div class="service-detail-shell">
   <nav class="service-detail-breadcrumb" aria-label="مسار التنقل">
-    <a href="index.html">الرئيسية</a><span>←</span><a href="services.html">الحلول والخدمات</a><span>←</span><a href="ecommerce.html">المتاجر الإلكترونية</a><span>←</span><b aria-current="page">تخصيص واجهة المتجر</b>
+    <a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><span>←</span><b aria-current="page">تخصيص واجهة المتجر</b>
   </nav>
 </div>
 
@@ -96,7 +55,7 @@
           <li>لا نعد بوظيفة لا تدعمها المنصة أو الثيم</li>
         </ul>
         <div class="service-commerce-actions">
-          <a class="btn btn-primary" href="contact.html#quote" data-analytics="quote_request" data-analytics-label="storefront customization hero">ابدأ تقييم واجهة متجرك</a>
+          <a class="btn btn-primary" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization hero">ابدأ تقييم واجهة متجرك</a>
           <a class="service-text-link" href="#decision-center" data-open-service-tab="problems">افهم تفاصيل الخدمة ←</a>
         </div>
       </div>
@@ -141,7 +100,7 @@
   <div class="service-detail-shell"><div class="service-detail-heading"><span>اختيار المسار الصحيح</span><h2>هل تخصيص الواجهة هو الخدمة المناسبة لك؟</h2></div>
     <div class="service-fit-grid">
       <article class="service-fit-card service-fit-card--good"><h3>تناسبك عندما</h3><ul><li>لديك متجر قائم ويعمل.</li><li>لديك هوية أو اتجاه بصري يمكن البناء عليه.</li><li>تريد تطوير الواجهة دون إعادة بناء المتجر بالكامل.</li><li>تحتاج ترتيب الصفحة الرئيسية والأقسام والبطاقات والجوال.</li><li>يمكنك توفير المحتوى والصور والصلاحيات اللازمة.</li></ul></article>
-      <article class="service-fit-card"><h3>قد تحتاج مسارًا آخر عندما</h3><ul><li>لا يوجد متجر بعد — <a href="ecommerce.html#service-launch">ابدأ بخدمة إطلاق المتجر</a>.</li><li>البنية كاملة أصبحت قديمة أو مشتتة — <a href="ecommerce.html#service-redesign">راجع خدمة إعادة التصميم</a>.</li><li>المشكلة محصورة في صفحة المنتج — <a href="product-page-optimization.html">تحسين صفحة المنتج</a>.</li><li>الهوية نفسها غير جاهزة — <a href="brand-content.html">الهوية والمحتوى</a>.</li></ul></article>
+      <article class="service-fit-card"><h3>قد تحتاج مسارًا آخر عندما</h3><ul><li>لا يوجد متجر بعد — <a href="{% url 'public_preview:ecommerce' %}#service-launch">ابدأ بخدمة إطلاق المتجر</a>.</li><li>البنية كاملة أصبحت قديمة أو مشتتة — <a href="{% url 'public_preview:ecommerce' %}#service-redesign">راجع خدمة إعادة التصميم</a>.</li><li>المشكلة محصورة في صفحة المنتج — <a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a>.</li><li>الهوية نفسها غير جاهزة — <a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a>.</li></ul></article>
     </div>
   </div>
 </section>
@@ -197,9 +156,9 @@
 <section class="service-detail-section service-detail-section--soft" id="related-services">
   <div class="service-detail-shell"><div class="service-detail-heading"><span>قبلها أو بعدها</span><h2>خدمات مرتبطة بمسار واجهة المتجر</h2></div>
     <div class="service-related-grid">
-      <article class="service-related-card"><img src="/static/public_preview/assets/images/services/ecommerce/store-redesign.svg" alt="إعادة تصميم متجر قائم" width="800" height="500" loading="lazy"><div class="service-related-card__body"><small>مسار أوسع</small><h3>إعادة تصميم متجر قائم</h3><p>عندما تكون المشكلة في بنية وتجربة المتجر كاملة، وليس التخصيص البصري فقط.</p><a href="ecommerce.html#service-redesign">استكشف المسار ←</a></div></article>
-      <article class="service-related-card"><img src="/static/public_preview/assets/images/services/ecommerce/product-experience.svg" alt="تحسين صفحة المنتج" width="800" height="500" loading="lazy"><div class="service-related-card__body"><small>خدمة متخصصة</small><h3>تحسين صفحة المنتج</h3><p>عندما يتركز الاحتياج في الصور والمعلومات والخيارات والثقة وقرار الشراء.</p><a href="product-page-optimization.html">تفاصيل الخدمة ←</a></div></article>
-      <article class="service-related-card"><img src="/static/public_preview/assets/images/showcase/tharaa-experience-source.png" alt="ثيم ثراء لمتاجر سلة" width="1200" height="800" loading="lazy"><div class="service-related-card__body"><small>منتج من ابتكار تك</small><h3>ثيم ثراء</h3><p>خيار منتج جاهز لمتاجر سلة؛ ترخيص الثيم منفصل عن خدمة التركيب والتخصيص.</p><a href="tharaa.html">استكشف ثراء ←</a></div></article>
+      <article class="service-related-card"><img src="/static/public_preview/assets/images/services/ecommerce/store-redesign.svg" alt="إعادة تصميم متجر قائم" width="800" height="500" loading="lazy"><div class="service-related-card__body"><small>مسار أوسع</small><h3>إعادة تصميم متجر قائم</h3><p>عندما تكون المشكلة في بنية وتجربة المتجر كاملة، وليس التخصيص البصري فقط.</p><a href="{% url 'public_preview:ecommerce' %}#service-redesign">استكشف المسار ←</a></div></article>
+      <article class="service-related-card"><img src="/static/public_preview/assets/images/services/ecommerce/product-experience.svg" alt="تحسين صفحة المنتج" width="800" height="500" loading="lazy"><div class="service-related-card__body"><small>خدمة متخصصة</small><h3>تحسين صفحة المنتج</h3><p>عندما يتركز الاحتياج في الصور والمعلومات والخيارات والثقة وقرار الشراء.</p><a href="{% url 'services:product-page-optimization' %}">تفاصيل الخدمة ←</a></div></article>
+      <article class="service-related-card"><img src="/static/public_preview/assets/images/showcase/tharaa-experience-source.png" alt="ثيم ثراء لمتاجر سلة" width="1200" height="800" loading="lazy"><div class="service-related-card__body"><small>منتج من ابتكار تك</small><h3>ثيم ثراء</h3><p>خيار منتج جاهز لمتاجر سلة؛ ترخيص الثيم منفصل عن خدمة التركيب والتخصيص.</p><a href="{% url 'public_preview:tharaa' %}">استكشف ثراء ←</a></div></article>
     </div>
   </div>
 </section>
@@ -222,26 +181,18 @@
 </section>
 
 <section class="service-final-cta" id="service-contact">
-  <div class="service-detail-shell"><div class="service-final-cta__card"><div><h2>أرسل رابط متجرك قبل أن تقرر حجم التخصيص.</h2><p>سنبدأ من الحالة الحالية ونحدد هل تحتاج تخصيص واجهة، تحسينًا مركزًا، أم مسار إعادة تصميم أوسع.</p></div><div class="service-final-cta__actions"><a class="btn btn-white" href="contact.html#quote" data-analytics="quote_request" data-analytics-label="storefront customization final">ابدأ تقييم الواجهة</a><a class="btn btn-outline" href="ecommerce.html">العودة لحلول المتاجر</a></div></div></div>
+  <div class="service-detail-shell"><div class="service-final-cta__card"><div><h2>أرسل رابط متجرك قبل أن تقرر حجم التخصيص.</h2><p>سنبدأ من الحالة الحالية ونحدد هل تحتاج تخصيص واجهة، تحسينًا مركزًا، أم مسار إعادة تصميم أوسع.</p></div><div class="service-final-cta__actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization final">ابدأ تقييم الواجهة</a><a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}">العودة لحلول المتاجر</a></div></div></div>
 </section>
 
 </main>
-<footer class="ibt-shell-footer">
-  <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
-  </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
-</footer>
-<div class="service-sticky-cta"><a class="btn btn-primary" href="contact.html#quote" data-analytics="quote_request" data-analytics-label="storefront customization sticky">ابدأ تقييم واجهة متجرك</a></div>
+{% endblock %}
+
+{% block page_scripts %}
+<div class="service-sticky-cta"><a class="btn btn-primary" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization sticky">ابدأ تقييم واجهة متجرك</a></div>
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/site-config.js"></script>
 <script src="/static/public_preview/assets/js/modules/analytics.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
 <script src="/static/public_preview/assets/js/app.js"></script>
 <script src="/static/public_preview/assets/js/commerce-service-detail.js"></script>
-</body>
-</html>
+{% endblock %}

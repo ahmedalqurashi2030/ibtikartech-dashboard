@@ -1,9 +1,6 @@
-{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}
-<!DOCTYPE html>
+{% extends "public_preview/base.html" %}
 
-<html data-theme="dark" dir="rtl" lang="ar">
-<head>
-<meta charset="utf-8"/>
+{% block head %}
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <meta content="ثيم ثراء لمتاجر سلة — تجربة متجر مرنة، سريعة، متجاوبة وقابلة للتخصيص، من ابتكار تك للحلول والخدمات الرقمية." name="description"/>
 <meta content="#070914" name="theme-color"/>
@@ -19,49 +16,11 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-</head>
-<body class="approved-source-page source-tharaa" data-section="tharaa" data-approved-source="Ibtikar_Tech_Tharaa_Theme_Page_Final_CTA_Replaced.html">
-<a class="approved-skip-link" href="#main">انتقل إلى المحتوى</a>
-<header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
-  <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-    </a>
-    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
-      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
-      <div class="ibt-shell-nav-group" data-ibt-mega-root>
-        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
-        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
-          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
-          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
-          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
-          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
-          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
-          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
-        </div></div>
-      </div>
-      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
-    </nav>
-    <div class="ibt-shell-actions">
-      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
-  <a data-nav-key="home" href="index.html">الرئيسية</a>
-  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
-  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-  <a data-nav-key="about" href="about.html">عن ابتكار</a>
-  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-</nav>
+{% endblock %}
+
+{% block body_attrs %} class="approved-source-page source-tharaa" data-section="tharaa" data-approved-source="Ibtikar_Tech_Tharaa_Theme_Page_Final_CTA_Replaced.html"{% endblock %}
+
+{% block content %}
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
 <a class="skip" href="#main">تجاوز إلى المحتوى</a>
@@ -80,12 +39,12 @@
 <button aria-label="تبديل النمط" class="icon-btn" id="themeToggle">
 <svg viewbox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"></path></svg>
 </button>
-<a class="btn btn--primary btn--sm" href="contact.html#quote">ناقش ثراء لمتجرك</a>
+<a class="btn btn--primary btn--sm" href="{% url 'public_preview:contact' %}#quote">ناقش ثراء لمتجرك</a>
 <button aria-expanded="false" aria-label="فتح القائمة" class="menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
 </div>
 </div>
 </header>
-<div data-approved-legacy-shell hidden inert class="mobile-menu" id="mobileMenu"><a href="#v4-experience">التجربة</a><a href="#v4-preview">المعاينة</a><a href="#features">المزايا</a><a href="#product">صفحة المنتج</a><a href="#sections">الأقسام</a><a href="#faq">الأسئلة</a><a class="btn btn--primary" href="contact.html#quote">ناقش ثراء لمتجرك</a><a href="#faq">الدعم</a></div>
+<div data-approved-legacy-shell hidden inert class="mobile-menu" id="mobileMenu"><a href="#v4-experience">التجربة</a><a href="#v4-preview">المعاينة</a><a href="#features">المزايا</a><a href="#product">صفحة المنتج</a><a href="#sections">الأقسام</a><a href="#faq">الأسئلة</a><a class="btn btn--primary" href="{% url 'public_preview:contact' %}#quote">ناقش ثراء لمتجرك</a><a href="#faq">الدعم</a></div>
 <main id="main">
 <section class="hero" id="top">
 <canvas aria-hidden="true" id="heroCanvas"></canvas>
@@ -281,7 +240,7 @@
 </section>
 <section class="section custom" id="customize"><div class="container custom-grid"><div class="custom-copy reveal"><span class="eyebrow">CUSTOMIZATION STUDIO</span><h2>تخصيص منظم<br/><span class="gradient-text">لا فوضى خيارات</span></h2><p>تمنحك إعدادات ثراء حرية كافية لبناء شخصية متجرك، مع قيود ذكية تحافظ على التناسق وسهولة القراءة.</p><div class="custom-list"><div>ألوان الخلفيات والنصوص</div><div>الوضع الفاتح والداكن</div><div>الهيدر وروابطه</div><div>شريط الإعلان</div><div>مظهر البطاقات</div><div>ترتيب الأقسام</div></div></div><div class="studio reveal"><div class="studio-panel"><h3>إعدادات الثيم</h3><div class="studio-control"><label>الوضع الداكن <span class="switch"></span></label></div><div class="studio-control"><label>اللون الأساسي</label><div class="swatches" id="studioSwatches"><button class="active" data-studio="#9a6d4d" style="--sw:#9a6d4d"></button><button data-studio="#8b5cf6" style="--sw:#8b5cf6"></button><button data-studio="#0ea5e9" style="--sw:#0ea5e9"></button></div></div><div class="studio-control"><label>نمط الهيدر</label><select><option>فاتح</option><option>داكن</option></select></div><div class="studio-control"><label>تثبيت القائمة <span class="switch"></span></label></div></div><div class="studio-preview"><div class="studio-site" id="studioSite"><div class="studio-nav"></div><div class="studio-hero"><small>NEW COLLECTION</small><h4>واجهة تعكس هويتك</h4><i></i></div><div class="studio-cards"><i></i><i></i><i></i></div></div></div></div></div></section>
 <section class="section tech-section"><div class="container"><div class="section-head"><span class="eyebrow">TECHNICAL FOUNDATION</span><h2>واجهة جميلة<br/><span class="gradient-text">على أساس تقني سليم</span></h2><p>تم تطوير الثيم على بنية Twilight الحديثة مع الاعتماد على مكوّنات سلة الرسمية ومراعاة التوافق والاستجابة.</p></div><div class="tech-grid"><article class="tech-card reveal" style="--accent:var(--blue)"><i>TW</i><strong>Twilight حديث</strong><span>بنية سلة الرسمية</span></article><article class="tech-card reveal" style="--accent:var(--cyan)"><i>R</i><strong>Responsive</strong><span>جوال، لوحي وسطح مكتب</span></article><article class="tech-card reveal" style="--accent:var(--green)"><i>A11Y</i><strong>قابلية استخدام</strong><span>تباين، لمس وتنقل أوضح</span></article><article class="tech-card reveal" style="--accent:var(--pink)"><i>RTL</i><strong>عربي وإنجليزي</strong><span>دعم RTL / LTR</span></article></div></div></section>
-<section class="section faq" id="faq"><div class="container faq-grid"><div class="faq-intro"><span class="eyebrow">FAQ</span><h2>قبل أن تبدأ<br/><span class="gradient-text">هذه أهم الإجابات</span></h2><p>إجابات مختصرة عن التوافق والتخصيص والمعاينة ونطاق خدمات التركيب.</p><a class="btn btn--ghost" href="contact.html#quote">ناقش احتياج متجرك</a></div><div class="accordion">
+<section class="section faq" id="faq"><div class="container faq-grid"><div class="faq-intro"><span class="eyebrow">FAQ</span><h2>قبل أن تبدأ<br/><span class="gradient-text">هذه أهم الإجابات</span></h2><p>إجابات مختصرة عن التوافق والتخصيص والمعاينة ونطاق خدمات التركيب.</p><a class="btn btn--ghost" href="{% url 'public_preview:contact' %}#quote">ناقش احتياج متجرك</a></div><div class="accordion">
 <article class="faq-item open"><button aria-expanded="true">هل ثيم ثراء متوافق مع منصة سلة؟<i></i></button><div class="faq-answer" style="max-height:160px"><p>نعم، ثراء مبني كثيم لمنصة سلة باستخدام بنية Twilight ومكوّنات سلة الرسمية، مع مراعاة صفحات المتجر الأساسية وتجربة الجوال.</p></div></article>
 <article class="faq-item"><button aria-expanded="false">هل يمكن تخصيص ألوان الثيم وهويته؟<i></i></button><div class="faq-answer"><p>نعم. يوفر الثيم إعدادات للألوان والخلفيات والنصوص والهيدر والوضع الداكن، إضافة إلى أقسام يمكن ترتيبها وتعبئتها بما يناسب العلامة.</p></div></article>
 <article class="faq-item"><button aria-expanded="false">هل يناسب العطور فقط؟<i></i></button><div class="faq-answer"><p>ليس حصريًا للعطور، لكن تموضعه الأقوى للمتاجر التي تعتمد على الصورة والهوية وتجربة المنتج، خصوصًا العطور والعناية والجمال والهدايا الراقية.</p></div></article>
@@ -289,20 +248,13 @@
 <article class="faq-item"><button aria-expanded="false">هل يشمل الطلب التركيب والتخصيص؟<i></i></button><div class="faq-answer"><p>ترخيص الثيم مستقل عن خدمات التركيب والتخصيص. وعند طلب خدمة إضافية يحدد نطاقها ومخرجاتها بشكل منفصل قبل التنفيذ.</p></div></article>
 <article class="faq-item"><button aria-expanded="false">هل يدعم الوضع الداكن؟<i></i></button><div class="faq-answer"><p>نعم. يمكن تفعيل الوضع الداكن، جعله افتراضيًا أو توفير زر تبديل للزائر وفق إعدادات المتجر.</p></div></article>
 </div></div></section>
-<section class="final-cta" id="request"><div class="container"><div class="final-card reveal"><div class="final-card__copy"><small>ابدأ بالمعاينة ثم حدد النطاق</small><h2>شاهد ثراء على تجربة تشبه نشاطك</h2><p>استكشف الواجهات والتخصيص، ثم حدد ما إذا كان احتياجك يقتصر على الترخيص أو يحتاج خدمة تركيب وتخصيص مستقلة.</p></div><div class="final-actions"><a class="btn btn--light" href="#v4-preview">شاهد المعاينة</a><a href="contact.html#quote">جهّز طلبك ←</a></div></div></div></section>
+<section class="final-cta" id="request"><div class="container"><div class="final-card reveal"><div class="final-card__copy"><small>ابدأ بالمعاينة ثم حدد النطاق</small><h2>شاهد ثراء على تجربة تشبه نشاطك</h2><p>استكشف الواجهات والتخصيص، ثم حدد ما إذا كان احتياجك يقتصر على الترخيص أو يحتاج خدمة تركيب وتخصيص مستقلة.</p></div><div class="final-actions"><a class="btn btn--light" href="#v4-preview">شاهد المعاينة</a><a href="{% url 'public_preview:contact' %}#quote">جهّز طلبك ←</a></div></div></div></section>
 </main>
-<footer data-approved-legacy-shell hidden inert aria-hidden="true" class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-about"><a class="brand" href="#top"><span class="brand-mark"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ثراء × ابتكار تك</strong><small>THARAA THEME</small></span></a><p>ثيم تجارة إلكترونية لمنصة سلة، صمم لتقديم هوية أوضح وتجربة شراء مرنة وقابلة للتوسع.</p></div><div><h3>استكشف الثيم</h3><a href="#v4-experience">رحلة التجربة</a><a href="#v4-preview">مختبر المعاينة</a><a href="#features">المزايا</a><a href="#sections">الأقسام</a></div><div><h3>المساعدة</h3><a href="#faq">الأسئلة الشائعة</a><a href="#request">طلب المعاينة</a><a href="contact.html#quote">ابدأ مشروعك</a><a href="contact.html#quote">دعم تيليجرام</a></div><div><h3>ابتكار تك</h3><a href="index.html">الرئيسية</a><a href="services.html">الخدمات</a><a href="portfolio.html">الأعمال</a><a href="contact.html#quote">تواصل معنا</a></div></div><div class="footer-bottom"><span>© 2026 ابتكار تك للحلول والخدمات الرقمية. جميع الحقوق محفوظة.</span><span>ثيم ثراء — تجربة متجر قابلة للنمو</span></div></div></footer>
-<footer class="ibt-shell-footer">
-  <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
-  </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
-</footer>
-<div class="sticky-cta"><button data-open-preview="">معاينة</button><a href="contact.html#quote">ناقش ثراء</a></div>
+<footer data-approved-legacy-shell hidden inert aria-hidden="true" class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-about"><a class="brand" href="#top"><span class="brand-mark"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ثراء × ابتكار تك</strong><small>THARAA THEME</small></span></a><p>ثيم تجارة إلكترونية لمنصة سلة، صمم لتقديم هوية أوضح وتجربة شراء مرنة وقابلة للتوسع.</p></div><div><h3>استكشف الثيم</h3><a href="#v4-experience">رحلة التجربة</a><a href="#v4-preview">مختبر المعاينة</a><a href="#features">المزايا</a><a href="#sections">الأقسام</a></div><div><h3>المساعدة</h3><a href="#faq">الأسئلة الشائعة</a><a href="#request">طلب المعاينة</a><a href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a href="{% url 'public_preview:contact' %}#quote">دعم تيليجرام</a></div><div><h3>ابتكار تك</h3><a href="{% url 'public_preview:home' %}">الرئيسية</a><a href="{% url 'services:index' %}">الخدمات</a><a href="{% url 'public_preview:portfolio' %}">الأعمال</a><a href="{% url 'public_preview:contact' %}#quote">تواصل معنا</a></div></div><div class="footer-bottom"><span>© 2026 ابتكار تك للحلول والخدمات الرقمية. جميع الحقوق محفوظة.</span><span>ثيم ثراء — تجربة متجر قابلة للنمو</span></div></div></footer>
+{% endblock %}
+
+{% block page_scripts %}
+<div class="sticky-cta"><button data-open-preview="">معاينة</button><a href="{% url 'public_preview:contact' %}#quote">ناقش ثراء</a></div>
 <div aria-labelledby="previewTitle" aria-modal="true" class="preview-modal" id="previewModal" role="dialog"><div class="modal-shell"><div class="modal-head"><strong id="previewTitle">معاينة ثيم ثراء</strong><button aria-label="إغلاق" id="closePreview">✕</button></div><div class="modal-body"><div class="modal-preview"><div class="mnav"></div><div class="mhero"><div><small>THARAA COLLECTION</small><h3>تجربة متجر تبدأ من الهوية</h3></div><i></i></div><div class="mcards"><i></i><i></i><i></i><i></i></div></div></div></div></div>
 <dialog aria-labelledby="componentPreviewTitle" class="component-preview-dialog" id="componentPreviewDialog">
 <div class="component-preview-dialog__head">
@@ -316,5 +268,4 @@
 
 
 <script src="/static/public_preview/assets/js/approved-source.js"></script>
-</body>
-</html>
+{% endblock %}

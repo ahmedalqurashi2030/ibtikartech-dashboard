@@ -1,10 +1,52 @@
 <footer class="ibt-shell-footer">
   <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المعرفة</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
+    <div class="ibt-shell-footer-main">
+      <a class="ibt-shell-brand" href="{% url 'public_preview:home' %}">
+        <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
+      </a>
+      <p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p>
+    </div>
+
+    <div>
+      <h3>الحلول والخدمات</h3>
+      <a href="{% url 'services:index' %}#goals">ابدأ من هدفك</a>
+      <a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
+      <a href="{% url 'public_preview:websites' %}">المواقع</a>
+      <a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a>
+      <a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a>
+    </div>
+
+    <div>
+      <h3>المتاجر والمنصات</h3>
+      <a href="{% url 'public_preview:ecommerce' %}#platforms">المنصات التي نعمل عليها</a>
+      <div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div>
+      <a href="{% url 'services:storefront-customization' %}">تخصيص واجهة المتجر</a>
+      <a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a>
+    </div>
+
+    <div>
+      <h3>منتجاتنا</h3>
+      <a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a>
+    </div>
+
+    <div>
+      <h3>ابتكار تك</h3>
+      <a href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
+      <a href="{% url 'public_preview:knowledge' %}">المعرفة</a>
+      <a href="{% url 'public_preview:about' %}">عن ابتكار</a>
+      <a href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
+    </div>
   </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year"></span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المعرفة</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
+
+  <div class="ibt-shell-footer-bottom">
+    <span>© <span id="year"></span> ابتكار تك. جميع الحقوق محفوظة.</span>
+    <div>
+      <a href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
+      <a href="{% url 'public_preview:knowledge' %}">المعرفة</a>
+      <a href="{% url 'services:index' %}">الحلول والخدمات</a>
+      <a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a>
+      <a href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
+    </div>
+  </div>
 </footer>

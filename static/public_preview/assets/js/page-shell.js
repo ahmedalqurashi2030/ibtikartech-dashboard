@@ -1,20 +1,165 @@
 (() => {
   'use strict';
 
-  const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const pageKey = pathname.replace(/\.html$/, '') || 'index';
+  // Django clean URLs are canonical. Template context supplies a stable page
+  // identity so preserved page-specific enhancement logic can keep using its
+  // historic page keys internally without exposing .html in browser navigation.
+  const pageKey = (document.body.dataset.page || 'index').toLowerCase();
+  const pathname = pageKey === 'index' ? 'index.html' : `${pageKey}.html`;
   const productPages = new Set(['tharaa.html']);
   const knowledgePages = new Set(['knowledge.html']);
+
+  const cleanPublicRoutes = new Map([
+    ['index.html', '/'],
+    ['services.html', '/services/'],
+    ['ecommerce.html', '/ecommerce/'],
+    ['websites.html', '/websites/'],
+    ['brand-content.html', '/brand-content/'],
+    ['growth.html', '/growth/'],
+    ['custom-systems.html', '/custom-systems/'],
+    ['tharaa.html', '/tharaa/'],
+    ['portfolio.html', '/portfolio/'],
+    ['knowledge.html', '/knowledge/'],
+    ['article-store-launch.html', '/knowledge/store-launch/'],
+    ['article-product-page.html', '/knowledge/product-page/'],
+    ['article-store-redesign.html', '/knowledge/store-redesign/'],
+    ['about.html', '/about/'],
+    ['contact.html', '/contact/'],
+    ['store-launch.html', '/services/store-launch/'],
+    ['storefront-customization.html', '/services/storefront-customization/'],
+    ['store-redesign.html', '/services/store-redesign/'],
+    ['product-page-optimization.html', '/services/product-page-optimization/'],
+    ['ecommerce-growth.html', '/services/ecommerce-growth/'],
+    ['ecommerce-support.html', '/services/ecommerce-support/'],
+    ['404.html', '/404/'],
+  ]);
+
   const retiredRoutes = new Map([
-    ['salla.html', 'ecommerce.html#platforms'],
-    ['zid.html', 'ecommerce.html#platforms'],
-    ['shopify.html', 'ecommerce.html#platforms'],
-    ['woocommerce.html', 'ecommerce.html#platforms'],
-    ['wordpress.html', 'websites.html#capabilities'],
+    ['salla.html', '/ecommerce/#platforms'],
+    ['zid.html', '/ecommerce/#platforms'],
+    ['shopify.html', '/ecommerce/#platforms'],
+    ['woocommerce.html', '/ecommerce/#platforms'],
+    ['wordpress.html', '/websites/#capabilities'],
   ]);
 
   const productionOrigin = 'https://ibtikartech.co';
   const previewOrigin = 'https://ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/';
+
+  const canonicalizePublicHref = (rawValue) => {
+    const raw = String(rawValue || '').trim();
+    if (!raw || raw.startsWith('#')) return raw;
+    if (/^(?:mailto:|tel:|sms:|javascript:|data:|blob:)/i.test(raw)) return raw;
+
+    try {
+      const url = new URL(raw, location.href);
+      if (url.origin !== location.origin) return raw;
+
+      const basename = url.pathname.split('/').filter(Boolean).pop()?.toLowerCase() || '';
+      const mappedPath = cleanPublicRoutes.get(basename) || retiredRoutes.get(basename);
+      if (!mappedPath) return raw;
+
+      const mapped = new URL(mappedPath, location.origin);
+      // A legacy target may already define a canonical fragment (for example
+      // retired platform pages -> #platforms). Preserve an explicit fragment
+      // from the original link when present; otherwise keep the mapped one.
+      if (url.search) mapped.search = url.search;
+      if (url.hash) mapped.hash = url.hash;
+      return `${mapped.pathname}${mapped.search}${mapped.hash}`;
+    } catch (_) {
+      return raw;
+    }
+  };
+
+  const normalizePublicLink = (link) => {
+    if (!(link instanceof HTMLAnchorElement)) return;
+    const raw = link.getAttribute('href') || '';
+    const clean = canonicalizePublicHref(raw);
+    if (clean !== raw) {
+      link.setAttribute('href', clean);
+      link.dataset.cleanUrlNormalized = 'true';
+    }
+  };
+
+  const normalizePublicDataHref = (node) => {
+    if (!(node instanceof HTMLElement) || !node.hasAttribute('data-href')) return;
+    const raw = node.getAttribute('data-href') || '';
+    const clean = canonicalizePublicHref(raw);
+    if (clean !== raw) node.setAttribute('data-href', clean);
+  };
+
+  const normalizePublicNavigation = (scope = document) => {
+    if (scope instanceof HTMLAnchorElement) normalizePublicLink(scope);
+    if (scope instanceof HTMLElement) normalizePublicDataHref(scope);
+    scope.querySelectorAll?.('a[href]').forEach(normalizePublicLink);
+    scope.querySelectorAll?.('[data-href]').forEach(normalizePublicDataHref);
+  };
+
+  // Run before preserved enhancement bundles can attach navigation behavior.
+  // The observer also catches links/cards created later by those bundles.
+  normalizePublicNavigation(document);
+  const publicNavigationObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes') {
+        normalizePublicNavigation(mutation.target);
+        return;
+      }
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) normalizePublicNavigation(node);
+      });
+    });
+  });
+  publicNavigationObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['href', 'data-href'],
+  });
+
+  // Two preserved homepage interactions navigate through JavaScript closures
+  // rather than an anchor's href. Capture them before the legacy handlers and
+  // send them directly to the canonical Django route.
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target) return;
+
+    const briefTrigger = target.closest('[data-open-brief]');
+    if (briefTrigger) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      location.href = '/contact/#quote';
+      return;
+    }
+
+    const mobileServiceCard = target.closest('.services-mobile-card[data-href]');
+    if (!mobileServiceCard || target.closest('a,button,input,select,textarea')) return;
+    const destination = canonicalizePublicHref(mobileServiceCard.getAttribute('data-href'));
+    if (!destination) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.href = destination;
+  }, true);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target) return;
+
+    const briefTrigger = target.closest('[data-open-brief]');
+    if (briefTrigger) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      location.href = '/contact/#quote';
+      return;
+    }
+
+    const mobileServiceCard = target.closest('.services-mobile-card[data-href]');
+    if (!mobileServiceCard) return;
+    const destination = canonicalizePublicHref(mobileServiceCard.getAttribute('data-href'));
+    if (!destination) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.href = destination;
+  }, true);
 
   const normalizeHomepageLegacyShell = () => {
     if (!document.body.classList.contains('source-home')) return;
@@ -26,13 +171,17 @@
     });
 
     document.querySelector('body.source-home > .announcement')?.remove();
-    document.querySelector('body.source-home > .skip-link')?.remove();
+    // The Django base owns the canonical skip link. Remove only accidental
+    // duplicate legacy copies after imports; never remove the shared first link.
+    const homepageSkipLinks = [...document.querySelectorAll('body.source-home > .skip-link')];
+    homepageSkipLinks.slice(1).forEach((node) => node.remove());
   };
 
   const normalizeProductionMetadata = () => {
     const robots = document.querySelector('meta[name="robots"]')?.content?.toLowerCase() || '';
     const indexable = !robots.includes('noindex');
-    const canonicalPath = pathname === 'index.html' || pathname === '' ? '/' : `/${pathname}`;
+    const browserPath = location.pathname || '/';
+    const canonicalPath = browserPath === '/' ? '/' : `${browserPath.replace(/\/+$/, '')}/`;
     const canonicalUrl = `${productionOrigin}${canonicalPath}`;
 
     if (indexable) {
@@ -76,12 +225,6 @@
     link.classList.toggle('is-active', active);
     if (active) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
-  });
-
-  document.querySelectorAll('a[href]').forEach((link) => {
-    const raw = link.getAttribute('href') || '';
-    const clean = raw.split('#')[0].toLowerCase();
-    if (retiredRoutes.has(clean)) link.href = retiredRoutes.get(clean);
   });
 
   document.querySelectorAll('#year').forEach((item) => {
@@ -149,6 +292,10 @@
     } else {
       ensureScript('/static/public_preview/assets/js/strategy-enhancements.js', 'strategy-enhancements');
     }
+
+    // Enhancement bundles may synchronously inject legacy relative links.
+    // Normalize once more immediately; the observer protects later mutations.
+    queueMicrotask(() => normalizePublicNavigation(document));
   };
 
   if (document.readyState === 'loading') {
