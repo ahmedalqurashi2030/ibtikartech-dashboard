@@ -1,0 +1,71 @@
+name: Django Public Architecture QA
+
+on:
+  pull_request:
+    paths:
+      - "apps/public_preview/**"
+      - "apps/services/urls.py"
+      - "templates/public_preview/**"
+      - "scripts/refactor_public_preview_templates.py"
+      - "scripts/componentize_public_preview_templates.py"
+      - "scripts/componentize_page_cta.py"
+      - "scripts/normalize_public_preview_metadata.py"
+      - ".github/workflows/django-public-architecture-qa.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/public_preview/**"
+      - "apps/services/urls.py"
+      - "templates/public_preview/**"
+      - "scripts/refactor_public_preview_templates.py"
+      - "scripts/componentize_public_preview_templates.py"
+      - "scripts/componentize_page_cta.py"
+      - "scripts/normalize_public_preview_metadata.py"
+      - ".github/workflows/django-public-architecture-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate transformation scripts
+        run: |
+          python -m py_compile scripts/refactor_public_preview_templates.py
+          python -m py_compile scripts/componentize_public_preview_templates.py
+          python -m py_compile scripts/componentize_page_cta.py
+          python -m py_compile scripts/normalize_public_preview_metadata.py
+
+      - name: Verify transformations are reproducible and committed
+        run: |
+          python scripts/refactor_public_preview_templates.py
+          python scripts/componentize_public_preview_templates.py
+          python scripts/componentize_page_cta.py
+          python scripts/normalize_public_preview_metadata.py
+          git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
+
+      - name: Template architecture guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          for page in templates/public_preview/pages/*.html; do
+            grep -q 'extends "public_preview/base.html"' "$page"
+            ! grep -q 'id="ibtikarSiteHeader"' "$page"
+            ! grep -q 'class="ibt-shell-footer"' "$page"
+          done
+          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
+          ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
+          grep -R -q 'include "public_preview/components/breadcrumbs.html"' templates/public_preview/pages
+          grep -R -q 'include "public_preview/components/section_heading.html"' templates/public_preview/pages
+          grep -R -q 'include "public_preview/components/page_cta.html"' templates/public_preview/pages
