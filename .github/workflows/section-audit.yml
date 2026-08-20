@@ -41,9 +41,7 @@ jobs:
 
           class AuditParser(HTMLParser):
               def __init__(self):
-                  super().__init__()
-                  self.region_stack=[]
-                  self.current=None
+                  super().__init__(); self.region_stack=[]; self.current=None
                   self.data={k:{'text':[],'links':[],'images':[]} for k in [*REGION_IDS.values(),'footer']}
                   self.styles=[]; self.scripts=[]
               def norm(self,v):
@@ -51,8 +49,7 @@ jobs:
                   v=v.replace('/static/public_preview/','')
                   return v.lstrip('/') if v.startswith('/assets/') else v
               def handle_starttag(self, tag, attrs):
-                  d=dict(attrs)
-                  prev=self.current
+                  d=dict(attrs); prev=self.current
                   if d.get('id') in REGION_IDS:
                       self.region_stack.append(prev); self.current=REGION_IDS[d['id']]
                   elif tag=='footer':
@@ -76,25 +73,15 @@ jobs:
               with open(path,encoding='utf-8',errors='replace') as f: p.feed(f.read())
               return p
 
-          def digest_text(items):
-              return hashlib.sha256('\n'.join(items).encode()).hexdigest()[:12]
+          def digest_text(items): return hashlib.sha256('\n'.join(items).encode()).hexdigest()[:12]
 
           src=parse(sys.argv[1]); prod=parse(sys.argv[2])
           print('--- REGION AUDIT ---')
           for region in ['header','mobile_nav','home','journey','services','tharaa','faq','contact','footer']:
               a=src.data[region]; b=prod.data[region]
               print(f'{region}|text_equal={a["text"]==b["text"]}|links_equal={a["links"]==b["links"]}|images_equal={a["images"]==b["images"]}|src_text_sha={digest_text(a["text"])}|prod_text_sha={digest_text(b["text"])}|links={len(a["links"])}/{len(b["links"])}|images={len(a["images"])}/{len(b["images"])}')
-              if a['links']!=b['links']:
-                  print('SRC_LINKS',region,a['links']); print('PROD_LINKS',region,b['links'])
-              if a['images']!=b['images']:
-                  print('SRC_IMAGES',region,a['images']); print('PROD_IMAGES',region,b['images'])
           print('STYLES_EQUAL',src.styles==prod.styles)
-          print('SOURCE_STYLES',src.styles)
-          print('PROD_STYLES',prod.styles)
           print('SCRIPTS_EQUAL',src.scripts==prod.scripts)
-          print('SOURCE_SCRIPTS',src.scripts)
-          print('PROD_SCRIPTS',prod.scripts)
-
           with open('/tmp/ibtikar-assets.list','w',encoding='utf-8') as f:
               for x in src.styles+src.scripts:
                   if x.startswith('assets/'): f.write(x+'\n')
@@ -117,3 +104,15 @@ jobs:
             if [ "$s1" = "$s2" ]; then status=MATCH; else status=DIFF; fi
             echo "$status|$asset|$s1|$s2"
           done < /tmp/ibtikar-assets.list
+
+          echo '--- DJANGO PATH-NORMALIZED JS AUDIT ---'
+          for asset in assets/js/page-shell.js assets/js/ibtikar-shell.js assets/js/approved-source.js; do
+            src_file="/tmp/src-$(echo "$asset" | tr '/.' '__')"
+            prod_file="/tmp/prod-$(echo "$asset" | tr '/.' '__')"
+            norm_file="${prod_file}.normalized"
+            sed 's#/static/public_preview/assets/#assets/#g' "$prod_file" > "$norm_file"
+            s1=$(sha256sum "$src_file" | awk '{print $1}')
+            s2=$(sha256sum "$norm_file" | awk '{print $1}')
+            if [ "$s1" = "$s2" ]; then status=NORMALIZED_MATCH; else status=REAL_DIFF; fi
+            echo "$status|$asset|$s1|$s2"
+          done
