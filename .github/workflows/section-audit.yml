@@ -34,45 +34,86 @@ jobs:
             -o "$PROD"
 
           python3 - "$SRC" "$PROD" <<'PY'
-          import sys, html
+          import sys, html, hashlib
           from html.parser import HTMLParser
+
+          REGION_IDS={'ibtikarSiteHeader':'header','ibtikarMobileMenu':'mobile_nav','home':'home','journey':'journey','services':'services','tharaa':'tharaa','faq':'faq','contact':'contact'}
 
           class AuditParser(HTMLParser):
               def __init__(self):
-                  super().__init__(); self.stack=[]; self.sections=[]; self.current_section=None; self.capture=None; self.buf=[]; self.headings=[]
+                  super().__init__()
+                  self.region_stack=[]
+                  self.current=None
+                  self.data={k:{'text':[],'links':[],'images':[]} for k in [*REGION_IDS.values(),'footer']}
+                  self.styles=[]; self.scripts=[]
+              def norm(self,v):
+                  if not v: return ''
+                  v=v.replace('/static/public_preview/','')
+                  return v.lstrip('/') if v.startswith('/assets/') else v
               def handle_starttag(self, tag, attrs):
                   d=dict(attrs)
-                  if tag=='section':
-                      sec={'id':d.get('id',''),'class':d.get('class',''),'headings':[]}
-                      self.sections.append(sec); self.stack.append(self.current_section); self.current_section=sec
-                  if tag in ('h1','h2','h3'):
-                      self.capture=tag; self.buf=[]
+                  prev=self.current
+                  if d.get('id') in REGION_IDS:
+                      self.region_stack.append(prev); self.current=REGION_IDS[d['id']]
+                  elif tag=='footer':
+                      self.region_stack.append(prev); self.current='footer'
+                  if self.current:
+                      if tag=='a' and d.get('href'): self.data[self.current]['links'].append(self.norm(d.get('href')))
+                      if tag=='img' and d.get('src'): self.data[self.current]['images'].append(self.norm(d.get('src')))
+                  rel=d.get('rel','')
+                  if tag=='link' and 'stylesheet' in rel and d.get('href'): self.styles.append(self.norm(d['href']))
+                  if tag=='script' and d.get('src'): self.scripts.append(self.norm(d['src']))
               def handle_data(self, data):
-                  if self.capture: self.buf.append(data)
+                  if self.current:
+                      t=' '.join(data.split())
+                      if t: self.data[self.current]['text'].append(t)
               def handle_endtag(self, tag):
-                  if self.capture==tag:
-                      text=' '.join(''.join(self.buf).split())
-                      if text:
-                          item=(tag,html.unescape(text)); self.headings.append(item)
-                          if self.current_section is not None: self.current_section['headings'].append(item)
-                      self.capture=None; self.buf=[]
-                  if tag=='section': self.current_section=self.stack.pop() if self.stack else None
+                  if tag in ('header','nav','section','footer') and self.region_stack:
+                      self.current=self.region_stack.pop()
 
           def parse(path):
               p=AuditParser()
               with open(path,encoding='utf-8',errors='replace') as f: p.feed(f.read())
               return p
 
+          def digest_text(items):
+              return hashlib.sha256('\n'.join(items).encode()).hexdigest()[:12]
+
           src=parse(sys.argv[1]); prod=parse(sys.argv[2])
-          print('SOURCE_SECTION_COUNT',len(src.sections)); print('PROD_SECTION_COUNT',len(prod.sections)); print('SOURCE_HEADING_COUNT',len(src.headings)); print('PROD_HEADING_COUNT',len(prod.headings)); print('HEADINGS_IDENTICAL',src.headings==prod.headings)
-          print('--- SOURCE HEADINGS ---')
-          for i,(tag,text) in enumerate(src.headings,1): print(f'{i:02d}|{tag}|{text}')
-          print('--- PRODUCTION HEADINGS ---')
-          for i,(tag,text) in enumerate(prod.headings,1): print(f'{i:02d}|{tag}|{text}')
-          print('--- SECTION MAP SOURCE ---')
-          for i,s in enumerate(src.sections,1):
-              lead=' / '.join(t for _,t in s['headings'][:2]); print(f'{i:02d}|id={s["id"]}|class={s["class"]}|{lead}')
-          print('--- SECTION MAP PROD ---')
-          for i,s in enumerate(prod.sections,1):
-              lead=' / '.join(t for _,t in s['headings'][:2]); print(f'{i:02d}|id={s["id"]}|class={s["class"]}|{lead}')
+          print('--- REGION AUDIT ---')
+          for region in ['header','mobile_nav','home','journey','services','tharaa','faq','contact','footer']:
+              a=src.data[region]; b=prod.data[region]
+              print(f'{region}|text_equal={a["text"]==b["text"]}|links_equal={a["links"]==b["links"]}|images_equal={a["images"]==b["images"]}|src_text_sha={digest_text(a["text"])}|prod_text_sha={digest_text(b["text"])}|links={len(a["links"])}/{len(b["links"])}|images={len(a["images"])}/{len(b["images"])}')
+              if a['links']!=b['links']:
+                  print('SRC_LINKS',region,a['links']); print('PROD_LINKS',region,b['links'])
+              if a['images']!=b['images']:
+                  print('SRC_IMAGES',region,a['images']); print('PROD_IMAGES',region,b['images'])
+          print('STYLES_EQUAL',src.styles==prod.styles)
+          print('SOURCE_STYLES',src.styles)
+          print('PROD_STYLES',prod.styles)
+          print('SCRIPTS_EQUAL',src.scripts==prod.scripts)
+          print('SOURCE_SCRIPTS',src.scripts)
+          print('PROD_SCRIPTS',prod.scripts)
+
+          with open('/tmp/ibtikar-assets.list','w',encoding='utf-8') as f:
+              for x in src.styles+src.scripts:
+                  if x.startswith('assets/'): f.write(x+'\n')
           PY
+
+          echo '--- ASSET BYTE AUDIT ---'
+          while IFS= read -r asset; do
+            [ -n "$asset" ] || continue
+            src_file="/tmp/src-$(echo "$asset" | tr '/.' '__')"
+            prod_file="/tmp/prod-$(echo "$asset" | tr '/.' '__')"
+            curl --fail --silent --show-error --location \
+              "https://raw.githubusercontent.com/ahmedalqurashi2030/ibtikartech/main/$asset" \
+              -o "$src_file"
+            curl --fail --silent --show-error \
+              --resolve 'ibtikartech.co:443:127.0.0.1' \
+              "https://ibtikartech.co/static/public_preview/$asset" \
+              -o "$prod_file"
+            s1=$(sha256sum "$src_file" | awk '{print $1}')
+            s2=$(sha256sum "$prod_file" | awk '{print $1}')
+            if [ "$s1" = "$s2" ]; then status=MATCH; else status=DIFF; fi
+            echo "$status|$asset|$s1|$s2"
+          done < /tmp/ibtikar-assets.list
