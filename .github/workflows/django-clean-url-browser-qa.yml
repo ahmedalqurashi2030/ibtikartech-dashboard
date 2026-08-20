@@ -37,10 +37,13 @@ jobs:
       - name: Prepare Django
         run: python manage.py migrate --noinput
 
-      - name: Start Django server
+      - name: Start Django server with test static files
         shell: bash
         run: |
-          python manage.py runserver 127.0.0.1:8000 --noreload > /tmp/ibtikar-django.log 2>&1 &
+          # config.settings.test intentionally keeps DEBUG=False. --insecure is
+          # appropriate only for this isolated browser-QA server so Django's
+          # staticfiles app serves the committed CSS/JS during the test.
+          python manage.py runserver 127.0.0.1:8000 --noreload --insecure > /tmp/ibtikar-django.log 2>&1 &
           echo $! > /tmp/ibtikar-django.pid
           for i in {1..40}; do
             if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then exit 0; fi
@@ -49,7 +52,7 @@ jobs:
           cat /tmp/ibtikar-django.log
           exit 1
 
-      - name: Verify clean and legacy route contract
+      - name: Verify clean, legacy, and static route contract
         shell: bash
         run: |
           set -euo pipefail
@@ -70,6 +73,16 @@ jobs:
           for route in "${legacy_routes[@]}"; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000/${route}")"
             test "$code" = "301" || { echo "$code /$route expected 301"; exit 1; }
+          done
+
+          static_assets=(
+            /static/public_preview/assets/js/page-shell.js
+            /static/public_preview/assets/css/ibtikar-shell.css
+            /static/public_preview/assets/css/pages/frontend-final.css
+          )
+          for asset in "${static_assets[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${asset}")"
+            test "$code" = "200" || { echo "$code $asset expected 200"; exit 1; }
           done
 
       - name: Checkout frontend QA harness
