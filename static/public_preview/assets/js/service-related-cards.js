@@ -396,6 +396,6 @@
   };
 
   document.querySelectorAll('.related-nav').forEach(replaceRelatedNav);
-  document.querySelectorAll('.product-related-section .related-grid').forEach(replaceExistingRichGrid);
+  document.querySelectorAll('.product-related-section .related-grid, .service-related-grid').forEach(replaceExistingRichGrid);
   document.querySelectorAll('.service-related-cards').forEach(enhanceCarousel);
 })();
