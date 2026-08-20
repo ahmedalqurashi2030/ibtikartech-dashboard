@@ -1,0 +1,122 @@
+name: Django Clean URL Browser QA
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/django-clean-url-browser-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.test
+      DJANGO_SECRET_KEY: ci-only-secret
+
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dashboard
+        run: python -m pip install --upgrade pip && pip install -e ".[dev]"
+
+      - name: Prepare Django
+        run: python manage.py migrate --noinput
+
+      - name: Start Django server
+        shell: bash
+        run: |
+          python manage.py runserver 127.0.0.1:8000 --noreload > /tmp/ibtikar-django.log 2>&1 &
+          echo $! > /tmp/ibtikar-django.pid
+          for i in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then exit 0; fi
+            sleep 0.25
+          done
+          cat /tmp/ibtikar-django.log
+          exit 1
+
+      - name: Verify clean and legacy route contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          clean_routes=(
+            / /services/ /ecommerce/ /websites/ /brand-content/ /growth/
+            /custom-systems/ /tharaa/ /portfolio/ /knowledge/
+            /knowledge/store-launch/ /knowledge/product-page/ /knowledge/store-redesign/
+            /about/ /contact/ /services/store-launch/ /services/storefront-customization/
+            /services/store-redesign/ /services/product-page-optimization/
+            /services/ecommerce-growth/ /services/ecommerce-support/ /404/
+          )
+          for route in "${clean_routes[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${route}")"
+            test "$code" = "200" || { echo "$code $route"; exit 1; }
+          done
+
+          legacy_routes=(services.html ecommerce.html about.html contact.html store-launch.html)
+          for route in "${legacy_routes[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000/${route}")"
+            test "$code" = "301" || { echo "$code /$route expected 301"; exit 1; }
+          done
+
+      - name: Checkout frontend QA harness
+        run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikar-frontend-qa
+
+      - name: Deep interaction QA through Django redirects
+        working-directory: /tmp/ibtikar-frontend-qa
+        env:
+          BASE_URL: http://127.0.0.1:8000
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            node scripts/interaction-qa.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then exit 0; fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then sleep 2; continue; fi
+            exit "$status"
+          done
+
+      - name: Headless Chrome against 22 clean Django routes
+        working-directory: /tmp/ibtikar-frontend-qa
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          QA_PAGES: >-
+            .,services/,ecommerce/,websites/,brand-content/,growth/,custom-systems/,
+            tharaa/,portfolio/,knowledge/,knowledge/store-launch/,knowledge/product-page/,
+            knowledge/store-redesign/,about/,contact/,services/store-launch/,
+            services/storefront-customization/,services/store-redesign/,
+            services/product-page-optimization/,services/ecommerce-growth/,
+            services/ecommerce-support/,404/
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            node scripts/browser-qa-ci.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then exit 0; fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then sleep 2; continue; fi
+            exit "$status"
+          done
+
+      - name: Stop Django server
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/ibtikar-django.pid ]; then
+            kill "$(cat /tmp/ibtikar-django.pid)" 2>/dev/null || true
+          fi
+          tail -n 100 /tmp/ibtikar-django.log 2>/dev/null || true
