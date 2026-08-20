@@ -29,15 +29,12 @@ jobs:
           hostname
 
           echo "=== deployed app commit ==="
-          sudo -u deploy -H git -C /srv/ibtikartech/app rev-parse HEAD || true
-          sudo -u deploy -H git -C /srv/ibtikartech/app status --short --branch || true
+          git -C /srv/ibtikartech/app rev-parse HEAD 2>/dev/null || true
+          git -C /srv/ibtikartech/app status --short --branch 2>/dev/null || true
 
           echo "=== relevant services ==="
           systemctl list-units --type=service --all --no-pager \
             | grep -Ei 'ibtikar|gunicorn|nginx' || true
-
-          echo "=== listeners ==="
-          ss -ltn | grep -E ':(8000|80|443)\\b' || true
 
           echo "=== direct gunicorn health ==="
           curl --max-time 10 --silent --show-error --include \
@@ -50,3 +47,31 @@ jobs:
           echo "=== public health ==="
           curl --max-time 15 --silent --show-error --include \
             https://ibtikartech.co/healthz/ || true
+
+          echo "=== public route status ==="
+          for route in \
+            / \
+            /services.html \
+            /ecommerce.html \
+            /websites.html \
+            /brand-content.html \
+            /growth.html \
+            /custom-systems.html \
+            /tharaa.html \
+            /portfolio.html \
+            /knowledge.html \
+            /about.html \
+            /contact.html; do
+            code="$(curl --max-time 15 --silent --show-error --output /dev/null --write-out '%{http_code}' "https://ibtikartech.co${route}" || printf '000')"
+            printf '%s %s\n' "$code" "$route"
+          done
+
+          echo "=== deployed production QA assets ==="
+          shell_js="$(curl --max-time 15 --silent --show-error https://ibtikartech.co/static/public_preview/assets/js/page-shell.js || true)"
+          if printf '%s' "$shell_js" | grep -q "const productionOrigin = 'https://ibtikartech.co'"; then
+            echo "PASS page-shell production metadata marker"
+          else
+            echo "FAIL page-shell production metadata marker"
+          fi
+          css_code="$(curl --max-time 15 --silent --show-error --output /dev/null --write-out '%{http_code}' https://ibtikartech.co/static/public_preview/dashboard/homepage-production-qa-v1.css || printf '000')"
+          echo "$css_code homepage-production-qa-v1.css"
