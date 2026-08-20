@@ -21,11 +21,13 @@ def test_public_service_pages_use_explicit_named_routes(client, route_name, expe
     assert response.status_code == 200
 
 
+@pytest.mark.django_db
 def test_public_services_do_not_expose_database_catalog(client):
     response = client.get("/services/catalog/")
     assert response.status_code == 404
 
 
+@pytest.mark.django_db
 @pytest.mark.parametrize(
     "path",
     (
