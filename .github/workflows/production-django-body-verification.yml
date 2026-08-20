@@ -17,7 +17,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          expected="87a83f9e88aa818e30fc38b0ac06f3e725b04630"
+          expected="f19a5203cc7440574f7ce3942ceb8250c4385b6d"
           app="/srv/ibtikartech/app"
 
           deployed="$(git -C "$app" rev-parse HEAD)"
@@ -94,6 +94,7 @@ jobs:
             /static/public_preview/assets/js/ibtikar-shell.js
             /static/public_preview/dashboard/dom-contracts.js
             /static/public_preview/assets/css/ibtikar-shell.css
+            /static/public_preview/assets/css/pages/section-layout-refinement-v2.css
           )
           for asset in "${assets[@]}"; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' "$origin$asset")"
