@@ -12,12 +12,20 @@
 {% block content %}
 <main id="main-content">
 <section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
-{% include "public_preview/components/breadcrumbs.html" with current_label="أعمالنا" %}<span class="platform-kicker">SELECTED WORK</span>
+<nav class="breadcrumbs" aria-label="مسار التنقل">
+  <a href="{% url 'public_preview:home' %}">الرئيسية</a>
+  <span aria-hidden="true">←</span>
+  <span aria-current="page">أعمالنا</span>
+</nav><span class="platform-kicker">SELECTED WORK</span>
 <h1>نعرض القرار والتنفيذ. <span>لا صورة الواجهة وحدها.</span></h1><p>كل حالة نعرضها توضح ما كان يجب حله، ما الذي بنيناه، ولماذا اتخذنا القرارات الأساسية. ولا نضيف أرقام أداء أو نتائج تجارية ما لم تكن قابلة للتوثيق.</p>
 <div class="platform-actions"><a class="btn btn-primary" href="#tharaa-case">شاهد حالة ثراء</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}#quote">ناقش مشروعك</a></div></div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/tharaa-experience-source.png" alt="معاينة من تجربة ثيم ثراء لمتاجر سلة" width="1200" height="800" fetchpriority="high"><figcaption>ثراء — منتج أصلي من ابتكار تك لمنصة سلة.</figcaption></figure></div></section>
 
-<section class="platform-section platform-section--soft" id="tharaa-case"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="CASE 01 · THARAA" title="ثيم ثراء — بناء منتج، لا مجرد واجهة متجر" description="بدأ المشروع بهدف بناء ثيم لمنصة سلة يمنح العلامة مساحة أكبر للهوية والعرض البصري، مع الحفاظ على قابلية الاستخدام والتجاوب والعمل داخل بنية المنصة." %}<div class="route-grid">
+<section class="platform-section platform-section--soft" id="tharaa-case"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">CASE 01 · THARAA</span>
+  <h2>ثيم ثراء — بناء منتج، لا مجرد واجهة متجر</h2>
+  <p>بدأ المشروع بهدف بناء ثيم لمنصة سلة يمنح العلامة مساحة أكبر للهوية والعرض البصري، مع الحفاظ على قابلية الاستخدام والتجاوب والعمل داخل بنية المنصة.</p>
+</div><div class="route-grid">
 <article class="route-card reveal"><small>01 / CHALLENGE</small><h3>التحدي</h3><p>تقديم تجربة Premium قابلة للتخصيص دون تحويل الثيم إلى مجموعة خيارات مشتتة أو واجهة ثقيلة يصعب إدارتها.</p></article>
 <article class="route-card reveal"><small>02 / PRODUCT</small><h3>قرار المنتج</h3><p>تموضع أقوى للمتاجر التي تعتمد على الصورة والهوية وتجربة المنتج، خصوصًا العطور والعناية والجمال والهدايا الراقية.</p></article>
 <article class="route-card reveal"><small>03 / EXPERIENCE</small><h3>قرار التجربة</h3><p>Mobile-first، عرض منتجات أوضح، مكونات رئيسية قابلة للترتيب، وتخصيص منظم للألوان والهيدر والأقسام.</p></article>
@@ -27,18 +35,44 @@
 <section class="platform-section"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">ما تم بناؤه</span><h2>من نظام الواجهة إلى رحلة المنتج</h2><p>ثراء يجمع عدة قرارات داخل منتج واحد بدل التعامل مع كل صفحة أو مكوّن كقطعة منفصلة.</p><ul class="check-list"><li>نظام واجهة وهوية قابل للتخصيص</li><li>مكتبة أقسام للصفحة الرئيسية</li><li>تجربة منتج وجوال مرتبة حول قرار الشراء</li><li>Light / Dark ودعم RTL / LTR</li><li>قوائم وتنقل ومكونات متجر ضمن بيئة سلة</li></ul></div>
 <div class="evidence-panel reveal"><span class="section-kicker">حدود الدليل</span><h2>ما الذي لا ندعيه هنا؟</h2><ul class="check-list"><li>لا ننشر رقم مبيعات غير موثق</li><li>لا ننسب تحسن تحويل دون قياس قبل وبعد</li><li>لا نستخدم أسماء متاجر أو شعارات دون حق نشر</li><li>البيانات التجارية للثيم تعرض فقط عند اعتمادها رسميًا</li></ul></div></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="قرارات مختارة" title="لماذا اتخذنا هذه القرارات؟" description="هذه أمثلة على التفكير الذي نطبقه عند بناء منتج أو إعادة تصميم تجربة قائمة." %}<div class="route-grid">
+<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">قرارات مختارة</span>
+  <h2>لماذا اتخذنا هذه القرارات؟</h2>
+  <p>هذه أمثلة على التفكير الذي نطبقه عند بناء منتج أو إعادة تصميم تجربة قائمة.</p>
+</div><div class="route-grid">
 <article class="route-card reveal"><small>MOBILE</small><h3>الجوال ليس نسخة مصغرة</h3><p>ترتيب المحتوى والإجراء الأساسي والمسافات يعالج الشاشة الصغيرة كرحلة مستقلة، لا مجرد ضغط تخطيط سطح المكتب.</p></article>
 <article class="route-card reveal"><small>CUSTOMIZATION</small><h3>حرية ضمن نظام</h3><p>التخصيص يخدم شخصية المتجر مع الحفاظ على تناسق القراءة والبطاقات والمكونات الأساسية.</p></article>
 <article class="route-card reveal"><small>COMPONENTS</small><h3>المكونات تخدم سيناريوهات</h3><p>الأقسام لا توجد لزيادة العدد؛ لكل مكوّن وظيفة محتوى أو عرض أو ثقة أو اكتشاف داخل المتجر.</p></article>
 <article class="route-card reveal"><small>PLATFORM</small><h3>احترام حدود سلة</h3><p>المنتج يُبنى حول بنية المنصة ومكوناتها وتدفقاتها، بدل فرض تجربة لا تتناسب مع البيئة التي سيعمل داخلها.</p></article>
 </div></div></section>
 
-<section class="platform-section"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="استكشف المنتج" title="شاهد ثراء كما يراه التاجر" description="صفحة المنتج تعرض المعاينات والمكونات والتخصيص وتجربة الجوال بصورة أعمق من دراسة الحالة." %}<nav class="related-nav" aria-label="روابط ثراء والخدمات"><a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a><a href="{% url 'public_preview:ecommerce' %}">حلول المتاجر</a><a href="{% url 'services:storefront-customization' %}">تخصيص الواجهات</a><a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a></nav></div></section>
+<section class="platform-section"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">استكشف المنتج</span>
+  <h2>شاهد ثراء كما يراه التاجر</h2>
+  <p>صفحة المنتج تعرض المعاينات والمكونات والتخصيص وتجربة الجوال بصورة أعمق من دراسة الحالة.</p>
+</div><nav class="related-nav" aria-label="روابط ثراء والخدمات"><a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a><a href="{% url 'public_preview:ecommerce' %}">حلول المتاجر</a><a href="{% url 'services:storefront-customization' %}">تخصيص الواجهات</a><a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a></nav></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="معيار نشر الأعمال" title="الحالات القادمة تتبع نفس مستوى الإثبات" description="عندما نضيف مشروعًا جديدًا سنوضح دوره ونطاقه وقراراته، ونضيف النتائج فقط عندما يكون مصدرها وفترة قياسها واضحين." %}<div class="route-grid"><article class="route-card reveal"><small>CONTEXT</small><h3>السياق</h3><p>ما المشكلة ومن المستخدم وما القيود الفعلية؟</p></article><article class="route-card reveal"><small>SCOPE</small><h3>النطاق</h3><p>ما الذي نفذته ابتكار تك فعلًا وما الذي لم يكن ضمن المشروع؟</p></article><article class="route-card reveal"><small>DECISIONS</small><h3>القرارات</h3><p>كيف أثرت المنصة والمحتوى والتجربة والتقنية في الحل؟</p></article><article class="route-card reveal"><small>EVIDENCE</small><h3>الدليل</h3><p>نتائج أو قياس فقط عندما توجد بيانات قابلة للإسناد.</p></article></div></div></section>
+<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">معيار نشر الأعمال</span>
+  <h2>الحالات القادمة تتبع نفس مستوى الإثبات</h2>
+  <p>عندما نضيف مشروعًا جديدًا سنوضح دوره ونطاقه وقراراته، ونضيف النتائج فقط عندما يكون مصدرها وفترة قياسها واضحين.</p>
+</div><div class="route-grid"><article class="route-card reveal"><small>CONTEXT</small><h3>السياق</h3><p>ما المشكلة ومن المستخدم وما القيود الفعلية؟</p></article><article class="route-card reveal"><small>SCOPE</small><h3>النطاق</h3><p>ما الذي نفذته ابتكار تك فعلًا وما الذي لم يكن ضمن المشروع؟</p></article><article class="route-card reveal"><small>DECISIONS</small><h3>القرارات</h3><p>كيف أثرت المنصة والمحتوى والتجربة والتقنية في الحل؟</p></article><article class="route-card reveal"><small>EVIDENCE</small><h3>الدليل</h3><p>نتائج أو قياس فقط عندما توجد بيانات قابلة للإسناد.</p></article></div></div></section>
 
-{% include "public_preview/components/page_cta.html" with kicker="مشروع جديد" title="لديك تحدٍ يحتاج قرارًا وتنفيذًا منظمًا؟" description="شاركنا الوضع الحالي والهدف، وسنحدد المسار والنطاق المناسب قبل بدء التنفيذ." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ مشروعك" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="استكشف الخدمات" %}</main>
+<section class="page-cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div>
+        <span class="section-kicker">مشروع جديد</span>
+        <h2>لديك تحدٍ يحتاج قرارًا وتنفيذًا منظمًا؟</h2>
+        <p>شاركنا الوضع الحالي والهدف، وسنحدد المسار والنطاق المناسب قبل بدء التنفيذ.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
+        <a class="btn btn-outline" href="{% url 'services:index' %}">استكشف الخدمات</a>
+      </div>
+    </div>
+  </div>
+</section></main>
 {% endblock %}
 
 {% block page_scripts %}

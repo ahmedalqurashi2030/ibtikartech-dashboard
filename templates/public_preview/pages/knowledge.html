@@ -16,7 +16,11 @@
 {% block content %}
 <main id="main-content">
   <section class="articles-hero"><div class="container articles-hero__grid">
-    <div class="reveal">{% include "public_preview/components/breadcrumbs.html" with current_label="المقالات" %}<span class="section-kicker">IBTIKAR JOURNAL</span><h1>معرفة عملية تقود إلى <span>قرار رقمي أوضح.</span></h1><p class="articles-hero__lead">مقالات نكتبها لأصحاب المتاجر والمشاريع في السعودية والخليج. نختصر ما تحتاج فهمه قبل الإطلاق أو التطوير، ونحوّل الخبرة التقنية والتجارية إلى خطوات قابلة للتطبيق.</p><div class="articles-hero__actions"><a class="btn btn-primary" href="#latest">استكشف المقالات</a><a class="btn btn-outline" href="{% url 'services:index' %}">الحلول والخدمات</a></div></div>
+    <div class="reveal"><nav class="breadcrumbs" aria-label="مسار التنقل">
+  <a href="{% url 'public_preview:home' %}">الرئيسية</a>
+  <span aria-hidden="true">←</span>
+  <span aria-current="page">المقالات</span>
+</nav><span class="section-kicker">IBTIKAR JOURNAL</span><h1>معرفة عملية تقود إلى <span>قرار رقمي أوضح.</span></h1><p class="articles-hero__lead">مقالات نكتبها لأصحاب المتاجر والمشاريع في السعودية والخليج. نختصر ما تحتاج فهمه قبل الإطلاق أو التطوير، ونحوّل الخبرة التقنية والتجارية إلى خطوات قابلة للتطبيق.</p><div class="articles-hero__actions"><a class="btn btn-primary" href="#latest">استكشف المقالات</a><a class="btn btn-outline" href="{% url 'services:index' %}">الحلول والخدمات</a></div></div>
     <div class="editorial-visual reveal" aria-hidden="true"><div class="editorial-visual__paper"><div class="editorial-visual__top"><span>ISSUE / 01</span><span class="editorial-visual__mark">إت</span></div><div class="editorial-visual__title">وضوح قبل التنفيذ.<b>قياس بعد الإطلاق.</b></div><div class="editorial-visual__lines"><i></i><i></i><i></i></div></div></div>
   </div></section>
 
@@ -32,7 +36,21 @@
 
   <section class="articles-section articles-section--soft"><div class="container"><div class="articles-heading reveal"><div><span class="section-kicker">مسارات المعرفة</span><h2>لا تقرأ أكثر؛ اقرأ ما يخدم مرحلتك</h2></div><p>اختر المسار الأقرب للمشكلة الحالية، ثم انتقل إلى المقال أو الخدمة ذات الصلة.</p></div><div class="route-grid"><article class="route-card reveal"><small>01 / BUILD</small><h3>الإطلاق والبناء</h3><p>التجهيز، اختيار المنصة، بنية المتجر أو الموقع، والاختبار قبل النشر.</p><a href="{% url 'public_preview:article-store-launch' %}">ابدأ من دليل الإطلاق ←</a></article><article class="route-card reveal"><small>02 / EXPERIENCE</small><h3>التجربة والتحويل</h3><p>التنقل، صفحات المنتجات، الثقة، الجوال، وتحسين رحلة القرار.</p><a href="{% url 'public_preview:article-product-page' %}">ابدأ من صفحة المنتج ←</a></article><article class="route-card reveal"><small>03 / GROW</small><h3>القياس والنمو</h3><p>أسئلة القياس، الأحداث، الفرضيات، وتحويل البيانات إلى تحسينات.</p><a href="{% url 'public_preview:growth' %}">استكشف حلول النمو ←</a></article></div></div></section>
 
-  {% include "public_preview/components/page_cta.html" with kicker="من المعرفة إلى التنفيذ" title="لديك تحدٍ واضح وتريد تحويله إلى خطة؟" description="شاركنا وضع المشروع والهدف الحالي، وسنساعدك على تحديد نقطة البداية والنطاق المناسب." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ مشروعك" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="استكشف الخدمات" %}
+  <section class="page-cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div>
+        <span class="section-kicker">من المعرفة إلى التنفيذ</span>
+        <h2>لديك تحدٍ واضح وتريد تحويله إلى خطة؟</h2>
+        <p>شاركنا وضع المشروع والهدف الحالي، وسنساعدك على تحديد نقطة البداية والنطاق المناسب.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
+        <a class="btn btn-outline" href="{% url 'services:index' %}">استكشف الخدمات</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 {% endblock %}
 
