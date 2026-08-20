@@ -76,6 +76,11 @@ DASHBOARD_REFINEMENT_LOADERS = (
         "/static/public_preview/dashboard/ecommerce-refinement-v1.css",
         "ibtikar-ecommerce-refinement-v1",
     ),
+    (
+        "source-tharaa",
+        "/static/public_preview/dashboard/tharaa-refinement-v1.css",
+        "ibtikar-tharaa-refinement-v1",
+    ),
 )
 
 

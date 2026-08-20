@@ -84,6 +84,9 @@
   if (document.body.classList.contains('source-ecommerce')) {
     ensureStylesheet('/static/public_preview/dashboard/ecommerce-refinement-v1.css', 'ibtikar-ecommerce-refinement-v1');
   }
+  if (document.body.classList.contains('source-tharaa')) {
+    ensureStylesheet('/static/public_preview/dashboard/tharaa-refinement-v1.css', 'ibtikar-tharaa-refinement-v1');
+  }
 
   const loadEnhancements = () => {
     ensureScript('/static/public_preview/assets/js/continuous-flow.js', 'continuous-flow');
