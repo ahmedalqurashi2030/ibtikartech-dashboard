@@ -1,8 +1,15 @@
-from django.urls import path
+from django.http import Http404
+from django.urls import path, re_path
 
 from apps.public_preview.views import preview_page
 
 app_name = "services"
+
+
+def _reject_unknown_public_service(request):
+    """Stop unknown /services/* paths before the global Wagtail catch-all."""
+    raise Http404
+
 
 # Public service pages are explicit website templates. They intentionally do not
 # resolve Service models or database slugs: every route is named and controlled
@@ -45,4 +52,5 @@ urlpatterns = [
         {"page_name": "ecommerce-support.html"},
         name="ecommerce-support",
     ),
+    re_path(r"^.*$", _reject_unknown_public_service),
 ]
