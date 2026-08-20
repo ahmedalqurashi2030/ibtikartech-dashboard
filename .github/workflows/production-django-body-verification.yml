@@ -18,7 +18,7 @@ jobs:
         run: |
           set -u
           service_state="$(systemctl is-active ibtikartech.service 2>&1 || true)"
-          local_code="$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/healthz/ 2>/tmp/ibtikar-local-curl.err || true)"
+          local_code="$(curl -sS -H 'X-Forwarded-Proto: https' -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/healthz/ 2>/tmp/ibtikar-local-curl.err || true)"
           public_code="$(curl -sS -o /dev/null -w '%{http_code}' https://ibtikartech.co/healthz/ 2>/tmp/ibtikar-public-curl.err || true)"
 
           echo "service_state=$service_state"
