@@ -1,3 +1,6 @@
+@import url("./article-utility-refinement-v1.css");
+@import url("./article-utility-completion-v1.css");
+
 /* Service detail completion: RTL/logical-property corrections after legacy source CSS. */
 body.service-detail-page .service-assurance li::before,
 body.service-detail-page :is(.service-fit-card li,.service-check-list li)::before{
