@@ -20,7 +20,7 @@ jobs:
           expected="f19a5203cc7440574f7ce3942ceb8250c4385b6d"
           app="/srv/ibtikartech/app"
 
-          deployed="$(git -C "$app" rev-parse HEAD)"
+          deployed="$(sudo -u deploy -H git -C "$app" rev-parse HEAD)"
           echo "deployed_commit=$deployed"
           test "$deployed" = "$expected"
 
