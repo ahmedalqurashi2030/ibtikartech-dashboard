@@ -10,6 +10,7 @@ on:
       - "scripts/componentize_public_preview_templates.py"
       - "scripts/componentize_page_cta.py"
       - "scripts/normalize_public_preview_metadata.py"
+      - "scripts/patch_public_runtime_accessibility.py"
       - ".github/workflows/django-public-architecture-qa.yml"
   push:
     branches:
@@ -22,6 +23,7 @@ on:
       - "scripts/componentize_public_preview_templates.py"
       - "scripts/componentize_page_cta.py"
       - "scripts/normalize_public_preview_metadata.py"
+      - "scripts/patch_public_runtime_accessibility.py"
       - ".github/workflows/django-public-architecture-qa.yml"
 
 permissions:
@@ -46,6 +48,7 @@ jobs:
           python -m py_compile scripts/componentize_public_preview_templates.py
           python -m py_compile scripts/componentize_page_cta.py
           python -m py_compile scripts/normalize_public_preview_metadata.py
+          python -m py_compile scripts/patch_public_runtime_accessibility.py
 
       - name: Verify transformations are reproducible and committed
         run: |
@@ -53,6 +56,7 @@ jobs:
           python scripts/componentize_public_preview_templates.py
           python scripts/componentize_page_cta.py
           python scripts/normalize_public_preview_metadata.py
+          python scripts/patch_public_runtime_accessibility.py
           git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
 
       - name: Template architecture guards
@@ -69,3 +73,4 @@ jobs:
           grep -R -q 'include "public_preview/components/breadcrumbs.html"' templates/public_preview/pages
           grep -R -q 'include "public_preview/components/section_heading.html"' templates/public_preview/pages
           grep -R -q 'include "public_preview/components/page_cta.html"' templates/public_preview/pages
+          grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
