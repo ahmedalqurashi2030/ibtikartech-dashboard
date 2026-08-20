@@ -11,6 +11,7 @@ on:
       - scripts/componentize_page_cta.py
       - scripts/normalize_public_preview_metadata.py
       - scripts/patch_public_runtime_accessibility.py
+      - scripts/verify_public_section_preservation.py
       - .github/workflows/frontend-preview-import.yml
   workflow_dispatch:
 
@@ -44,6 +45,9 @@ jobs:
           python scripts/componentize_page_cta.py
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
+
+      - name: Verify every approved section is preserved
+        run: python scripts/verify_public_section_preservation.py --source /tmp/ibtikartech-source
 
       - name: Verify clean route template architecture
         shell: bash
