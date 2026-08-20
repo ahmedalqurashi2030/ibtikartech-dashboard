@@ -1,0 +1,46 @@
+name: Public Production Recovery Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check-public:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check production HTML and CSS without cache
+        shell: bash
+        run: |
+          set -euo pipefail
+          ts="$(date +%s)"
+          echo '== homepage =='
+          curl --fail --silent --show-error --max-time 20 \
+            -H 'Cache-Control: no-cache' \
+            "https://ibtikartech.co/?v=${ts}" \
+            -o /tmp/home.html
+          grep -q 'نبني منظومة رقمية' /tmp/home.html
+          if grep -q '<div class="cinematic-story__brand"><span aria-hidden="true" class="cinematic-story__mark"' /tmp/home.html; then
+            echo 'HOME_RECOVERY=OLD'
+          else
+            echo 'HOME_RECOVERY=NEW'
+          fi
+
+          echo '== css =='
+          curl --fail --silent --show-error --max-time 20 \
+            -H 'Cache-Control: no-cache' \
+            "https://ibtikartech.co/static/public_preview/assets/css/ibtikar-shell.css?v=${ts}" \
+            -o /tmp/shell.css
+          count="$(grep -c 'APPROVED VISUAL RECOVERY 2026-08-20' /tmp/shell.css || true)"
+          echo "CSS_RECOVERY_MARKERS=${count}"
+          if [ "$count" = '1' ]; then
+            grep -q 'radial-gradient(circle at 5px 5px' /tmp/shell.css
+            echo 'CSS_RECOVERY=NEW'
+          else
+            echo 'CSS_RECOVERY=OLD'
+            exit 20
+          fi
