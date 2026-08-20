@@ -3,8 +3,8 @@
     <div class="cta-card reveal">
       <div>
         <span class="section-kicker">{{ kicker }}</span>
-        <h2>{{ title|safe }}</h2>
-        <p>{{ description|safe }}</p>
+        <h2>{{ title }}</h2>
+        <p>{{ description }}</p>
       </div>
       <div class="cta-actions">
         <a class="{{ primary_class }}" href="{% url primary_url_name %}{{ primary_fragment|default:'' }}">{{ primary_label }}</a>
