@@ -1,48 +1,16 @@
-{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}
-<!doctype html><html lang="ar" dir="rtl" data-theme="dark" class="no-js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ابدأ مشروعك مع ابتكار تك | تجهيز طلب المشروع</title><meta name="description" content="جهز معلومات مشروعك وهدفه ومنصته في نموذج مختصر يساعد على تحديد الخدمة والنطاق والخطوة التالية."><meta name="robots" content="noindex,follow"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
+{% extends "public_preview/base.html" %}
+
+{% block head %}
+<title>ابدأ مشروعك مع ابتكار تك | تجهيز طلب المشروع</title><meta name="description" content="جهز معلومات مشروعك وهدفه ومنصته في نموذج مختصر يساعد على تحديد الخدمة والنطاق والخطوة التالية."><meta name="robots" content="noindex,follow"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-</head><body class="inner-page platform-page" data-section="services"><a class="skip-link" href="#main-content">انتقل إلى المحتوى</a><header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
-  <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-    </a>
-    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
-      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
-      <div class="ibt-shell-nav-group" data-ibt-mega-root>
-        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
-        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
-          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
-          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
-          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
-          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
-          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
-          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
-        </div></div>
-      </div>
-      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
-    </nav>
-    <div class="ibt-shell-actions">
-      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
-  <a data-nav-key="home" href="index.html">الرئيسية</a>
-  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
-  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-  <a data-nav-key="about" href="about.html">عن ابتكار</a>
-  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-</nav><main id="main-content">
-<section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal"><nav class="breadcrumbs" aria-label="مسار التنقل"><a href="index.html">الرئيسية</a><span>←</span><span aria-current="page">ابدأ مشروعك</span></nav><span class="platform-kicker">ابدأ من الهدف</span><h1>جهّز معلومات مشروعك. <span>وحوّل الاحتياج إلى نطاق أوضح.</span></h1><p>ثلاث خطوات قصيرة تساعد على ترتيب الهدف والوضع الحالي والمنصة والتفاصيل التي نحتاجها قبل اقتراح الخدمة أو النطاق المناسب.</p><div class="platform-proof"><span><b>3 خطوات</b>معلومات مركزة</span><span><b>Scope-first</b>النطاق قبل السعر</span><span><b>حفظ محلي</b>مسودتك تبقى على جهازك</span></div></div><figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع منظومة ابتكار تك الرقمية" width="1200" height="800" fetchpriority="high"><figcaption>كلما كان الهدف والوضع الحالي أوضح، كان تحديد نقطة البداية أدق.</figcaption></figure></div></section>
+{% endblock %}
+
+{% block body_attrs %} class="inner-page platform-page" data-section="services"{% endblock %}
+
+{% block content %}
+<main id="main-content">
+<section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal"><nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><span aria-current="page">ابدأ مشروعك</span></nav><span class="platform-kicker">ابدأ من الهدف</span><h1>جهّز معلومات مشروعك. <span>وحوّل الاحتياج إلى نطاق أوضح.</span></h1><p>ثلاث خطوات قصيرة تساعد على ترتيب الهدف والوضع الحالي والمنصة والتفاصيل التي نحتاجها قبل اقتراح الخدمة أو النطاق المناسب.</p><div class="platform-proof"><span><b>3 خطوات</b>معلومات مركزة</span><span><b>Scope-first</b>النطاق قبل السعر</span><span><b>حفظ محلي</b>مسودتك تبقى على جهازك</span></div></div><figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع منظومة ابتكار تك الرقمية" width="1200" height="800" fetchpriority="high"><figcaption>كلما كان الهدف والوضع الحالي أوضح، كان تحديد نقطة البداية أدق.</figcaption></figure></div></section>
 <section class="platform-section platform-section--soft" id="quote"><div class="container contact-layout"><aside class="contact-panel content-copy reveal"><span class="section-kicker">معلومات المشروع</span><h2>ابدأ من النتيجة التي تريدها، لا من اسم الخدمة</h2><p>رتّب معلومات مشروعك واحفظها كمسودة على جهازك. الإرسال المباشر غير متاح حاليًا.</p><ul class="check-list"><li>لا تضع كلمات مرور أو مفاتيح أو بيانات حساسة</li><li>أضف رابط الموقع أو المتجر داخل التفاصيل إن وجد</li><li>السعر والمدة يحددان بعد مراجعة النطاق الفعلي</li></ul></aside>
 <form class="quote-form platform-card reveal" id="quote-form" data-form-steps data-ibt-form data-analytics="quote_request" novalidate>
   <div class="form-stepper" aria-label="مراحل النموذج"><span data-step class="is-active">1. عنك</span><span data-step>2. المشروع</span><span data-step>3. التفاصيل</span></div>
@@ -51,13 +19,9 @@
   <div data-step-panel hidden><div class="field"><label for="quote-details">صف الوضع الحالي والنتيجة التي تريدها</label><textarea id="quote-details" name="details" required placeholder="ما الموجود الآن؟ ما المشكلة أو الهدف؟ وما الرابط إن وجد؟"></textarea></div><div class="field hp" aria-hidden="true"><label for="ibt_website">اترك هذا الحقل فارغًا</label><input id="ibt_website" name="ibt_website" tabindex="-1" autocomplete="off"></div><p class="legal-note">تحفظ المسودة محليًا على هذا الجهاز ولا ترسل إلى أي جهة خارجية.</p><div class="form-actions"><button class="btn btn-outline" type="button" data-step-prev>السابق</button><button class="btn btn-primary" type="submit">حفظ مسودة الطلب</button></div></div>
   <p class="form-message" data-form-state aria-live="polite"></p>
 </form></div></section>
-</main><footer class="ibt-shell-footer">
-  <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
-  </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
-</footer><script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script></body></html>
+</main>
+{% endblock %}
+
+{% block page_scripts %}
+<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script>
+{% endblock %}

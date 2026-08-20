@@ -1,70 +1,33 @@
-{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}
-<!doctype html>
-<html lang="ar" dir="rtl" data-theme="dark" class="no-js">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+{% extends "public_preview/base.html" %}
+
+{% block head %}
 <title>الظهور والقياس والنمو | SEO وتحليلات | ابتكار تك</title>
 <meta name="description" content="SEO وتحليلات وتتبع وتحسين تحويل للمتاجر والمواقع ضمن أساس قياس واضح وخطة تحسين مبنية على بيانات حقيقية.">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-</head>
-<body class="inner-page platform-page" data-section="services"><a class="skip-link" href="#main-content">انتقل إلى المحتوى</a><header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
-  <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-    </a>
-    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
-      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
-      <div class="ibt-shell-nav-group" data-ibt-mega-root>
-        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
-        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
-          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
-          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
-          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
-          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
-          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
-          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
-        </div></div>
-      </div>
-      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
-    </nav>
-    <div class="ibt-shell-actions">
-      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
-  <a data-nav-key="home" href="index.html">الرئيسية</a>
-  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
-  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-  <a data-nav-key="about" href="about.html">عن ابتكار</a>
-  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-</nav><main id="main-content">
+{% endblock %}
+
+{% block body_attrs %} class="inner-page platform-page" data-section="services"{% endblock %}
+
+{% block content %}
+<main id="main-content">
 <section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
-<nav class="breadcrumbs" aria-label="مسار التنقل"><a href="index.html">الرئيسية</a><span>←</span><a href="services.html">الحلول والخدمات</a><span>←</span><span aria-current="page">الظهور والقياس والنمو</span></nav>
+<nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">الظهور والقياس والنمو</span></nav>
 <span class="platform-kicker">VISIBILITY · MEASUREMENT · GROWTH</span><h1>اعرف ما يحدث. <span>ثم حسّن ما يستحق.</span></h1>
 <p>نبني أساس الظهور والقياس أولًا، ثم نحول البيانات إلى أولويات تحسين قابلة للتنفيذ بدل مطاردة أرقام منفصلة أو وعود نمو غير قابلة للإثبات.</p>
-<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">استكشف ما ننفذ</a><a class="btn btn-outline" href="contact.html#quote">اطلب تشخيص احتياجك</a></div>
+<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">استكشف ما ننفذ</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}#quote">اطلب تشخيص احتياجك</a></div>
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/ecommerce-experience-source.png" alt="تجربة تجارة رقمية قابلة للقياس" width="1200" height="800" fetchpriority="high"><figcaption>القياس لا يعوض تجربة ضعيفة؛ لذلك نربط البيانات بسرعة الموقع والمحتوى ورحلة المستخدم.</figcaption></figure></div></section>
 
 <section class="platform-section platform-section--soft" id="capabilities"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">مكوّنات المسار</span><h2>ظهور وقياس وتحسين داخل دورة واحدة</h2><p>ننفذ ما يحتاجه المشروع فعلًا، ولا نركب أدوات لمجرد زيادة عدد التقارير.</p></div><div class="route-grid">
-<article class="route-card reveal"><small>01 / TECHNICAL SEO</small><h3>SEO تقني</h3><p>فهرسة وبنية وروابط وعناوين وعوامل تقنية أساسية تؤثر في قابلية الاكتشاف.</p><a href="contact.html#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>02 / CONTENT SEO</small><h3>SEO للمحتوى</h3><p>نية بحث وهيكل صفحات وروابط داخلية وفرص محتوى مرتبطة بما يبحث عنه العميل.</p><a href="contact.html#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>03 / ANALYTICS</small><h3>GA4 وTag Manager</h3><p>خطة أحداث وتحويلات وأسماء موثقة، ثم تحقق من وصول البيانات ضمن النطاق.</p><a href="contact.html#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>04 / TRACKING</small><h3>التتبع والكتالوجات</h3><p>Pixels وCatalogs أو تكاملات قياس عند الحاجة، بعد تحديد الغرض والموافقة والمتطلبات التقنية.</p><a href="contact.html#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>05 / CRO</small><h3>تحسين التحويل</h3><p>فرضيات واختبارات أو تعديلات مبنية على نقطة احتكاك واضحة وبيانات يمكن قراءتها.</p><a href="contact.html#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>06 / REPORTING</small><h3>لوحات وتقارير</h3><p>قراءة مختصرة تربط المؤشر بالسؤال والقرار بدل تراكم الأرقام بلا إجراء.</p><a href="contact.html#quote">ناقش هذا المسار ←</a></article>
+<article class="route-card reveal"><small>01 / TECHNICAL SEO</small><h3>SEO تقني</h3><p>فهرسة وبنية وروابط وعناوين وعوامل تقنية أساسية تؤثر في قابلية الاكتشاف.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
+<article class="route-card reveal"><small>02 / CONTENT SEO</small><h3>SEO للمحتوى</h3><p>نية بحث وهيكل صفحات وروابط داخلية وفرص محتوى مرتبطة بما يبحث عنه العميل.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
+<article class="route-card reveal"><small>03 / ANALYTICS</small><h3>GA4 وTag Manager</h3><p>خطة أحداث وتحويلات وأسماء موثقة، ثم تحقق من وصول البيانات ضمن النطاق.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
+<article class="route-card reveal"><small>04 / TRACKING</small><h3>التتبع والكتالوجات</h3><p>Pixels وCatalogs أو تكاملات قياس عند الحاجة، بعد تحديد الغرض والموافقة والمتطلبات التقنية.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
+<article class="route-card reveal"><small>05 / CRO</small><h3>تحسين التحويل</h3><p>فرضيات واختبارات أو تعديلات مبنية على نقطة احتكاك واضحة وبيانات يمكن قراءتها.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
+<article class="route-card reveal"><small>06 / REPORTING</small><h3>لوحات وتقارير</h3><p>قراءة مختصرة تربط المؤشر بالسؤال والقرار بدل تراكم الأرقام بلا إجراء.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
 </div></div></section>
 
 <section class="platform-section"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">طريقة العمل</span><h2>Measurement Foundation → Growth Backlog</h2><p>نبدأ بسؤال تجاري واضح، نحدد البيانات اللازمة للإجابة عنه، ثم نبني قائمة تحسين مرتبة بالأولوية.</p><ul class="check-list"><li>لا ضمانات ترتيب أو مبيعات غير واقعية</li><li>الخصوصية والموافقة جزء من قرار التتبع</li><li>توثيق الأحداث والأسماء ومصادر البيانات</li><li>كل توصية مرتبطة بسبب وأولوية</li></ul></div><div class="timeline reveal">
@@ -79,16 +42,12 @@
 <article class="platform-card reveal"><h3>ليس ضمن النطاق تلقائيًا</h3><ul><li>ضمان ترتيب أو عدد مبيعات محدد</li><li>إدارة إعلانات مدفوعة أو ميزانيات حملات إلا بنطاق مستقل</li><li>تتبع لا توجد له موافقة أو غرض واضح</li><li>إصلاح مشكلات المنتج أو التشغيل التي لا يحلها التسويق</li></ul></article>
 </div></div></section>
 
-<section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ بما يمنعك من اتخاذ القرار</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="services.html">الحلول والخدمات</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="custom-systems.html">الأنظمة والأتمتة</a></nav></div></section>
+<section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ بما يمنعك من اتخاذ القرار</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
-<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">الظهور والقياس والنمو</span><h2>حوّل البيانات إلى أولويات واضحة</h2><p>أرسل الرابط والأدوات الحالية والسؤال الذي تريد الإجابة عنه، وسنحدد هل المشكلة في الظهور أو القياس أو التجربة.</p></div><div class="cta-actions"><a class="btn btn-white" href="contact.html#quote">ابدأ التشخيص</a><a class="btn btn-outline" href="services.html">جميع الخدمات</a></div></div></div></section>
-</main><footer class="ibt-shell-footer">
-  <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
-  </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
-</footer><script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script></body></html>
+<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">الظهور والقياس والنمو</span><h2>حوّل البيانات إلى أولويات واضحة</h2><p>أرسل الرابط والأدوات الحالية والسؤال الذي تريد الإجابة عنه، وسنحدد هل المشكلة في الظهور أو القياس أو التجربة.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a><a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a></div></div></div></section>
+</main>
+{% endblock %}
+
+{% block page_scripts %}
+<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script>
+{% endblock %}

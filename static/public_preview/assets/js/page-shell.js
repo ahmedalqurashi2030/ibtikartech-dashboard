@@ -1,8 +1,10 @@
 (() => {
   'use strict';
 
-  const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const pageKey = pathname.replace(/\.html$/, '') || 'index';
+  // Django clean URLs are canonical. Template context supplies the stable page
+  // identity so existing page-specific enhancement logic no longer depends on .html.
+  const pageKey = (document.body.dataset.page || 'index').toLowerCase();
+  const pathname = pageKey === 'index' ? 'index.html' : `${pageKey}.html`;
   const productPages = new Set(['tharaa.html']);
   const knowledgePages = new Set(['knowledge.html']);
   const retiredRoutes = new Map([
@@ -32,7 +34,8 @@
   const normalizeProductionMetadata = () => {
     const robots = document.querySelector('meta[name="robots"]')?.content?.toLowerCase() || '';
     const indexable = !robots.includes('noindex');
-    const canonicalPath = pathname === 'index.html' || pathname === '' ? '/' : `/${pathname}`;
+    const browserPath = location.pathname || '/';
+    const canonicalPath = browserPath === '/' ? '/' : `${browserPath.replace(/\/+$/, '')}/`;
     const canonicalUrl = `${productionOrigin}${canonicalPath}`;
 
     if (indexable) {

@@ -1,63 +1,28 @@
-{# TEMPORARY FRONTEND PREVIEW: static source preserved until data binding phase. #}
-<!doctype html><html lang="ar" dir="rtl" data-theme="dark" class="no-js"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+{% extends "public_preview/base.html" %}
+
+{% block head %}
 <title>عن ابتكار تك | حلول رقمية للسوق السعودي والخليجي</title><meta name="description" content="ابتكار تك للحلول والخدمات الرقمية: شريك رقمي يبني المتاجر والمواقع والهوية والقياس والأنظمة ضمن نطاق واضح، مع تركيز على السوق السعودي ثم الخليج.">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-</head>
-<body class="inner-page platform-page" data-section="about"><a class="skip-link" href="#main-content">انتقل إلى المحتوى</a><header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
-  <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="index.html" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-    </a>
-    <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">
-      <a class="ibt-shell-nav-link" data-nav-key="home" href="index.html">الرئيسية</a>
-      <div class="ibt-shell-nav-group" data-ibt-mega-root>
-        <a class="ibt-shell-nav-link" data-nav-key="services" href="services.html">الحلول والخدمات</a>
-        <button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-        <div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" inert data-ibt-mega-menu><div class="ibt-shell-mega-grid">
-          <a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>إطلاق، تطوير، بناء علامة، ربط عمليات أو نمو — ثم نحدد أقل نطاق صحيح.</p></a>
-          <a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>
-          <a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>
-          <a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>
-          <a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>
-          <a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>
-        </div></div>
-      </div>
-      <a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-      <a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-      <a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-      <a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>
-    </nav>
-    <div class="ibt-shell-actions">
-      <a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-      <button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>
-    </div>
-  </div>
-</header>
-<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">
-  <a data-nav-key="home" href="index.html">الرئيسية</a>
-  <details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>
-  <a data-nav-key="products" href="tharaa.html">ثيم ثراء</a>
-  <a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>
-  <a data-nav-key="knowledge" href="knowledge.html">المقالات</a>
-  <a data-nav-key="about" href="about.html">عن ابتكار</a>
-  <a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>
-</nav><main id="main-content">
+{% endblock %}
+
+{% block body_attrs %} class="inner-page platform-page" data-section="about"{% endblock %}
+
+{% block content %}
+<main id="main-content">
 <section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
-<nav class="breadcrumbs" aria-label="مسار التنقل"><a href="index.html">الرئيسية</a><span>←</span><span aria-current="page">عن ابتكار</span></nav><span class="platform-kicker">IBTIKAR TECH</span>
+<nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><span aria-current="page">عن ابتكار</span></nav><span class="platform-kicker">IBTIKAR TECH</span>
 <h1>شريك رقمي يبدأ من الهدف. <span>لا من اسم التقنية.</span></h1><p>ابتكار تك للحلول والخدمات الرقمية تبني المتاجر والمواقع والهوية والقياس والأنظمة ضمن نطاق واضح، مع تركيز على احتياجات المشاريع في السعودية أولًا ثم الخليج.</p>
-<div class="platform-actions"><a class="btn btn-primary" href="#focus">اعرف أين نركز</a><a class="btn btn-outline" href="contact.html#quote">ناقش مشروعك</a></div></div>
+<div class="platform-actions"><a class="btn btn-primary" href="#focus">اعرف أين نركز</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}#quote">ناقش مشروعك</a></div></div>
 <div class="evidence-panel reveal"><span class="section-kicker">تمركزنا</span><h2>تنفيذ عملي بين التجارة والتقنية والعلامة</h2><ul class="check-list"><li>تخصص واضح في التجارة الإلكترونية وتجارب سلة</li><li>مواقع وهوية ومحتوى مرتبطة بهدف تجاري</li><li>ظهور وقياس وتحسين مبني على بيانات متاحة</li><li>ربط وأتمتة وحلول مخصصة عندما يحتاجها التشغيل</li><li>منتج أصلي من ابتكار تك: ثيم ثراء لمتاجر سلة</li></ul></div></div></section>
 
 <section class="platform-section platform-section--soft" id="focus"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">أين نركز</span><h2>السعودية أولًا، والخليج كامتداد طبيعي</h2><p>نبني التجربة حول اللغة العربية وسلوك العميل المحلي وواقع المنصات المستخدمة في المنطقة، مع دعم الحلول الأوسع عندما يتطلب المشروع ذلك.</p></div><div class="route-grid">
-<article class="route-card reveal"><small>01 / COMMERCE</small><h3>التجارة الإلكترونية</h3><p>إطلاق وتخصيص وإعادة تصميم وقياس ودعم للمتاجر، مع خبرة مباشرة في سلة والمنصات الشائعة.</p><a href="ecommerce.html">استكشف المتاجر ←</a></article>
-<article class="route-card reveal"><small>02 / WEB</small><h3>المواقع وتجارب الويب</h3><p>مواقع عربية وRTL-first وصفحات هبوط وتجارب محتوى تقود إلى إجراء واضح.</p><a href="websites.html">استكشف المواقع ←</a></article>
-<article class="route-card reveal"><small>03 / BRAND</small><h3>الهوية والمحتوى</h3><p>نظام علامة ومحتوى عربي أصيل يترجم إلى تجربة رقمية متماسكة.</p><a href="brand-content.html">استكشف الهوية ←</a></article>
-<article class="route-card reveal"><small>04 / GROWTH</small><h3>الظهور والقياس والنمو</h3><p>SEO وقياس وتحليلات وأولويات تحسين تساعد على اتخاذ قرارات أوضح دون وعود نتائج غير قابلة للإثبات.</p><a href="growth.html">استكشف الظهور والقياس والنمو ←</a></article>
-<article class="route-card reveal"><small>05 / SYSTEMS</small><h3>الأنظمة والربط والأتمتة</h3><p>تكاملات وأتمتة وحلول مخصصة عندما يحتاج المشروع إلى تشغيل أذكى لا واجهة إضافية فقط.</p><a href="custom-systems.html">استكشف الأنظمة ←</a></article>
+<article class="route-card reveal"><small>01 / COMMERCE</small><h3>التجارة الإلكترونية</h3><p>إطلاق وتخصيص وإعادة تصميم وقياس ودعم للمتاجر، مع خبرة مباشرة في سلة والمنصات الشائعة.</p><a href="{% url 'public_preview:ecommerce' %}">استكشف المتاجر ←</a></article>
+<article class="route-card reveal"><small>02 / WEB</small><h3>المواقع وتجارب الويب</h3><p>مواقع عربية وRTL-first وصفحات هبوط وتجارب محتوى تقود إلى إجراء واضح.</p><a href="{% url 'public_preview:websites' %}">استكشف المواقع ←</a></article>
+<article class="route-card reveal"><small>03 / BRAND</small><h3>الهوية والمحتوى</h3><p>نظام علامة ومحتوى عربي أصيل يترجم إلى تجربة رقمية متماسكة.</p><a href="{% url 'public_preview:brand-content' %}">استكشف الهوية ←</a></article>
+<article class="route-card reveal"><small>04 / GROWTH</small><h3>الظهور والقياس والنمو</h3><p>SEO وقياس وتحليلات وأولويات تحسين تساعد على اتخاذ قرارات أوضح دون وعود نتائج غير قابلة للإثبات.</p><a href="{% url 'public_preview:growth' %}">استكشف الظهور والقياس والنمو ←</a></article>
+<article class="route-card reveal"><small>05 / SYSTEMS</small><h3>الأنظمة والربط والأتمتة</h3><p>تكاملات وأتمتة وحلول مخصصة عندما يحتاج المشروع إلى تشغيل أذكى لا واجهة إضافية فقط.</p><a href="{% url 'public_preview:custom-systems' %}">استكشف الأنظمة ←</a></article>
 </div></div></section>
 
 <section class="platform-section" id="approach"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">مبادئ العمل</span><h2>كيف نتخذ القرار قبل التنفيذ؟</h2><p>المنهج ثابت، لكن الحل يتغير حسب الهدف والمنصة والمستخدم والمرحلة.</p></div><div class="route-grid">
@@ -71,17 +36,13 @@
 <div class="timeline reveal"><article><h3>استكشاف</h3><p>المشروع والجمهور والمنصة والقيود.</p></article><article><h3>نطاق</h3><p>المخرجات والمسؤوليات وما هو خارج المشروع.</p></article><article><h3>بناء</h3><p>تنفيذ الأولويات المتفق عليها ومراجعتها.</p></article><article><h3>تحقق وتسليم</h3><p>QA ثم تسليم منظم وتحديد الخطوة التالية.</p></article></div></div></section>
 
 <section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">منتج من داخل ابتكار تك</span><h2>ثراء يثبت أننا نبني منتجات، لا خدمات فقط</h2><p>ثيم ثراء منتج مخصص لمتاجر سلة يركز على الهوية وتجربة المنتج والجوال، ويمنح ابتكار تك خبرة مباشرة في بناء الثيمات داخل بيئة سلة نفسها.</p></div><div class="platform-grid platform-grid--2">
-<article class="platform-card reveal"><small>THARAA</small><h3>ثيم ثراء</h3><p>منتج مستقل داخل ابتكار تك، بتمركز أقوى للمتاجر التي تعتمد على الصورة والهوية والعرض الراقي.</p><a href="tharaa.html">استكشف ثيم ثراء ←</a></article>
-<article class="platform-card reveal"><small>SALLA EXPERIENCE</small><h3>خبرة مرتبطة بالمنتج الحقيقي</h3><p>تطوير ثراء يجعل قراراتنا في خدمات سلة مرتبطة بقيود الثيم والمنصة والجوال والمكونات، لا بمعلومات نظرية فقط.</p><a href="ecommerce.html#platforms">حلول المتاجر والمنصات ←</a></article>
+<article class="platform-card reveal"><small>THARAA</small><h3>ثيم ثراء</h3><p>منتج مستقل داخل ابتكار تك، بتمركز أقوى للمتاجر التي تعتمد على الصورة والهوية والعرض الراقي.</p><a href="{% url 'public_preview:tharaa' %}">استكشف ثيم ثراء ←</a></article>
+<article class="platform-card reveal"><small>SALLA EXPERIENCE</small><h3>خبرة مرتبطة بالمنتج الحقيقي</h3><p>تطوير ثراء يجعل قراراتنا في خدمات سلة مرتبطة بقيود الثيم والمنصة والجوال والمكونات، لا بمعلومات نظرية فقط.</p><a href="{% url 'public_preview:ecommerce' %}#platforms">حلول المتاجر والمنصات ←</a></article>
 </div></div></section>
 
-<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">الخطوة الأولى</span><h2>عرّفنا على هدف المشروع</h2><p>ابدأ بالهدف والوضع الحالي، وسنحدد المسار الأقرب بدل فرض حزمة جاهزة.</p></div><div class="cta-actions"><a class="btn btn-white" href="contact.html#quote">ابدأ التشخيص</a><a class="btn btn-outline" href="services.html">الحلول والخدمات</a></div></div></div></section></main><footer class="ibt-shell-footer">
-  <div class="ibt-shell-footer-grid">
-    <div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>
-    <div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>
-    <div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>
-    <div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>
-    <div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>
-  </div>
-  <div class="ibt-shell-footer-bottom"><span>© <span id="year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المقالات</a><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>
-</footer><script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script></body></html>
+<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">الخطوة الأولى</span><h2>عرّفنا على هدف المشروع</h2><p>ابدأ بالهدف والوضع الحالي، وسنحدد المسار الأقرب بدل فرض حزمة جاهزة.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a><a class="btn btn-outline" href="{% url 'services:index' %}">الحلول والخدمات</a></div></div></div></section></main>
+{% endblock %}
+
+{% block page_scripts %}
+<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script>
+{% endblock %}
