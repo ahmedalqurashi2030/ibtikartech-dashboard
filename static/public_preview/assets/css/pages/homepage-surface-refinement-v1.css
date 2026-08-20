@@ -1,0 +1,121 @@
+/*
+ * Ibtikar Tech — Homepage Surface Refinement V1
+ * Removes the legacy announcement bars and keeps customer-review/lower sections
+ * on the same dark visual surface as the homepage instead of switching to light.
+ * Frontend-only; no backend or content-model changes.
+ */
+
+/* --------------------------------------------------------------------------
+   ANNOUNCEMENT BARS
+   The homepage still carries two legacy announcement layers from the approved
+   source. The shared site header already provides the primary navigation/CTA,
+   so these bars are intentionally removed from the rendered experience.
+   -------------------------------------------------------------------------- */
+body.source-home .announcement,
+body.source-home .ibtx-announcement {
+  display: none !important;
+}
+
+/* Do not reserve legacy top-bar space after the announcement is removed. */
+body.source-home {
+  --announcement-h: 0px !important;
+}
+
+/* --------------------------------------------------------------------------
+   HOMEPAGE BASE SURFACE
+   Keep the page anchored to the same deep navy surface. The cinematic runtime
+   may update its ambient CSS variable while scrolling; this override prevents
+   a white/light canvas from flashing behind or between late-page sections.
+   -------------------------------------------------------------------------- */
+body.source-home,
+body.source-home main,
+body.source-home .cinematic-ambient-bg {
+  background-color: #050817 !important;
+}
+
+body.source-home .cinematic-ambient-bg {
+  background-image:
+    radial-gradient(circle at 14% 18%, rgba(16, 200, 232, .055), transparent 29rem),
+    radial-gradient(circle at 86% 22%, rgba(124, 58, 237, .06), transparent 31rem) !important;
+}
+
+/* --------------------------------------------------------------------------
+   CUSTOMER REVIEWS + FOLLOWING SECTION
+   These selectors support both the current source and the earlier approved
+   homepage structure where testimonials are present before the final sections.
+   -------------------------------------------------------------------------- */
+body.source-home #testimonials,
+body.source-home section#testimonials,
+body.source-home #testimonials + section,
+body.source-home .testimonials-section,
+body.source-home .ibtx-testimonials-section,
+body.source-home #faq,
+body.source-home .faq-section {
+  background: #050817 !important;
+  background-image: none !important;
+  color: var(--text, #f8fafc) !important;
+}
+
+/* Remove soft/light hand-off strips around the two sections. */
+body.source-home #testimonials::before,
+body.source-home #testimonials::after,
+body.source-home #testimonials + section::before,
+body.source-home #testimonials + section::after,
+body.source-home #faq::before,
+body.source-home #faq::after,
+body.source-home .faq-section::before,
+body.source-home .faq-section::after {
+  background: none !important;
+  background-image: none !important;
+}
+
+/* Keep review cards and FAQ items readable as elevated surfaces without turning
+   the whole section into a different theme. */
+body.source-home .testimonial,
+body.source-home .ibtx-testimonial-card,
+body.source-home #testimonials article,
+body.source-home .faq-section .accordion-item,
+body.source-home #faq .accordion-item {
+  background: color-mix(in srgb, #111a33 92%, transparent) !important;
+  border-color: rgba(255, 255, 255, .09) !important;
+  color: #f8fafc !important;
+}
+
+body.source-home .testimonial p,
+body.source-home .ibtx-testimonial-card blockquote,
+body.source-home .client small,
+body.source-home .faq-section p,
+body.source-home #faq p {
+  color: #a8b1c5 !important;
+}
+
+body.source-home .client strong,
+body.source-home .faq-section h2,
+body.source-home .faq-section h3,
+body.source-home #faq h2,
+body.source-home #faq h3,
+body.source-home #faq button,
+body.source-home .faq-section button {
+  color: #f8fafc !important;
+}
+
+/* If the section immediately after testimonials is the final CTA, only its
+   outer canvas stays dark; the CTA card itself retains the branded gradient. */
+body.source-home #testimonials + .cta-section,
+body.source-home .faq-section + .cta-section,
+body.source-home #faq + .cta-section,
+body.source-home .cta-section {
+  background: #050817 !important;
+  background-image: none !important;
+}
+
+/* Responsive behavior remains purely fluid; no light fallback at small widths. */
+@media (max-width: 820px) {
+  body.source-home #testimonials,
+  body.source-home #testimonials + section,
+  body.source-home #faq,
+  body.source-home .faq-section,
+  body.source-home .cta-section {
+    background: #050817 !important;
+  }
+}
