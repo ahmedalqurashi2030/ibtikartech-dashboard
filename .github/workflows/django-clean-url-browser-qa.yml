@@ -3,6 +3,11 @@ name: Django Clean URL Browser QA
 on:
   pull_request:
     paths:
+      - "apps/public_preview/**"
+      - "apps/services/urls.py"
+      - "templates/public_preview/**"
+      - "static/public_preview/assets/js/**"
+      - "static/public_preview/assets/css/**"
       - ".github/workflows/django-clean-url-browser-qa.yml"
 
 permissions:
@@ -52,12 +57,12 @@ jobs:
           cat /tmp/ibtikar-django.log
           exit 1
 
-      - name: Verify clean, legacy, catalog, and static route contract
+      - name: Verify clean, legacy, explicit-service, and static route contract
         shell: bash
         run: |
           set -euo pipefail
           clean_routes=(
-            / /services/ /services/catalog/ /ecommerce/ /websites/ /brand-content/ /growth/
+            / /services/ /ecommerce/ /websites/ /brand-content/ /growth/
             /custom-systems/ /tharaa/ /portfolio/ /knowledge/
             /knowledge/store-launch/ /knowledge/product-page/ /knowledge/store-redesign/
             /about/ /contact/ /services/store-launch/ /services/storefront-customization/
@@ -67,6 +72,16 @@ jobs:
           for route in "${clean_routes[@]}"; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${route}")"
             test "$code" = "200" || { echo "$code $route"; exit 1; }
+          done
+
+          forbidden_dynamic_routes=(
+            /services/catalog/
+            /services/example-database-slug/
+            /services/example-database-slug/request/
+          )
+          for route in "${forbidden_dynamic_routes[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${route}")"
+            test "$code" = "404" || { echo "$code $route expected 404"; exit 1; }
           done
 
           legacy_routes=(
@@ -101,11 +116,11 @@ jobs:
         shell: bash
         run: |
           set +e
-          for attempt in 1 2; do
+          for attempt in 1 2 3; do
             node scripts/interaction-qa.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
-            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then sleep 2; continue; fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -lt 3 ]; then sleep 2; continue; fi
             exit "$status"
           done
 
@@ -114,9 +129,7 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:8000
           # The QA harness keys specialized assertions by the historic filename.
-          # Django permanently redirects each request to its clean URL before
-          # rendering, so Chrome inspects the clean final document while the
-          # harness still executes Services/Contact/Tharaa-specific assertions.
+          # Django redirects each request to its explicit clean URL before render.
           QA_PAGES: >-
             index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
             custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
@@ -126,11 +139,11 @@ jobs:
         shell: bash
         run: |
           set +e
-          for attempt in 1 2; do
+          for attempt in 1 2 3; do
             node scripts/browser-qa-ci.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
-            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then sleep 2; continue; fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -lt 3 ]; then sleep 2; continue; fi
             exit "$status"
           done
 
