@@ -109,9 +109,8 @@ def verify_page(path: Path, failures: list[str]) -> None:
         failures.append(f"{name}: {exc}")
         return
 
-    # Page-owned scripts that were historically rendered after the shared footer
-    # now live at the tail of body. Keep those external scripts non-blocking so
-    # the footer/runtime can parse before page initialization executes.
+    # Page-owned scripts live at the tail of body. Keep external scripts
+    # non-blocking so parsing of the shared footer is not delayed.
     main_end = body.lower().rfind("</main>")
     if main_end >= 0:
         tail = body[main_end + len("</main>") :]
@@ -133,13 +132,16 @@ def verify_base(failures: list[str]) -> None:
     if PAGE_SCRIPTS_OPEN in base or "page_scripts" in base:
         failures.append("base.html: legacy page_scripts contract remains")
 
-    expected = ("document_head.html", "header.html", "footer.html", "runtime.html")
+    expected = ("document_head.html", "header.html", "footer.html")
     for component in expected:
         include = f'{{% include "public_preview/components/{component}" %}}'
         if include not in base:
             failures.append(f"base.html: missing {component} include")
         if not (COMPONENTS_DIR / component).is_file():
             failures.append(f"components/{component}: missing file")
+
+    if 'include "public_preview/components/runtime.html"' in base:
+        failures.append("base.html: unnecessary global runtime include remains")
 
 
 def main() -> None:
