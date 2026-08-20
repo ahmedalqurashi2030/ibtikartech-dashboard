@@ -1,7 +1,6 @@
 import pytest
 from django.urls import reverse
 
-
 EXPLICIT_SERVICE_PAGES = (
     ("index", "/services/"),
     ("store-launch", "/services/store-launch/"),
