@@ -31,31 +31,20 @@ jobs:
           test "$local_code" = "200"
           test "$public_code" = "200"
 
-      - name: Verify deployed Django template architecture
+      - name: Verify rendered shared shell and native body deployment markers
         shell: bash
         run: |
           set -euo pipefail
-          app="/srv/ibtikartech/app"
-          base="$app/templates/public_preview/base.html"
-          pages="$app/templates/public_preview/pages"
+          origin="https://ibtikartech.co"
+          homepage="$(curl --fail --silent --show-error "$origin/")"
+          services_html="$(curl --fail --silent --show-error "$origin/services/")"
 
-          grep -Fq '{% block body %}' "$base"
-          grep -Fq 'include "public_preview/components/header.html"' "$base"
-          grep -Fq 'include "public_preview/components/footer.html"' "$base"
-          grep -Fq 'include "public_preview/components/runtime.html"' "$base"
-          grep -Fq 'section-layout-refinement-v2.css' "$base"
-          ! grep -Fq 'block page_scripts' "$base"
-          ! grep -R -n -F 'block page_scripts' "$pages"
-          ! grep -R -n -F 'block content' "$pages"
-
-          count=0
-          while IFS= read -r page; do
-            grep -Fq 'extends "public_preview/base.html"' "$page"
-            grep -Fq '{% block body %}' "$page"
-            count=$((count + 1))
-          done < <(find "$pages" -maxdepth 1 -type f -name '*.html' | sort)
-          echo "page_templates=$count"
-          test "$count" -eq 22
+          test "$(grep -o 'id="ibtikarSiteHeader"' <<<"$homepage" | wc -l)" -eq 1
+          test "$(grep -o 'class="ibt-shell-footer"' <<<"$homepage" | wc -l)" -eq 1
+          grep -Fq 'section-layout-refinement-v2.css' <<<"$homepage"
+          grep -Fq 'data-ibt-mega-toggle' <<<"$homepage"
+          grep -Fq 'source-services.js" defer' <<<"$services_html"
+          grep -Fq 'approved-source.js" defer' <<<"$services_html"
 
       - name: Verify production clean routes and rendered content
         shell: bash
@@ -65,6 +54,7 @@ jobs:
           routes=(
             / /services/ /ecommerce/ /websites/ /brand-content/ /growth/
             /custom-systems/ /tharaa/ /portfolio/ /knowledge/ /about/ /contact/
+            /knowledge/store-launch/ /knowledge/product-page/ /knowledge/store-redesign/
             /services/store-launch/ /services/storefront-customization/
             /services/store-redesign/ /services/product-page-optimization/
             /services/ecommerce-growth/ /services/ecommerce-support/
@@ -86,6 +76,11 @@ jobs:
             location="$(awk 'BEGIN{IGNORECASE=1} /^location:/{gsub("\r",""); print $2}' <<<"$headers" | tail -n1)"
             test -n "$location"
             ! grep -q '\.html' <<<"$location"
+          done
+
+          for forbidden in /services/catalog/ /services/example-database-slug/; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "$origin$forbidden")"
+            test "$code" = "404" || { echo "$code $forbidden expected 404"; exit 1; }
           done
 
       - name: Verify key production assets
