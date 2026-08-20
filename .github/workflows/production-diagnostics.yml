@@ -28,23 +28,13 @@ jobs:
           date -u
           hostname
 
-          echo "=== deployed app commit ==="
-          git -C /srv/ibtikartech/app rev-parse HEAD 2>/dev/null || true
-          git -C /srv/ibtikartech/app status --short --branch 2>/dev/null || true
-
           echo "=== relevant services ==="
           systemctl list-units --type=service --all --no-pager \
             | grep -Ei 'ibtikar|gunicorn|nginx' || true
 
-          echo "=== direct gunicorn health ==="
-          curl --max-time 10 --silent --show-error --include \
-            http://127.0.0.1:8000/healthz/ || true
-
-          echo "=== local nginx health ==="
+          echo "=== health ==="
           curl --max-time 10 --silent --show-error --include --insecure \
             -H 'Host: ibtikartech.co' https://127.0.0.1/healthz/ || true
-
-          echo "=== public health ==="
           curl --max-time 15 --silent --show-error --include \
             https://ibtikartech.co/healthz/ || true
 
@@ -66,12 +56,47 @@ jobs:
             printf '%s %s\n' "$code" "$route"
           done
 
-          echo "=== deployed production QA assets ==="
+          echo "=== static asset HTTP status ==="
+          for asset in \
+            /static/public_preview/assets/js/page-shell.js \
+            /static/public_preview/assets/css/pages/ux-system-v1.css \
+            /static/public_preview/dashboard/homepage-refinement-v1.css \
+            /static/public_preview/dashboard/services-refinement-v1.css \
+            /static/public_preview/dashboard/ecommerce-refinement-v1.css \
+            /static/public_preview/dashboard/tharaa-refinement-v1.css \
+            /static/public_preview/dashboard/public-pages-refinement-v1.css \
+            /static/public_preview/dashboard/service-detail-completion-v1.css \
+            /static/public_preview/dashboard/homepage-production-qa-v1.css; do
+            code="$(curl --max-time 15 --silent --show-error --output /dev/null --write-out '%{http_code}' "https://ibtikartech.co${asset}" || printf '000')"
+            printf '%s %s\n' "$code" "$asset"
+          done
+
+          echo "=== deployed production QA marker ==="
           shell_js="$(curl --max-time 15 --silent --show-error https://ibtikartech.co/static/public_preview/assets/js/page-shell.js || true)"
           if printf '%s' "$shell_js" | grep -q "const productionOrigin = 'https://ibtikartech.co'"; then
             echo "PASS page-shell production metadata marker"
           else
             echo "FAIL page-shell production metadata marker"
           fi
-          css_code="$(curl --max-time 15 --silent --show-error --output /dev/null --write-out '%{http_code}' https://ibtikartech.co/static/public_preview/dashboard/homepage-production-qa-v1.css || printf '000')"
-          echo "$css_code homepage-production-qa-v1.css"
+
+          echo "=== source static permissions ==="
+          for target in \
+            /srv/ibtikartech/app/static/public_preview/dashboard \
+            /srv/ibtikartech/app/static/public_preview/dashboard/homepage-refinement-v1.css \
+            /srv/ibtikartech/app/static/public_preview/dashboard/service-detail-completion-v1.css \
+            /srv/ibtikartech/app/static/public_preview/dashboard/homepage-production-qa-v1.css; do
+            stat -c '%A %a %U:%G %n' "$target" 2>/dev/null || echo "MISSING $target"
+          done
+
+          echo "=== collected static permissions ==="
+          for target in \
+            /srv/ibtikartech/app/staticfiles/public_preview/dashboard \
+            /srv/ibtikartech/app/staticfiles/public_preview/dashboard/homepage-refinement-v1.css \
+            /srv/ibtikartech/app/staticfiles/public_preview/dashboard/service-detail-completion-v1.css \
+            /srv/ibtikartech/app/staticfiles/public_preview/dashboard/homepage-production-qa-v1.css; do
+            stat -c '%A %a %U:%G %n' "$target" 2>/dev/null || echo "MISSING $target"
+          done
+
+          echo "=== nginx static mapping ==="
+          grep -R -n -E 'location[[:space:]]+/static|alias[[:space:]].*static|root[[:space:]].*static' \
+            /etc/nginx/sites-enabled /etc/nginx/conf.d 2>/dev/null || true
