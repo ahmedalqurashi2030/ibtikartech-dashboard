@@ -1,23 +1,48 @@
 from django.urls import path
-from django.views.generic import RedirectView
 
-from . import views
+from apps.public_preview.views import preview_page
 
 app_name = "services"
 
+# Public service pages are explicit website templates. They intentionally do not
+# resolve Service models or database slugs: every route is named and controlled
+# by the frontend architecture so section structure can be standardized safely.
 urlpatterns = [
-    # The approved public marketing page owns /services/. Keep the original
-    # database-backed service catalogue available under an explicit namespace.
+    path("", preview_page, {"page_name": "services.html"}, name="index"),
     path(
-        "",
-        RedirectView.as_view(pattern_name="public_preview:services", permanent=True),
-        name="index",
+        "store-launch/",
+        preview_page,
+        {"page_name": "store-launch.html"},
+        name="store-launch",
     ),
-    path("catalog/", views.service_index, name="catalog"),
-    path("catalog/<slug:slug>/", views.service_detail, name="detail"),
-    path("catalog/<slug:slug>/request/", views.service_request, name="request"),
-    # Compatibility aliases for pre-refactor dynamic URLs. Approved marketing
-    # routes are mounted earlier and intentionally win for their exact slugs.
-    path("<slug:slug>/request/", views.service_request, name="legacy-request"),
-    path("<slug:slug>/", views.service_detail, name="legacy-detail"),
+    path(
+        "storefront-customization/",
+        preview_page,
+        {"page_name": "storefront-customization.html"},
+        name="storefront-customization",
+    ),
+    path(
+        "store-redesign/",
+        preview_page,
+        {"page_name": "store-redesign.html"},
+        name="store-redesign",
+    ),
+    path(
+        "product-page-optimization/",
+        preview_page,
+        {"page_name": "product-page-optimization.html"},
+        name="product-page-optimization",
+    ),
+    path(
+        "ecommerce-growth/",
+        preview_page,
+        {"page_name": "ecommerce-growth.html"},
+        name="ecommerce-growth",
+    ),
+    path(
+        "ecommerce-support/",
+        preview_page,
+        {"page_name": "ecommerce-support.html"},
+        name="ecommerce-support",
+    ),
 ]
