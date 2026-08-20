@@ -11,6 +11,7 @@ on:
       - "scripts/componentize_page_cta.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_public_section_preservation.py"
       - ".github/workflows/django-public-architecture-qa.yml"
   push:
     branches:
@@ -24,6 +25,7 @@ on:
       - "scripts/componentize_page_cta.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_public_section_preservation.py"
       - ".github/workflows/django-public-architecture-qa.yml"
 
 permissions:
@@ -34,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout
+      - name: Checkout dashboard
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -49,6 +51,7 @@ jobs:
           python -m py_compile scripts/componentize_page_cta.py
           python -m py_compile scripts/normalize_public_preview_metadata.py
           python -m py_compile scripts/patch_public_runtime_accessibility.py
+          python -m py_compile scripts/verify_public_section_preservation.py
 
       - name: Verify transformations are reproducible and committed
         run: |
@@ -58,6 +61,12 @@ jobs:
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
           git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
+
+      - name: Checkout approved frontend source
+        run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
+
+      - name: Verify every approved section is preserved
+        run: python scripts/verify_public_section_preservation.py --source /tmp/ibtikartech-source
 
       - name: Template architecture guards
         shell: bash
