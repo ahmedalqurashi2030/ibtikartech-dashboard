@@ -1,0 +1,595 @@
+/*
+ * Ibtikar Tech — Services Page Refinement V1
+ * Frontend-only. Scoped to body.source-services.
+ */
+
+body.source-services[data-page="services"] {
+  --services-section-y: clamp(76px, 7.5vw, 106px);
+  --services-line: color-mix(in srgb, var(--ibt-border) 76%, transparent);
+  --services-reading: 64ch;
+}
+
+body.source-services[data-page="services"] main p {
+  max-width: var(--services-reading);
+}
+
+/* HERO ------------------------------------------------------------------- */
+body.source-services[data-page="services"] #top.hero {
+  min-height: clamp(660px, 78svh, 790px) !important;
+  padding: clamp(122px, 11vw, 150px) 0 clamp(72px, 7vw, 96px) !important;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(79, 125, 243, .15), transparent 32%),
+    radial-gradient(circle at 18% 78%, rgba(124, 58, 237, .11), transparent 35%),
+    linear-gradient(145deg, #071025 0%, #0b1026 58%, #11142e 100%) !important;
+}
+
+body.source-services[data-page="services"] #top .hero-grid {
+  grid-template-columns: minmax(0, .92fr) minmax(430px, 1.08fr) !important;
+  gap: clamp(42px, 5.4vw, 78px) !important;
+  align-items: center !important;
+}
+
+body.source-services[data-page="services"] #top .hero-copy {
+  max-width: 690px;
+}
+
+body.source-services[data-page="services"] #top .eyebrow {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #a8b5d0 !important;
+  font-size: 12px !important;
+}
+
+body.source-services[data-page="services"] #top .hero-copy h1 {
+  margin: 20px 0 18px !important;
+  max-width: 690px;
+  font-size: clamp(43px, 5.2vw, 72px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.038em !important;
+}
+
+body.source-services[data-page="services"] #top .hero-copy > p {
+  max-width: 58ch !important;
+  color: #bec8dc !important;
+  font-size: clamp(16px, 1.25vw, 18px) !important;
+  line-height: 1.9 !important;
+}
+
+body.source-services[data-page="services"] #top .hero-actions {
+  margin-top: 26px !important;
+  gap: 10px !important;
+}
+
+body.source-services[data-page="services"] #top .hero-actions .btn {
+  min-height: 48px !important;
+  padding-inline: 20px !important;
+  border-radius: 12px !important;
+}
+
+body.source-services[data-page="services"] #top .hero-actions .btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+body.source-services[data-page="services"] #top .hero-proof {
+  margin-top: 24px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 !important;
+  border-block: 1px solid rgba(255, 255, 255, .08);
+}
+
+body.source-services[data-page="services"] #top .proof-chip {
+  min-height: 54px;
+  padding: 12px 13px !important;
+  border: 0 !important;
+  border-inline-end: 1px solid rgba(255, 255, 255, .07) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #c4cedf !important;
+  font-size: 12px !important;
+}
+
+body.source-services[data-page="services"] #top .proof-chip:last-child {
+  border-inline-end: 0 !important;
+}
+
+body.source-services[data-page="services"] #top .proof-chip b {
+  color: #79e6f7 !important;
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+body.source-services[data-page="services"] #top .hero-visual {
+  min-height: 500px !important;
+  transform: none !important;
+}
+
+body.source-services[data-page="services"] #top .service-orbit {
+  transform: scale(.94);
+}
+
+body.source-services[data-page="services"] #top .orbit-node {
+  border-radius: 14px !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .18) !important;
+}
+
+body.source-services[data-page="services"] #top .core {
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .25) !important;
+}
+
+/* GOALS ------------------------------------------------------------------ */
+body.source-services[data-page="services"] #goals.section {
+  padding: var(--services-section-y) 0 !important;
+}
+
+body.source-services[data-page="services"] #goals .heading {
+  max-width: 760px !important;
+  margin-bottom: 42px !important;
+}
+
+body.source-services[data-page="services"] #goals .heading h2 {
+  margin-top: 10px !important;
+  font-size: clamp(34px, 4vw, 52px) !important;
+  line-height: 1.14 !important;
+}
+
+body.source-services[data-page="services"] #goals .goal-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border-block: 1px solid var(--services-line);
+}
+
+body.source-services[data-page="services"] #goals .goal {
+  min-height: 250px !important;
+  padding: clamp(24px, 3vw, 36px) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-services[data-page="services"] #goals .goal:nth-child(odd) {
+  border-inline-end: 1px solid var(--services-line) !important;
+}
+
+body.source-services[data-page="services"] #goals .goal:nth-child(-n+2) {
+  border-block-end: 1px solid var(--services-line) !important;
+}
+
+body.source-services[data-page="services"] #goals .goal:hover {
+  transform: none !important;
+  background: color-mix(in srgb, var(--ibt-blue) 4%, transparent) !important;
+}
+
+body.source-services[data-page="services"] #goals .goal-icon {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+body.source-services[data-page="services"] #goals .goal h3 {
+  margin: 20px 0 10px !important;
+  font-size: clamp(22px, 2.1vw, 29px) !important;
+  line-height: 1.25 !important;
+}
+
+body.source-services[data-page="services"] #goals .goal p {
+  max-width: 48ch !important;
+  line-height: 1.85 !important;
+}
+
+body.source-services[data-page="services"] #goals .goal a {
+  margin-top: 18px !important;
+  display: inline-flex;
+  font-weight: 800;
+}
+
+/* SERVICE LAB ------------------------------------------------------------ */
+body.source-services[data-page="services"] #services.service-lab {
+  padding: var(--services-section-y) 0 !important;
+}
+
+body.source-services[data-page="services"] #services > .container > .heading {
+  margin-bottom: 44px !important;
+  max-width: 780px !important;
+}
+
+body.source-services[data-page="services"] #services > .container > .heading h2 {
+  font-size: clamp(34px, 4vw, 52px) !important;
+  line-height: 1.14 !important;
+}
+
+body.source-services[data-page="services"] #services .lab-grid {
+  grid-template-columns: minmax(360px, .82fr) minmax(0, 1.18fr) !important;
+  gap: clamp(30px, 4.5vw, 64px) !important;
+  align-items: start !important;
+}
+
+body.source-services[data-page="services"] #services .lab-stage-wrap {
+  position: sticky !important;
+  top: 110px !important;
+}
+
+body.source-services[data-page="services"] #services .lab-stage {
+  min-height: 520px !important;
+  border-radius: 22px !important;
+  border-color: rgba(255, 255, 255, .09) !important;
+  box-shadow: 0 26px 80px rgba(0, 0, 0, .22) !important;
+}
+
+body.source-services[data-page="services"] #services .stage-screen,
+body.source-services[data-page="services"] #services .visual-shell {
+  border-radius: 16px !important;
+}
+
+body.source-services[data-page="services"] #services .service-list {
+  gap: 0 !important;
+  border-top: 1px solid var(--services-line);
+}
+
+body.source-services[data-page="services"] #services .service-item {
+  min-height: 0 !important;
+  padding: 30px 4px 32px !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--services-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-services[data-page="services"] #services .service-item:hover,
+body.source-services[data-page="services"] #services .service-item.active {
+  transform: none !important;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ibt-blue) 5%, transparent), transparent) !important;
+}
+
+body.source-services[data-page="services"] #services .service-item.active {
+  padding-inline: 18px 8px !important;
+  border-inline-start: 2px solid #6fdff1 !important;
+}
+
+body.source-services[data-page="services"] #services .service-no {
+  font-size: 10px !important;
+  letter-spacing: .08em !important;
+}
+
+body.source-services[data-page="services"] #services .service-item h3 {
+  margin: 10px 0 8px !important;
+  font-size: clamp(25px, 2.6vw, 34px) !important;
+  line-height: 1.2 !important;
+}
+
+body.source-services[data-page="services"] #services .service-item > p {
+  max-width: 58ch !important;
+  margin: 0 !important;
+  line-height: 1.85 !important;
+}
+
+body.source-services[data-page="services"] #services .outcomes {
+  margin: 18px 0 12px !important;
+  gap: 7px !important;
+}
+
+body.source-services[data-page="services"] #services .outcomes span,
+body.source-services[data-page="services"] #services .service-chips b {
+  border-radius: 8px !important;
+}
+
+body.source-services[data-page="services"] #services .service-chips {
+  gap: 6px !important;
+}
+
+body.source-services[data-page="services"] #services .service-item > a {
+  margin-top: 18px !important;
+  display: inline-flex;
+  font-weight: 900;
+}
+
+/* SOLUTION STACKS -------------------------------------------------------- */
+body.source-services[data-page="services"] #solutions.section {
+  padding: var(--services-section-y) 0 !important;
+}
+
+body.source-services[data-page="services"] #solutions .heading {
+  margin-bottom: 40px !important;
+  max-width: 760px !important;
+}
+
+body.source-services[data-page="services"] #solutions .heading h2 {
+  font-size: clamp(34px, 4vw, 52px) !important;
+  line-height: 1.14 !important;
+}
+
+body.source-services[data-page="services"] #solutions .stacks-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack {
+  min-height: 310px !important;
+  padding: clamp(24px, 3vw, 34px) !important;
+  border: 1px solid var(--services-line) !important;
+  border-radius: 18px !important;
+  background: color-mix(in srgb, var(--ibt-surface) 78%, transparent) !important;
+  box-shadow: none !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack:hover {
+  transform: translateY(-2px) !important;
+  border-color: color-mix(in srgb, var(--ibt-blue) 28%, var(--ibt-border)) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .08) !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack-label {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--ibt-blue) !important;
+  font-size: 11px !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack h3 {
+  margin: 14px 0 10px !important;
+  font-size: clamp(24px, 2.5vw, 32px) !important;
+  line-height: 1.2 !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack p {
+  max-width: 50ch !important;
+  line-height: 1.82 !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack-flow {
+  margin-top: 24px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack-flow span {
+  padding: 7px 9px !important;
+  border-radius: 8px !important;
+}
+
+body.source-services[data-page="services"] #solutions .stack-flow i {
+  opacity: .55;
+}
+
+/* FAQ -------------------------------------------------------------------- */
+body.source-services[data-page="services"] #faq.section {
+  padding: var(--services-section-y) 0 !important;
+}
+
+body.source-services[data-page="services"] #faq .faq-grid {
+  grid-template-columns: minmax(250px, .68fr) minmax(0, 1.32fr) !important;
+  gap: clamp(44px, 6vw, 82px) !important;
+  align-items: start !important;
+}
+
+body.source-services[data-page="services"] #faq .faq-copy {
+  position: sticky;
+  top: 112px;
+  max-width: 410px;
+}
+
+body.source-services[data-page="services"] #faq .faq-copy h2 {
+  margin: 12px 0 14px !important;
+  font-size: clamp(34px, 3.7vw, 50px) !important;
+}
+
+body.source-services[data-page="services"] #faq .accordion {
+  border-top: 1px solid var(--services-line);
+}
+
+body.source-services[data-page="services"] #faq .faq {
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--services-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.source-services[data-page="services"] #faq .faq button {
+  min-height: 70px !important;
+  padding: 18px 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font-size: clamp(15px, 1.3vw, 17px) !important;
+}
+
+body.source-services[data-page="services"] #faq .faq-answer p {
+  max-width: 58ch !important;
+  padding-bottom: 20px !important;
+  line-height: 1.85 !important;
+}
+
+/* CTA -------------------------------------------------------------------- */
+body.source-services[data-page="services"] #contact.cta {
+  padding: clamp(66px, 7vw, 92px) 0 !important;
+}
+
+body.source-services[data-page="services"] #contact .cta-card {
+  min-height: 240px;
+  padding: clamp(30px, 4.5vw, 52px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 32px 50px !important;
+  align-items: center !important;
+  border: 1px solid rgba(255, 255, 255, .1) !important;
+  border-radius: 24px !important;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(16, 200, 232, .1), transparent 30%),
+    linear-gradient(145deg, #0c1733 0%, #11152f 70%, #17132d 100%) !important;
+  box-shadow: 0 26px 76px rgba(3, 8, 24, .22) !important;
+}
+
+body.source-services[data-page="services"] #contact .cta-copy {
+  max-width: 690px;
+}
+
+body.source-services[data-page="services"] #contact .cta-copy h2 {
+  margin: 10px 0 12px !important;
+  font-size: clamp(34px, 4vw, 52px) !important;
+  line-height: 1.12 !important;
+}
+
+body.source-services[data-page="services"] #contact .cta-copy p {
+  max-width: 52ch !important;
+  line-height: 1.85 !important;
+}
+
+body.source-services[data-page="services"] #contact .cta-actions {
+  display: grid !important;
+  gap: 9px !important;
+  min-width: 220px;
+}
+
+body.source-services[data-page="services"] #contact .cta-actions .btn {
+  width: 100%;
+  min-height: 48px !important;
+  border-radius: 12px !important;
+}
+
+/* RESPONSIVE ------------------------------------------------------------- */
+@media (max-width: 1040px) {
+  body.source-services[data-page="services"] #top .hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr) !important;
+    gap: 34px !important;
+  }
+
+  body.source-services[data-page="services"] #services .lab-grid {
+    grid-template-columns: minmax(320px, .8fr) minmax(0, 1.2fr) !important;
+    gap: 30px !important;
+  }
+}
+
+@media (max-width: 820px) {
+  body.source-services[data-page="services"] {
+    --services-section-y: clamp(58px, 12vw, 76px);
+  }
+
+  body.source-services[data-page="services"] #top.hero {
+    min-height: auto !important;
+    padding: 108px 0 68px !important;
+  }
+
+  body.source-services[data-page="services"] #top .hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-services[data-page="services"] #top .hero-copy h1 {
+    font-size: clamp(39px, 10.8vw, 54px) !important;
+  }
+
+  body.source-services[data-page="services"] #top .hero-visual {
+    min-height: 420px !important;
+    width: min(100%, 620px);
+    margin-inline: auto;
+  }
+
+  body.source-services[data-page="services"] #goals .goal-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-services[data-page="services"] #goals .goal {
+    min-height: 0 !important;
+    border-inline-end: 0 !important;
+    border-block-end: 1px solid var(--services-line) !important;
+  }
+
+  body.source-services[data-page="services"] #goals .goal:last-child {
+    border-block-end: 0 !important;
+  }
+
+  body.source-services[data-page="services"] #services .lab-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-services[data-page="services"] #services .lab-stage-wrap {
+    display: none !important;
+  }
+
+  body.source-services[data-page="services"] #services .service-item,
+  body.source-services[data-page="services"] #services .service-item.active {
+    padding: 26px 0 28px !important;
+    border-inline-start: 0 !important;
+    background: transparent !important;
+  }
+
+  body.source-services[data-page="services"] #solutions .stacks-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-services[data-page="services"] #solutions .stack {
+    min-height: 0 !important;
+  }
+
+  body.source-services[data-page="services"] #faq .faq-grid {
+    grid-template-columns: 1fr !important;
+    gap: 34px !important;
+  }
+
+  body.source-services[data-page="services"] #faq .faq-copy {
+    position: static !important;
+    max-width: 620px;
+  }
+
+  body.source-services[data-page="services"] #contact .cta-card {
+    grid-template-columns: 1fr !important;
+    min-height: 0 !important;
+  }
+
+  body.source-services[data-page="services"] #contact .cta-actions {
+    width: min(100%, 420px);
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  body.source-services[data-page="services"] #top .hero-copy h1 {
+    font-size: clamp(37px, 12vw, 48px) !important;
+  }
+
+  body.source-services[data-page="services"] #top .hero-proof {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.source-services[data-page="services"] #top .proof-chip {
+    min-height: 44px;
+    border-inline-end: 0 !important;
+    border-block-end: 1px solid rgba(255, 255, 255, .07) !important;
+  }
+
+  body.source-services[data-page="services"] #top .proof-chip:last-child {
+    border-block-end: 0 !important;
+  }
+
+  body.source-services[data-page="services"] #solutions .stack {
+    padding: 22px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  body.source-services[data-page="services"] #contact .cta-card {
+    padding: 26px 20px !important;
+    border-radius: 20px !important;
+  }
+
+  body.source-services[data-page="services"] #contact .cta-actions {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.source-services[data-page="services"] #top .hero-visual,
+  body.source-services[data-page="services"] #services .lab-stage,
+  body.source-services[data-page="services"] #solutions .stack {
+    animation: none !important;
+    transition: none !important;
+  }
+}
