@@ -1,0 +1,137 @@
+name: Sync Frontend 4497d13
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.head_ref == 'sync/frontend-main-4497d13' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout dashboard sync branch
+        uses: actions/checkout@v4
+        with:
+          ref: sync/frontend-main-4497d13
+          fetch-depth: 0
+
+      - name: Checkout exact frontend source
+        uses: actions/checkout@v4
+        with:
+          repository: ahmedalqurashi2030/ibtikartech
+          ref: 4497d13c8aeb1a8d69315c09e46e4b656cc3f963
+          path: .frontend-source
+          fetch-depth: 1
+
+      - name: Import exact frontend into Django public preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/import_frontend_preview.py \
+            --source .frontend-source \
+            --destination . \
+            --source-commit 4497d13c8aeb1a8d69315c09e46e4b656cc3f963
+
+      - name: Verify import provenance and visual recovery
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          expected = '4497d13c8aeb1a8d69315c09e46e4b656cc3f963'
+          manifest = json.loads(Path('docs/frontend-preview-manifest.json').read_text(encoding='utf-8'))
+          assert manifest['source_commit'] == expected, manifest['source_commit']
+          assert manifest['business_model_binding'] is False
+          assert len(manifest['required_pages']) == 22
+
+          shell = Path('static/public_preview/assets/css/ibtikar-shell.css').read_text(encoding='utf-8')
+          assert shell.count('APPROVED VISUAL RECOVERY 2026-08-20') == 1
+          assert 'radial-gradient(circle at 5px 5px' in shell
+
+          home = Path('templates/public_preview/pages/index.html').read_text(encoding='utf-8')
+          assert 'نبني منظومة رقمية' in home
+          assert 'ابدأ بتشخيص مشروعك' in home
+          assert 'استكشف منظومة الحلول' in home
+          assert 'hero-dashboard hero-system-stage' in home
+          assert '<div class="cinematic-story__brand"><span aria-hidden="true" class="cinematic-story__mark"' not in home
+
+          for name in (
+              'store-launch.html',
+              'storefront-customization.html',
+              'store-redesign.html',
+              'product-page-optimization.html',
+              'ecommerce-growth.html',
+              'ecommerce-support.html',
+          ):
+              page = Path('templates/public_preview/pages', name).read_text(encoding='utf-8')
+              assert 'data-service-decision-tab="results"' not in page, name
+              assert 'data-service-decision-panel="results"' not in page, name
+
+          print('Frontend provenance/recovery verification: PASS')
+          PY
+
+      - name: Enforce frontend-only change boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          git status --short
+          mapfile -t changed < <(git diff --name-only)
+          test "${#changed[@]}" -gt 0
+          for file in "${changed[@]}"; do
+            case "$file" in
+              docs/frontend-preview-manifest.json|templates/public_preview/pages/*|static/public_preview/assets/*)
+                ;;
+              *)
+                echo "ERROR: importer touched forbidden path: $file" >&2
+                exit 1
+                ;;
+            esac
+          done
+          if git status --porcelain | grep -E '^.. (apps/|config/|templates/(?!public_preview/pages/)|manage.py|pyproject.toml)' >/dev/null 2>&1; then
+            echo 'ERROR: backend/control path changed.' >&2
+            exit 1
+          fi
+          echo 'Frontend-only boundary: PASS'
+
+      - name: Verify required templates and local static references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+
+          manifest = json.loads(Path('docs/frontend-preview-manifest.json').read_text(encoding='utf-8'))
+          pages = Path('templates/public_preview/pages')
+          static_root = Path('static/public_preview/assets')
+          for name in manifest['required_pages']:
+              path = pages / name
+              assert path.is_file(), name
+              text = path.read_text(encoding='utf-8')
+              for rel in re.findall(r'/static/public_preview/assets/([^"\'\)\s>]+)', text):
+                  rel = rel.split('?', 1)[0].split('#', 1)[0]
+                  assert (static_root / rel).exists(), f'{name}: missing asset {rel}'
+          print('22/22 templates and static references: PASS')
+          PY
+
+      - name: Commit imported frontend to sync branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/frontend-preview-manifest.json templates/public_preview/pages static/public_preview/assets
+          if git diff --cached --quiet; then
+            echo 'No imported frontend changes to commit.'
+            exit 0
+          fi
+          git commit -m 'sync: import ibtikartech frontend 4497d13'
+          git push origin HEAD:sync/frontend-main-4497d13
