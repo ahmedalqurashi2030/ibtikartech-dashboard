@@ -6,6 +6,8 @@ on:
       - feat/frontend-preview-migration
     paths:
       - scripts/import_frontend_preview.py
+      - scripts/refactor_public_preview_templates.py
+      - scripts/componentize_public_preview_templates.py
       - .github/workflows/frontend-preview-import.yml
   workflow_dispatch:
 
@@ -31,6 +33,22 @@ jobs:
           python scripts/import_frontend_preview.py \
             --source /tmp/ibtikartech-source \
             --destination "$GITHUB_WORKSPACE"
+
+      - name: Apply Django template architecture
+        run: |
+          python scripts/refactor_public_preview_templates.py
+          python scripts/componentize_public_preview_templates.py
+
+      - name: Verify clean route template architecture
+        shell: bash
+        run: |
+          set -euo pipefail
+          for page in templates/public_preview/pages/*.html; do
+            grep -q 'extends "public_preview/base.html"' "$page"
+            ! grep -q 'id="ibtikarSiteHeader"' "$page"
+            ! grep -q 'class="ibt-shell-footer"' "$page"
+          done
+          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
 
       - name: Commit imported preview
         run: |
