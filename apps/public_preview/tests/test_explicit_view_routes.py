@@ -68,8 +68,15 @@ SERVICE_VIEW_ROUTES = (
 )
 
 
-@pytest.mark.parametrize("route_name,view_func,expected_path", PUBLIC_VIEW_ROUTES + SERVICE_VIEW_ROUTES)
-def test_clean_url_resolves_directly_to_explicit_python_view(route_name, view_func, expected_path):
+@pytest.mark.parametrize(
+    "route_name,view_func,expected_path",
+    PUBLIC_VIEW_ROUTES + SERVICE_VIEW_ROUTES,
+)
+def test_clean_url_resolves_directly_to_explicit_python_view(
+    route_name,
+    view_func,
+    expected_path,
+):
     path = reverse(route_name)
     match = resolve(path)
 
@@ -94,7 +101,11 @@ def test_clean_url_resolves_directly_to_explicit_python_view(route_name, view_fu
         ("/ecommerce-support.html", "services:ecommerce-support"),
     ),
 )
-def test_legacy_html_url_never_renders_and_only_redirects(client, legacy_path, clean_route_name):
+def test_legacy_html_url_never_renders_and_only_redirects(
+    client,
+    legacy_path,
+    clean_route_name,
+):
     response = client.get(legacy_path, follow=False)
 
     assert response.status_code == 301
