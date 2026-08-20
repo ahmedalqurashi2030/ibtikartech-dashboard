@@ -12,6 +12,7 @@ import argparse
 import json
 import re
 import shutil
+import subprocess
 from pathlib import Path
 
 REQUIRED_PAGES = (
@@ -75,7 +76,26 @@ def patch_runtime_assets(assets_dir: Path) -> None:
             path.write_text(updated, encoding="utf-8")
 
 
-def import_frontend(source_root: Path, destination_root: Path) -> dict[str, object]:
+def resolve_source_commit(source_root: Path, explicit_commit: str | None) -> str:
+    if explicit_commit:
+        return explicit_commit
+    try:
+        return subprocess.check_output(
+            ["git", "-C", str(source_root), "rev-parse", "HEAD"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+    except (OSError, subprocess.CalledProcessError):
+        raise RuntimeError(
+            "Could not determine frontend source commit. Pass --source-commit explicitly."
+        ) from None
+
+
+def import_frontend(
+    source_root: Path,
+    destination_root: Path,
+    source_commit: str | None = None,
+) -> dict[str, object]:
     missing = [page for page in REQUIRED_PAGES if not (source_root / page).is_file()]
     if missing:
         raise RuntimeError(f"Source frontend is missing required page(s): {', '.join(missing)}")
@@ -93,6 +113,7 @@ def import_frontend(source_root: Path, destination_root: Path) -> dict[str, obje
     if not source_assets.is_dir():
         raise RuntimeError("Source frontend assets/ directory is missing.")
 
+    resolved_source_commit = resolve_source_commit(source_root, source_commit)
     pages_dir = destination_root / "templates" / "public_preview" / "pages"
     assets_dir = destination_root / "static" / "public_preview" / "assets"
     manifest_path = destination_root / "docs" / "frontend-preview-manifest.json"
@@ -126,7 +147,7 @@ def import_frontend(source_root: Path, destination_root: Path) -> dict[str, obje
         "source_ref": "main",
         "mode": "temporary-static-django-preview",
         "header_footer": "source-preserved-or-django-includes",
-        "source_commit": "999845f48ddaf3ed59f49b1515ff9b94474141a1",
+        "source_commit": resolved_source_commit,
         "business_model_binding": False,
         "required_pages": imported_pages,
         "retired_platform_pages": list(RETIRED_PLATFORM_PAGES),
@@ -143,10 +164,21 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--destination", type=Path, default=Path.cwd())
+    parser.add_argument(
+        "--source-commit",
+        help="Exact frontend source commit. If omitted, infer it from the source Git checkout.",
+    )
     args = parser.parse_args()
 
-    manifest = import_frontend(args.source.resolve(), args.destination.resolve())
-    print(f"Imported {len(manifest['required_pages'])} frontend pages.")
+    manifest = import_frontend(
+        args.source.resolve(),
+        args.destination.resolve(),
+        source_commit=args.source_commit,
+    )
+    print(
+        f"Imported {len(manifest['required_pages'])} frontend pages "
+        f"from {manifest['source_commit']}."
+    )
 
 
 if __name__ == "__main__":
