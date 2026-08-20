@@ -50,6 +50,15 @@
     document.body.appendChild(guard);
   }
 
+  const ensureStylesheet = (href, id) => {
+    if (document.getElementById(id) || document.querySelector(`link[href="${href}"]`)) return;
+    const link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+  };
+
   const ensureScript = (src, datasetKey) => {
     if (document.querySelector(`script[data-${datasetKey}]`)) return;
     const script = document.createElement('script');
@@ -58,6 +67,10 @@
     script.dataset[datasetKey.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())] = 'true';
     document.body.appendChild(script);
   };
+
+  // Load the UI/UX system as the final cascade layer without changing the
+  // imported source templates or their backend-facing contracts.
+  ensureStylesheet('/static/public_preview/assets/css/pages/ux-system-v1.css', 'ibtikar-ux-system-v1');
 
   const loadEnhancements = () => {
     ensureScript('/static/public_preview/assets/js/continuous-flow.js', 'continuous-flow');
