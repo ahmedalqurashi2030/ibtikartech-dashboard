@@ -5,6 +5,7 @@ on:
     paths:
       - "apps/public_preview/**"
       - "apps/services/urls.py"
+      - "apps/services/public_views.py"
       - "templates/public_preview/**"
       - "static/public_preview/assets/js/**"
       - "static/public_preview/assets/css/**"
@@ -96,8 +97,11 @@ jobs:
             ecommerce-growth.html ecommerce-support.html 404.html
           )
           for route in "${legacy_routes[@]}"; do
+            location="$(curl -sS -o /dev/null -w '%{redirect_url}' "http://127.0.0.1:8000/${route}")"
             code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000/${route}")"
             test "$code" = "301" || { echo "$code /$route expected 301"; exit 1; }
+            test -n "$location" || { echo "/$route missing redirect target"; exit 1; }
+            ! grep -q '\.html' <<<"$location" || { echo "/$route redirects to another .html URL: $location"; exit 1; }
           done
 
           static_assets=(
@@ -121,8 +125,8 @@ jobs:
         working-directory: /tmp/ibtikar-frontend-qa
         env:
           BASE_URL: http://127.0.0.1:8000
-          # The QA harness keys specialized assertions by the historic filename.
-          # Django redirects each request to its explicit clean URL before render.
+          # Historic filenames are used only as QA keys. Django immediately
+          # redirects them to the explicit clean Python routes before rendering.
           QA_PAGES: >-
             index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
             custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
