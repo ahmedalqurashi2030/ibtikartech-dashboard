@@ -9,6 +9,7 @@ on:
       - "scripts/patch_public_runtime_accessibility.py"
       - "scripts/verify_public_section_preservation.py"
       - "templates/public_preview/base.html"
+      - "templates/public_preview/pages/product-page-optimization.html"
       - "static/public_preview/assets/js/page-shell.js"
       - "static/public_preview/assets/css/pages/*-v1.css"
       - "static/public_preview/dashboard/*.css"
@@ -23,6 +24,7 @@ on:
       - "scripts/patch_public_runtime_accessibility.py"
       - "scripts/verify_public_section_preservation.py"
       - "templates/public_preview/base.html"
+      - "templates/public_preview/pages/product-page-optimization.html"
       - "static/public_preview/assets/js/page-shell.js"
       - "static/public_preview/assets/css/pages/*-v1.css"
       - "static/public_preview/dashboard/*.css"
@@ -67,6 +69,14 @@ jobs:
       - name: Checkout current frontend source
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
 
+      - name: Preserve standardized inline service page contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/ibtikar-inline-contracts
+          cp templates/public_preview/pages/product-page-optimization.html \
+            /tmp/ibtikar-inline-contracts/product-page-optimization.html
+
       - name: Run real frontend importer
         shell: bash
         run: |
@@ -77,13 +87,20 @@ jobs:
             --destination "$GITHUB_WORKSPACE" \
             --source-commit "$source_commit"
 
+      - name: Restore standardized inline service page contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp /tmp/ibtikar-inline-contracts/product-page-optimization.html \
+            templates/public_preview/pages/product-page-optimization.html
+
       - name: Apply Django public architecture without section components
         run: |
           python scripts/refactor_public_preview_templates.py
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
 
-      - name: Verify every approved section survives import and refactor
+      - name: Verify every approved section and content block survives import
         run: python scripts/verify_public_section_preservation.py --source /tmp/ibtikartech-source
 
       - name: Verify import-safe Django and production paths
@@ -95,10 +112,33 @@ jobs:
             ! grep -q 'id="ibtikarSiteHeader"' "$page"
             ! grep -q 'class="ibt-shell-footer"' "$page"
             ! grep -q 'public_preview/components/' "$page"
+            ! grep -q '{% include ' "$page"
           done
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
           grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
+
+          service_pages=(
+            store-launch.html storefront-customization.html store-redesign.html
+            product-page-optimization.html ecommerce-growth.html ecommerce-support.html
+          )
+          for name in "${service_pages[@]}"; do
+            page="templates/public_preview/pages/$name"
+            grep -q 'class="service-detail-main"' "$page"
+            grep -q 'class="service-commerce-hero"' "$page"
+            grep -q 'class="service-quick-info"' "$page"
+            grep -q 'data-service-decision-tabs' "$page"
+            grep -q 'data-service-decision-tab="problems"' "$page"
+            grep -q 'data-service-decision-panel="problems"' "$page"
+            grep -q 'class="service-problem-grid"' "$page"
+            grep -q 'class="service-fit-grid"' "$page"
+            grep -q 'class="service-scope-grid"' "$page"
+            grep -q 'class="service-deliverable-grid"' "$page"
+            grep -q 'class="service-exclusion-list"' "$page"
+            grep -q 'commerce-service-detail.js' "$page"
+            ! grep -q 'class="svc-hero' "$page"
+            ! grep -q 'data-decision-tab=' "$page"
+          done
 
           for source in static/public_preview/dashboard/*.css; do
             filename="$(basename "$source")"
