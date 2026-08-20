@@ -48,3 +48,30 @@ jobs:
 
       - name: Verify model state
         run: python manage.py makemigrations --check --dry-run
+
+  deploy-production:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
+
+    timeout-minutes: 20
+
+    concurrency:
+      group: ibtikartech-production
+      cancel-in-progress: false
+
+    steps:
+      - name: Deploy production
+        run: sudo -u deploy -H /usr/local/sbin/deploy-ibtikartech
+
+      - name: Verify production health
+        run: |
+          curl --fail --silent --show-error \
+            --retry 5 \
+            --retry-delay 3 \
+            --retry-all-errors \
+            https://ibtikartech.co/healthz/
