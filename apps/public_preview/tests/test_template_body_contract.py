@@ -44,7 +44,7 @@ def test_public_children_use_one_native_body_block_only():
         assert 'class="ibt-shell-footer"' not in source, page_name
 
 
-def test_public_base_owns_shell_and_exposes_only_body_content_block():
+def test_public_base_owns_only_required_shared_shell_includes():
     base = BASE_TEMPLATE.read_text(encoding="utf-8")
 
     assert '{% block body %}{% endblock %}' in base
@@ -52,9 +52,13 @@ def test_public_base_owns_shell_and_exposes_only_body_content_block():
     assert "{% block page_scripts %}" not in base
     assert "page_scripts" not in base
 
-    for component in ("document_head.html", "header.html", "footer.html", "runtime.html"):
+    for component in ("document_head.html", "header.html", "footer.html"):
         assert f'include "public_preview/components/{component}"' in base
         assert (COMPONENTS_DIR / component).is_file()
+
+    # DOM contracts that are already supported by page markup/runtime must not
+    # add a separate global JavaScript request through the base template.
+    assert 'include "public_preview/components/runtime.html"' not in base
 
 
 def test_known_internal_page_links_use_django_named_urls_in_templates():
