@@ -1,0 +1,101 @@
+name: Production Django Body Verification
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/production-django-body-verification.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify-production:
+    runs-on: [self-hosted, production, ibtikartech]
+    timeout-minutes: 10
+    steps:
+      - name: Verify deployed commit and services
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="87a83f9e88aa818e30fc38b0ac06f3e725b04630"
+          app="/srv/ibtikartech/app"
+
+          deployed="$(git -C "$app" rev-parse HEAD)"
+          echo "deployed_commit=$deployed"
+          test "$deployed" = "$expected"
+
+          systemctl is-active --quiet ibtikartech.service
+          test "$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/healthz/)" = "200"
+          test "$(curl -sS -o /dev/null -w '%{http_code}' https://ibtikartech.co/healthz/)" = "200"
+
+      - name: Verify deployed Django template architecture
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="/srv/ibtikartech/app"
+          base="$app/templates/public_preview/base.html"
+          pages="$app/templates/public_preview/pages"
+
+          grep -Fq '{% block body %}' "$base"
+          grep -Fq 'include "public_preview/components/header.html"' "$base"
+          grep -Fq 'include "public_preview/components/footer.html"' "$base"
+          grep -Fq 'include "public_preview/components/runtime.html"' "$base"
+          ! grep -Fq 'block page_scripts' "$base"
+          ! grep -R -n -F 'block page_scripts' "$pages"
+          ! grep -R -n -F 'block content' "$pages"
+
+          count=0
+          while IFS= read -r page; do
+            grep -Fq 'extends "public_preview/base.html"' "$page"
+            grep -Fq '{% block body %}' "$page"
+            count=$((count + 1))
+          done < <(find "$pages" -maxdepth 1 -type f -name '*.html' | sort)
+          echo "page_templates=$count"
+          test "$count" -eq 22
+
+      - name: Verify production clean routes and rendered content
+        shell: bash
+        run: |
+          set -euo pipefail
+          origin="https://ibtikartech.co"
+          routes=(
+            / /services/ /ecommerce/ /websites/ /brand-content/ /growth/
+            /custom-systems/ /tharaa/ /portfolio/ /knowledge/ /about/ /contact/
+            /services/store-launch/ /services/storefront-customization/
+            /services/store-redesign/ /services/product-page-optimization/
+            /services/ecommerce-growth/ /services/ecommerce-support/
+          )
+
+          for route in "${routes[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "$origin$route")"
+            test "$code" = "200" || { echo "$code $route"; exit 1; }
+          done
+
+          services_html="$(curl --fail --silent --show-error "$origin/services/")"
+          grep -Fq 'ستة محاور رئيسية لبناء تجربة رقمية متكاملة' <<<"$services_html"
+          ! grep -Fq 'سيتم نشر الخدمات قريبًا' <<<"$services_html"
+          ! grep -Eqi '(href|action)="[^"]+\.html([?#][^"]*)?"' <<<"$services_html"
+
+          for legacy in services.html portfolio.html about.html contact.html; do
+            headers="$(curl -sSI "$origin/$legacy")"
+            grep -Eq '^HTTP/[^ ]+ 301' <<<"$headers"
+            location="$(awk 'BEGIN{IGNORECASE=1} /^location:/{gsub("\r",""); print $2}' <<<"$headers" | tail -n1)"
+            test -n "$location"
+            ! grep -q '\.html' <<<"$location"
+          done
+
+      - name: Verify key production assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          origin="https://ibtikartech.co"
+          assets=(
+            /static/public_preview/assets/js/page-shell.js
+            /static/public_preview/assets/js/ibtikar-shell.js
+            /static/public_preview/dashboard/dom-contracts.js
+            /static/public_preview/assets/css/ibtikar-shell.css
+          )
+          for asset in "${assets[@]}"; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "$origin$asset")"
+            test "$code" = "200" || { echo "$code $asset"; exit 1; }
+          done
