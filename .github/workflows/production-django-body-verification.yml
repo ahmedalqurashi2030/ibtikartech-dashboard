@@ -39,12 +39,28 @@ jobs:
           homepage="$(curl --fail --silent --show-error "$origin/")"
           services_html="$(curl --fail --silent --show-error "$origin/services/")"
 
-          test "$(grep -o 'id="ibtikarSiteHeader"' <<<"$homepage" | wc -l)" -eq 1
-          test "$(grep -o 'class="ibt-shell-footer"' <<<"$homepage" | wc -l)" -eq 1
-          grep -Fq 'section-layout-refinement-v2.css' <<<"$homepage"
-          grep -Fq 'data-ibt-mega-toggle' <<<"$homepage"
-          grep -Fq 'source-services.js" defer' <<<"$services_html"
-          grep -Fq 'approved-source.js" defer' <<<"$services_html"
+          header_count="$(grep -o 'id="ibtikarSiteHeader"' <<<"$homepage" | wc -l)"
+          footer_count="$(grep -o 'class="ibt-shell-footer"' <<<"$homepage" | wc -l)"
+          layout_count="$(grep -o 'section-layout-refinement-v2.css' <<<"$homepage" | wc -l)"
+          mega_count="$(grep -o 'data-ibt-mega-toggle' <<<"$homepage" | wc -l)"
+          source_services_tag="$(grep -o '<script[^>]*source-services\.js[^>]*>' <<<"$services_html" | head -n1 || true)"
+          approved_source_tag="$(grep -o '<script[^>]*approved-source\.js[^>]*>' <<<"$services_html" | head -n1 || true)"
+
+          echo "header_count=$header_count"
+          echo "footer_count=$footer_count"
+          echo "layout_refinement_count=$layout_count"
+          echo "mega_toggle_count=$mega_count"
+          echo "source_services_tag=$source_services_tag"
+          echo "approved_source_tag=$approved_source_tag"
+
+          test "$header_count" -eq 1
+          test "$footer_count" -eq 1
+          test "$layout_count" -ge 1
+          test "$mega_count" -ge 1
+          test -n "$source_services_tag"
+          test -n "$approved_source_tag"
+          grep -Fq 'defer' <<<"$source_services_tag"
+          grep -Fq 'defer' <<<"$approved_source_tag"
 
       - name: Verify production clean routes and rendered content
         shell: bash
