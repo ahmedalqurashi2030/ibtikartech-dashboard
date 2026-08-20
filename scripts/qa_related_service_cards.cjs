@@ -95,6 +95,12 @@ async function inspect(client, route, viewport, runtimeEvents) {
   await client.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
   await client.send('Page.navigate', { url: `${baseUrl}${route}` });
   await wait(900);
+  await evaluate(client, `(() => {
+    const related = document.querySelector('.service-related-cards, .service-related-grid, .related-nav');
+    related?.scrollIntoView({ block: 'center', inline: 'nearest' });
+    return Boolean(related);
+  })()`);
+  await wait(500);
 
   const metrics = await evaluate(client, `(() => {
     const tracks = [...document.querySelectorAll('.service-related-cards')];
