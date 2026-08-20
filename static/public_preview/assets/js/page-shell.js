@@ -121,7 +121,6 @@
   // cannot delete them. Scope each special layer to the relevant approved-source page.
   if (document.body.classList.contains('source-home')) {
     ensureStylesheet('/static/public_preview/dashboard/homepage-refinement-v1.css', 'ibtikar-homepage-refinement-v1');
-    ensureStylesheet('/static/public_preview/dashboard/homepage-production-qa-v1.css', 'ibtikar-homepage-production-qa-v1');
   }
   if (document.body.classList.contains('source-services')) {
     ensureStylesheet('/static/public_preview/dashboard/services-refinement-v1.css', 'ibtikar-services-refinement-v1');
