@@ -121,24 +121,23 @@
     document.body.appendChild(script);
   };
 
-  // Shared presentation layers. The category layer is safely scoped by data-page,
-  // so loading it globally avoids fragile page-specific loader state after imports.
+  // Shared presentation layers. Dashboard-owned refinements are mirrored into
+  // the served assets tree so production Nginx can deliver them with normal static permissions.
   ensureStylesheet('/static/public_preview/assets/css/pages/ux-system-v1.css', 'ibtikar-ux-system-v1');
-  ensureStylesheet('/static/public_preview/dashboard/service-category-refinement-v1.css', 'ibtikar-service-category-refinement-v1');
+  ensureStylesheet('/static/public_preview/assets/css/pages/service-category-refinement-v1.css', 'ibtikar-service-category-refinement-v1');
 
-  // Dashboard-owned page refinements live outside imported assets so source syncs
-  // cannot delete them. Scope each special layer to the relevant approved-source page.
+  // Scope each special refinement layer to the relevant approved-source page.
   if (document.body.classList.contains('source-home')) {
-    ensureStylesheet('/static/public_preview/dashboard/homepage-refinement-v1.css', 'ibtikar-homepage-refinement-v1');
+    ensureStylesheet('/static/public_preview/assets/css/pages/homepage-refinement-v1.css', 'ibtikar-homepage-refinement-v1');
   }
   if (document.body.classList.contains('source-services')) {
-    ensureStylesheet('/static/public_preview/dashboard/services-refinement-v1.css', 'ibtikar-services-refinement-v1');
+    ensureStylesheet('/static/public_preview/assets/css/pages/services-refinement-v1.css', 'ibtikar-services-refinement-v1');
   }
   if (document.body.classList.contains('source-ecommerce')) {
-    ensureStylesheet('/static/public_preview/dashboard/ecommerce-refinement-v1.css', 'ibtikar-ecommerce-refinement-v1');
+    ensureStylesheet('/static/public_preview/assets/css/pages/ecommerce-refinement-v1.css', 'ibtikar-ecommerce-refinement-v1');
   }
   if (document.body.classList.contains('source-tharaa')) {
-    ensureStylesheet('/static/public_preview/dashboard/tharaa-refinement-v1.css', 'ibtikar-tharaa-refinement-v1');
+    ensureStylesheet('/static/public_preview/assets/css/pages/tharaa-refinement-v1.css', 'ibtikar-tharaa-refinement-v1');
   }
 
   const loadEnhancements = () => {
