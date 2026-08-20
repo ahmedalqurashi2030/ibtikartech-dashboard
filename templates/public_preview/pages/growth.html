@@ -44,7 +44,7 @@
 
 <section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ بما يمنعك من اتخاذ القرار</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
-<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">الظهور والقياس والنمو</span><h2>حوّل البيانات إلى أولويات واضحة</h2><p>أرسل الرابط والأدوات الحالية والسؤال الذي تريد الإجابة عنه، وسنحدد هل المشكلة في الظهور أو القياس أو التجربة.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a><a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a></div></div></div></section>
+{% include "public_preview/components/page_cta.html" with kicker="الظهور والقياس والنمو" title="حوّل البيانات إلى أولويات واضحة" description="أرسل الرابط والأدوات الحالية والسؤال الذي تريد الإجابة عنه، وسنحدد هل المشكلة في الظهور أو القياس أو التجربة." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ التشخيص" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="جميع الخدمات" %}
 </main>
 {% endblock %}
 

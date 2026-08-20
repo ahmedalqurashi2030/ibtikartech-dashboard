@@ -40,7 +40,7 @@
 <article class="platform-card reveal"><small>SALLA EXPERIENCE</small><h3>خبرة مرتبطة بالمنتج الحقيقي</h3><p>تطوير ثراء يجعل قراراتنا في خدمات سلة مرتبطة بقيود الثيم والمنصة والجوال والمكونات، لا بمعلومات نظرية فقط.</p><a href="{% url 'public_preview:ecommerce' %}#platforms">حلول المتاجر والمنصات ←</a></article>
 </div></div></section>
 
-<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">الخطوة الأولى</span><h2>عرّفنا على هدف المشروع</h2><p>ابدأ بالهدف والوضع الحالي، وسنحدد المسار الأقرب بدل فرض حزمة جاهزة.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a><a class="btn btn-outline" href="{% url 'services:index' %}">الحلول والخدمات</a></div></div></div></section></main>
+{% include "public_preview/components/page_cta.html" with kicker="الخطوة الأولى" title="عرّفنا على هدف المشروع" description="ابدأ بالهدف والوضع الحالي، وسنحدد المسار الأقرب بدل فرض حزمة جاهزة." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ التشخيص" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="الحلول والخدمات" %}</main>
 {% endblock %}
 
 {% block page_scripts %}

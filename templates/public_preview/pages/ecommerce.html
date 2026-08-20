@@ -127,7 +127,7 @@
   <article class="faq reveal"><button type="button" aria-expanded="false">هل تضمنون زيادة المبيعات؟<i>+</i></button><div class="faq-answer"><div><p>لا نقدم ضمانًا غير واقعي. نحسن وضوح التجربة والقياس ونقاط الاحتكاك، بينما تتأثر النتائج أيضًا بالمنتج والسعر والتشغيل والتسويق.</p></div></div></article>
 </div></div></section>
 
-<section class="page-cta"><div class="container"><div class="cta-card reveal"><div><span class="section-kicker">لا تعرف أي خدمة تناسبك؟</span><h2>أرسل حالة متجرك، وسنحدد نقطة البداية.</h2><p>رابط المتجر أو الفكرة والمنصة والهدف تكفي للتشخيص الأولي. لا تحتاج أن تختار اسم الخدمة بنفسك.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">اطلب تشخيص متجرك</a><a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}#platforms">استكشف حلول سلة</a></div></div></div></section>
+{% include "public_preview/components/page_cta.html" with kicker="لا تعرف أي خدمة تناسبك؟" title="أرسل حالة متجرك، وسنحدد نقطة البداية." description="رابط المتجر أو الفكرة والمنصة والهدف تكفي للتشخيص الأولي. لا تحتاج أن تختار اسم الخدمة بنفسك." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="اطلب تشخيص متجرك" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="public_preview:ecommerce" secondary_label="استكشف حلول سلة" secondary_fragment="#platforms" %}
 
   </main>
 {% endblock %}
