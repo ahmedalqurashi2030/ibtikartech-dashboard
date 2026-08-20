@@ -52,19 +52,22 @@ def section_heading(values: dict[str, str]) -> str:
     )
 
 
+def django_url(name: str, fragment: str = "") -> str:
+    return "{% url '" + name + "' %}" + fragment
+
+
 def page_cta(values: dict[str, str]) -> str:
-    primary_fragment = values.get("primary_fragment", "")
+    primary_href = django_url(
+        values["primary_url_name"], values.get("primary_fragment", "")
+    )
     secondary = ""
     if values.get("secondary_url_name"):
-        secondary_fragment = values.get("secondary_fragment", "")
+        secondary_href = django_url(
+            values["secondary_url_name"], values.get("secondary_fragment", "")
+        )
         secondary = (
-            '\n        <a class="{secondary_class}" '
-            'href="{% url \'{secondary_url}\' %}{secondary_fragment}">{secondary_label}</a>'
-        ).format(
-            secondary_class=values["secondary_class"],
-            secondary_url=values["secondary_url_name"],
-            secondary_fragment=secondary_fragment,
-            secondary_label=values["secondary_label"],
+            f'\n        <a class="{values["secondary_class"]}" '
+            f'href="{secondary_href}">{values["secondary_label"]}</a>'
         )
 
     return (
@@ -77,18 +80,13 @@ def page_cta(values: dict[str, str]) -> str:
         f'        <p>{values["description"]}</p>\n'
         '      </div>\n'
         '      <div class="cta-actions">\n'
-        '        <a class="{primary_class}" href="{% url \'{primary_url}\' %}{primary_fragment}">{primary_label}</a>'
-        '{secondary}\n'
+        f'        <a class="{values["primary_class"]}" '
+        f'href="{primary_href}">{values["primary_label"]}</a>'
+        f'{secondary}\n'
         '      </div>\n'
         '    </div>\n'
         '  </div>\n'
         '</section>'
-    ).format(
-        primary_class=values["primary_class"],
-        primary_url=values["primary_url_name"],
-        primary_fragment=primary_fragment,
-        primary_label=values["primary_label"],
-        secondary=secondary,
     )
 
 
