@@ -4,6 +4,7 @@
 The public site intentionally keeps complete section HTML inside every page.
 This helper only reverses the three conservative includes introduced by the
 current refactor branch; it does not rewrite wording or page-specific content.
+Run it once on the refactor branch, verify the result, then remove this helper.
 """
 
 from __future__ import annotations
