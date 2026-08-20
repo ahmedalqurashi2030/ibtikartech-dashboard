@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
@@ -144,7 +145,8 @@ def service_request(request, slug):
                 },
             )
             messages.success(request, "وصل طلبك إلى فريق ابتكار تك وسنتابع معك.")
-            return redirect(f"/services/{service.slug}/?sent=1")
+            detail_url = reverse("services:detail", kwargs={"slug": service.slug})
+            return redirect(f"{detail_url}?sent=1")
 
     return render(
         request,
