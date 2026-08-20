@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Replace matching page CTA markup with a shared parameterized include."""
+"""Replace matching plain-text page CTA markup with a shared parameterized include.
+
+Only structurally identical CTAs with plain text are componentized. CTAs with
+inline HTML stay in their page template so reusable components never require
+``safe`` rendering and remain suitable for future dynamic content.
+"""
 
 from __future__ import annotations
 
@@ -12,8 +17,8 @@ CTA_INCLUDE = 'include "public_preview/components/page_cta.html"'
 
 PAGE_CTA_RE = re.compile(
     r'<section class="page-cta"><div class="container"><div class="cta-card reveal"><div>'
-    r'<span class="section-kicker">(?P<kicker>.*?)</span>'
-    r'<h2>(?P<title>.*?)</h2><p>(?P<description>.*?)</p></div>'
+    r'<span class="section-kicker">(?P<kicker>[^<]*)</span>'
+    r'<h2>(?P<title>[^<]*)</h2><p>(?P<description>[^<]*)</p></div>'
     r'<div class="cta-actions">'
     r'<a class="(?P<primary_class>[^"]+)" href="\{% url \'(?P<primary_url>[^\']+)\' %\}'
     r'(?P<primary_fragment>#[^"]*)?">(?P<primary_label>[^<]+)</a>'
@@ -22,13 +27,17 @@ PAGE_CTA_RE = re.compile(
     r'</div></div></div></section>',
     re.DOTALL,
 )
+CTA_INCLUDE_RE = re.compile(
+    r'{%\s*include\s+"public_preview/components/page_cta\.html"(?P<args>.*?)%}',
+    re.DOTALL,
+)
 
 
 def quote(value: str | None) -> str | None:
     if value is None:
         return None
     value = " ".join(value.split())
-    if '"' in value or "{%" in value or "{{" in value:
+    if any(token in value for token in ('"', "{%", "{{", "<", ">")):
         return None
     return f'"{value}"'
 
@@ -90,12 +99,22 @@ def replacement(match: re.Match[str]) -> str:
     )
 
 
+def validate_existing_includes(source: str, path: Path) -> None:
+    for match in CTA_INCLUDE_RE.finditer(source):
+        args = match.group("args")
+        if "<" in args or ">" in args or "|safe" in args:
+            raise RuntimeError(
+                f"Unsafe/rich page CTA include found in {path.name}; keep rich markup inline."
+            )
+
+
 def main() -> None:
     total = 0
     combined_after = []
     for path in sorted(PAGES_DIR.glob("*.html")):
         source = path.read_text(encoding="utf-8")
         updated, count = PAGE_CTA_RE.subn(replacement, source)
+        validate_existing_includes(updated, path)
         if updated != source:
             path.write_text(updated, encoding="utf-8")
         combined_after.append(updated)
