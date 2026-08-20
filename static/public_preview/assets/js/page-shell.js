@@ -13,6 +13,59 @@
     ['wordpress.html', 'websites.html#capabilities'],
   ]);
 
+  const productionOrigin = 'https://ibtikartech.co';
+  const previewOrigin = 'https://ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/';
+
+  const normalizeHomepageLegacyShell = () => {
+    if (!document.body.classList.contains('source-home')) return;
+
+    [...document.body.childNodes].forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent?.includes('Ibtikar Tech Homepage V7')) {
+        node.remove();
+      }
+    });
+
+    document.querySelector('body.source-home > .announcement')?.remove();
+    document.querySelector('body.source-home > .skip-link')?.remove();
+  };
+
+  const normalizeProductionMetadata = () => {
+    const robots = document.querySelector('meta[name="robots"]')?.content?.toLowerCase() || '';
+    const indexable = !robots.includes('noindex');
+    const canonicalPath = pathname === 'index.html' || pathname === '' ? '/' : `/${pathname}`;
+    const canonicalUrl = `${productionOrigin}${canonicalPath}`;
+
+    if (indexable) {
+      let canonical = document.querySelector('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.rel = 'canonical';
+        document.head.appendChild(canonical);
+      }
+      canonical.href = canonicalUrl;
+
+      let ogUrl = document.querySelector('meta[property="og:url"]');
+      if (!ogUrl) {
+        ogUrl = document.createElement('meta');
+        ogUrl.setAttribute('property', 'og:url');
+        document.head.appendChild(ogUrl);
+      }
+      ogUrl.content = canonicalUrl;
+    }
+
+    document.querySelectorAll('script[type="application/ld+json"]').forEach((script) => {
+      if (script.textContent?.includes(previewOrigin)) {
+        script.textContent = script.textContent.replaceAll(previewOrigin, `${productionOrigin}/`);
+      }
+    });
+  };
+
+  normalizeProductionMetadata();
+  normalizeHomepageLegacyShell();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', normalizeHomepageLegacyShell, { once: true });
+  }
+
   let section = document.body.dataset.section || '';
   document.body.dataset.page = pageKey;
   if (productPages.has(pathname)) section = 'products';
