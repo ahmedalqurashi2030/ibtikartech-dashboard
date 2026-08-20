@@ -7,7 +7,6 @@ from django.urls import reverse
 
 from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
 
-
 PLATFORM_FAMILY_PAGES = (
     "websites.html",
     "brand-content.html",
