@@ -76,6 +76,54 @@ def patch_runtime_assets(assets_dir: Path) -> None:
             path.write_text(updated, encoding="utf-8")
 
 
+def patch_dashboard_journey_alignment(assets_dir: Path) -> None:
+    """Keep the approved Journey film aligned with the visual reference.
+
+    The first narrative beat remains available, but the visual timeline gets a
+    controlled lead so the large identity/browser composition appears earlier,
+    matching the approved homepage rhythm.
+    """
+    js_path = assets_dir / "js" / "source-home.js"
+    js = js_path.read_text(encoding="utf-8")
+    old_progress = '''  const getProgress=()=>{
+    const rect=story.getBoundingClientRect();
+    const scrollable=Math.max(1,story.offsetHeight-innerHeight);
+    return clamp((-rect.top)/scrollable);
+  };'''
+    new_progress = '''  // JOURNEY_REFERENCE_ALIGNMENT: preserve the narrative, but advance the
+  // cinematic composition slightly so the identity/browser scene arrives at
+  // the same visual moment as the approved reference.
+  const getProgress=()=>{
+    const rect=story.getBoundingClientRect();
+    const scrollable=Math.max(1,story.offsetHeight-innerHeight);
+    const raw=clamp((-rect.top)/scrollable);
+    const lead=.22;
+    return clamp(lead+raw*(1-lead));
+  };'''
+    if 'JOURNEY_REFERENCE_ALIGNMENT' not in js:
+        if old_progress not in js:
+            raise RuntimeError('Journey progress engine changed; refusing unsafe patch.')
+        js = js.replace(old_progress, new_progress, 1)
+        js_path.write_text(js, encoding="utf-8")
+
+    css_path = assets_dir / "css" / "pages" / "source-home.css"
+    css = css_path.read_text(encoding="utf-8")
+    css_marker = 'DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20'
+    if css_marker not in css:
+        css += """
+
+/* DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20
+   Keep the caption block slightly higher on desktop so the large visual
+   composition owns the center of the viewport, matching the approved frame. */
+@media (min-width:761px){
+  body.source-home #journey .cinematic-story__captions{
+    bottom:clamp(96px,15vh,156px);
+  }
+}
+"""
+        css_path.write_text(css, encoding="utf-8")
+
+
 def resolve_source_commit(source_root: Path, explicit_commit: str | None) -> str:
     if explicit_commit:
         return explicit_commit
@@ -126,6 +174,7 @@ def import_frontend(
         shutil.rmtree(assets_dir)
     shutil.copytree(source_assets, assets_dir)
     patch_runtime_assets(assets_dir)
+    patch_dashboard_journey_alignment(assets_dir)
 
     imported_pages = []
     for page_name in REQUIRED_PAGES:
