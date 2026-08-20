@@ -1,0 +1,745 @@
+/*
+ * Ibtikar Tech — Section Layout Refinement V2
+ * Final, additive RTL-first pass for the homepage film, service carousels,
+ * ecommerce service discovery, and related-service navigation.
+ * No backend behavior or content model changes.
+ */
+
+/* --------------------------------------------------------------------------
+   HOMEPAGE / SCROLL FILM
+   Keep the cinematic sequence, but present it as a contained product-quality
+   panel instead of a full-bleed viewport wall on desktop.
+   -------------------------------------------------------------------------- */
+@media (min-width: 821px) {
+  html body.source-home[data-page="index"] #journey.cinematic-story {
+    height: 215vh !important;
+    min-height: 1400px !important;
+    background: transparent !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-story__stage {
+    width: min(calc(100% - 40px), 1180px) !important;
+    height: min(760px, calc(100svh - 128px)) !important;
+    min-height: 600px !important;
+    top: 104px !important;
+    margin-inline: auto !important;
+    border: 1px solid rgba(255, 255, 255, .075) !important;
+    border-radius: 26px !important;
+    background: #030611 !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, .24) !important;
+    overflow: hidden !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-story__top {
+    top: 24px !important;
+    right: 28px !important;
+    left: 28px !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-story__index {
+    font-size: 9px !important;
+    letter-spacing: .16em !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-story__captions {
+    right: clamp(30px, 4vw, 58px) !important;
+    bottom: clamp(54px, 8vh, 80px) !important;
+    width: min(43%, 450px) !important;
+    min-height: 154px !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-cap .cap-no {
+    margin-bottom: 10px !important;
+    font-size: 9px !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-cap h3 {
+    margin-bottom: 10px !important;
+    font-size: clamp(28px, 3vw, 42px) !important;
+    line-height: 1.12 !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-cap p {
+    max-width: 43ch !important;
+    font-size: clamp(12px, 1vw, 14px) !important;
+    line-height: 1.82 !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-story__rail {
+    left: 24px !important;
+    height: min(42vh, 330px) !important;
+    gap: 12px !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-story__cue {
+    bottom: 14px !important;
+    font-size: 9px !important;
+  }
+
+  html body.source-home[data-page="index"] #journey .cinematic-story__final-action {
+    bottom: 20px !important;
+    padding: 9px 13px !important;
+    border-radius: 10px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   HOMEPAGE / SERVICES CAROUSEL
+   Right-aligned title + left controls on one visual row, with a smaller,
+   denser card system that shows more choices without feeling oversized.
+   -------------------------------------------------------------------------- */
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider {
+  padding: clamp(70px, 6.5vw, 92px) 0 clamp(76px, 7vw, 98px) !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-deck {
+  width: min(calc(100% - 40px), 1180px) !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-deck .section-heading {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto auto !important;
+  align-items: center !important;
+  column-gap: clamp(24px, 4vw, 54px) !important;
+  row-gap: 5px !important;
+  margin: 0 0 26px !important;
+  padding: 0 !important;
+  text-align: start !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .section-heading .section-kicker {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .section-heading h2 {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  max-width: 650px !important;
+  margin: 4px 0 0 !important;
+  font-size: clamp(30px, 3.35vw, 46px) !important;
+  line-height: 1.14 !important;
+  letter-spacing: -.025em !important;
+}
+
+html body.source-home[data-page="index"] #services .home-services-slider__toolbar {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+  justify-self: end !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+
+html body.source-home[data-page="index"] #services .home-services-slider__counter {
+  min-width: 66px !important;
+  gap: 4px !important;
+  font-size: 10px !important;
+}
+
+html body.source-home[data-page="index"] #services .home-services-slider__counter strong {
+  font-size: 16px !important;
+}
+
+html body.source-home[data-page="index"] #services .home-services-slider__buttons {
+  gap: 6px !important;
+}
+
+html body.source-home[data-page="index"] #services .home-services-slider__button {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 11px !important;
+  font-size: 18px !important;
+  box-shadow: none !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-track {
+  gap: 12px !important;
+  padding-top: 4px !important;
+  padding-bottom: 18px !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card {
+  flex: 0 0 clamp(282px, 29vw, 350px) !important;
+  padding: 15px !important;
+  border-radius: 20px !important;
+  opacity: .88 !important;
+  transform: none !important;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, .14) !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card.is-active {
+  opacity: 1 !important;
+  transform: none !important;
+  box-shadow: 0 20px 52px rgba(0, 0, 0, .2) !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card__scene {
+  height: clamp(168px, 17vw, 205px) !important;
+  margin-bottom: 15px !important;
+  border-radius: 15px !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card small {
+  font-size: 9px !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card h3 {
+  margin: 7px 0 5px !important;
+  font-size: clamp(21px, 1.9vw, 27px) !important;
+  line-height: 1.25 !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card p {
+  margin: 0 0 9px !important;
+  font-size: 12.5px !important;
+  line-height: 1.75 !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card .chips {
+  gap: 5px !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card .chips span {
+  padding: 5px 7px !important;
+  font-size: 8.5px !important;
+}
+
+html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .home-service-mobile-action {
+  margin-top: 13px !important;
+  font-size: 11px !important;
+}
+
+/* --------------------------------------------------------------------------
+   SERVICES & SOLUTIONS / FAST DISCOVERY
+   Use the same title-controls-card rhythm as the homepage carousel.
+   -------------------------------------------------------------------------- */
+html body.source-services .fast-discovery-slider {
+  padding: clamp(68px, 6vw, 86px) 0 clamp(70px, 6vw, 88px) !important;
+}
+
+html body.source-services .fast-discovery-slider .strategy-shell {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto auto !important;
+  align-items: end !important;
+  column-gap: clamp(24px, 4vw, 52px) !important;
+}
+
+html body.source-services .fast-discovery-slider .strategy-head {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  max-width: 650px !important;
+  margin: 0 0 22px !important;
+  text-align: start !important;
+}
+
+html body.source-services .fast-discovery-slider .strategy-head h2 {
+  max-width: 620px !important;
+  margin-top: 9px !important;
+  font-size: clamp(30px, 3.45vw, 44px) !important;
+  line-height: 1.16 !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-controls {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  justify-self: end !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  margin: 0 0 22px !important;
+  direction: ltr !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-controls__status {
+  gap: 4px !important;
+  font-size: 10px !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-controls__status b {
+  font-size: 17px !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-controls__actions {
+  gap: 6px !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-controls__actions button {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 11px !important;
+  box-shadow: none !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-track {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  gap: 12px !important;
+  padding: 3px 2px 16px !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide {
+  flex: 0 0 clamp(270px, 27vw, 320px) !important;
+  min-height: 420px !important;
+  padding: 13px 13px 17px !important;
+  border-radius: 20px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide.is-active {
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .15) !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide:hover {
+  transform: translateY(-2px) !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide__image {
+  height: 166px !important;
+  margin: 10px 0 15px !important;
+  border-radius: 14px !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide h3 {
+  margin: 0 3px 6px !important;
+  font-size: 20px !important;
+  line-height: 1.32 !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide p {
+  margin-inline: 3px !important;
+  font-size: 12px !important;
+  line-height: 1.75 !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide__tags {
+  gap: 5px !important;
+  margin: 13px 3px 0 !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide__tags span {
+  padding: 4px 7px !important;
+  font-size: 8.5px !important;
+}
+
+html body.source-services .fast-discovery-slider .fast-discovery-slide > a {
+  margin: 15px 3px 0 !important;
+  padding-top: 13px !important;
+  font-size: 10.5px !important;
+}
+
+/* --------------------------------------------------------------------------
+   ECOMMERCE CATEGORY / SUBSERVICES
+   The six service paths become a calmer, denser 3-column matrix on desktop.
+   -------------------------------------------------------------------------- */
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro {
+  grid-template-columns: minmax(0, 1fr) minmax(250px, .62fr) !important;
+  gap: 24px 44px !important;
+  margin-bottom: 30px !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro h2 {
+  max-width: 620px !important;
+  font-size: clamp(30px, 3.4vw, 46px) !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card,
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card--featured {
+  border-radius: 16px !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card:hover {
+  transform: translateY(-2px) !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__media {
+  height: clamp(158px, 15vw, 190px) !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__body {
+  padding: 18px !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card h3 {
+  margin: 10px 0 7px !important;
+  font-size: clamp(21px, 1.8vw, 26px) !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__body > p {
+  margin-bottom: 14px !important;
+  font-size: 12.5px !important;
+  line-height: 1.75 !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__fit {
+  padding: 12px 0 !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__meta {
+  margin-top: 11px !important;
+}
+
+html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card__footer {
+  margin-top: 14px !important;
+  padding-top: 13px !important;
+}
+
+/* --------------------------------------------------------------------------
+   RELATED SERVICES / SERVICE DETAIL PAGES
+   Replace the loose pill strip with a compact decision rail. On mobile it
+   remains horizontally swipeable, keeping the interaction useful and tidy.
+   -------------------------------------------------------------------------- */
+html body.service-detail-page .related-nav {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  flex-wrap: initial !important;
+  gap: 10px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+html body.service-detail-page .related-nav a {
+  min-height: 70px !important;
+  padding: 13px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  border: 1px solid var(--sd-line, var(--ibt-border)) !important;
+  border-radius: 14px !important;
+  background: color-mix(in srgb, var(--ibt-surface) 84%, transparent) !important;
+  color: var(--ibt-text) !important;
+  font-size: 12px !important;
+  font-weight: 850 !important;
+  line-height: 1.55 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body.service-detail-page .related-nav a::after {
+  content: "←";
+  flex: none;
+  color: var(--ibt-cyan);
+  font-size: 14px;
+}
+
+html body.service-detail-page .related-nav a:hover,
+html body.service-detail-page .related-nav a:focus-visible {
+  border-color: color-mix(in srgb, var(--ibt-cyan) 30%, var(--ibt-border)) !important;
+  background: color-mix(in srgb, var(--ibt-cyan) 5%, var(--ibt-surface)) !important;
+  color: var(--ibt-text) !important;
+  transform: none !important;
+}
+
+/* Rich related cards used by the product-page optimization service. */
+html body.service-detail-page .product-related-section .related-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+html body.service-detail-page .product-related-section .related-grid > article {
+  min-width: 0 !important;
+  padding: 12px 12px 15px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border: 1px solid var(--sd-line, var(--ibt-border)) !important;
+  border-radius: 17px !important;
+  background: color-mix(in srgb, var(--ibt-surface) 86%, transparent) !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  transform: none !important;
+}
+
+html body.service-detail-page .product-related-section .related-grid > article:hover {
+  border-color: color-mix(in srgb, var(--ibt-cyan) 28%, var(--ibt-border)) !important;
+  transform: translateY(-2px) !important;
+}
+
+html body.service-detail-page .product-related-section .related-grid img {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 10 !important;
+  margin: 0 0 13px !important;
+  display: block !important;
+  object-fit: cover !important;
+  border-radius: 12px !important;
+  background: #071025 !important;
+}
+
+html body.service-detail-page .product-related-section .related-grid article > span {
+  color: var(--ibt-blue) !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+}
+
+html body.service-detail-page .product-related-section .related-grid h3 {
+  margin: 7px 0 6px !important;
+  font-size: 18px !important;
+  line-height: 1.35 !important;
+}
+
+html body.service-detail-page .product-related-section .related-grid p {
+  margin: 0 !important;
+  color: var(--ibt-muted) !important;
+  font-size: 11.5px !important;
+  line-height: 1.75 !important;
+}
+
+html body.service-detail-page .product-related-section .related-grid a {
+  margin-top: auto !important;
+  padding-top: 13px !important;
+  border-top: 1px solid var(--sd-line, var(--ibt-border)) !important;
+  color: var(--ibt-cyan) !important;
+  font-size: 10.5px !important;
+  font-weight: 900 !important;
+}
+
+/* Category pages use the same visual grammar for their related-service rails. */
+html body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .related-nav {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  flex-wrap: initial !important;
+  gap: 10px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .related-nav a {
+  min-height: 66px !important;
+  padding: 12px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  border: 1px solid var(--svc-line, var(--ibt-border)) !important;
+  border-radius: 13px !important;
+  background: color-mix(in srgb, var(--ibt-surface) 82%, transparent) !important;
+  color: var(--ibt-text) !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+html body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .related-nav a::after {
+  content: "←";
+  flex: none;
+  color: var(--ibt-page-accent);
+}
+
+html body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .related-nav a:hover {
+  border-color: color-mix(in srgb, var(--ibt-page-accent) 28%, var(--ibt-border)) !important;
+  background: color-mix(in srgb, var(--ibt-page-accent) 5%, var(--ibt-surface)) !important;
+  color: var(--ibt-text) !important;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 1040px) and (min-width: 821px) {
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card {
+    flex-basis: clamp(280px, 36vw, 330px) !important;
+  }
+
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html body.service-detail-page .product-related-section .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 820px) {
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider {
+    padding: 60px 0 68px !important;
+  }
+
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-deck {
+    width: 100% !important;
+  }
+
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-deck .section-heading {
+    display: block !important;
+    margin-bottom: 20px !important;
+    padding-inline: 20px !important;
+  }
+
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .section-heading h2 {
+    max-width: 560px !important;
+    margin-top: 6px !important;
+    font-size: clamp(28px, 8vw, 38px) !important;
+  }
+
+  html body.source-home[data-page="index"] #services .home-services-slider__toolbar {
+    width: 100% !important;
+    margin-top: 15px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-track {
+    gap: 11px !important;
+    padding: 4px 20px 16px !important;
+  }
+
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card {
+    flex-basis: min(80vw, 330px) !important;
+    padding: 14px !important;
+    border-radius: 19px !important;
+  }
+
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card__scene {
+    height: 180px !important;
+  }
+
+  html body.source-services .fast-discovery-slider {
+    padding: 62px 0 66px !important;
+  }
+
+  html body.source-services .fast-discovery-slider .strategy-shell {
+    display: block !important;
+  }
+
+  html body.source-services .fast-discovery-slider .strategy-head {
+    max-width: none !important;
+    margin-bottom: 15px !important;
+    text-align: start !important;
+  }
+
+  html body.source-services .fast-discovery-slider .strategy-head h2 {
+    font-size: clamp(28px, 8vw, 38px) !important;
+  }
+
+  html body.source-services .fast-discovery-slider .fast-discovery-controls {
+    margin: 0 0 14px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  html body.source-services .fast-discovery-slider .fast-discovery-track {
+    gap: 11px !important;
+  }
+
+  html body.source-services .fast-discovery-slider .fast-discovery-slide {
+    flex-basis: min(82vw, 320px) !important;
+    min-height: 405px !important;
+  }
+
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro {
+    display: block !important;
+    margin-bottom: 24px !important;
+  }
+
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-subservices__intro > p {
+    margin-top: 12px !important;
+  }
+
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-grid {
+    display: flex !important;
+    gap: 11px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 2px 0 14px !important;
+    scroll-snap-type: x mandatory !important;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card,
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card--featured {
+    flex: 0 0 min(82vw, 330px) !important;
+    scroll-snap-align: start !important;
+  }
+
+  html body.service-detail-page .related-nav,
+  html body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .related-nav {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 9px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 2px 0 10px !important;
+    scroll-snap-type: x proximity !important;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  html body.service-detail-page .related-nav::-webkit-scrollbar,
+  html body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .related-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  html body.service-detail-page .related-nav a,
+  html body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .related-nav a {
+    flex: 0 0 min(76vw, 280px) !important;
+    scroll-snap-align: start !important;
+  }
+
+  html body.service-detail-page .product-related-section .related-grid {
+    display: flex !important;
+    gap: 10px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-bottom: 12px !important;
+    scroll-snap-type: x proximity !important;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  html body.service-detail-page .product-related-section .related-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  html body.service-detail-page .product-related-section .related-grid > article {
+    flex: 0 0 min(80vw, 310px) !important;
+    scroll-snap-align: start !important;
+  }
+}
+
+@media (max-width: 520px) {
+  html body.source-home[data-page="index"] #services .home-services-slider__button,
+  html body.source-services .fast-discovery-slider .fast-discovery-controls__actions button {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card {
+    flex-basis: min(84vw, 315px) !important;
+  }
+
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card,
+  html body.source-ecommerce[data-page="ecommerce"] #subservices .commerce-service-card--featured {
+    flex-basis: min(86vw, 315px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body.source-home[data-page="index"] #services .services-mobile-card,
+  html body.source-services .fast-discovery-slider .fast-discovery-slide,
+  html body.service-detail-page .related-nav a,
+  html body.service-detail-page .product-related-section .related-grid > article {
+    transition: none !important;
+    transform: none !important;
+  }
+}
