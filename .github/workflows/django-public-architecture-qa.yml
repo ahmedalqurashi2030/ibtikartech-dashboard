@@ -66,6 +66,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
+          # Every public page owns only page-specific blocks and inherits the
+          # global document shell. Shared shell fragments must never be copied
+          # back into individual pages.
           for page in templates/public_preview/pages/*.html; do
             grep -q 'extends "public_preview/base.html"' "$page"
             ! grep -q 'id="ibtikarSiteHeader"' "$page"
@@ -73,12 +77,29 @@ jobs:
             ! grep -q 'public_preview/components/' "$page"
           done
 
-          grep -q 'id="ibtikarSiteHeader"' templates/public_preview/base.html
-          grep -q 'class="ibt-shell-footer"' templates/public_preview/base.html
-          ! grep -q 'public_preview/components/' templates/public_preview/base.html
+          # base.html composes the reusable shell through Django includes.
+          grep -q 'include "public_preview/components/document_head.html"' templates/public_preview/base.html
+          grep -q 'include "public_preview/components/header.html"' templates/public_preview/base.html
+          grep -q 'include "public_preview/components/footer.html"' templates/public_preview/base.html
+          ! grep -q 'id="ibtikarSiteHeader"' templates/public_preview/base.html
+          ! grep -q 'class="ibt-shell-footer"' templates/public_preview/base.html
 
-          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
-          ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
+          # Header owns desktop navigation and composes the shared mobile menu;
+          # footer remains a single reusable component for every route.
+          grep -q 'id="ibtikarSiteHeader"' templates/public_preview/components/header.html
+          grep -q 'include "public_preview/components/mobile_menu.html"' templates/public_preview/components/header.html
+          grep -q 'id="ibtikarMobileMenu"' templates/public_preview/components/mobile_menu.html
+          grep -q 'class="ibt-shell-footer"' templates/public_preview/components/footer.html
+
+          # Progressive enhancement must switch out of no-js before CSS can
+          # hide JS-owned controls such as the desktop mega-menu toggle.
+          grep -q "classList.remove('no-js')" templates/public_preview/components/document_head.html
+          grep -q "classList.add('js-ready')" templates/public_preview/components/document_head.html
+
+          # Canonical navigation must be native Django URLs everywhere in the
+          # reusable shell and page content; legacy .html URLs are redirects only.
+          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components
+          ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages templates/public_preview/components
 
           # Browser routes must resolve through explicit Python view functions.
           ! grep -n 'preview_page' apps/public_preview/urls.py
