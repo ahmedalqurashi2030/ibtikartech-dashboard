@@ -1,1 +1,13 @@
-# intentionally absent from main; section audit only
+name: Production Read-Only Diagnostics Disabled
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo disabled
