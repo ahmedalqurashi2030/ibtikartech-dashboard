@@ -45,6 +45,7 @@ def test_services_public_index_is_clean_and_database_catalog_is_preserved(client
     catalog_response = client.get(reverse("services:catalog"))
 
     assert reverse("services:index") == "/services/"
+    assert reverse("services:catalog") == "/services/catalog/"
     assert public_response.status_code == 200
     assert catalog_response.status_code == 200
 
@@ -85,3 +86,14 @@ def test_repeated_public_structures_use_shared_includes():
 
     assert combined.count('include "public_preview/components/breadcrumbs.html"') >= 3
     assert combined.count('include "public_preview/components/section_heading.html"') >= 3
+    assert combined.count('include "public_preview/components/page_cta.html"') >= 1
+
+
+def test_shared_public_components_keep_django_autoescaping_enabled():
+    components_dir = Path(settings.BASE_DIR) / "templates" / "public_preview" / "components"
+    reusable = ("breadcrumbs.html", "section_heading.html", "page_cta.html")
+
+    for filename in reusable:
+        source = (components_dir / filename).read_text(encoding="utf-8")
+        assert "|safe" not in source
+        assert "{% autoescape off %}" not in source
