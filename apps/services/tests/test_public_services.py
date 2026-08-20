@@ -1,5 +1,6 @@
-import pytest
 from django.urls import reverse
+
+import pytest
 
 
 EXPLICIT_SERVICE_PAGES = (
