@@ -1,7 +1,7 @@
 from django.http import HttpResponseNotFound
 from django.urls import path, re_path
 
-from apps.public_preview.views import preview_page
+from . import public_views
 
 app_name = "services"
 
@@ -11,46 +11,21 @@ def _reject_unknown_public_service(request):
     return HttpResponseNotFound()
 
 
-# Public service pages are explicit website templates. They intentionally do not
-# resolve Service models or database slugs: every route is named and controlled
-# by the frontend architecture so section structure can be standardized safely.
 urlpatterns = [
-    path("", preview_page, {"page_name": "services.html"}, name="index"),
-    path(
-        "store-launch/",
-        preview_page,
-        {"page_name": "store-launch.html"},
-        name="store-launch",
-    ),
+    path("", public_views.services, name="index"),
+    path("store-launch/", public_views.store_launch, name="store-launch"),
     path(
         "storefront-customization/",
-        preview_page,
-        {"page_name": "storefront-customization.html"},
+        public_views.storefront_customization,
         name="storefront-customization",
     ),
-    path(
-        "store-redesign/",
-        preview_page,
-        {"page_name": "store-redesign.html"},
-        name="store-redesign",
-    ),
+    path("store-redesign/", public_views.store_redesign, name="store-redesign"),
     path(
         "product-page-optimization/",
-        preview_page,
-        {"page_name": "product-page-optimization.html"},
+        public_views.product_page_optimization,
         name="product-page-optimization",
     ),
-    path(
-        "ecommerce-growth/",
-        preview_page,
-        {"page_name": "ecommerce-growth.html"},
-        name="ecommerce-growth",
-    ),
-    path(
-        "ecommerce-support/",
-        preview_page,
-        {"page_name": "ecommerce-support.html"},
-        name="ecommerce-support",
-    ),
+    path("ecommerce-growth/", public_views.ecommerce_growth, name="ecommerce-growth"),
+    path("ecommerce-support/", public_views.ecommerce_support, name="ecommerce-support"),
     re_path(r"^.*$", _reject_unknown_public_service),
 ]
