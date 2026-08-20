@@ -40,14 +40,6 @@ jobs:
       - name: Django system checks
         run: python manage.py check
 
-      - name: Show Ruff import fix diff
-        shell: bash
-        run: |
-          set -euo pipefail
-          ruff check apps/public_preview/tests/test_preview_routes.py apps/services/tests/test_public_services.py --select I001 --fix || true
-          git diff -- apps/public_preview/tests/test_preview_routes.py apps/services/tests/test_public_services.py
-          exit 1
-
       - name: Ruff
         run: ruff check apps config tests --output-format=github
 
