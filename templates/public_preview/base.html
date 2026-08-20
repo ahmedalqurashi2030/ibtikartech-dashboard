@@ -4,6 +4,7 @@
 <head>
   {% include "public_preview/components/document_head.html" %}
   {% block head %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/section-layout-refinement-v2.css' %}">
 </head>
 <body data-page="{{ page_key|default:'index' }}"{% block body_attrs %}{% endblock %}>
   <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
