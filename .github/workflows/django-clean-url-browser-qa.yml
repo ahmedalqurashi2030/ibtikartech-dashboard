@@ -110,23 +110,12 @@ jobs:
             test "$code" = "200" || { echo "$code $asset expected 200"; exit 1; }
           done
 
+          homepage="$(curl --fail --silent --show-error http://127.0.0.1:8000/)"
+          grep -Fq 'data-ibt-mega-toggle' <<<"$homepage"
+          grep -Fq 'aria-controls="solutionsServicesMega"' <<<"$homepage"
+
       - name: Checkout frontend QA harness
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikar-frontend-qa
-
-      - name: Deep interaction QA through Django redirects
-        working-directory: /tmp/ibtikar-frontend-qa
-        env:
-          BASE_URL: http://127.0.0.1:8000
-        shell: bash
-        run: |
-          set +e
-          for attempt in 1 2 3; do
-            node scripts/interaction-qa.cjs
-            status=$?
-            if [ "$status" -eq 0 ]; then exit 0; fi
-            if [ "$status" -eq 75 ] && [ "$attempt" -lt 3 ]; then sleep 2; continue; fi
-            exit "$status"
-          done
 
       - name: Headless Chrome on clean output with page-specific assertions
         working-directory: /tmp/ibtikar-frontend-qa
@@ -143,13 +132,32 @@ jobs:
         shell: bash
         run: |
           set +e
+          last_status=1
           for attempt in 1 2 3; do
             node scripts/browser-qa-ci.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
-            if [ "$status" -eq 75 ] && [ "$attempt" -lt 3 ]; then sleep 2; continue; fi
-            exit "$status"
+            last_status="$status"
+            if [ "$attempt" -lt 3 ]; then sleep 2; fi
           done
+          exit "$last_status"
+
+      - name: Deep interaction QA through Django redirects
+        working-directory: /tmp/ibtikar-frontend-qa
+        env:
+          BASE_URL: http://127.0.0.1:8000
+        shell: bash
+        run: |
+          set +e
+          last_status=1
+          for attempt in 1 2 3; do
+            node scripts/interaction-qa.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then exit 0; fi
+            last_status="$status"
+            if [ "$attempt" -lt 3 ]; then sleep 2; fi
+          done
+          exit "$last_status"
 
       - name: Stop Django server
         if: always()
