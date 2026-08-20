@@ -1,27 +1,137 @@
 /*
- * Ibtikar Tech — Shared Related Service Cards
- * Restores the image-first related-services pattern across service category
- * and service detail pages. Frontend-only; no backend/content-model changes.
+ * Ibtikar Tech — Shared Related Service Cards Carousel
+ * Image-first cards across service/category pages with swipe, mouse-drag,
+ * keyboard navigation and explicit previous/next controls.
  */
+
+.service-related-carousel__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 22px 40px;
+  margin-bottom: 26px;
+}
+
+.service-related-carousel__header > :is(.service-detail-heading, .platform-heading) {
+  margin: 0 !important;
+  min-width: 0;
+}
+
+.service-related-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 11px;
+  direction: ltr;
+  flex: none;
+}
+
+.service-related-carousel__status {
+  min-width: 68px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  color: color-mix(in srgb, var(--ibt-muted) 84%, transparent);
+  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .08em;
+}
+
+.service-related-carousel__status strong {
+  color: var(--ibt-text);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.service-related-carousel__buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.service-related-carousel__buttons button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--ibt-border) 90%, transparent);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--ibt-surface) 82%, transparent);
+  color: var(--ibt-text);
+  font-size: 18px;
+  line-height: 1;
+  box-shadow: none;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, opacity .2s ease;
+}
+
+.service-related-carousel__buttons button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ibt-cyan) 34%, var(--ibt-border));
+  background: color-mix(in srgb, var(--ibt-cyan) 6%, var(--ibt-surface));
+}
+
+.service-related-carousel__buttons button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ibt-cyan) 34%, transparent);
+  outline-offset: 3px;
+}
+
+.service-related-carousel__buttons button:disabled {
+  opacity: .32;
+  cursor: not-allowed;
+  transform: none;
+}
 
 .service-related-cards {
   --related-line: color-mix(in srgb, var(--ibt-border) 78%, transparent);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 3px 1px 16px;
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  direction: rtl;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1px;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  touch-action: pan-x pan-y;
+}
+
+.service-related-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.service-related-cards:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--ibt-cyan) 40%, transparent);
+  outline-offset: 5px;
+  border-radius: 18px;
+}
+
+.service-related-cards.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
 }
 
 .service-related-card {
+  flex: 0 0 calc((100% - 28px) / 3);
   min-width: 0;
   overflow: hidden;
+  direction: rtl;
+  scroll-snap-align: start;
   border: 1px solid var(--related-line);
   border-radius: 18px;
   background: color-mix(in srgb, var(--ibt-surface) 88%, transparent);
   box-shadow: none;
-  transition: transform .22s var(--ibt-ease, ease), border-color .22s ease, box-shadow .22s ease;
+  opacity: .88;
+  transition: transform .22s var(--ibt-ease, ease), border-color .22s ease, box-shadow .22s ease, opacity .22s ease;
+}
+
+.service-related-card.is-visible-slide {
+  opacity: 1;
 }
 
 .service-related-card:hover {
@@ -134,13 +244,6 @@
   transform: translateX(-3px);
 }
 
-/* Keep the section heading aligned with the same editorial rhythm used by
-   the ecommerce service cards, rather than centering it as a detached block. */
-body.service-detail-page .service-related-cards + *,
-body.service-detail-page .service-related-cards {
-  position: relative;
-}
-
 body.service-detail-page .service-detail-section:has(.service-related-cards) .service-detail-heading,
 body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"], [data-page="custom-systems"]) .platform-section:has(.service-related-cards) .platform-heading {
   max-width: 720px !important;
@@ -149,8 +252,8 @@ body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"
 }
 
 @media (max-width: 1040px) and (min-width: 821px) {
-  .service-related-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .service-related-card {
+    flex-basis: calc((100% - 14px) / 2);
   }
 
   .service-related-card__media {
@@ -159,26 +262,23 @@ body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"
 }
 
 @media (max-width: 820px) {
-  .service-related-cards {
-    display: flex;
-    gap: 11px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 2px 0 14px;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 0;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+  .service-related-carousel__header {
+    display: block;
+    margin-bottom: 20px;
   }
 
-  .service-related-cards::-webkit-scrollbar {
-    display: none;
+  .service-related-carousel__controls {
+    margin-top: 16px;
+    justify-content: space-between;
+  }
+
+  .service-related-cards {
+    gap: 11px;
+    padding: 2px 0 14px;
   }
 
   .service-related-card {
     flex: 0 0 min(82vw, 330px);
-    scroll-snap-align: start;
     border-radius: 17px;
   }
 
@@ -196,6 +296,11 @@ body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"
 }
 
 @media (max-width: 520px) {
+  .service-related-carousel__buttons button {
+    width: 40px;
+    height: 40px;
+  }
+
   .service-related-card {
     flex-basis: min(86vw, 315px);
   }
@@ -208,13 +313,19 @@ body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"
 @media (prefers-reduced-motion: reduce) {
   .service-related-card,
   .service-related-card__media img,
-  .service-related-card__action b {
+  .service-related-card__action b,
+  .service-related-carousel__buttons button {
     transition: none !important;
   }
 
   .service-related-card:hover,
   .service-related-card:hover .service-related-card__media img,
-  .service-related-card:hover .service-related-card__action b {
+  .service-related-card:hover .service-related-card__action b,
+  .service-related-carousel__buttons button:hover {
     transform: none !important;
+  }
+
+  .service-related-cards {
+    scroll-behavior: auto !important;
   }
 }
