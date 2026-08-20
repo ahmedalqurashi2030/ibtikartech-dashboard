@@ -5,6 +5,16 @@ The approved frontend source remains the content authority. This post-import ste
 only changes document architecture and URLs: the global document shell moves to
 base.html, while every page keeps the complete HTML for all of its own sections.
 No section is replaced by a reusable include or database-backed model.
+
+Public child templates use one presentation contract:
+- ``{% extends \"public_preview/base.html\" %}``
+- page metadata in ``{% block head %}``
+- body attributes in ``{% block body_attrs %}``
+- all page sections and page-owned runtime in ``{% block body %}``
+
+There is intentionally no ``page_scripts`` block. Page-owned external scripts
+that used to live after the shared footer are moved to the end of ``body`` and
+marked ``defer`` so they execute only after the complete document has parsed.
 """
 
 from __future__ import annotations
@@ -16,7 +26,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES  # noqa: E402
+from apps.public_preview.manifest import (  # noqa: E402
+    PAGE_URL_NAMES,
+    PUBLIC_PAGE_ROUTES,
+    REQUIRED_PAGES,
+    SERVICE_PAGE_ROUTES,
+)
 
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
 PAGE_SHELL_JS = ROOT / "static" / "public_preview" / "assets" / "js" / "page-shell.js"
@@ -48,6 +63,12 @@ LOCAL_PAGE_ATTR_RE = re.compile(
     r'(?P<suffix>[?#][^"\']*)?(?P=quote)',
     re.IGNORECASE,
 )
+LOCAL_CLEAN_ATTR_RE = re.compile(
+    r'(?P<attr>href|action)=(?P<quote>["\'])'
+    r'(?P<path>/[^"\'?#]*)'
+    r'(?P<suffix>[?#][^"\']*)?(?P=quote)',
+    re.IGNORECASE,
+)
 CHARSET_RE = re.compile(r'<meta\s+charset=["\'][^"\']+["\']\s*/?>', re.IGNORECASE)
 VIEWPORT_RE = re.compile(
     r'<meta\s+name=["\']viewport["\'][^>]*>', re.IGNORECASE
@@ -56,12 +77,30 @@ IMPORT_COMMENT_RE = re.compile(
     r'^\s*\{#\s*TEMPORARY FRONTEND PREVIEW:.*?#\}\s*', re.DOTALL
 )
 DATA_PAGE_RE = re.compile(r'\s+data-page=(?:"[^"]*"|\'[^\']*\')', re.IGNORECASE)
+SCRIPT_OPEN_RE = re.compile(r"<script(?P<attrs>[^>]*)>", re.IGNORECASE)
+
+BLOCK_END = "{% endblock %}"
+BODY_BLOCK_OPEN = "{% block body %}"
+CONTENT_BLOCK_OPEN = "{% block content %}"
+PAGE_SCRIPTS_BLOCK_OPEN = "{% block page_scripts %}"
+
+
+def _known_clean_paths() -> dict[str, str]:
+    mapping: dict[str, str] = {"/services/": "services:index"}
+    for page_name, (route, _view_name) in PUBLIC_PAGE_ROUTES.items():
+        mapping[f"/{route}" if route else "/"] = PAGE_URL_NAMES[page_name]
+    for page_name, (route, _view_name) in SERVICE_PAGE_ROUTES.items():
+        mapping[f"/services/{route}"] = PAGE_URL_NAMES[page_name]
+    return mapping
+
+
+CLEAN_PATH_URL_NAMES = _known_clean_paths()
 
 
 def rewrite_named_urls(source: str) -> str:
-    """Replace local *.html href/action attributes with namespaced Django URLs."""
+    """Replace internal href/action targets with namespaced Django URLs."""
 
-    def replace(match: re.Match[str]) -> str:
+    def replace_legacy(match: re.Match[str]) -> str:
         page_name = match.group("page").lower()
         pattern_name = PAGE_URL_NAMES.get(page_name)
         if not pattern_name:
@@ -72,7 +111,40 @@ def rewrite_named_urls(source: str) -> str:
             f"{{% url '{pattern_name}' %}}{suffix}{match.group('quote')}"
         )
 
-    return LOCAL_PAGE_ATTR_RE.sub(replace, source)
+    def replace_clean(match: re.Match[str]) -> str:
+        pattern_name = CLEAN_PATH_URL_NAMES.get(match.group("path"))
+        if not pattern_name:
+            return match.group(0)
+        suffix = match.group("suffix") or ""
+        return (
+            f'{match.group("attr")}={match.group("quote")}'
+            f"{{% url '{pattern_name}' %}}{suffix}{match.group('quote')}"
+        )
+
+    source = LOCAL_PAGE_ATTR_RE.sub(replace_legacy, source)
+    return LOCAL_CLEAN_ATTR_RE.sub(replace_clean, source)
+
+
+def defer_external_scripts(source: str) -> str:
+    """Defer page-owned external scripts moved inside the body block.
+
+    This keeps their effective execution point after the full HTML document has
+    parsed, including the shared footer/runtime, while avoiding render blocking.
+    Async/module scripts keep their existing semantics.
+    """
+
+    def replace(match: re.Match[str]) -> str:
+        attrs = match.group("attrs")
+        lowered = attrs.lower()
+        if "src=" not in lowered:
+            return match.group(0)
+        if re.search(r"(?:^|\s)(?:defer|async)(?:\s|=|$)", lowered):
+            return match.group(0)
+        if re.search(r"\btype\s*=\s*([\"\'])module\1", lowered):
+            return match.group(0)
+        return f"<script{attrs} defer>"
+
+    return SCRIPT_OPEN_RE.sub(replace, source)
 
 
 def clean_head(head: str) -> str:
@@ -93,13 +165,57 @@ def remove_shared_shell(source: str) -> str:
     return updated.strip()
 
 
+def _block_bounds(source: str, opener: str) -> tuple[int, int, int, int] | None:
+    """Return opener/body/end bounds for one top-level Django template block."""
+    start = source.find(opener)
+    if start < 0:
+        return None
+    body_start = start + len(opener)
+    end = source.find(BLOCK_END, body_start)
+    if end < 0:
+        raise RuntimeError(f"Unclosed Django block: {opener}")
+    return start, body_start, end, end + len(BLOCK_END)
+
+
+def normalize_existing_child(source: str, page_name: str) -> str:
+    """Migrate an already-converted child template to the native body contract."""
+    updated = rewrite_named_urls(source)
+
+    scripts = ""
+    scripts_bounds = _block_bounds(updated, PAGE_SCRIPTS_BLOCK_OPEN)
+    if scripts_bounds:
+        start, body_start, end, block_end = scripts_bounds
+        scripts = updated[body_start:end].strip()
+        updated = (updated[:start].rstrip() + "\n" + updated[block_end:].lstrip()).rstrip() + "\n"
+
+    if CONTENT_BLOCK_OPEN in updated:
+        updated = updated.replace(CONTENT_BLOCK_OPEN, BODY_BLOCK_OPEN, 1)
+
+    body_bounds = _block_bounds(updated, BODY_BLOCK_OPEN)
+    if not body_bounds:
+        raise RuntimeError(f"Django body block missing: {page_name}")
+
+    if scripts:
+        scripts = defer_external_scripts(scripts)
+        _start, _body_start, body_end, _block_end = body_bounds
+        before = updated[:body_end].rstrip()
+        after = updated[body_end:]
+        updated = f"{before}\n\n{scripts}\n{after.lstrip()}"
+
+    if CONTENT_BLOCK_OPEN in updated:
+        raise RuntimeError(f"Legacy content block remains: {page_name}")
+    if PAGE_SCRIPTS_BLOCK_OPEN in updated or "page_scripts" in updated:
+        raise RuntimeError(f"Legacy page_scripts contract remains: {page_name}")
+
+    return updated
+
+
 def convert_page(page_name: str) -> None:
     path = PAGES_DIR / page_name
     source = path.read_text(encoding="utf-8")
 
     if source.lstrip().startswith('{% extends "public_preview/base.html" %}'):
-        # Still normalize named URLs so the script is idempotent after manual edits.
-        updated = rewrite_named_urls(source)
+        updated = normalize_existing_child(source, page_name)
         if updated != source:
             path.write_text(updated, encoding="utf-8")
         return
@@ -120,7 +236,10 @@ def convert_page(page_name: str) -> None:
     before_footer = body[: footer.start()]
     after_footer = body[footer.end() :]
     content = rewrite_named_urls(remove_shared_shell(before_footer))
-    scripts = rewrite_named_urls(after_footer.strip())
+    scripts = defer_external_scripts(rewrite_named_urls(after_footer.strip()))
+    body_payload = content.rstrip()
+    if scripts:
+        body_payload = f"{body_payload}\n\n{scripts}"
 
     child = (
         '{% extends "public_preview/base.html" %}\n\n'
@@ -130,11 +249,8 @@ def convert_page(page_name: str) -> None:
         "{% block body_attrs %}"
         f"{body_attrs}"
         "{% endblock %}\n\n"
-        "{% block content %}\n"
-        f"{content}\n"
-        "{% endblock %}\n\n"
-        "{% block page_scripts %}\n"
-        f"{scripts}\n"
+        "{% block body %}\n"
+        f"{body_payload}\n"
         "{% endblock %}\n"
     )
 
@@ -149,6 +265,9 @@ def convert_page(page_name: str) -> None:
 
     if "public_preview/components/" in child:
         raise RuntimeError(f"Section component include introduced unexpectedly: {page_name}")
+
+    if CONTENT_BLOCK_OPEN in child or "page_scripts" in child:
+        raise RuntimeError(f"Legacy child block introduced unexpectedly: {page_name}")
 
     unresolved = [
         match.group("page")
@@ -188,7 +307,7 @@ def main() -> None:
         convert_page(page_name)
     patch_page_shell_runtime()
     print(
-        f"Refactored {len(REQUIRED_PAGES)} public templates while preserving full page section HTML."
+        f"Refactored {len(REQUIRED_PAGES)} public templates with one native Django body block."
     )
 
 

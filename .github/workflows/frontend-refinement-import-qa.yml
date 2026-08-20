@@ -7,6 +7,7 @@ on:
       - "scripts/refactor_public_preview_templates.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_django_template_contract.py"
       - "scripts/verify_public_section_preservation.py"
       - "templates/public_preview/base.html"
       - "templates/public_preview/pages/product-page-optimization.html"
@@ -22,6 +23,7 @@ on:
       - "scripts/refactor_public_preview_templates.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_django_template_contract.py"
       - "scripts/verify_public_section_preservation.py"
       - "templates/public_preview/base.html"
       - "templates/public_preview/pages/product-page-optimization.html"
@@ -53,6 +55,7 @@ jobs:
           python -m py_compile scripts/refactor_public_preview_templates.py
           python -m py_compile scripts/normalize_public_preview_metadata.py
           python -m py_compile scripts/patch_public_runtime_accessibility.py
+          python -m py_compile scripts/verify_django_template_contract.py
           python -m py_compile scripts/verify_public_section_preservation.py
 
       - name: Verify committed refinement mirror
@@ -94,11 +97,14 @@ jobs:
           cp /tmp/ibtikar-inline-contracts/product-page-optimization.html \
             templates/public_preview/pages/product-page-optimization.html
 
-      - name: Apply Django public architecture without section components
+      - name: Apply native Django public template architecture
         run: |
           python scripts/refactor_public_preview_templates.py
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
+
+      - name: Verify native Django template contract
+        run: python scripts/verify_django_template_contract.py
 
       - name: Verify every approved section and content block survives import
         run: python scripts/verify_public_section_preservation.py --source /tmp/ibtikartech-source
@@ -109,6 +115,10 @@ jobs:
           set -euo pipefail
           for page in templates/public_preview/pages/*.html; do
             grep -q 'extends "public_preview/base.html"' "$page"
+            test "$(grep -c '{% block body %}' "$page")" -eq 1
+            ! grep -q '{% block content %}' "$page"
+            ! grep -q '{% block page_scripts %}' "$page"
+            ! grep -q 'page_scripts' "$page"
             ! grep -q 'id="ibtikarSiteHeader"' "$page"
             ! grep -q 'class="ibt-shell-footer"' "$page"
             ! grep -q 'public_preview/components/' "$page"

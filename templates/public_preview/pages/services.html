@@ -19,7 +19,7 @@
 
 {% block body_attrs %} class="approved-source-page source-services" data-section="services" data-approved-source="ai_studio_code - 2026-07-30T040101.270.html"{% endblock %}
 
-{% block content %}
+{% block body %}
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
 <a class="skip" href="#main">انتقل إلى المحتوى</a>
@@ -67,10 +67,8 @@
 <section class="cta" id="contact"><div class="container"><div class="cta-card reveal"><div class="cta-copy"><small>ابدأ من النتيجة التي تريدها</small><h2>دعنا نبني المسار المناسب لمشروعك.</h2><p>أرسل نشاطك وهدفك ووضعك الحالي، وسنقترح نقطة البداية والخدمات المطلوبة دون تعقيد.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}">استكشف حلول المتاجر</a></div></div></div></section>
 </main>
 <footer data-approved-legacy-shell hidden inert aria-hidden="true" class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a class="brand" href="#top"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية متكاملة تساعد المشاريع على الظهور والعمل والنمو.</p></div><div><h3>الخدمات</h3><a href="#services">المتاجر الإلكترونية</a><a href="#services">المواقع وصفحات الهبوط</a><a href="#services">التطبيقات والأنظمة</a><a href="#services">الهوية والمحتوى</a></div><div><h3>الحلول</h3><a href="#solutions">إطلاق متجر</a><a href="#solutions">حضور الشركات</a><a href="#solutions">النمو الرقمي</a><a href="#solutions">الحلول المخصصة</a></div><div><h3>ابدأ</h3><a href="#faq">الأسئلة الشائعة</a><a href="#contact">طلب عرض سعر</a><a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a></div></div><div class="footer-bottom"><span>© 2026 ابتكار تك. جميع الحقوق محفوظة.</span><span>استراتيجية · تصميم · تقنية · نمو</span></div></div></footer>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/source-services.js"></script>
+<script src="/static/public_preview/assets/js/source-services.js" defer></script>
 
-<script src="/static/public_preview/assets/js/approved-source.js"></script>
+<script src="/static/public_preview/assets/js/approved-source.js" defer></script>
 {% endblock %}

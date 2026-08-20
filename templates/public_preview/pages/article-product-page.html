@@ -7,7 +7,7 @@
 
 {% block body_attrs %} class="inner-page article-page" data-section="knowledge"{% endblock %}
 
-{% block content %}
+{% block body %}
 <div class="reading-progress" id="progressBar" aria-hidden="true"></div>
 
 
@@ -22,8 +22,6 @@
 <h2 id="measurement">قِس السلوك الذي يكشف المشكلة</h2><p>لا يكفي تتبع مشاهدة الصفحة والإضافة للسلة. حسب السؤال، قد تحتاج معرفة اختيار الخيارات، فتح دليل المقاسات، الوصول إلى معلومات الشحن، أو ظهور رسالة خطأ. اجمع أقل عدد أحداث يجيب عن فرضية واضحة.</p><div class="article-callout"><strong>مثال فرضية</strong><p>إذا كان الزوار يبدؤون اختيار المقاس لكن لا يضيفون للسلة، فافحص وضوح دليل المقاسات وحالات التوفر قبل تغيير لون الزر.</p></div>
 <div class="article-end"><h2>ابدأ بالمعلومة التي تمنع الشراء</h2><p>قبل إضافة قسم جديد، اسأل: أي تردد يعالجه؟ وهل يمكن معالجته بمحتوى أو ترتيب أو حالة أوضح؟ عندها يصبح التصميم وسيلة لاتخاذ القرار، لا مجرد واجهة جذابة.</p><a class="btn btn-primary" href="{% url 'services:product-page-optimization' %}">استكشف خدمة تحسين صفحة المنتج</a></div></div></div></section></article>
 <section class="related-articles"><div class="container"><div class="articles-heading"><div><span class="section-kicker">تابع القراءة</span><h2>أدلة مرتبطة بتجربة المتجر</h2></div></div><div class="articles-grid"><article class="article-card"><div class="article-card__visual" data-label="LAUNCH"><span class="article-card__number">01</span></div><div class="article-card__body"><span class="article-topic">المتاجر الإلكترونية</span><h3>دليل إطلاق متجر إلكتروني من الفكرة إلى أول طلب</h3><a class="article-link" href="{% url 'public_preview:article-store-launch' %}">اقرأ المقال</a></div></article><article class="article-card article-card--strategy"><div class="article-card__visual" data-label="SCOPE"><span class="article-card__number">03</span></div><div class="article-card__body"><span class="article-topic">الاستراتيجية</span><h3>تخصيص الواجهة أم إعادة تصميم المتجر؟</h3><a class="article-link" href="{% url 'public_preview:article-store-redesign' %}">اقرأ المقال</a></div></article></div></div></section></main>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script><script src="/static/public_preview/assets/js/articles.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/articles.js" defer></script>
 {% endblock %}

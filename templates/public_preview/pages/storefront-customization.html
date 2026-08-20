@@ -13,7 +13,7 @@
 
 {% block body_attrs %} class="inner-page service-detail-page" data-section="services"{% endblock %}
 
-{% block content %}
+{% block body %}
 <main id="main-content" class="service-detail-main">
 
 <div class="service-detail-shell">
@@ -185,14 +185,12 @@
 </section>
 
 </main>
-{% endblock %}
 
-{% block page_scripts %}
 <div class="service-sticky-cta"><a class="btn btn-primary" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization sticky">ابدأ تقييم واجهة متجرك</a></div>
-<script src="/static/public_preview/assets/js/page-shell.js"></script>
-<script src="/static/public_preview/assets/js/site-config.js"></script>
-<script src="/static/public_preview/assets/js/modules/analytics.js"></script>
-<script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
-<script src="/static/public_preview/assets/js/app.js"></script>
-<script src="/static/public_preview/assets/js/commerce-service-detail.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/site-config.js" defer></script>
+<script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
+<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/app.js" defer></script>
+<script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
 {% endblock %}

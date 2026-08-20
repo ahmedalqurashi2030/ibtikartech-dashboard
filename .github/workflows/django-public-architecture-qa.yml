@@ -10,6 +10,7 @@ on:
       - "scripts/refactor_public_preview_templates.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_django_template_contract.py"
       - "scripts/verify_public_section_preservation.py"
       - ".github/workflows/django-public-architecture-qa.yml"
   push:
@@ -23,6 +24,7 @@ on:
       - "scripts/refactor_public_preview_templates.py"
       - "scripts/normalize_public_preview_metadata.py"
       - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_django_template_contract.py"
       - "scripts/verify_public_section_preservation.py"
       - ".github/workflows/django-public-architecture-qa.yml"
 
@@ -42,11 +44,12 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate transformation scripts
+      - name: Validate transformation and architecture scripts
         run: |
           python -m py_compile scripts/refactor_public_preview_templates.py
           python -m py_compile scripts/normalize_public_preview_metadata.py
           python -m py_compile scripts/patch_public_runtime_accessibility.py
+          python -m py_compile scripts/verify_django_template_contract.py
           python -m py_compile scripts/verify_public_section_preservation.py
 
       - name: Verify transformations are reproducible and committed
@@ -55,6 +58,9 @@ jobs:
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
           git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
+
+      - name: Verify native Django template contract
+        run: python scripts/verify_django_template_contract.py
 
       - name: Checkout approved frontend source
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
@@ -67,20 +73,29 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Every public page owns only page-specific blocks and inherits the
-          # global document shell. Shared shell fragments must never be copied
-          # back into individual pages.
+          # Every public page inherits the shared shell, exposes one native
+          # Django body block, and keeps its page-specific sections inline.
           for page in templates/public_preview/pages/*.html; do
             grep -q 'extends "public_preview/base.html"' "$page"
+            test "$(grep -c '{% block body %}' "$page")" -eq 1
+            ! grep -q '{% block content %}' "$page"
+            ! grep -q '{% block page_scripts %}' "$page"
+            ! grep -q 'page_scripts' "$page"
             ! grep -q 'id="ibtikarSiteHeader"' "$page"
             ! grep -q 'class="ibt-shell-footer"' "$page"
             ! grep -q 'public_preview/components/' "$page"
           done
 
-          # base.html composes the reusable shell through Django includes.
+          # base.html composes the reusable shell through Django includes and
+          # exposes only the body content insertion point used by child pages.
           grep -q 'include "public_preview/components/document_head.html"' templates/public_preview/base.html
           grep -q 'include "public_preview/components/header.html"' templates/public_preview/base.html
           grep -q 'include "public_preview/components/footer.html"' templates/public_preview/base.html
+          grep -q 'include "public_preview/components/runtime.html"' templates/public_preview/base.html
+          test "$(grep -c '{% block body %}' templates/public_preview/base.html)" -eq 1
+          ! grep -q '{% block content %}' templates/public_preview/base.html
+          ! grep -q '{% block page_scripts %}' templates/public_preview/base.html
+          ! grep -q 'page_scripts' templates/public_preview/base.html
           ! grep -q 'id="ibtikarSiteHeader"' templates/public_preview/base.html
           ! grep -q 'class="ibt-shell-footer"' templates/public_preview/base.html
 

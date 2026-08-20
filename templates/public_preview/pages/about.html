@@ -9,7 +9,7 @@
 
 {% block body_attrs %} class="inner-page platform-page" data-section="about"{% endblock %}
 
-{% block content %}
+{% block body %}
 <main id="main-content">
 <section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
 <nav class="breadcrumbs" aria-label="مسار التنقل">
@@ -71,8 +71,6 @@
     </div>
   </div>
 </section></main>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
 {% endblock %}

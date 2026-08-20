@@ -13,7 +13,7 @@
 
 {% block body_attrs %} class="inner-page articles-page knowledge-page" data-section="knowledge"{% endblock %}
 
-{% block content %}
+{% block body %}
 <main id="main-content">
   <section class="articles-hero"><div class="container articles-hero__grid">
     <div class="reveal"><nav class="breadcrumbs" aria-label="مسار التنقل">
@@ -52,8 +52,6 @@
   </div>
 </section>
 </main>
-{% endblock %}
 
-{% block page_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script><script src="/static/public_preview/assets/js/site-config.js"></script><script src="/static/public_preview/assets/js/modules/analytics.js"></script><script src="/static/public_preview/assets/js/ibtikar-shell.js"></script><script src="/static/public_preview/assets/js/app.js"></script><script src="/static/public_preview/assets/js/articles.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/articles.js" defer></script>
 {% endblock %}
