@@ -121,10 +121,67 @@ jobs:
       - name: Checkout frontend QA harness
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikar-frontend-qa
 
+      - name: Adapt frontend QA assertions to Django clean URLs
+        working-directory: /tmp/ibtikar-frontend-qa
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("scripts/browser-qa.cjs")
+          source = path.read_text(encoding="utf-8")
+
+          replacements = (
+              (
+                  "servicesDiscoveryCount: document.querySelectorAll('.fast-discovery-slide').length,",
+                  "servicesServiceCount: document.querySelectorAll('.service-item').length,",
+              ),
+              (
+                  "      productRelatedHrefs: [...document.querySelectorAll('.related-grid article a')].map((a) => a.getAttribute('href'))",
+                  "      currentPath: window.location.pathname,\n"
+                  "      productRelatedHrefs: [...document.querySelectorAll('.related-grid article a')].map((a) => a.getAttribute('href'))",
+              ),
+              (
+                  "    if (metrics.servicesDiscoveryCount !== 8) failures.push(`${prefix}: expected 8 discovery cards, found ${metrics.servicesDiscoveryCount}`);",
+                  "    if (metrics.servicesServiceCount !== 6) failures.push(`${prefix}: expected 6 service axes, found ${metrics.servicesServiceCount}`);",
+              ),
+          )
+          for old, new in replacements:
+              if old not in source:
+                  raise SystemExit(f"Expected QA marker not found: {old}")
+              source = source.replace(old, new, 1)
+
+          old_product_assertion = """  if (page === 'product-page-optimization.html' && metrics.productRelatedHrefs.length) {
+            const required = ['storefront-customization.html','brand-content.html','ecommerce-growth.html','store-redesign.html'];
+            required.forEach((href) => {
+              if (!metrics.productRelatedHrefs.includes(href)) failures.push(`${prefix}: expected related-service route ${href}`);
+            });
+          }"""
+          new_product_assertion = """  if (page === 'product-page-optimization.html' && metrics.productRelatedHrefs.length) {
+            const cleanDjangoPage = !String(metrics.currentPath || '').endsWith('.html');
+            if (cleanDjangoPage) {
+              if (metrics.productRelatedHrefs.length !== 4) failures.push(`${prefix}: expected 4 related-service cards, found ${metrics.productRelatedHrefs.length}`);
+              const legacyHtmlHrefs = metrics.productRelatedHrefs.filter((href) => /\\.html(?:[?#]|$)/.test(String(href || '')));
+              if (legacyHtmlHrefs.length) failures.push(`${prefix}: clean Django page still exposes legacy .html links: ${legacyHtmlHrefs.join(', ')}`);
+            } else {
+              const required = ['storefront-customization.html','brand-content.html','ecommerce-growth.html','store-redesign.html'];
+              required.forEach((href) => {
+                if (!metrics.productRelatedHrefs.includes(href)) failures.push(`${prefix}: expected related-service route ${href}`);
+              });
+            }
+          }"""
+          if old_product_assertion not in source:
+              raise SystemExit("Expected legacy product related-route assertion was not found")
+          source = source.replace(old_product_assertion, new_product_assertion, 1)
+          path.write_text(source, encoding="utf-8")
+          PY
+
       - name: Headless Chrome on clean output with page-specific assertions
         working-directory: /tmp/ibtikar-frontend-qa
         env:
           BASE_URL: http://127.0.0.1:8000
+          # Historic filenames are only QA keys. Django redirects them to the
+          # canonical clean route before the page is inspected.
           QA_PAGES: >-
             index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
             custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
