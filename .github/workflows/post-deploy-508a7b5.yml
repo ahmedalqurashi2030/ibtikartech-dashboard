@@ -1,0 +1,85 @@
+name: Post Deploy 508a7b5 Read-Only Verification
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
+    timeout-minutes: 8
+    steps:
+      - name: Verify deployed revision and production health read-only
+        shell: bash
+        run: |
+          set -euo pipefail
+          EXPECTED='508a7b5ea08e3d42d0d027017ab4ebf111445199'
+          APP='/srv/ibtikartech/app'
+
+          echo '== wait for expected deployment revision =='
+          current=''
+          for attempt in $(seq 1 72); do
+            current=$(git -C "$APP" rev-parse HEAD 2>/dev/null || true)
+            echo "attempt=$attempt deployed_head=$current"
+            if [ "$current" = "$EXPECTED" ]; then
+              break
+            fi
+            sleep 5
+          done
+          test "$current" = "$EXPECTED"
+
+          echo '== service =='
+          test "$(systemctl is-active ibtikartech.service)" = 'active'
+          systemctl show ibtikartech.service -p ActiveState -p SubState -p Result -p ExecMainStatus --no-pager
+
+          echo '== gunicorn listener =='
+          ss -ltn '( sport = :8000 )' | grep -q '127.0.0.1:8000'
+
+          echo '== direct django health =='
+          curl --fail --silent --show-error --max-time 8 \
+            -H 'Host: ibtikartech.co' \
+            -H 'X-Forwarded-Proto: https' \
+            http://127.0.0.1:8000/healthz/ | tee /tmp/ibtikar-health.json
+          grep -q '"status"' /tmp/ibtikar-health.json
+
+          echo '== nginx local https health =='
+          curl --fail --silent --show-error --max-time 8 \
+            --resolve 'ibtikartech.co:443:127.0.0.1' \
+            https://ibtikartech.co/healthz/ | grep -q '"status"'
+
+          echo '== public homepage recovery content =='
+          curl --fail --silent --show-error --max-time 12 https://ibtikartech.co/ -o /tmp/ibtikar-home.html
+          grep -q 'نبني منظومة رقمية' /tmp/ibtikar-home.html
+          grep -q 'ابدأ بتشخيص مشروعك' /tmp/ibtikar-home.html
+          grep -q 'استكشف منظومة الحلول' /tmp/ibtikar-home.html
+          if grep -q '<div class="cinematic-story__brand"><span aria-hidden="true" class="cinematic-story__mark"' /tmp/ibtikar-home.html; then
+            echo 'ERROR: removed Journey brand badge still present in production HTML.' >&2
+            exit 1
+          fi
+
+          echo '== public CSS visual recovery =='
+          curl --fail --silent --show-error --max-time 12 \
+            https://ibtikartech.co/static/public_preview/assets/css/ibtikar-shell.css \
+            -o /tmp/ibtikar-shell.css
+          test "$(grep -c 'APPROVED VISUAL RECOVERY 2026-08-20' /tmp/ibtikar-shell.css)" = '1'
+          grep -q 'radial-gradient(circle at 5px 5px' /tmp/ibtikar-shell.css
+
+          echo '== manifest source provenance on deployed checkout =='
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          expected = '4497d13c8aeb1a8d69315c09e46e4b656cc3f963'
+          data = json.loads(Path('/srv/ibtikartech/app/docs/frontend-preview-manifest.json').read_text(encoding='utf-8'))
+          assert data['source_commit'] == expected, data['source_commit']
+          assert data['business_model_binding'] is False
+          print('manifest_source_commit=' + data['source_commit'])
+          PY
+
+          echo 'POST_DEPLOY_VERIFICATION=PASS'
