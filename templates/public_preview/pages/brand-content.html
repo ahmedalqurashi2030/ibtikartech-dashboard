@@ -21,7 +21,11 @@
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع الهوية الرقمية داخل منظومة ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>الهوية ليست شعارًا منفصلًا؛ هي قواعد ورسائل تظهر عبر كل نقطة اتصال.</figcaption></figure></div></section>
 
-<section class="platform-section platform-section--soft" id="capabilities"><div class="container">{% include "public_preview/components/section_heading.html" with kicker="مساران مترابطان" title="نظام العلامة أولًا، ثم المحتوى الذي يفعّله" description="يمكن تنفيذ المسارين معًا أو تحديد أحدهما حسب جاهزية المشروع." %}<div class="platform-grid platform-grid--2">
+<section class="platform-section platform-section--soft" id="capabilities"><div class="container"><div class="platform-heading reveal">
+  <span class="section-kicker">مساران مترابطان</span>
+  <h2>نظام العلامة أولًا، ثم المحتوى الذي يفعّله</h2>
+  <p>يمكن تنفيذ المسارين معًا أو تحديد أحدهما حسب جاهزية المشروع.</p>
+</div><div class="platform-grid platform-grid--2">
 <article class="platform-card reveal"><small>01 / BRAND SYSTEM</small><h3>بناء نظام العلامة</h3><ul><li>التموضع والرسالة والشخصية</li><li>الهوية البصرية والألوان والخطوط</li><li>قواعد الاستخدام والاتساق</li><li>Digital Design System عند الحاجة</li><li>تطبيقات أولية توضح طريقة الاستخدام</li></ul></article>
 <article class="platform-card reveal"><small>02 / DIGITAL CONTENT</small><h3>المحتوى الرقمي</h3><ul><li>لغة العلامة ونبرة الخطاب</li><li>محتوى المواقع وصفحات الخدمات</li><li>محتوى المتاجر وصفحات المنتج</li><li>بنرات ورسائل وCTA مرتبطة بالهدف</li><li>نسخة إنجليزية أصلية عند اعتمادها ضمن النطاق</li></ul></article>
 </div></div></section>
@@ -49,7 +53,21 @@
 
 <section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياج العلامة</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a></nav></div></section>
 
-{% include "public_preview/components/page_cta.html" with kicker="الهوية والمحتوى" title="اجعل علامتك تُفهم قبل أن تُشرح" description="شاركنا نشاطك والمواد الحالية ونقاط عدم الاتساق، وسنحدد هل تحتاج نظام علامة أو محتوى أو الاثنين معًا." primary_class="btn btn-white" primary_url_name="public_preview:contact" primary_label="ابدأ التشخيص" primary_fragment="#quote" secondary_class="btn btn-outline" secondary_url_name="services:index" secondary_label="جميع الخدمات" %}
+<section class="page-cta">
+  <div class="container">
+    <div class="cta-card reveal">
+      <div>
+        <span class="section-kicker">الهوية والمحتوى</span>
+        <h2>اجعل علامتك تُفهم قبل أن تُشرح</h2>
+        <p>شاركنا نشاطك والمواد الحالية ونقاط عدم الاتساق، وسنحدد هل تحتاج نظام علامة أو محتوى أو الاثنين معًا.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a>
+        <a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 {% endblock %}
 
