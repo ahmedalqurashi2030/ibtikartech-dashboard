@@ -8,6 +8,7 @@ on:
       - scripts/import_frontend_preview.py
       - scripts/refactor_public_preview_templates.py
       - scripts/componentize_public_preview_templates.py
+      - scripts/componentize_page_cta.py
       - scripts/normalize_public_preview_metadata.py
       - .github/workflows/frontend-preview-import.yml
   workflow_dispatch:
@@ -39,6 +40,7 @@ jobs:
         run: |
           python scripts/refactor_public_preview_templates.py
           python scripts/componentize_public_preview_templates.py
+          python scripts/componentize_page_cta.py
           python scripts/normalize_public_preview_metadata.py
 
       - name: Verify clean route template architecture
@@ -52,6 +54,7 @@ jobs:
           done
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
+          grep -R -q 'include "public_preview/components/page_cta.html"' templates/public_preview/pages
 
       - name: Commit imported preview
         run: |
