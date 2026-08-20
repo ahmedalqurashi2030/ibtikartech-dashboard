@@ -10,6 +10,7 @@ on:
       - "static/public_preview/assets/js/**"
       - "static/public_preview/assets/css/**"
       - "scripts/browser_qa_clean_urls.cjs"
+      - "scripts/interaction_qa_clean_urls.cjs"
       - "config/settings/test.py"
       - ".github/workflows/django-clean-url-browser-qa.yml"
 
@@ -135,11 +136,7 @@ jobs:
           done
           exit "$last_status"
 
-      - name: Checkout frontend interaction QA harness
-        run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikar-frontend-qa
-
-      - name: Deep interaction QA through Django redirects
-        working-directory: /tmp/ibtikar-frontend-qa
+      - name: Canonical Django deep interaction QA
         env:
           BASE_URL: http://127.0.0.1:8000
         shell: bash
@@ -147,7 +144,7 @@ jobs:
           set +e
           last_status=1
           for attempt in 1 2; do
-            timeout 150s node scripts/interaction-qa.cjs
+            timeout 210s node scripts/interaction_qa_clean_urls.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
             last_status="$status"
