@@ -25,10 +25,6 @@ jobs:
           echo "== timestamp =="
           date -Is
 
-          echo "== deployed git head =="
-          git -C /srv/ibtikartech/app rev-parse HEAD || true
-          git -C /srv/ibtikartech/app status --short || true
-
           echo "== ibtikartech service =="
           systemctl is-active ibtikartech.service || true
           systemctl show ibtikartech.service \
@@ -38,14 +34,29 @@ jobs:
           echo "== listener on port 8000 =="
           ss -ltnp '( sport = :8000 )' || true
 
-          echo "== direct gunicorn health =="
+          echo "== direct gunicorn over http =="
           curl --silent --show-error --include --max-time 5 \
             http://127.0.0.1:8000/healthz/ || true
 
-          echo "== nginx local health =="
+          echo "== direct gunicorn as proxied https =="
+          curl --silent --show-error --include --max-time 5 \
+            -H 'Host: ibtikartech.co' \
+            -H 'X-Forwarded-Proto: https' \
+            http://127.0.0.1:8000/healthz/ || true
+
+          echo "== nginx local http =="
           curl --silent --show-error --include --max-time 5 \
             -H 'Host: ibtikartech.co' \
             http://127.0.0.1/healthz/ || true
+
+          echo "== nginx local https =="
+          curl --silent --show-error --include --max-time 8 \
+            --resolve 'ibtikartech.co:443:127.0.0.1' \
+            https://ibtikartech.co/healthz/ || true
+
+          echo "== public https from production host =="
+          curl --silent --show-error --include --max-time 8 \
+            https://ibtikartech.co/healthz/ || true
 
           echo "== recent service warnings/errors =="
           journalctl -u ibtikartech.service \
