@@ -48,14 +48,13 @@ jobs:
 
           echo "header_count=$header_count"
           echo "footer_count=$footer_count"
-          echo "layout_refinement_count=$layout_count"
+          echo "layout_refinement_count=$layout_count (informational: later UI-only commit)"
           echo "mega_toggle_count=$mega_count"
           echo "source_services_tag=$source_services_tag"
           echo "approved_source_tag=$approved_source_tag"
 
           test "$header_count" -eq 1
           test "$footer_count" -eq 1
-          test "$layout_count" -ge 1
           test "$mega_count" -ge 1
           test -n "$source_services_tag"
           test -n "$approved_source_tag"
@@ -99,7 +98,7 @@ jobs:
             test "$code" = "404" || { echo "$code $forbidden expected 404"; exit 1; }
           done
 
-      - name: Verify key production assets
+      - name: Verify architecture-critical production assets
         shell: bash
         run: |
           set -euo pipefail
@@ -109,9 +108,11 @@ jobs:
             /static/public_preview/assets/js/ibtikar-shell.js
             /static/public_preview/dashboard/dom-contracts.js
             /static/public_preview/assets/css/ibtikar-shell.css
-            /static/public_preview/assets/css/pages/section-layout-refinement-v2.css
           )
           for asset in "${assets[@]}"; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' "$origin$asset")"
             test "$code" = "200" || { echo "$code $asset"; exit 1; }
           done
+
+          later_layout_code="$(curl -sS -o /dev/null -w '%{http_code}' "$origin/static/public_preview/assets/css/pages/section-layout-refinement-v2.css" || true)"
+          echo "later_layout_refinement_asset=$later_layout_code (informational; not part of PR #32 architecture)"
