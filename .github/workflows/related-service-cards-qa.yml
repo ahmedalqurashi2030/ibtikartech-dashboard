@@ -1,0 +1,85 @@
+name: Related Service Cards QA
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  related-cards-browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.test
+      DJANGO_SECRET_KEY: ci-only-secret
+      DJANGO_TEST_DATABASE_NAME: /tmp/ibtikar-related-cards.sqlite3
+      BASE_URL: http://127.0.0.1:8000
+
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install dashboard
+        run: python -m pip install --upgrade pip && pip install -e ".[dev]"
+
+      - name: Static contract checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check static/public_preview/assets/js/service-related-cards.js
+          node --check scripts/qa_related_service_cards.cjs
+          test "$(grep -c "service-related-cards.css" templates/public_preview/base.html)" -eq 1
+          test "$(grep -c "service-related-cards.js" templates/public_preview/base.html)" -eq 1
+          grep -q "service-related-cards--carousel" static/public_preview/assets/js/service-related-cards.js
+          grep -q "aria-roledescription.*carousel" static/public_preview/assets/js/service-related-cards.js
+          grep -q "prefers-reduced-motion: reduce" static/public_preview/assets/css/pages/service-related-cards.css
+          grep -q "scroll-snap-type: x mandatory" static/public_preview/assets/css/pages/service-related-cards.css
+
+      - name: Prepare Django
+        run: |
+          rm -f "$DJANGO_TEST_DATABASE_NAME"
+          python manage.py migrate --noinput
+          python manage.py check
+
+      - name: Start Django server
+        shell: bash
+        run: |
+          python manage.py runserver 127.0.0.1:8000 --noreload --insecure > /tmp/ibtikar-related-cards.log 2>&1 &
+          echo $! > /tmp/ibtikar-related-cards.pid
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then exit 0; fi
+            sleep 0.25
+          done
+          cat /tmp/ibtikar-related-cards.log
+          exit 1
+
+      - name: Existing clean URL browser regression QA
+        run: timeout 480s node scripts/browser_qa_clean_urls.cjs
+
+      - name: Existing deep interaction regression QA
+        run: timeout 300s node scripts/interaction_qa_clean_urls.cjs
+
+      - name: Related service cards dedicated browser QA
+        run: timeout 420s node scripts/qa_related_service_cards.cjs
+
+      - name: Stop Django server
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/ibtikar-related-cards.pid ]; then
+            kill "$(cat /tmp/ibtikar-related-cards.pid)" 2>/dev/null || true
+          fi
+          tail -n 120 /tmp/ibtikar-related-cards.log 2>/dev/null || true
