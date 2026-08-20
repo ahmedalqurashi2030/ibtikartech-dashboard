@@ -5,6 +5,7 @@ on:
     paths:
       - "apps/public_preview/**"
       - "apps/services/urls.py"
+      - "apps/services/public_views.py"
       - "templates/public_preview/**"
       - "scripts/refactor_public_preview_templates.py"
       - "scripts/normalize_public_preview_metadata.py"
@@ -17,6 +18,7 @@ on:
     paths:
       - "apps/public_preview/**"
       - "apps/services/urls.py"
+      - "apps/services/public_views.py"
       - "templates/public_preview/**"
       - "scripts/refactor_public_preview_templates.py"
       - "scripts/normalize_public_preview_metadata.py"
@@ -78,7 +80,17 @@ jobs:
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
 
-          # Public service routing must stay explicit and template-backed.
+          # Browser routes must resolve through explicit Python view functions.
+          ! grep -n 'preview_page' apps/public_preview/urls.py
+          ! grep -n 'preview_page' apps/services/urls.py
+          grep -q 'path("", views.home, name="home")' apps/public_preview/urls.py
+          grep -q 'path("", public_views.services, name="index")' apps/services/urls.py
+          grep -q '^def home(request):' apps/public_preview/views.py
+          grep -q '^def portfolio(request):' apps/public_preview/views.py
+          grep -q '^def services(request):' apps/services/public_views.py
+          grep -q '^def product_page_optimization(request):' apps/services/public_views.py
+
+          # Public service routing must stay explicit and never fall back to DB slugs.
           ! grep -n '<slug:' apps/services/urls.py
           ! grep -n 'views\.service_' apps/services/urls.py
           ! grep -R -n '/services/catalog/' templates/public_preview
