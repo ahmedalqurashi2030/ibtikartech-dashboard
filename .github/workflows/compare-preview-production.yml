@@ -1,0 +1,67 @@
+name: Compare Preview and Production
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
+    timeout-minutes: 5
+
+    steps:
+      - name: Read-only compare public pages
+        shell: bash
+        run: |
+          set +e
+          PREVIEW='https://ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/'
+          PROD='https://ibtikartech.co/'
+          for name in preview production; do
+            if [ "$name" = preview ]; then url="$PREVIEW"; else url="$PROD"; fi
+            echo "=== $name ==="
+            echo "URL=$url"
+            curl -L --silent --show-error --max-time 12 -D "/tmp/$name.headers" "$url" -o "/tmp/$name.html"
+            code=$?
+            echo "curl_exit=$code"
+            head -n 12 "/tmp/$name.headers" || true
+            if [ -s "/tmp/$name.html" ]; then
+              echo "sha256=$(sha256sum /tmp/$name.html | awk '{print $1}')"
+              python3 - "$name" "/tmp/$name.html" <<'PY'
+          import sys
+          from html.parser import HTMLParser
+          name,path=sys.argv[1:]
+          class P(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.h=[]; self.links=[]; self.scripts=[]; self.header=[]; self.cap=None; self.buf=[]; self.in_header=False
+              def handle_starttag(self,t,a):
+                  d=dict(a)
+                  if t=='header': self.in_header=True; self.header.append(('START',d.get('class',''),d.get('id','')))
+                  if t in ('h1','h2','h3'): self.cap=t; self.buf=[]
+                  if t=='link' and 'stylesheet' in d.get('rel','') and d.get('href'): self.links.append(d['href'])
+                  if t=='script' and d.get('src'): self.scripts.append(d['src'])
+              def handle_data(self,d):
+                  if self.cap: self.buf.append(d)
+              def handle_endtag(self,t):
+                  if self.cap==t:
+                      x=' '.join(''.join(self.buf).split())
+                      if x: self.h.append((t,x))
+                      self.cap=None; self.buf=[]
+                  if t=='header': self.in_header=False
+          p=P(); p.feed(open(path,encoding='utf-8',errors='replace').read())
+          print('HEADERS',p.header[:5])
+          print('HEADINGS',p.h[:12])
+          print('STYLES',p.links[:20])
+          print('SCRIPTS',p.scripts[:20])
+          text=open(path,encoding='utf-8',errors='replace').read()
+          for needle in ['ابدأ تشخيص مشروعك','نبني منظومة رقمية','نبني منظومة واحدة','ibt-shell-menu-toggle','نعمل باحتراف على']:
+              print('HAS',needle,needle in text)
+          PY
+            fi
+          done
