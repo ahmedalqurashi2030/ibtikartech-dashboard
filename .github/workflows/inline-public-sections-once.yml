@@ -1,25 +1,28 @@
 name: Inline Public Sections Once
 
 on:
-  push:
+  pull_request:
     branches:
-      - refactor/django-clean-urls-template-architecture-2026-08-20
+      - main
     paths:
       - scripts/inline_public_sections_once.py
       - .github/workflows/inline-public-sections-once.yml
+      - templates/public_preview/pages/**
 
 permissions:
   contents: write
 
 jobs:
   inline:
+    if: github.head_ref == 'refactor/django-clean-urls-template-architecture-2026-08-20'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout branch
+      - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
-          ref: refactor/django-clean-urls-template-architecture-2026-08-20
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -47,4 +50,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add templates/public_preview/pages
           git commit -m "Inline repeated section HTML in public pages"
-          git push origin HEAD:refactor/django-clean-urls-template-architecture-2026-08-20
+          git push origin HEAD:${{ github.head_ref }}
