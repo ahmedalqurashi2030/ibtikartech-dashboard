@@ -1,3 +1,4 @@
+# Temporary applicator; removed before merge.
 name: Apply Journey Reference Alignment
 
 on:
@@ -81,8 +82,9 @@ jobs:
           css = Path('static/public_preview/assets/css/pages/source-home.css').read_text(encoding='utf-8')
           assert js.count('JOURNEY_REFERENCE_ALIGNMENT') == 1
           assert css.count('DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20') == 1
-          assert 'الفكرة تصبح اتجاهًا' in Path('templates/public_preview/pages/index.html').read_text(encoding='utf-8')
-          assert 'الاتجاه يصبح هوية' in Path('templates/public_preview/pages/index.html').read_text(encoding='utf-8')
+          home = Path('templates/public_preview/pages/index.html').read_text(encoding='utf-8')
+          assert 'الفكرة تصبح اتجاهًا' in home
+          assert 'الاتجاه يصبح هوية' in home
           print('Journey reference alignment: PASS')
           PY
 
