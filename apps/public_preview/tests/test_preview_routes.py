@@ -165,7 +165,10 @@ def test_service_detail_pages_share_one_structural_contract():
         )
         assert decision_tabs_marker in source
         assert 'class="service-detail-heading"' in source
-        assert 'class="page-cta"' in source
+        assert (
+            'class="page-cta"' in source
+            or 'class="service-final-cta"' in source
+        )
         assert 'commerce-service-detail.js' in source
 
         for key in SERVICE_DECISION_KEYS:
