@@ -1,0 +1,61 @@
+name: Django Template Refactor
+
+on:
+  push:
+    branches:
+      - refactor/django-clean-urls-template-architecture-2026-08-20
+    paths:
+      - scripts/refactor_public_preview_templates.py
+      - .github/workflows/django-template-refactor.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refactor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout refactor branch
+        uses: actions/checkout@v4
+        with:
+          ref: refactor/django-clean-urls-template-architecture-2026-08-20
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate refactor script
+        run: python -m py_compile scripts/refactor_public_preview_templates.py
+
+      - name: Refactor imported templates
+        run: python scripts/refactor_public_preview_templates.py
+
+      - name: Architecture guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          for page in templates/public_preview/pages/*.html; do
+            grep -q 'extends "public_preview/base.html"' "$page"
+            ! grep -q 'id="ibtikarSiteHeader"' "$page"
+            ! grep -q 'class="ibt-shell-footer"' "$page"
+          done
+          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
+          grep -q 'Django clean URLs are canonical' static/public_preview/assets/js/page-shell.js
+
+      - name: Commit generated Django templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/public_preview/pages static/public_preview/assets/js/page-shell.js
+          if git diff --cached --quiet; then
+            echo "Django template architecture is already synchronized."
+            exit 0
+          fi
+          git commit -m "refactor(templates): apply Django inheritance and clean URLs"
+          git push origin HEAD:refactor/django-clean-urls-template-architecture-2026-08-20
