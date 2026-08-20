@@ -7,8 +7,6 @@ on:
     paths:
       - scripts/import_frontend_preview.py
       - scripts/refactor_public_preview_templates.py
-      - scripts/componentize_public_preview_templates.py
-      - scripts/componentize_page_cta.py
       - scripts/normalize_public_preview_metadata.py
       - scripts/patch_public_runtime_accessibility.py
       - scripts/verify_public_section_preservation.py
@@ -38,11 +36,9 @@ jobs:
             --source /tmp/ibtikartech-source \
             --destination "$GITHUB_WORKSPACE"
 
-      - name: Apply Django template architecture
+      - name: Apply Django template architecture without section components
         run: |
           python scripts/refactor_public_preview_templates.py
-          python scripts/componentize_public_preview_templates.py
-          python scripts/componentize_page_cta.py
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
 
@@ -57,10 +53,10 @@ jobs:
             grep -q 'extends "public_preview/base.html"' "$page"
             ! grep -q 'id="ibtikarSiteHeader"' "$page"
             ! grep -q 'class="ibt-shell-footer"' "$page"
+            ! grep -q 'public_preview/components/' "$page"
           done
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
-          grep -R -q 'include "public_preview/components/page_cta.html"' templates/public_preview/pages
           grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
 
       - name: Commit imported preview
