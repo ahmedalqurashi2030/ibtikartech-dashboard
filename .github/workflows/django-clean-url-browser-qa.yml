@@ -8,6 +8,7 @@ on:
       - "templates/public_preview/**"
       - "static/public_preview/assets/js/**"
       - "static/public_preview/assets/css/**"
+      - "config/settings/test.py"
       - ".github/workflows/django-clean-url-browser-qa.yml"
 
 permissions:
@@ -20,6 +21,7 @@ jobs:
     env:
       DJANGO_SETTINGS_MODULE: config.settings.test
       DJANGO_SECRET_KEY: ci-only-secret
+      DJANGO_TEST_DATABASE_NAME: /tmp/ibtikar-browser-qa.sqlite3
 
     steps:
       - name: Checkout dashboard
@@ -40,7 +42,9 @@ jobs:
         run: python -m pip install --upgrade pip && pip install -e ".[dev]"
 
       - name: Prepare Django
-        run: python manage.py migrate --noinput
+        run: |
+          rm -f "$DJANGO_TEST_DATABASE_NAME"
+          python manage.py migrate --noinput
 
       - name: Start Django server with test static files
         shell: bash
