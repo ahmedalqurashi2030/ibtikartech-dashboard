@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block head %}{% endblock %}
+</head>
+<body data-page="{{ page_key|default:'index' }}"{% block body_attrs %}{% endblock %}>
+  <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+  {% include "public_preview/components/header.html" %}
+
+  {% block content %}{% endblock %}
+
+  {% include "public_preview/components/footer.html" %}
+  {% block page_scripts %}{% endblock %}
+</body>
+</html>
