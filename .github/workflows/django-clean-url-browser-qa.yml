@@ -18,7 +18,7 @@ permissions:
 jobs:
   browser-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 15
     env:
       DJANGO_SETTINGS_MODULE: config.settings.test
       DJANGO_SECRET_KEY: ci-only-secret
@@ -50,9 +50,6 @@ jobs:
       - name: Start Django server with test static files
         shell: bash
         run: |
-          # config.settings.test intentionally keeps DEBUG=False. --insecure is
-          # appropriate only for this isolated browser-QA server so Django's
-          # staticfiles app serves the committed CSS/JS during the test.
           python manage.py runserver 127.0.0.1:8000 --noreload --insecure > /tmp/ibtikar-django.log 2>&1 &
           echo $! > /tmp/ibtikar-django.pid
           for i in {1..40}; do
@@ -101,7 +98,10 @@ jobs:
             code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000/${route}")"
             test "$code" = "301" || { echo "$code /$route expected 301"; exit 1; }
             test -n "$location" || { echo "/$route missing redirect target"; exit 1; }
-            ! grep -q '\.html' <<<"$location" || { echo "/$route redirects to another .html URL: $location"; exit 1; }
+            ! grep -q '\.html' <<<"$location" || {
+              echo "/$route redirects to another .html URL: $location"
+              exit 1
+            }
           done
 
           static_assets=(
@@ -125,8 +125,6 @@ jobs:
         working-directory: /tmp/ibtikar-frontend-qa
         env:
           BASE_URL: http://127.0.0.1:8000
-          # Historic filenames are used only as QA keys. Django immediately
-          # redirects them to the explicit clean Python routes before rendering.
           QA_PAGES: >-
             index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
             custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
@@ -137,12 +135,12 @@ jobs:
         run: |
           set +e
           last_status=1
-          for attempt in 1 2 3; do
-            node scripts/browser-qa-ci.cjs
+          for attempt in 1 2; do
+            timeout 240s node scripts/browser-qa-ci.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
             last_status="$status"
-            if [ "$attempt" -lt 3 ]; then sleep 2; fi
+            if [ "$attempt" -lt 2 ]; then sleep 2; fi
           done
           exit "$last_status"
 
@@ -155,7 +153,7 @@ jobs:
           set +e
           last_status=1
           for attempt in 1 2 3; do
-            node scripts/interaction-qa.cjs
+            timeout 90s node scripts/interaction-qa.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
             last_status="$status"
