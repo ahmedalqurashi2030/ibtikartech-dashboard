@@ -7,6 +7,7 @@ on:
     paths:
       - scripts/refactor_public_preview_templates.py
       - scripts/componentize_public_preview_templates.py
+      - scripts/normalize_public_preview_metadata.py
       - templates/public_preview/components/**
       - .github/workflows/django-template-refactor.yml
   workflow_dispatch:
@@ -34,11 +35,13 @@ jobs:
         run: |
           python -m py_compile scripts/refactor_public_preview_templates.py
           python -m py_compile scripts/componentize_public_preview_templates.py
+          python -m py_compile scripts/normalize_public_preview_metadata.py
 
       - name: Refactor imported templates
         run: |
           python scripts/refactor_public_preview_templates.py
           python scripts/componentize_public_preview_templates.py
+          python scripts/normalize_public_preview_metadata.py
 
       - name: Architecture guards
         shell: bash
@@ -50,6 +53,7 @@ jobs:
             ! grep -q 'class="ibt-shell-footer"' "$page"
           done
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
+          ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
           grep -R -q 'include "public_preview/components/breadcrumbs.html"' templates/public_preview/pages
           grep -R -q 'include "public_preview/components/section_heading.html"' templates/public_preview/pages
           grep -q 'Django clean URLs are canonical' static/public_preview/assets/js/page-shell.js
@@ -65,5 +69,5 @@ jobs:
             echo "Django template architecture is already synchronized."
             exit 0
           fi
-          git commit -m "refactor(templates): reuse shared public components"
+          git commit -m "refactor(templates): normalize clean Django metadata"
           git push origin HEAD:refactor/django-clean-urls-template-architecture-2026-08-20
