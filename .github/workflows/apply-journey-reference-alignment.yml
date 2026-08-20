@@ -1,0 +1,111 @@
+name: Apply Journey Reference Alignment
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.head_ref == 'fix/journey-reference-alignment' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout dashboard branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/journey-reference-alignment
+          fetch-depth: 0
+
+      - name: Checkout exact frontend source
+        uses: actions/checkout@v4
+        with:
+          repository: ahmedalqurashi2030/ibtikartech
+          ref: 4497d13c8aeb1a8d69315c09e46e4b656cc3f963
+          path: .frontend-source
+          fetch-depth: 1
+
+      - name: Make dashboard importer preserve Journey alignment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/import_frontend_preview.py')
+          text = path.read_text(encoding='utf-8')
+          marker = 'def patch_dashboard_journey_alignment(assets_dir: Path) -> None:'
+          if marker not in text:
+              anchor = '''def resolve_source_commit(source_root: Path, explicit_commit: str | None) -> str:\n'''
+              patch = '''def patch_dashboard_journey_alignment(assets_dir: Path) -> None:\n    \"\"\"Keep the approved Journey film aligned with the visual reference.\n\n    The first narrative beat remains available, but the visual timeline gets a\n    controlled lead so the large identity/browser composition appears earlier,\n    matching the approved homepage rhythm.\n    \"\"\"\n    js_path = assets_dir / \"js\" / \"source-home.js\"\n    js = js_path.read_text(encoding=\"utf-8\")\n    old_progress = ''' + "'''" + '''  const getProgress=()=>{\n    const rect=story.getBoundingClientRect();\n    const scrollable=Math.max(1,story.offsetHeight-innerHeight);\n    return clamp((-rect.top)/scrollable);\n  };''' + "'''" + '''\n    new_progress = ''' + "'''" + '''  // JOURNEY_REFERENCE_ALIGNMENT: preserve the narrative, but advance the\n  // cinematic composition slightly so the identity/browser scene arrives at\n  // the same visual moment as the approved reference.\n  const getProgress=()=>{\n    const rect=story.getBoundingClientRect();\n    const scrollable=Math.max(1,story.offsetHeight-innerHeight);\n    const raw=clamp((-rect.top)/scrollable);\n    const lead=.22;\n    return clamp(lead+raw*(1-lead));\n  };''' + "'''" + '''\n    if 'JOURNEY_REFERENCE_ALIGNMENT' not in js:\n        if old_progress not in js:\n            raise RuntimeError('Journey progress engine changed; refusing unsafe patch.')\n        js = js.replace(old_progress, new_progress, 1)\n        js_path.write_text(js, encoding=\"utf-8\")\n\n    css_path = assets_dir / \"css\" / \"pages\" / \"source-home.css\"\n    css = css_path.read_text(encoding=\"utf-8\")\n    css_marker = 'DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20'\n    if css_marker not in css:\n        css += ''' + '"""' + '''\n\n/* DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20\n   Keep the caption block slightly higher on desktop so the large visual\n   composition owns the center of the viewport, matching the approved frame. */\n@media (min-width:761px){\n  body.source-home #journey .cinematic-story__captions{\n    bottom:clamp(96px,15vh,156px);\n  }\n}\n''' + '"""' + '''\n        css_path.write_text(css, encoding=\"utf-8\")\n\n\n'''
+              if anchor not in text:
+                  raise SystemExit('Importer anchor not found; refusing unsafe edit.')
+              text = text.replace(anchor, patch + anchor, 1)
+
+          call_anchor = '    patch_runtime_assets(assets_dir)\n'
+          if '    patch_dashboard_journey_alignment(assets_dir)\n' not in text:
+              if call_anchor not in text:
+                  raise SystemExit('Importer call anchor not found.')
+              text = text.replace(
+                  call_anchor,
+                  call_anchor + '    patch_dashboard_journey_alignment(assets_dir)\n',
+                  1,
+              )
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Re-import frontend and apply persistent Journey patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/import_frontend_preview.py \
+            --source .frontend-source \
+            --destination . \
+            --source-commit 4497d13c8aeb1a8d69315c09e46e4b656cc3f963
+
+      - name: Validate Journey patch and scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check static/public_preview/assets/js/source-home.js
+          grep -q 'JOURNEY_REFERENCE_ALIGNMENT' static/public_preview/assets/js/source-home.js
+          grep -q 'const lead=.22' static/public_preview/assets/js/source-home.js
+          test "$(grep -c 'DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20' static/public_preview/assets/css/pages/source-home.css)" = '1'
+          grep -q 'bottom:clamp(96px,15vh,156px)' static/public_preview/assets/css/pages/source-home.css
+          python3 - <<'PY'
+          from pathlib import Path
+          js = Path('static/public_preview/assets/js/source-home.js').read_text(encoding='utf-8')
+          css = Path('static/public_preview/assets/css/pages/source-home.css').read_text(encoding='utf-8')
+          assert js.count('JOURNEY_REFERENCE_ALIGNMENT') == 1
+          assert css.count('DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20') == 1
+          assert 'الفكرة تصبح اتجاهًا' in Path('templates/public_preview/pages/index.html').read_text(encoding='utf-8')
+          assert 'الاتجاه يصبح هوية' in Path('templates/public_preview/pages/index.html').read_text(encoding='utf-8')
+          print('Journey reference alignment: PASS')
+          PY
+
+          mapfile -t changed < <(git diff --name-only)
+          for file in "${changed[@]}"; do
+            case "$file" in
+              scripts/import_frontend_preview.py|static/public_preview/assets/js/source-home.js|static/public_preview/assets/css/pages/source-home.css)
+                ;;
+              *)
+                echo "ERROR: unexpected changed path: $file" >&2
+                exit 1
+                ;;
+            esac
+          done
+
+      - name: Commit aligned Journey
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/import_frontend_preview.py \
+            static/public_preview/assets/js/source-home.js \
+            static/public_preview/assets/css/pages/source-home.css
+          git commit -m 'fix: align Journey cinematic section with approved reference'
+          git push origin HEAD:fix/journey-reference-alignment
