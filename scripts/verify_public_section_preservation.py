@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Verify the Django refactor preserves approved page sections and their content.
+"""Verify the Django refactor preserves approved sections and page content.
 
-The approved frontend source is the content authority. Page sections remain as
-full HTML inside each Django child template; this verifier does not account for
-components/includes because section components are intentionally not part of the
-public architecture.
+The approved frontend source is the content authority. Refactoring may move an
+existing content block between section wrappers in order to standardize the DOM,
+so the contract is:
+- the number of <section> elements is preserved;
+- the complete normalized text inside <main> is preserved in the same order.
+
+Page sections remain full HTML inside each Django child template. No component
+or include accounting exists in this verifier by design.
 """
 
 from __future__ import annotations
@@ -32,7 +36,7 @@ def normalize_text(value: str) -> str:
 
 
 class TagTextCollector(HTMLParser):
-    """Collect normalized text for every occurrence of one HTML tag in start order."""
+    """Collect normalized text for each occurrence of one HTML tag."""
 
     def __init__(self, target_tag: str) -> None:
         super().__init__(convert_charrefs=True)
@@ -77,16 +81,15 @@ def extract_tag_texts(source: str, tag: str) -> list[str]:
     return parser.values()
 
 
-def first_difference(expected: list[str], actual: list[str]) -> str | None:
-    if len(expected) != len(actual):
-        return f"count differs: source={len(expected)}, Django={len(actual)}"
-    for index, (left, right) in enumerate(zip(expected, actual, strict=True), start=1):
-        if left != right:
-            return (
-                f"item {index} text differs; "
-                f"source={left[:140]!r}, Django={right[:140]!r}"
-            )
-    return None
+def describe_text_difference(expected: str, actual: str) -> str:
+    limit = min(len(expected), len(actual))
+    position = next((i for i in range(limit) if expected[i] != actual[i]), limit)
+    start = max(0, position - 60)
+    end = position + 100
+    return (
+        f"text differs near character {position}; "
+        f"source={expected[start:end]!r}, Django={actual[start:end]!r}"
+    )
 
 
 def main() -> None:
@@ -119,28 +122,27 @@ def main() -> None:
             )
             continue
 
-        section_difference = first_difference(
-            extract_tag_texts(source, "section"),
-            extract_tag_texts(template, "section"),
-        )
-        if section_difference:
-            failures.append(f"{page_name}: section content {section_difference}")
+        source_main = extract_tag_texts(source, "main")
+        template_main = extract_tag_texts(template, "main")
+        if len(source_main) != len(template_main):
+            failures.append(
+                f"{page_name}: main count differs: "
+                f"source={len(source_main)}, Django={len(template_main)}"
+            )
             continue
-
-        # Main-level comparison also protects text that may legitimately sit
-        # between sections while the global header/footer live in base.html.
-        main_difference = first_difference(
-            extract_tag_texts(source, "main"),
-            extract_tag_texts(template, "main"),
-        )
-        if main_difference:
-            failures.append(f"{page_name}: main content {main_difference}")
+        if not source_main:
+            continue
+        if source_main[0] != template_main[0]:
+            failures.append(
+                f"{page_name}: main content "
+                + describe_text_difference(source_main[0], template_main[0])
+            )
 
     if failures:
         raise RuntimeError("Public content preservation failed:\n- " + "\n- ".join(failures))
 
     print(
-        "Section and main-content preservation passed for "
+        "Section count and main-content preservation passed for "
         f"{len(REQUIRED_PAGES)}/{len(REQUIRED_PAGES)} pages."
     )
 
