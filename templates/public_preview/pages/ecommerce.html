@@ -33,7 +33,7 @@
 <nav class="commerce-category-nav" aria-label="أقسام حلول المتاجر الإلكترونية"><div class="container commerce-category-nav__inner"><a href="#paths">نقطة البداية</a><a href="#subservices">الخدمات الفرعية</a><a href="#platforms">المنصات</a><a href="#tharaa-product">ثيم ثراء</a><a href="#product-page">صفحة المنتج</a><a href="#process">طريقة العمل</a><a href="#faq">الأسئلة</a></div></nav>
 
 <section class="platform-section platform-section--soft" id="paths"><div class="container">
-  <div class="platform-heading reveal"><span class="section-kicker">ابدأ من المرحلة</span><h2>أي نقطة بداية تشبه وضع متجرك؟</h2><p>التاجر لا يحتاج أن يعرف اسم الخدمة التقنية. يكفي أن يحدد الحالة، ثم نوصله للمسار المناسب.</p></div>
+  {% include "public_preview/components/section_heading.html" with kicker="ابدأ من المرحلة" title="أي نقطة بداية تشبه وضع متجرك؟" description="التاجر لا يحتاج أن يعرف اسم الخدمة التقنية. يكفي أن يحدد الحالة، ثم نوصله للمسار المناسب." %}
   <div class="route-grid">
     <article class="route-card reveal"><small>BUILD</small><h3>أطلق متجرًا جديدًا</h3><p>من الفكرة والمنصة إلى هيكل المتجر والهوية والتجهيز والاختبار.</p><a href="#service-launch">شاهد خدمة الإطلاق ←</a></article>
     <article class="route-card reveal"><small>IMPROVE</small><h3>طوّر متجرًا قائمًا</h3><p>تخصيص أو إعادة تصميم بعد تشخيص الرحلة والجوال والمحتوى.</p><a href="#service-customize">شاهد مسارات التطوير ←</a></article>
@@ -84,7 +84,7 @@
 </div></section>
 
 <section class="platform-section platform-section--soft" id="platforms"><div class="container">
-  <div class="platform-heading reveal"><span class="section-kicker">المنصة جزء من القرار</span><h2>نختار ونطوّر وفق واقع مشروعك</h2><p>المنصة عامل تنفيذ داخل الخدمة. نحدد الأنسب وفق تشغيل مشروعك وحدود التخصيص، وتظهر خبرة المنصة داخل نطاق الخدمة نفسها.</p></div>
+  {% include "public_preview/components/section_heading.html" with kicker="المنصة جزء من القرار" title="نختار ونطوّر وفق واقع مشروعك" description="المنصة عامل تنفيذ داخل الخدمة. نحدد الأنسب وفق تشغيل مشروعك وحدود التخصيص، وتظهر خبرة المنصة داخل نطاق الخدمة نفسها." %}
   <div class="platform-grid platform-grid--4">
     <article class="platform-card reveal"><small>SAUDI COMMERCE</small><h3>سلة</h3><p>إطلاق وتخصيص وتجربة وقياس للسوق المحلي ضمن حدود المنصة والثيم.</p><a class="btn btn-outline btn-small" href="{% url 'public_preview:ecommerce' %}#platforms">حلول سلة</a></article>
     <article class="platform-card reveal"><small>SAUDI COMMERCE</small><h3>زد</h3><p>تجارة محلية مع احتياجات تشغيل وربط وتجربة علامة.</p><a class="btn btn-outline btn-small" href="{% url 'public_preview:ecommerce' %}#platforms">حلول زد</a></article>
@@ -104,7 +104,7 @@
 </div></section>
 
 <section class="platform-section commerce-journey" id="process"><div class="container">
-  <div class="platform-heading reveal"><span class="section-kicker">رحلة بناء المتجر</span><h2>نبدأ من التجارة، لا من القالب</h2><p>المراحل ثابتة كمبدأ، لكن حجم كل مرحلة يتغير حسب الخدمة الفرعية والمنصة وحالة المتجر.</p></div>
+  {% include "public_preview/components/section_heading.html" with kicker="رحلة بناء المتجر" title="نبدأ من التجارة، لا من القالب" description="المراحل ثابتة كمبدأ، لكن حجم كل مرحلة يتغير حسب الخدمة الفرعية والمنصة وحالة المتجر." %}
   <ol class="commerce-journey__timeline" aria-label="خطوات رحلة بناء المتجر">
     <li class="commerce-journey__step reveal"><span class="commerce-journey__number" aria-hidden="true">01</span><div><h3>تشخيص النشاط والعميل</h3><p>المنتجات والقرار والاعتراضات والعمليات والمنصة.</p></div></li>
     <li class="commerce-journey__step reveal"><span class="commerce-journey__number" aria-hidden="true">02</span><div><h3>تحديد النطاق</h3><p>الخدمة الفرعية والمخرجات والصلاحيات والمراجعات.</p></div></li>
@@ -115,7 +115,7 @@
 </div></section>
 
 <section class="platform-section platform-section--soft" id="deliverables"><div class="container">
-  <div class="platform-heading reveal"><span class="section-kicker">مخرجات قابلة للفهم</span><h2>ما الذي يمكن أن يدخل داخل نطاق المتجر؟</h2><p>هذه عائلات مخرجات، وليست وعدًا بأن كل مشروع يشملها جميعًا. العرض النهائي يحدد ما يدخل فعلًا.</p></div>
+  {% include "public_preview/components/section_heading.html" with kicker="مخرجات قابلة للفهم" title="ما الذي يمكن أن يدخل داخل نطاق المتجر؟" description="هذه عائلات مخرجات، وليست وعدًا بأن كل مشروع يشملها جميعًا. العرض النهائي يحدد ما يدخل فعلًا." %}
   <div class="platform-grid platform-grid--3"><article class="platform-card reveal"><h3>الاستراتيجية والهيكل</h3><p>أهداف ونطاق وخريطة صفحات وتصنيفات.</p></article><article class="platform-card reveal"><h3>التصميم والتطوير</h3><p>واجهة متجاوبة وتخصيص مناسب لإمكانات المنصة.</p></article><article class="platform-card reveal"><h3>المحتوى والمنتجات</h3><p>قوالب معلومات وأولويات عرض وعدد متفق عليه.</p></article><article class="platform-card reveal"><h3>الربط والقياس</h3><p>أدوات وتحليلات وأحداث وفق الصلاحيات المتاحة.</p></article><article class="platform-card reveal"><h3>الأداء والجوال</h3><p>مراجعة التحميل والتفاعل والتجاوب والمسارات الحرجة.</p></article><article class="platform-card reveal"><h3>الاختبار والتسليم</h3><p>سيناريوهات رئيسية وتوثيق وملاحظات ونطاق دعم.</p></article></div>
 </div></section>
 
