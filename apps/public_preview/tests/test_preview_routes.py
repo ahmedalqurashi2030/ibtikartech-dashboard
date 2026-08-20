@@ -1,9 +1,9 @@
 import re
 from pathlib import Path
 
-import pytest
 from django.conf import settings
 from django.urls import reverse
+import pytest
 
 from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
 
