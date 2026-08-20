@@ -40,14 +40,13 @@ def test_root_is_the_named_homepage(client):
 
 
 @pytest.mark.django_db
-def test_services_public_index_is_clean_and_database_catalog_is_preserved(client):
+def test_services_public_index_is_explicit_and_not_model_catalog(client):
     public_response = client.get(reverse("services:index"))
-    catalog_response = client.get(reverse("services:catalog"))
 
     assert reverse("services:index") == "/services/"
-    assert reverse("services:catalog") == "/services/catalog/"
     assert public_response.status_code == 200
-    assert catalog_response.status_code == 200
+    assert client.get("/services/catalog/").status_code == 404
+    assert client.get("/services/a-random-model-slug/").status_code == 404
 
 
 @pytest.mark.django_db
@@ -76,24 +75,57 @@ def test_imported_pages_extend_shared_base_without_duplicate_shell():
         assert source.lstrip().startswith('{% extends "public_preview/base.html" %}')
         assert 'id="ibtikarSiteHeader"' not in source
         assert 'class="ibt-shell-footer"' not in source
+        assert "public_preview/components/" not in source
 
 
-def test_repeated_public_structures_use_shared_includes():
+def test_global_shell_html_lives_directly_in_base_template():
+    base = (Path(settings.BASE_DIR) / "templates" / "public_preview" / "base.html").read_text(
+        encoding="utf-8"
+    )
+
+    assert 'id="ibtikarSiteHeader"' in base
+    assert 'class="ibt-shell-footer"' in base
+    assert "public_preview/components/" not in base
+
+
+def test_repeated_sections_keep_canonical_html_inside_each_page():
     pages_dir = Path(settings.BASE_DIR) / "templates" / "public_preview" / "pages"
     combined = "\n".join(
         (pages_dir / page_name).read_text(encoding="utf-8") for page_name in REQUIRED_PAGES
     )
 
-    assert combined.count('include "public_preview/components/breadcrumbs.html"') >= 3
-    assert combined.count('include "public_preview/components/section_heading.html"') >= 3
-    assert combined.count('include "public_preview/components/page_cta.html"') >= 1
+    assert "public_preview/components/" not in combined
 
+    breadcrumb_openings = combined.count('<nav class="breadcrumbs" aria-label="مسار التنقل">')
+    breadcrumb_contract = re.compile(
+        r'<nav class="breadcrumbs" aria-label="مسار التنقل">\s*'
+        r'<a href="\{% url \'public_preview:home\' %\}">الرئيسية</a>\s*'
+        r'<span aria-hidden="true">←</span>\s*'
+        r'<span aria-current="page">[^<]+</span>\s*'</n        r'</nav>',
+        re.DOTALL,
+    )
+    assert breadcrumb_openings >= 3
+    assert len(breadcrumb_contract.findall(combined)) == breadcrumb_openings
 
-def test_shared_public_components_keep_django_autoescaping_enabled():
-    components_dir = Path(settings.BASE_DIR) / "templates" / "public_preview" / "components"
-    reusable = ("breadcrumbs.html", "section_heading.html", "page_cta.html")
+    heading_openings = combined.count('<div class="platform-heading reveal">')
+    heading_contract = re.compile(
+        r'<div class="platform-heading reveal">\s*'
+        r'<span class="section-kicker">[^<]+</span>\s*'
+        r'<h2>[^<]+</h2>\s*'
+        r'<p>[^<]+</p>\s*'
+        r'</div>',
+        re.DOTALL,
+    )
+    assert heading_openings >= 3
+    assert len(heading_contract.findall(combined)) == heading_openings
 
-    for filename in reusable:
-        source = (components_dir / filename).read_text(encoding="utf-8")
-        assert "|safe" not in source
-        assert "{% autoescape off %}" not in source
+    cta_openings = combined.count('<section class="page-cta">')
+    cta_contract = re.compile(
+        r'<section class="page-cta">\s*<div class="container">\s*'
+        r'<div class="cta-card reveal">\s*<div>\s*'
+        r'<span class="section-kicker">.*?</span>\s*<h2>.*?</h2>\s*<p>.*?</p>\s*'
+        r'</div>\s*<div class="cta-actions">.*?</div>\s*</div>\s*</div>\s*</section>',
+        re.DOTALL,
+    )
+    assert cta_openings >= 1
+    assert len(cta_contract.findall(combined)) == cta_openings
