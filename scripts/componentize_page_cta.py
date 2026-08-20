@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
+CTA_INCLUDE = 'include "public_preview/components/page_cta.html"'
 
 PAGE_CTA_RE = re.compile(
     r'<section class="page-cta"><div class="container"><div class="cta-card reveal"><div>'
@@ -91,15 +92,19 @@ def replacement(match: re.Match[str]) -> str:
 
 def main() -> None:
     total = 0
+    combined_after = []
     for path in sorted(PAGES_DIR.glob("*.html")):
         source = path.read_text(encoding="utf-8")
         updated, count = PAGE_CTA_RE.subn(replacement, source)
         if updated != source:
             path.write_text(updated, encoding="utf-8")
-            total += count
-    if total == 0:
-        raise RuntimeError("No matching reusable page CTA structures were found.")
-    print(f"Componentized {total} shared page CTA section(s).")
+        combined_after.append(updated)
+        total += count
+
+    combined = "\n".join(combined_after)
+    if total == 0 and CTA_INCLUDE not in combined:
+        raise RuntimeError("No matching reusable page CTA structures or includes were found.")
+    print(f"Reusable page CTA structures synchronized; {total} new replacement(s).")
 
 
 if __name__ == "__main__":
