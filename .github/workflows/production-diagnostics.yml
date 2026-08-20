@@ -1,0 +1,54 @@
+name: Production Read-Only Diagnostics
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostics:
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
+    timeout-minutes: 5
+
+    steps:
+      - name: Read-only production state
+        shell: bash
+        run: |
+          set +e
+
+          echo "== timestamp =="
+          date -Is
+
+          echo "== deployed git head =="
+          git -C /srv/ibtikartech/app rev-parse HEAD || true
+          git -C /srv/ibtikartech/app status --short || true
+
+          echo "== ibtikartech service =="
+          systemctl is-active ibtikartech.service || true
+          systemctl show ibtikartech.service \
+            -p ActiveState -p SubState -p Result -p ExecMainStatus \
+            --no-pager || true
+
+          echo "== listener on port 8000 =="
+          ss -ltnp '( sport = :8000 )' || true
+
+          echo "== direct gunicorn health =="
+          curl --silent --show-error --include --max-time 5 \
+            http://127.0.0.1:8000/healthz/ || true
+
+          echo "== nginx local health =="
+          curl --silent --show-error --include --max-time 5 \
+            -H 'Host: ibtikartech.co' \
+            http://127.0.0.1/healthz/ || true
+
+          echo "== recent service warnings/errors =="
+          journalctl -u ibtikartech.service \
+            --since '-20 minutes' \
+            --priority warning \
+            --no-pager -n 40 || true
