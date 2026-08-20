@@ -449,10 +449,15 @@
     if(finalAction){const o=smooth(.91,.985,p);finalAction.style.opacity=o;finalAction.style.transform=`translate(-50%,${20*(1-o)}px)`;finalAction.style.pointerEvents=o>.78?'auto':'none'}
   }
   let rafId=0;
+  // JOURNEY_REFERENCE_ALIGNMENT: preserve the narrative, but advance the
+  // cinematic composition slightly so the identity/browser scene arrives at
+  // the same visual moment as the approved reference.
   const getProgress=()=>{
     const rect=story.getBoundingClientRect();
     const scrollable=Math.max(1,story.offsetHeight-innerHeight);
-    return clamp((-rect.top)/scrollable);
+    const raw=clamp((-rect.top)/scrollable);
+    const lead=.22;
+    return clamp(lead+raw*(1-lead));
   };
   const renderFromScroll=()=>{
     rafId=0;

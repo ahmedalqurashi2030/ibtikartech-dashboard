@@ -1529,3 +1529,13 @@ html.no-immersive-motion .services-cinema__final{
 @media(prefers-reduced-motion:reduce){
   .cinematic-story{height:100svh!important;min-height:680px}
 }
+
+
+/* DASHBOARD JOURNEY REFERENCE ALIGNMENT 2026-08-20
+   Keep the caption block slightly higher on desktop so the large visual
+   composition owns the center of the viewport, matching the approved frame. */
+@media (min-width:761px){
+  body.source-home #journey .cinematic-story__captions{
+    bottom:clamp(96px,15vh,156px);
+  }
+}
