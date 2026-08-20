@@ -16,10 +16,20 @@ jobs:
       - name: Verify production services and health
         shell: bash
         run: |
-          set -euo pipefail
-          systemctl is-active --quiet ibtikartech.service
-          test "$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/healthz/)" = "200"
-          test "$(curl -sS -o /dev/null -w '%{http_code}' https://ibtikartech.co/healthz/)" = "200"
+          set -u
+          service_state="$(systemctl is-active ibtikartech.service 2>&1 || true)"
+          local_code="$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/healthz/ 2>/tmp/ibtikar-local-curl.err || true)"
+          public_code="$(curl -sS -o /dev/null -w '%{http_code}' https://ibtikartech.co/healthz/ 2>/tmp/ibtikar-public-curl.err || true)"
+
+          echo "service_state=$service_state"
+          echo "local_health=$local_code"
+          echo "public_health=$public_code"
+          if [ -s /tmp/ibtikar-local-curl.err ]; then cat /tmp/ibtikar-local-curl.err; fi
+          if [ -s /tmp/ibtikar-public-curl.err ]; then cat /tmp/ibtikar-public-curl.err; fi
+
+          test "$service_state" = "active"
+          test "$local_code" = "200"
+          test "$public_code" = "200"
 
       - name: Verify deployed Django template architecture
         shell: bash
