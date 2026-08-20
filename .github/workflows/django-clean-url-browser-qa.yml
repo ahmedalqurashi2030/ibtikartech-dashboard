@@ -52,12 +52,12 @@ jobs:
           cat /tmp/ibtikar-django.log
           exit 1
 
-      - name: Verify clean, legacy, and static route contract
+      - name: Verify clean, legacy, catalog, and static route contract
         shell: bash
         run: |
           set -euo pipefail
           clean_routes=(
-            / /services/ /ecommerce/ /websites/ /brand-content/ /growth/
+            / /services/ /services/catalog/ /ecommerce/ /websites/ /brand-content/ /growth/
             /custom-systems/ /tharaa/ /portfolio/ /knowledge/
             /knowledge/store-launch/ /knowledge/product-page/ /knowledge/store-redesign/
             /about/ /contact/ /services/store-launch/ /services/storefront-customization/
@@ -69,7 +69,13 @@ jobs:
             test "$code" = "200" || { echo "$code $route"; exit 1; }
           done
 
-          legacy_routes=(services.html ecommerce.html about.html contact.html store-launch.html)
+          legacy_routes=(
+            index.html services.html ecommerce.html websites.html brand-content.html growth.html
+            custom-systems.html tharaa.html portfolio.html knowledge.html article-store-launch.html
+            article-product-page.html article-store-redesign.html about.html contact.html store-launch.html
+            storefront-customization.html store-redesign.html product-page-optimization.html
+            ecommerce-growth.html ecommerce-support.html 404.html
+          )
           for route in "${legacy_routes[@]}"; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000/${route}")"
             test "$code" = "301" || { echo "$code /$route expected 301"; exit 1; }
@@ -103,17 +109,20 @@ jobs:
             exit "$status"
           done
 
-      - name: Headless Chrome against 22 clean Django routes
+      - name: Headless Chrome on clean output with page-specific assertions
         working-directory: /tmp/ibtikar-frontend-qa
         env:
           BASE_URL: http://127.0.0.1:8000
+          # The QA harness keys specialized assertions by the historic filename.
+          # Django permanently redirects each request to its clean URL before
+          # rendering, so Chrome inspects the clean final document while the
+          # harness still executes Services/Contact/Tharaa-specific assertions.
           QA_PAGES: >-
-            .,services/,ecommerce/,websites/,brand-content/,growth/,custom-systems/,
-            tharaa/,portfolio/,knowledge/,knowledge/store-launch/,knowledge/product-page/,
-            knowledge/store-redesign/,about/,contact/,services/store-launch/,
-            services/storefront-customization/,services/store-redesign/,
-            services/product-page-optimization/,services/ecommerce-growth/,
-            services/ecommerce-support/,404/
+            index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
+            custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
+            article-product-page.html,article-store-redesign.html,about.html,contact.html,
+            store-launch.html,storefront-customization.html,store-redesign.html,
+            product-page-optimization.html,ecommerce-growth.html,ecommerce-support.html,404.html
         shell: bash
         run: |
           set +e
