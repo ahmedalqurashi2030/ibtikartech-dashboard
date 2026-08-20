@@ -10,6 +10,7 @@ on:
       - scripts/normalize_public_preview_metadata.py
       - scripts/patch_public_runtime_accessibility.py
       - scripts/verify_public_section_preservation.py
+      - templates/public_preview/pages/product-page-optimization.html
       - .github/workflows/frontend-preview-import.yml
   workflow_dispatch:
 
@@ -30,11 +31,26 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
 
+      - name: Preserve standardized inline service page contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/ibtikar-inline-contracts
+          cp templates/public_preview/pages/product-page-optimization.html \
+            /tmp/ibtikar-inline-contracts/product-page-optimization.html
+
       - name: Import static preview
         run: |
           python scripts/import_frontend_preview.py \
             --source /tmp/ibtikartech-source \
             --destination "$GITHUB_WORKSPACE"
+
+      - name: Restore standardized inline service page contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp /tmp/ibtikar-inline-contracts/product-page-optimization.html \
+            templates/public_preview/pages/product-page-optimization.html
 
       - name: Apply Django template architecture without section components
         run: |
@@ -42,10 +58,10 @@ jobs:
           python scripts/normalize_public_preview_metadata.py
           python scripts/patch_public_runtime_accessibility.py
 
-      - name: Verify every approved section is preserved
+      - name: Verify every approved section and content block is preserved
         run: python scripts/verify_public_section_preservation.py --source /tmp/ibtikartech-source
 
-      - name: Verify clean route template architecture
+      - name: Verify clean route and inline section architecture
         shell: bash
         run: |
           set -euo pipefail
@@ -54,10 +70,33 @@ jobs:
             ! grep -q 'id="ibtikarSiteHeader"' "$page"
             ! grep -q 'class="ibt-shell-footer"' "$page"
             ! grep -q 'public_preview/components/' "$page"
+            ! grep -q '{% include ' "$page"
           done
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages
           grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
+
+          service_pages=(
+            store-launch.html storefront-customization.html store-redesign.html
+            product-page-optimization.html ecommerce-growth.html ecommerce-support.html
+          )
+          for name in "${service_pages[@]}"; do
+            page="templates/public_preview/pages/$name"
+            grep -q 'class="service-detail-main"' "$page"
+            grep -q 'class="service-commerce-hero"' "$page"
+            grep -q 'class="service-quick-info"' "$page"
+            grep -q 'data-service-decision-tabs' "$page"
+            grep -q 'data-service-decision-tab="problems"' "$page"
+            grep -q 'data-service-decision-panel="problems"' "$page"
+            grep -q 'class="service-problem-grid"' "$page"
+            grep -q 'class="service-fit-grid"' "$page"
+            grep -q 'class="service-scope-grid"' "$page"
+            grep -q 'class="service-deliverable-grid"' "$page"
+            grep -q 'class="service-exclusion-list"' "$page"
+            grep -q 'commerce-service-detail.js' "$page"
+            ! grep -q 'class="svc-hero' "$page"
+            ! grep -q 'data-decision-tab=' "$page"
+          done
 
       - name: Commit imported preview
         run: |
