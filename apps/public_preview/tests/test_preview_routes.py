@@ -113,7 +113,7 @@ def test_global_shell_html_lives_directly_in_base_template():
 
 
 def test_platform_family_pages_share_one_section_structure_contract():
-    """Same-function sections in the platform/service-family pages use one DOM vocabulary."""
+    """Same-function sections in platform-family pages use one DOM vocabulary."""
     for page_name in PLATFORM_FAMILY_PAGES:
         source = _page_source(page_name)
         assert '<main id="main-content">' in source
@@ -127,7 +127,7 @@ def test_platform_family_pages_share_one_section_structure_contract():
 
 
 def test_service_detail_pages_share_one_structural_contract():
-    """All explicit commerce service pages use the same shell, hero, tabs and panel DOM."""
+    """All explicit commerce service pages use one shell, hero, tabs and panel DOM."""
     forbidden_legacy_markers = (
         'class="service-page"',
         'class="svc-container"',
@@ -160,7 +160,11 @@ def test_service_detail_pages_share_one_structural_contract():
         assert 'class="service-commerce-actions"' in source
         assert 'class="service-quick-info"' in source
         assert 'class="service-decision-nav"' in source
-        assert 'class="service-detail-shell service-decision-tabs" data-service-decision-tabs' in source
+        decision_tabs_marker = (
+            'class="service-detail-shell service-decision-tabs" '
+            'data-service-decision-tabs'
+        )
+        assert decision_tabs_marker in source
         assert 'class="service-detail-heading"' in source
         assert 'class="page-cta"' in source
         assert 'commerce-service-detail.js' in source
