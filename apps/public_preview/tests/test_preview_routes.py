@@ -92,6 +92,16 @@ def _page_source(page_name: str) -> str:
     ).read_text(encoding="utf-8")
 
 
+def _component_source(component_name: str) -> str:
+    return (
+        Path(settings.BASE_DIR)
+        / "templates"
+        / "public_preview"
+        / "components"
+        / component_name
+    ).read_text(encoding="utf-8")
+
+
 def test_imported_pages_extend_shared_base_without_duplicate_shell():
     for page_name in REQUIRED_PAGES:
         source = _page_source(page_name)
@@ -101,14 +111,28 @@ def test_imported_pages_extend_shared_base_without_duplicate_shell():
         assert "public_preview/components/" not in source
 
 
-def test_global_shell_html_lives_directly_in_base_template():
-    base = (Path(settings.BASE_DIR) / "templates" / "public_preview" / "base.html").read_text(
-        encoding="utf-8"
-    )
+def test_global_shell_is_composed_from_shared_template_includes():
+    base = (
+        Path(settings.BASE_DIR) / "templates" / "public_preview" / "base.html"
+    ).read_text(encoding="utf-8")
+    header = _component_source("header.html")
+    mobile_menu = _component_source("mobile_menu.html")
+    footer = _component_source("footer.html")
+    document_head = _component_source("document_head.html")
 
-    assert 'id="ibtikarSiteHeader"' in base
-    assert 'class="ibt-shell-footer"' in base
-    assert "public_preview/components/" not in base
+    assert 'include "public_preview/components/document_head.html"' in base
+    assert 'include "public_preview/components/header.html"' in base
+    assert 'include "public_preview/components/footer.html"' in base
+    assert 'id="ibtikarSiteHeader"' not in base
+    assert 'class="ibt-shell-footer"' not in base
+
+    assert 'id="ibtikarSiteHeader"' in header
+    assert 'include "public_preview/components/mobile_menu.html"' in header
+    assert 'id="ibtikarMobileMenu"' in mobile_menu
+    assert 'class="ibt-shell-footer"' in footer
+
+    assert "classList.remove('no-js')" in document_head
+    assert "classList.add('js-ready')" in document_head
 
 
 def test_platform_family_pages_share_one_section_structure_contract():
