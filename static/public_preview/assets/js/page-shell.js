@@ -68,9 +68,17 @@
     document.body.appendChild(script);
   };
 
-  // Load the UI/UX system as the final cascade layer without changing the
-  // imported source templates or their backend-facing contracts.
+  // Load the shared UI/UX system without changing imported backend-facing contracts.
   ensureStylesheet('/static/public_preview/assets/css/pages/ux-system-v1.css', 'ibtikar-ux-system-v1');
+
+  // Dashboard-owned page refinements live outside imported assets so source syncs
+  // cannot delete them. Scope them by the current approved-source body class.
+  if (document.body.classList.contains('source-home')) {
+    ensureStylesheet('/static/public_preview/dashboard/homepage-refinement-v1.css', 'ibtikar-homepage-refinement-v1');
+  }
+  if (document.body.classList.contains('source-services')) {
+    ensureStylesheet('/static/public_preview/dashboard/services-refinement-v1.css', 'ibtikar-services-refinement-v1');
+  }
 
   const loadEnhancements = () => {
     ensureScript('/static/public_preview/assets/js/continuous-flow.js', 'continuous-flow');
