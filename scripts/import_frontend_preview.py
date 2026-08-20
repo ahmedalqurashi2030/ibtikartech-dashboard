@@ -51,6 +51,9 @@ RETIRED_PLATFORM_PAGES = (
 HEADER_INCLUDE = '{% include "public_preview/components/header.html" %}'
 FOOTER_INCLUDE = '{% include "public_preview/components/footer.html" %}'
 STATIC_PREFIX = "/static/public_preview/assets/"
+UX_STYLESHEET_RELATIVE = Path("css/pages/ux-system-v1.css")
+UX_STYLESHEET_URL = f"{STATIC_PREFIX}{UX_STYLESHEET_RELATIVE.as_posix()}"
+UX_STYLESHEET_ID = "ibtikar-ux-system-v1"
 
 
 def replace_shell_slot(source: str, attribute: str, replacement: str) -> str:
@@ -74,6 +77,56 @@ def patch_runtime_assets(assets_dir: Path) -> None:
         updated = text.replace("assets/", STATIC_PREFIX)
         if updated != text:
             path.write_text(updated, encoding="utf-8")
+
+
+def preserve_dashboard_ux_stylesheet(assets_dir: Path) -> str | None:
+    """Keep the dashboard-owned UX layer when imported source assets are replaced."""
+    stylesheet = assets_dir / UX_STYLESHEET_RELATIVE
+    if not stylesheet.is_file():
+        return None
+    return stylesheet.read_text(encoding="utf-8")
+
+
+def restore_dashboard_ux_stylesheet(assets_dir: Path, content: str | None) -> None:
+    if content is None:
+        return
+    stylesheet = assets_dir / UX_STYLESHEET_RELATIVE
+    stylesheet.parent.mkdir(parents=True, exist_ok=True)
+    stylesheet.write_text(content, encoding="utf-8")
+
+
+def patch_ux_system_loader(assets_dir: Path) -> None:
+    """Ensure imported pages keep loading the dashboard-owned final UX layer."""
+    js_path = assets_dir / "js" / "page-shell.js"
+    if not js_path.is_file():
+        raise RuntimeError("page-shell.js is missing; refusing to drop the UX system loader.")
+
+    js = js_path.read_text(encoding="utf-8")
+    if UX_STYLESHEET_ID in js:
+        return
+
+    script_marker = "  const ensureScript = (src, datasetKey) => {"
+    load_marker = "  const loadEnhancements = () => {"
+    if script_marker not in js or load_marker not in js:
+        raise RuntimeError("page-shell.js changed; refusing an unsafe UX loader patch.")
+
+    stylesheet_helper = f'''  const ensureStylesheet = (href, id) => {{
+    if (document.getElementById(id) || document.querySelector(`link[href="${{href}}"]`)) return;
+    const link = document.createElement('link');
+    link.id = id;
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+  }};
+
+'''
+    stylesheet_call = (
+        "  // Dashboard-owned final UI/UX layer; presentation only.\n"
+        f"  ensureStylesheet('{UX_STYLESHEET_URL}', '{UX_STYLESHEET_ID}');\n\n"
+    )
+    js = js.replace(script_marker, stylesheet_helper + script_marker, 1)
+    js = js.replace(load_marker, stylesheet_call + load_marker, 1)
+    js_path.write_text(js, encoding="utf-8")
 
 
 def patch_dashboard_journey_alignment(assets_dir: Path) -> None:
@@ -165,6 +218,7 @@ def import_frontend(
     pages_dir = destination_root / "templates" / "public_preview" / "pages"
     assets_dir = destination_root / "static" / "public_preview" / "assets"
     manifest_path = destination_root / "docs" / "frontend-preview-manifest.json"
+    preserved_ux_stylesheet = preserve_dashboard_ux_stylesheet(assets_dir)
 
     if pages_dir.exists():
         shutil.rmtree(pages_dir)
@@ -173,7 +227,9 @@ def import_frontend(
     if assets_dir.exists():
         shutil.rmtree(assets_dir)
     shutil.copytree(source_assets, assets_dir)
+    restore_dashboard_ux_stylesheet(assets_dir, preserved_ux_stylesheet)
     patch_runtime_assets(assets_dir)
+    patch_ux_system_loader(assets_dir)
     patch_dashboard_journey_alignment(assets_dir)
 
     imported_pages = []
