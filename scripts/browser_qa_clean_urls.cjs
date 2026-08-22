@@ -297,9 +297,9 @@ function validate(result, failures, internalLinks) {
 
   if (route === '/contact/') {
     if (!/noindex/i.test(metrics.robots)) {
-      failures.push(`${prefix}: contact preview should remain noindex until submission backend is connected`);
+      failures.push(`${prefix}: contact page should remain noindex`);
     }
-    if (metrics.contactSubmitLabel !== 'حفظ مسودة الطلب') {
+    if (metrics.contactSubmitLabel !== 'إرسال طلب المشروع') {
       failures.push(`${prefix}: unexpected contact submit label: ${metrics.contactSubmitLabel}`);
     }
   }
