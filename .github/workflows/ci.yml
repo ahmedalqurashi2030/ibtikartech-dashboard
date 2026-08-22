@@ -73,10 +73,25 @@ jobs:
       - name: Deploy production
         run: sudo -u deploy -H /usr/local/sbin/deploy-ibtikartech
 
-      - name: Verify production health
+      - name: Repair generated hero asset permissions
+        run: |
+          sudo -u deploy -H find /srv/ibtikartech -type d \
+            -path '*/assets/images/hero' -exec chmod 0755 {} +
+          sudo -u deploy -H find /srv/ibtikartech -type f \
+            \( -name 'ibtikar-services-ecosystem-v1.jpg' \
+            -o -name 'ibtikar-ecommerce-journey-v1.jpg' \) \
+            -exec chmod 0644 {} +
+
+      - name: Verify production health and hero assets
         run: |
           curl --fail --silent --show-error \
             --retry 5 \
             --retry-delay 3 \
             --retry-all-errors \
             https://ibtikartech.co/healthz/
+          curl --fail --silent --show-error \
+            https://ibtikartech.co/static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg \
+            --output /dev/null
+          curl --fail --silent --show-error \
+            https://ibtikartech.co/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg \
+            --output /dev/null
