@@ -283,7 +283,7 @@ def test_service_category_pages_use_decision_path_contract():
         source = _page_source(page_name)
         assert "service-category.css" in source
         assert "service-category-page" in source
-        assert 'class="service-paths-section' in source
+        assert "service-paths-section" in source
         assert 'class="service-paths-header' in source
         assert 'class="service-paths-grid"' in source
         assert 'class="service-path-card reveal"' in source
