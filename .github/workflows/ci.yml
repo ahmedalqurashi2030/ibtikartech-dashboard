@@ -2,6 +2,8 @@ name: CI
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "55 1 22 8 *"
   pull_request:
   push:
     branches:
@@ -52,7 +54,10 @@ jobs:
 
   deploy-production:
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule'
 
     runs-on:
       - self-hosted
