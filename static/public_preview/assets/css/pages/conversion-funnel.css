@@ -49,6 +49,21 @@
 .tharaa-decision__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .tharaa-decision__note { display: block; margin-top: 12px; color: #aeb9d5; font-size: 13px; }
 
+.tharaa-fit { position: relative; padding: clamp(64px,8vw,104px) 0; overflow: hidden; background: #080d21; border-top: 1px solid rgba(255,255,255,.06); }
+.tharaa-fit::before { content: ""; position: absolute; inset: 10% auto auto 3%; width: 360px; height: 360px; border-radius: 50%; background: rgba(55,173,255,.09); filter: blur(90px); pointer-events: none; }
+.tharaa-fit__grid { position: relative; display: grid; grid-template-columns: minmax(270px,.72fr) minmax(0,1.28fr); gap: clamp(24px,4vw,58px); align-items: start; }
+.tharaa-fit__intro h2 { margin: 10px 0 14px; color: #fff; font-size: clamp(32px,4vw,52px); line-height: 1.16; }
+.tharaa-fit__intro > p { margin: 0; max-width: 510px; color: #aeb9d5; line-height: 1.9; }
+.tharaa-fit__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.tharaa-fit__cards { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.tharaa-fit__card { min-height: 100%; padding: clamp(22px,3vw,32px); border: 1px solid rgba(255,255,255,.1); border-radius: 24px; background: linear-gradient(150deg,rgba(20,31,67,.94),rgba(9,15,37,.88)); box-shadow: 0 24px 60px rgba(0,0,0,.16); }
+.tharaa-fit__card--yes { border-color: rgba(62,204,175,.28); background: linear-gradient(150deg,rgba(19,51,63,.78),rgba(9,20,40,.92)); }
+.tharaa-fit__card small { color: #7dd3fc; font-weight: 800; }
+.tharaa-fit__card h3 { margin: 14px 0 18px; color: #fff; font-size: clamp(21px,2vw,27px); line-height: 1.45; }
+.tharaa-fit__card ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; color: #bcc6dd; }
+.tharaa-fit__card li { position: relative; padding-inline-start: 22px; line-height: 1.75; }
+.tharaa-fit__card li::before { content: ""; position: absolute; inset-inline-start: 0; top: .73em; width: 7px; height: 7px; border-radius: 50%; background: #6ed8ff; box-shadow: 0 0 0 4px rgba(110,216,255,.1); }
+
 @media (max-width: 760px) {
   .hero--system .hero__grid { grid-template-columns: 1fr; gap: 30px; }
   .hero--system .hero__content { text-align: center; }
@@ -67,6 +82,9 @@
   .source-services .hero-visual--image { min-height: 0; }
   .source-services .hero-visual--image img { border-radius: 22px; }
   .tharaa-decision__actions > * { width: 100%; justify-content: center; }
+  .tharaa-fit__grid,
+  .tharaa-fit__cards { grid-template-columns: 1fr; }
+  .tharaa-fit__actions > * { width: 100%; justify-content: center; }
 }
 
 @media (min-width: 761px) and (max-width: 1080px) {
