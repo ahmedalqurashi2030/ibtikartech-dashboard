@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/conversion-funnel.css">
 {% endblock %}
 
 {% block body_attrs %} class="approved-source-page source-tharaa" data-section="tharaa" data-approved-source="Ibtikar_Tech_Tharaa_Theme_Page_Final_CTA_Replaced.html"{% endblock %}
@@ -53,7 +54,14 @@
 <div class="hero-kicker"><b></b> ثيم احترافي لمتاجر سلة</div>
 <h1 class="gradient-text">ثـراء<small>THARAA COMMERCE EXPERIENCE</small></h1>
 <p class="hero-lead">ليس مجرد شكل جديد لمتجرك؛ بل نظام تجربة متكامل يعرض هويتك بوضوح، يسهّل اكتشاف المنتجات، ويقرّب العميل من قرار الشراء عبر الهاتف وسطح المكتب.</p>
-<div class="hero-actions"><button class="btn btn--primary" data-open-preview="">استكشف المعاينة التفاعلية</button><a class="btn btn--ghost" href="#v4-experience">شاهد رحلة الثيم</a></div>
+<div class="tharaa-decision" aria-label="سعر وخيارات ثيم ثراء">
+  <div class="tharaa-decision__price"><strong>299 ر.س</strong><del>399 ر.س</del><small>السعر الحالي في متجر ثيمات سلة</small></div>
+  <div class="tharaa-decision__actions">
+    <a class="btn btn--primary" href="https://salla.com/themes/1609470678" target="_blank" rel="noopener" data-analytics="tharaa_marketplace_click" data-analytics-destination="salla-marketplace">شراء الثيم من سلة</a>
+    <a class="btn btn--ghost" href="https://demostore.salla.sa/intend/1767904576" target="_blank" rel="noopener" data-analytics="demo_click" data-analytics-destination="tharaa-demo">فتح المتجر التجريبي</a>
+  </div>
+  <small class="tharaa-decision__note">الترخيص يتم عبر سلة. التركيب أو التخصيص خدمة مستقلة حسب نطاق متجرك.</small>
+</div>
 <div class="hero-badges"><span>متوافق مع سلة</span><span>RTL / LTR</span><span>وضع فاتح وداكن</span><span>Mobile-first</span><span>قابل للتخصيص</span></div>
 </div>
 <div class="hero-stage" id="heroStage">
@@ -248,11 +256,11 @@
 <article class="faq-item"><button aria-expanded="false">هل يشمل الطلب التركيب والتخصيص؟<i></i></button><div class="faq-answer"><p>ترخيص الثيم مستقل عن خدمات التركيب والتخصيص. وعند طلب خدمة إضافية يحدد نطاقها ومخرجاتها بشكل منفصل قبل التنفيذ.</p></div></article>
 <article class="faq-item"><button aria-expanded="false">هل يدعم الوضع الداكن؟<i></i></button><div class="faq-answer"><p>نعم. يمكن تفعيل الوضع الداكن، جعله افتراضيًا أو توفير زر تبديل للزائر وفق إعدادات المتجر.</p></div></article>
 </div></div></section>
-<section class="final-cta" id="request"><div class="container"><div class="final-card reveal"><div class="final-card__copy"><small>ابدأ بالمعاينة ثم حدد النطاق</small><h2>شاهد ثراء على تجربة تشبه نشاطك</h2><p>استكشف الواجهات والتخصيص، ثم حدد ما إذا كان احتياجك يقتصر على الترخيص أو يحتاج خدمة تركيب وتخصيص مستقلة.</p></div><div class="final-actions"><a class="btn btn--light" href="#v4-preview">شاهد المعاينة</a><a href="{% url 'public_preview:contact' %}#quote">جهّز طلبك ←</a></div></div></div></section>
+<section class="final-cta" id="request"><div class="container"><div class="final-card reveal"><div class="final-card__copy"><small>قرار واضح وخطوتان منفصلتان</small><h2>اشترِ الترخيص من سلة، واطلب التخصيص عند الحاجة</h2><p>سعر الثيم الحالي 299 ر.س عبر متجر ثيمات سلة. خدمة التركيب والتخصيص اختيارية ويحدد نطاقها بعد مراجعة المتجر.</p></div><div class="final-actions"><a class="btn btn--light" href="https://salla.com/themes/1609470678" target="_blank" rel="noopener" data-analytics="tharaa_marketplace_click">شراء ثراء من سلة</a><a href="{% url 'public_preview:contact' %}?goal=ثيم%20ثراء&amp;source=tharaa#quote">طلب تركيب أو تخصيص ←</a></div></div></div></section>
 </main>
 <footer data-approved-legacy-shell hidden inert aria-hidden="true" class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-about"><a class="brand" href="#top"><span class="brand-mark"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ثراء × ابتكار تك</strong><small>THARAA THEME</small></span></a><p>ثيم تجارة إلكترونية لمنصة سلة، صمم لتقديم هوية أوضح وتجربة شراء مرنة وقابلة للتوسع.</p></div><div><h3>استكشف الثيم</h3><a href="#v4-experience">رحلة التجربة</a><a href="#v4-preview">مختبر المعاينة</a><a href="#features">المزايا</a><a href="#sections">الأقسام</a></div><div><h3>المساعدة</h3><a href="#faq">الأسئلة الشائعة</a><a href="#request">طلب المعاينة</a><a href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a href="{% url 'public_preview:contact' %}#quote">دعم تيليجرام</a></div><div><h3>ابتكار تك</h3><a href="{% url 'public_preview:home' %}">الرئيسية</a><a href="{% url 'services:index' %}">الخدمات</a><a href="{% url 'public_preview:portfolio' %}">الأعمال</a><a href="{% url 'public_preview:contact' %}#quote">تواصل معنا</a></div></div><div class="footer-bottom"><span>© 2026 ابتكار تك للحلول والخدمات الرقمية. جميع الحقوق محفوظة.</span><span>ثيم ثراء — تجربة متجر قابلة للنمو</span></div></div></footer>
 
-<div class="sticky-cta"><button data-open-preview="">معاينة</button><a href="{% url 'public_preview:contact' %}#quote">ناقش ثراء</a></div>
+<div class="sticky-cta"><a href="https://demostore.salla.sa/intend/1767904576" target="_blank" rel="noopener" data-analytics="demo_click">معاينة مباشرة</a><a href="https://salla.com/themes/1609470678" target="_blank" rel="noopener" data-analytics="tharaa_marketplace_click">شراء بـ299 ر.س</a></div>
 <div aria-labelledby="previewTitle" aria-modal="true" class="preview-modal" id="previewModal" role="dialog"><div class="modal-shell"><div class="modal-head"><strong id="previewTitle">معاينة ثيم ثراء</strong><button aria-label="إغلاق" id="closePreview">✕</button></div><div class="modal-body"><div class="modal-preview"><div class="mnav"></div><div class="mhero"><div><small>THARAA COLLECTION</small><h3>تجربة متجر تبدأ من الهوية</h3></div><i></i></div><div class="mcards"><i></i><i></i><i></i><i></i></div></div></div></div></div>
 <dialog aria-labelledby="componentPreviewTitle" class="component-preview-dialog" id="componentPreviewDialog">
 <div class="component-preview-dialog__head">
