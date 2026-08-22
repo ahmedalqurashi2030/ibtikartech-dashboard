@@ -10,9 +10,10 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
 {% endblock %}
 
-{% block body_attrs %} class="inner-page platform-page approved-source-page source-ecommerce" data-section="services" data-approved-source="ecommerce.html"{% endblock %}
+{% block body_attrs %} class="inner-page platform-page approved-source-page source-ecommerce category-hub service-category-page category-ecommerce" data-section="services" data-approved-source="ecommerce.html"{% endblock %}
 
 {% block body %}
 <main id="main-content">
@@ -32,17 +33,49 @@
 
 <nav class="commerce-category-nav" aria-label="أقسام حلول المتاجر الإلكترونية"><div class="container commerce-category-nav__inner"><a href="#paths">نقطة البداية</a><a href="#subservices">الخدمات الفرعية</a><a href="#platforms">المنصات</a><a href="#tharaa-product">ثيم ثراء</a><a href="#product-page">صفحة المنتج</a><a href="#process">طريقة العمل</a><a href="#faq">الأسئلة</a></div></nav>
 
-<section class="platform-section platform-section--soft" id="paths"><div class="container">
-  <div class="platform-heading reveal">
-  <span class="section-kicker">ابدأ من المرحلة</span>
-  <h2>أي نقطة بداية تشبه وضع متجرك؟</h2>
-  <p>التاجر لا يحتاج أن يعرف اسم الخدمة التقنية. يكفي أن يحدد الحالة، ثم نوصله للمسار المناسب.</p>
-</div>
-  <div class="route-grid">
-    <article class="route-card reveal"><small>BUILD</small><h3>أطلق متجرًا جديدًا</h3><p>من الفكرة والمنصة إلى هيكل المتجر والهوية والتجهيز والاختبار.</p><a href="#service-launch">شاهد خدمة الإطلاق ←</a></article>
-    <article class="route-card reveal"><small>IMPROVE</small><h3>طوّر متجرًا قائمًا</h3><p>تخصيص أو إعادة تصميم بعد تشخيص الرحلة والجوال والمحتوى.</p><a href="#service-customize">شاهد مسارات التطوير ←</a></article>
-    <article class="route-card reveal"><small>FIX / CRO</small><h3>عالج مشكلة محددة</h3><p>صفحة منتج، تجربة شراء، ثيم أو نقطة احتكاك تحتاج تدخلًا مركزًا.</p><a href="#service-product">شاهد تحسين التجربة ←</a></article>
-    <article class="route-card reveal"><small>GROW</small><h3>اربط ونمِّ المتجر</h3><p>قياس وتكاملات وSEO وتحسينات مبنية على البيانات المتاحة.</p><a href="#service-growth">شاهد مسار النمو ←</a></article>
+
+<section class="platform-section platform-section--soft service-paths-section" id="paths"><div class="container">
+  <div class="service-paths-header reveal">
+    <div class="service-paths-header__copy"><span class="section-kicker">ابدأ من الحالة</span><h2>اختر وضع متجرك الآن، لا اسم الخدمة</h2><p>كل مسار يبدأ بسؤال تجاري مفهوم، ثم يقودك مباشرة إلى الخدمة المناسبة ونطاقها الفعلي.</p></div>
+    <aside class="service-paths-help" aria-label="مساعدة في اختيار المسار"><strong>غير متأكد من نقطة البداية؟</strong><span>أرسل رابط المتجر ووصفًا مختصرًا لما تريد تغييره، وسنحدد المسار الأنسب قبل إعداد العرض.</span><a href="{% url 'public_preview:contact' %}?goal=ecommerce&source=ecommerce-paths#quote">صف حالة متجرك</a></aside>
+  </div>
+  <div class="service-paths-grid" data-count="4">
+    
+<article class="service-path-card reveal" data-sequence="01">
+  <div class="service-path-card__meta"><span>01 / BUILD</span><span>متجر جديد</span></div>
+  <h3>أطلق متجرًا جديدًا على أساس صحيح</h3>
+  <p>من اختيار المنصة وهيكل الصفحات إلى الواجهة وصفحات الثقة والاختبار قبل الإطلاق.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>مشروع جديد أو علامة جاهزة للدخول إلى التجارة الإلكترونية.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>اختيار المنصة</li><li>هيكل المتجر</li><li>تجهيز الإطلاق</li></ul>
+  <a class="service-path-card__action" href="#service-launch">استكشف مسار الإطلاق</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="02">
+  <div class="service-path-card__meta"><span>02 / IMPROVE</span><span>متجر قائم</span></div>
+  <h3>طوّر متجرًا يعمل لكنه لا يعكس طموحك</h3>
+  <p>نشخّص الجوال والواجهة والمحتوى، ثم نخصّص أو نعيد تصميم ما يعيق وضوح الرحلة.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>لديك منتجات وزيارات، لكن التجربة غير متسقة أو قديمة.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>UX Audit</li><li>تخصيص الواجهة</li><li>إعادة التصميم</li></ul>
+  <a class="service-path-card__action" href="#service-customize">قارن مسارات التطوير</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="03">
+  <div class="service-path-card__meta"><span>03 / FIX / CRO</span><span>مشكلة محددة</span></div>
+  <h3>عالج نقطة الاحتكاك التي تعطّل الشراء</h3>
+  <p>تدخل مركز في صفحة المنتج أو الثيم أو الخطوة التي تربك العميل قبل القرار.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>المشكلة محددة ويمكن فحصها وقياس أثر تحسينها.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>صفحة المنتج</li><li>رحلة الشراء</li><li>CRO</li></ul>
+  <a class="service-path-card__action" href="#service-product">راجع تحسين تجربة المنتج</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="04">
+  <div class="service-path-card__meta"><span>04 / GROW</span><span>بعد الاستقرار</span></div>
+  <h3>ثبّت القياس ثم نمِّ المتجر بقرارات أوضح</h3>
+  <p>ربط الأحداث والتكاملات وSEO وقائمة تحسين مبنية على البيانات المتاحة.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>المتجر مستقر وتريد معرفة ما يستحق الأولوية بدل التحسين العشوائي.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>Analytics</li><li>Tracking</li><li>Growth Backlog</li></ul>
+  <a class="service-path-card__action" href="#service-growth">استكشف مسار النمو</a>
+</article>
   </div>
 </div></section>
 
