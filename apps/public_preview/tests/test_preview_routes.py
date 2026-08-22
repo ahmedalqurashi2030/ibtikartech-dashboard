@@ -259,3 +259,45 @@ def test_tharaa_page_supports_a_buyer_fit_decision_before_feature_depth():
     assert "شراء مرة واحدة" in source
     assert "افتح دليل المستخدم" in source
     assert "التركيب والتخصيص خدمة مستقلة عن الترخيص" in source
+
+
+SERVICE_CATEGORY_PAGES = (
+    "ecommerce.html",
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+)
+
+NON_COMMERCE_CATEGORY_PAGES = (
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+)
+
+
+def test_service_category_pages_use_decision_path_contract():
+    """Category pages lead with fit, scope and a contextual action instead of generic cards."""
+    for page_name in SERVICE_CATEGORY_PAGES:
+        source = _page_source(page_name)
+        assert "service-category.css" in source
+        assert "service-category-page" in source
+        assert 'class="service-paths-section' in source
+        assert 'class="service-paths-header' in source
+        assert 'class="service-paths-grid"' in source
+        assert 'class="service-path-card reveal"' in source
+        assert 'class="service-path-card__fit"' in source
+        assert 'class="service-path-card__scope"' in source
+        assert 'class="service-path-card__action"' in source
+        assert "مناسب عندما" in source
+        assert 'class="route-grid"' not in source
+
+
+def test_non_commerce_service_categories_offer_local_section_navigation():
+    for page_name in NON_COMMERCE_CATEGORY_PAGES:
+        source = _page_source(page_name)
+        assert 'class="service-page-nav"' in source
+        assert 'href="#capabilities"' in source
+        assert 'href="#approach"' in source
+        assert 'href="#fit"' in source
