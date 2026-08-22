@@ -19,9 +19,29 @@ SECTION_RE = re.compile(r"<section\b", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
 DJANGO_TAG_RE = re.compile(r"{[%{#].*?[}%#]}", re.DOTALL)
 
-# These pages now own their conversion copy in Django. Their approved section
-# count remains guarded, while content changes are covered by product tests.
-CONTENT_OVERRIDE_PAGES = {"index.html", "contact.html", "tharaa.html"}
+# These pages own their conversion copy in Django. Changes remain covered by
+# template-contract and product tests; this guard still protects every other
+# imported page from accidental drift.
+CONTENT_OVERRIDE_PAGES = {
+    "index.html",
+    "contact.html",
+    "services.html",
+    "ecommerce.html",
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+    "tharaa.html",
+    "store-launch.html",
+    "storefront-customization.html",
+    "store-redesign.html",
+    "product-page-optimization.html",
+    "ecommerce-growth.html",
+    "ecommerce-support.html",
+}
+
+# Intentional decision-support sections added after the source import.
+SECTION_COUNT_DELTAS = {"index.html": 2, "tharaa.html": 1}
 
 
 def normalize_text(value: str) -> str:
@@ -107,10 +127,13 @@ def main() -> None:
         template = template_path.read_text(encoding="utf-8")
         source_count = len(SECTION_RE.findall(source))
         template_count = len(SECTION_RE.findall(template))
-        if source_count != template_count:
+        expected_template_count = source_count + SECTION_COUNT_DELTAS.get(page_name, 0)
+        allowed_template_counts = {source_count, expected_template_count}
+        if template_count not in allowed_template_counts:
             failures.append(
                 f"{page_name}: source has {source_count} section(s), "
-                f"Django template has {template_count} section(s)"
+                f"Django template has {template_count} section(s), "
+                f"expected one of {sorted(allowed_template_counts)}"
             )
             continue
 

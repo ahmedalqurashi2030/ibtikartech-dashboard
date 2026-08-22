@@ -1,8 +1,8 @@
 {% extends "public_preview/base.html" %}
 
 {% block head %}
-<title>تصميم وتطوير المتاجر الإلكترونية | ابتكار تك</title>
-  <meta name="description" content="حلول بناء وتطوير المتاجر الإلكترونية على سلة وزد وWooCommerce وShopify: إطلاق المتجر، تخصيص الواجهة، إعادة التصميم، تحسين صفحة المنتج، الربط والقياس والدعم.">
+<title>حلول المتاجر الإلكترونية | ابتكار تك</title>
+  <meta name="description" content="حلول إطلاق وتخصيص وإعادة تصميم وتحسين وقياس ودعم المتاجر على سلة وزد وWooCommerce وShopify، بحسب حالة المتجر ونقطة البداية.">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
@@ -22,11 +22,11 @@
     <div class="hero-copy reveal">
       <nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">المتاجر الإلكترونية</span></nav>
       <span class="platform-kicker">حلول التجارة الإلكترونية</span>
-      <h1>متجر واضح وسريع. <span>يقود العميل من الاكتشاف إلى الشراء.</span></h1>
-      <p>«المتاجر الإلكترونية» هي خدمة رئيسية داخل ابتكار تك. تحتها مسارات فرعية تبدأ من إطلاق المتجر، وتمتد إلى تحسين التجربة والربط والقياس والدعم المستمر.</p>
-      <div class="platform-actions"><a class="btn btn-primary" href="#subservices">استكشف الخدمات الفرعية</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}#quote">اطلب تشخيص متجرك</a></div>
+      <h1>متجر يقود العميل بوضوح. <span>من الاكتشاف إلى الشراء.</span></h1>
+      <p>نطلق المتجر أو نطوّر الجزء الذي يعيق رحلته: المنصة والواجهة وصفحة المنتج والقياس والربط والدعم. تبدأ الخدمة من حالة متجرك، لا من باقة جاهزة.</p>
+      <div class="platform-actions"><a class="btn btn-primary" href="#paths">اختر نقطة البداية</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=ecommerce&source=ecommerce-hero#quote">أرسل رابط متجرك</a></div>
     </div>
-    <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/ecommerce-experience-source.png" alt="واجهة تجربة متجر إلكتروني من ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>مرجع التجارة المعتمد: العرض والتجربة والقرار ضمن قصة واحدة.</figcaption></figure>
+    <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg" alt="رحلة تجارة إلكترونية من اكتشاف المنتج إلى الدفع والقياس والتسليم" width="1280" height="853" fetchpriority="high"><figcaption>تجربة تجارة متصلة: اكتشاف، منتج، دفع، قياس وتسليم.</figcaption></figure>
   </div>
 </section>
 
@@ -55,17 +55,17 @@
   <div class="commerce-service-grid" aria-label="الخدمات الفرعية للمتاجر الإلكترونية">
     <article class="commerce-service-card commerce-service-card--featured reveal" id="service-launch">
       <figure class="commerce-service-card__media"><img src="/static/public_preview/assets/images/services/ecommerce/store-launch.svg" alt="معاينة بصرية لخدمة إطلاق متجر إلكتروني" width="800" height="500" loading="lazy"><span class="commerce-service-card__stage">مرحلة الإطلاق</span></figure>
-      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>01 / STORE LAUNCH</span><span>BUILD</span></div><h3>إطلاق متجر إلكتروني</h3><p>بناء نقطة البداية من المنصة والهيكل إلى الواجهة والتجهيز والاختبار قبل النشر.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>مشروع جديد أو علامة جاهزة للدخول إلى التجارة الإلكترونية.</strong></div><div class="commerce-service-card__meta"><span>سلة · زد · Shopify · WooCommerce</span><span>عرض حسب النطاق</span></div><div class="commerce-service-card__footer"><a href="{% url 'public_preview:contact' %}#quote">خطط لإطلاق متجرك</a><small>المدة بعد تثبيت المحتوى والنطاق</small></div></div>
+      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>01 / STORE LAUNCH</span><span>BUILD</span></div><h3>إطلاق متجر إلكتروني</h3><p>بناء نقطة البداية من المنصة والهيكل إلى الواجهة والتجهيز والاختبار قبل النشر.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>مشروع جديد أو علامة جاهزة للدخول إلى التجارة الإلكترونية.</strong></div><div class="commerce-service-card__meta"><span>سلة · زد · Shopify · WooCommerce</span><span>عرض حسب النطاق</span></div><div class="commerce-service-card__footer"><a href="{% url 'services:store-launch' %}">تفاصيل خدمة الإطلاق</a><small>المدة بعد تثبيت المحتوى والنطاق</small></div></div>
     </article>
 
     <article class="commerce-service-card reveal" id="service-customize">
       <figure class="commerce-service-card__media"><img src="/static/public_preview/assets/images/services/ecommerce/storefront-customization.svg" alt="معاينة بصرية لخدمة تخصيص واجهة المتجر" width="800" height="500" loading="lazy"><span class="commerce-service-card__stage">مرحلة التطوير</span></figure>
-      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>02 / STOREFRONT</span><span>BRAND</span></div><h3>تخصيص واجهة المتجر</h3><p>تطبيق الهوية على الثيم وترتيب الأقسام والبنرات والصفحات حتى لا يبدو المتجر قالبًا عامًا.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر يعمل، لكن واجهته لا تعكس مستوى العلامة.</strong></div><div class="commerce-service-card__meta"><span>واجهة · أقسام · هوية</span><span>بعد فحص الثيم والمنصة</span></div><div class="commerce-service-card__footer"><a href="{% url 'public_preview:contact' %}#quote">ناقش التخصيص</a><small>لا نعد بتعديل قبل فحص القيود</small></div></div>
+      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>02 / STOREFRONT</span><span>BRAND</span></div><h3>تخصيص واجهة المتجر</h3><p>تطبيق الهوية على الثيم وترتيب الأقسام والبنرات والصفحات حتى لا يبدو المتجر قالبًا عامًا.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر يعمل، لكن واجهته لا تعكس مستوى العلامة.</strong></div><div class="commerce-service-card__meta"><span>واجهة · أقسام · هوية</span><span>بعد فحص الثيم والمنصة</span></div><div class="commerce-service-card__footer"><a href="{% url 'services:storefront-customization' %}">تفاصيل تخصيص الواجهة</a><small>لا نعد بتعديل قبل فحص القيود</small></div></div>
     </article>
 
     <article class="commerce-service-card reveal" id="service-redesign">
       <figure class="commerce-service-card__media"><img src="/static/public_preview/assets/images/services/ecommerce/store-redesign.svg" alt="معاينة قبل وبعد لخدمة إعادة تصميم متجر قائم" width="800" height="500" loading="lazy"><span class="commerce-service-card__stage">إعادة بناء التجربة</span></figure>
-      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>03 / REDESIGN</span><span>REBUILD</span></div><h3>إعادة تصميم متجر قائم</h3><p>إعادة ترتيب التجربة بصريًا ووظيفيًا عندما تصبح التحسينات الصغيرة غير كافية.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر قديم أو متشعب يحتاج رؤية واحدة بدل تعديلات متفرقة.</strong></div><div class="commerce-service-card__meta"><span>UX Audit</span><span>تصميم + تنفيذ</span><span>مشروع مخصص</span></div><div class="commerce-service-card__footer"><a href="{% url 'public_preview:contact' %}#quote">اطلب مراجعة المتجر</a><small>يبدأ بتدقيق قبل قرار إعادة البناء</small></div></div>
+      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>03 / REDESIGN</span><span>REBUILD</span></div><h3>إعادة تصميم متجر قائم</h3><p>إعادة ترتيب التجربة بصريًا ووظيفيًا عندما تصبح التحسينات الصغيرة غير كافية.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر قديم أو متشعب يحتاج رؤية واحدة بدل تعديلات متفرقة.</strong></div><div class="commerce-service-card__meta"><span>UX Audit</span><span>تصميم + تنفيذ</span><span>مشروع مخصص</span></div><div class="commerce-service-card__footer"><a href="{% url 'services:store-redesign' %}">تفاصيل إعادة التصميم</a><small>يبدأ بتدقيق قبل قرار إعادة البناء</small></div></div>
     </article>
 
     <article class="commerce-service-card reveal" id="service-product">
@@ -75,12 +75,12 @@
 
     <article class="commerce-service-card reveal" id="service-growth">
       <figure class="commerce-service-card__media"><img src="/static/public_preview/assets/images/services/ecommerce/connect-growth.svg" alt="معاينة بصرية لخدمة الربط والقياس والنمو للمتاجر" width="800" height="500" loading="lazy"><span class="commerce-service-card__stage">بعد الاستقرار</span></figure>
-      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>05 / CONNECT + GROW</span><span>GROW</span></div><h3>الربط والقياس والنمو</h3><p>Analytics وTracking وSEO وتكاملات وتحسينات مرتبطة بما تسمح به المنصة وما تظهره البيانات.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر يعمل ويريد قرارات تحسين مبنية على قياس لا تخمين.</strong></div><div class="commerce-service-card__meta"><span>Analytics</span><span>SEO</span><span>Integrations</span></div><div class="commerce-service-card__footer"><a href="{% url 'public_preview:growth' %}">استكشف مسار النمو</a><small>الأدوات تحدد بعد فحص البيئة الحالية</small></div></div>
+      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>05 / CONNECT + GROW</span><span>GROW</span></div><h3>الربط والقياس والنمو</h3><p>Analytics وTracking وSEO وتكاملات وتحسينات مرتبطة بما تسمح به المنصة وما تظهره البيانات.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر يعمل ويريد قرارات تحسين مبنية على قياس لا تخمين.</strong></div><div class="commerce-service-card__meta"><span>Analytics</span><span>SEO</span><span>Integrations</span></div><div class="commerce-service-card__footer"><a href="{% url 'services:ecommerce-growth' %}">تفاصيل القياس والنمو</a><small>الأدوات تحدد بعد فحص البيئة الحالية</small></div></div>
     </article>
 
     <article class="commerce-service-card reveal" id="service-support">
       <figure class="commerce-service-card__media"><img src="/static/public_preview/assets/images/services/ecommerce/ongoing-support.svg" alt="معاينة بصرية لخدمة الدعم والتطوير المستمر للمتجر" width="800" height="500" loading="lazy"><span class="commerce-service-card__stage">بعد الإطلاق</span></figure>
-      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>06 / CONTINUITY</span><span>SUPPORT</span></div><h3>الدعم والتطوير المستمر</h3><p>مسار منظم للتعديلات والإصلاحات والتحسينات بعد الإطلاق بدل العودة إلى تنفيذ متقطع بلا سياق.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر يحتاج شريكًا تقنيًا بعد التسليم أو خلال مواسم التطوير.</strong></div><div class="commerce-service-card__meta"><span>دعم</span><span>تطوير</span><span>نطاق متفق عليه</span></div><div class="commerce-service-card__footer"><a href="{% url 'public_preview:contact' %}#quote">ناقش الدعم</a><small>الساعات والاستجابة تُثبت في الاتفاق</small></div></div>
+      <div class="commerce-service-card__body"><div class="commerce-service-card__eyebrow"><span>06 / CONTINUITY</span><span>SUPPORT</span></div><h3>الدعم والتطوير المستمر</h3><p>مسار منظم للتعديلات والإصلاحات والتحسينات بعد الإطلاق بدل العودة إلى تنفيذ متقطع بلا سياق.</p><div class="commerce-service-card__fit"><small>مناسبة لمن؟</small><strong>متجر يحتاج شريكًا تقنيًا بعد التسليم أو خلال مواسم التطوير.</strong></div><div class="commerce-service-card__meta"><span>دعم</span><span>تطوير</span><span>نطاق متفق عليه</span></div><div class="commerce-service-card__footer"><a href="{% url 'services:ecommerce-support' %}">تفاصيل الدعم المستمر</a><small>الساعات والاستجابة تُثبت في الاتفاق</small></div></div>
     </article>
   </div>
 
