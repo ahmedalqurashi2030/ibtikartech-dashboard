@@ -301,3 +301,26 @@ def test_non_commerce_service_categories_offer_local_section_navigation():
         assert 'href="#capabilities"' in source
         assert 'href="#approach"' in source
         assert 'href="#fit"' in source
+
+
+def test_service_category_pages_load_shared_cinematic_runtime():
+    """Every service category progressively enhances its decision paths with one shared runtime."""
+    for page_name in SERVICE_CATEGORY_PAGES:
+        source = _page_source(page_name)
+        assert source.count("service-cinema.js") == 1
+
+
+def test_service_cinema_runtime_preserves_accessible_static_fallback():
+    source = (
+        Path(settings.BASE_DIR)
+        / "static"
+        / "public_preview"
+        / "assets"
+        / "js"
+        / "service-cinema.js"
+    ).read_text(encoding="utf-8")
+
+    assert "service-paths-section" in source
+    assert "prefers-reduced-motion" in source
+    assert "requestAnimationFrame" in source
+    assert "service-path-card" in source
