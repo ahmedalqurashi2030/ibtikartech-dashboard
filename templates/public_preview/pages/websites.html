@@ -7,9 +7,10 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
 {% endblock %}
 
-{% block body_attrs %} class="inner-page platform-page" data-section="services"{% endblock %}
+{% block body_attrs %} class="inner-page platform-page category-hub service-category-page category-websites" data-section="services"{% endblock %}
 
 {% block body %}
 <main id="main-content">
@@ -21,20 +22,78 @@
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع بصري لمنظومة خدمات ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>نحافظ على هوية واضحة ونستخدم الحركة عندما تخدم الفهم، لا لمجرد الإبهار.</figcaption></figure></div></section>
 
-<section class="platform-section platform-section--soft" id="capabilities"><div class="container"><div class="platform-heading reveal">
-  <span class="section-kicker">ما الذي نبنيه</span>
-  <h2>أنواع مواقع مرتبطة بهدف واضح</h2>
-  <p>نحدد نوع الموقع من القرار المطلوب من الزائر، لا من قالب جاهز.</p>
-</div><div class="route-grid">
-<article class="route-card reveal"><small>01 / CORPORATE</small><h3>مواقع الشركات</h3><p>تموضع وخدمات وثقة ومحتوى يقود إلى تواصل أو طلب واضح.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>02 / LANDING</small><h3>صفحات الهبوط</h3><p>رسالة مركزة لخدمة أو منتج أو حملة مع تقليل التشتيت ووضوح التحويل.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>03 / REDESIGN</small><h3>إعادة تصميم موقع قائم</h3><p>إعادة ترتيب الرسالة والتجربة مع الحفاظ على المحتوى والروابط المهمة قدر الإمكان.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>04 / CONTENT</small><h3>مواقع المحتوى والمعرفة</h3><p>هياكل تحريرية للمقالات والأدلة والموارد مع تصنيف وروابط داخلية واضحة.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>05 / PRODUCT</small><h3>واجهات المنتجات الرقمية</h3><p>واجهات تسويقية وشرح منتج وتدفقات أولية، بينما الأنظمة التشغيلية المعقدة تنتقل لمسار الأنظمة.</p><a href="{% url 'public_preview:custom-systems' %}">استكشف الأنظمة عند الحاجة ←</a></article>
-<article class="route-card reveal"><small>06 / BILINGUAL</small><h3>مواقع عربية وثنائية اللغة</h3><p>بنية ومحتوى واتجاهات RTL/LTR مخططة من البداية عندما يحتاج المشروع العربية والإنجليزية.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-</div></div></section>
+<nav class="service-page-nav" aria-label="أقسام صفحة الخدمة"><div class="container service-page-nav__inner">
+  <a href="#capabilities">أنواع المواقع</a>
+  <a href="#approach">طريقة العمل</a>
+  <a href="#delivery">التسليم</a>
+  <a href="#fit">الملاءمة</a>
+</div></nav>
 
-<section class="platform-section"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">منهج التنفيذ</span><h2>الهيكل والمحتوى يسبقان الزخرفة</h2><p>نبدأ بالسؤال الذي يجب أن تجيب عنه كل صفحة، ثم نبني الواجهة حوله.</p><ul class="check-list"><li>خريطة صفحات وأولوية معلومات</li><li>H1 وCTA واضحان لكل صفحة رئيسية</li><li>حالات جوال ووصول من البداية</li><li>أداء وقياس ضمن قرار التصميم</li></ul></div><div class="timeline reveal">
+
+<section class="platform-section platform-section--soft service-paths-section" id="capabilities"><div class="container">
+  <div class="service-paths-header reveal">
+    <div class="service-paths-header__copy"><span class="section-kicker">اختر حسب الهدف</span><h2>ستة أنواع مواقع، لكل واحد قرار واضح</h2><p>لا نبدأ من قالب أو عدد صفحات؛ نبدأ بما يجب أن يفهمه الزائر وما الخطوة التي نريد منه اتخاذها.</p></div>
+    <aside class="service-paths-help" aria-label="مساعدة في اختيار المسار"><strong>لا تعرف النوع المناسب؟</strong><span>شاركنا نشاطك والجمهور والنتيجة المطلوبة، وسنقترح أقل بنية تحقق الهدف دون تضخيم النطاق.</span><a href="{% url 'public_preview:contact' %}?goal=website&source=website-paths#quote">صف هدف موقعك</a></aside>
+  </div>
+  <div class="service-paths-grid" data-count="6">
+    
+<article class="service-path-card reveal" data-sequence="01">
+  <div class="service-path-card__meta"><span>01 / CORPORATE</span><span>ثقة وطلبات</span></div>
+  <h3>موقع شركة يقود إلى طلب واضح</h3>
+  <p>يرتب القيمة والخدمات والدليل وروابط الإجراء حول القرار الذي تريد من الزائر اتخاذه.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>شركة خدمات أو B2B تحتاج حضورًا مهنيًا وطلبات أكثر تأهلًا.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>خريطة صفحات</li><li>محتوى خدمات</li><li>نماذج تحويل</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=website&service=corporate#quote">ناقش موقع شركتك</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="02">
+  <div class="service-path-card__meta"><span>02 / LANDING</span><span>تحويل مركز</span></div>
+  <h3>صفحة هبوط لعرض واحد</h3>
+  <p>رسالة مركزة ودليل وإجراء واحد قابل للقياس، مع تقليل التشتيت قبل التحويل.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>حملة أو خدمة أو منتج يحتاج خطوة تحويل محددة.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>الرسالة</li><li>الدليل</li><li>القياس</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=website&service=landing#quote">حدد هدف الصفحة</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="03">
+  <div class="service-path-card__meta"><span>03 / REDESIGN</span><span>موقع قائم</span></div>
+  <h3>إعادة تصميم تحافظ على ما يعمل</h3>
+  <p>نعيد ترتيب الرسالة والتنقل والجوال مع حماية المحتوى والروابط المهمة قدر الإمكان.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>الموقع يعمل لكن الوصول للمعلومة أو الطلب أصبح صعبًا.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>UX Audit</li><li>إعادة الهيكلة</li><li>Design System</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=website&service=redesign#quote">أرسل رابط موقعك</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="04">
+  <div class="service-path-card__meta"><span>04 / CONTENT</span><span>اكتشاف ونمو</span></div>
+  <h3>موقع محتوى ومعرفة قابل للتوسع</h3>
+  <p>بنية تحريرية للأدلة والمقالات والموارد تجعل الوصول إلى المعلومة والربط الداخلي أكثر وضوحًا.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>لديك خبرة ومحتوى يحتاج تصنيفًا ومسارات اكتشاف ثابتة.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>بنية المحتوى</li><li>التصنيفات</li><li>الروابط الداخلية</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=website&service=content#quote">خطط بنية المحتوى</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="05">
+  <div class="service-path-card__meta"><span>05 / PRODUCT</span><span>شرح المنتج</span></div>
+  <h3>واجهة تسويق لمنتج رقمي</h3>
+  <p>تشرح المنتج وحالات الاستخدام والتدفقات الأولية؛ أما التشغيل المعقد فينتقل لمسار الأنظمة.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>منتج SaaS أو تطبيق يحتاج تحويل الفكرة إلى تجربة مفهومة ومقنعة.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>Product Story</li><li>واجهات تسويق</li><li>تدفقات أولية</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:custom-systems' %}">استكشف الأنظمة عند الحاجة</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="06">
+  <div class="service-path-card__meta"><span>06 / BILINGUAL</span><span>RTL / LTR</span></div>
+  <h3>تجربة عربية وثنائية اللغة</h3>
+  <p>نخطط البنية والمحتوى والاتجاهات وتبديل اللغة من البداية، لا كنسخة مضافة بعد التنفيذ.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>العلامة تخاطب سوقًا عربيًا ودوليًا ضمن تجربة واحدة متسقة.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>RTL / LTR</li><li>تعريب أصلي</li><li>حوكمة المحتوى</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=website&service=bilingual#quote">ناقش النسخة الثنائية</a>
+</article>
+  </div>
+</div></section>
+
+<section class="platform-section" id="approach"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">منهج التنفيذ</span><h2>الهيكل والمحتوى يسبقان الزخرفة</h2><p>نبدأ بالسؤال الذي يجب أن تجيب عنه كل صفحة، ثم نبني الواجهة حوله.</p><ul class="check-list"><li>خريطة صفحات وأولوية معلومات</li><li>H1 وCTA واضحان لكل صفحة رئيسية</li><li>حالات جوال ووصول من البداية</li><li>أداء وقياس ضمن قرار التصميم</li></ul></div><div class="timeline reveal">
 <article><h3>تشخيص</h3><p>مراجعة الهدف والجمهور والمحتوى والوضع الحالي.</p></article>
 <article><h3>هيكلة المحتوى</h3><p>خريطة الصفحات والرسائل والتدفقات قبل التصميم.</p></article>
 <article><h3>تصميم وتنفيذ</h3><p>مكونات متجاوبة قابلة للإدارة والتوسع.</p></article>
@@ -50,12 +109,12 @@
 <article class="platform-card reveal"><h3>ما نحتاجه قبل التنفيذ</h3><ul><li>هدف الموقع والجمهور والإجراء الأساسي</li><li>الهوية أو قرار إدراجها ضمن المشروع</li><li>المحتوى والصور المتاحة وحقوق استخدامها</li><li>الدومين والاستضافة أو متطلبات البيئة</li><li>اللغات والتكاملات والنماذج المطلوبة</li><li>جهة واضحة لاعتماد المحتوى والتصميم</li></ul></article>
 </div></div></section>
 
-<section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">الملاءمة</span><h2>متى يكون هذا المسار مناسبًا؟</h2></div><div class="platform-grid platform-grid--2">
+<section class="platform-section" id="fit"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">الملاءمة</span><h2>متى يكون هذا المسار مناسبًا؟</h2></div><div class="platform-grid platform-grid--2">
 <article class="platform-card reveal"><h3>مناسب عندما</h3><ul><li>تحتاج موقعًا يشرح عرضك ويولد تواصلًا</li><li>لديك محتوى يحتاج إعادة تنظيم</li><li>تريد صفحة حملة أو خدمة قابلة للقياس</li></ul></article>
 <article class="platform-card reveal"><h3>نحتاج مسارًا آخر عندما</h3><ul><li>تحتاج متجرًا كاملًا — استخدم مسار المتاجر</li><li>تحتاج نظام عمليات أو بوابة تشغيلية — استخدم الأنظمة المخصصة</li><li>الهوية والمحتوى غير جاهزين ولا تريد إدخالهما ضمن النطاق</li></ul></article>
 </div></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياجك</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
+<section class="platform-section platform-section--soft" id="related"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياجك</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
 <section class="page-cta">
   <div class="container">
