@@ -67,7 +67,7 @@ def test_contact_post_rejects_invalid_and_honeypot_submissions(client):
     assert Inquiry.objects.count() == 0
 
 
-def test_home_decision_order_and_tharaa_direct_purchase(settings):
+def test_home_service_first_cinematic_order_and_tharaa_direct_purchase(settings):
     home = (settings.BASE_DIR / "templates/public_preview/pages/index.html").read_text(
         encoding="utf-8"
     )
@@ -75,8 +75,11 @@ def test_home_decision_order_and_tharaa_direct_purchase(settings):
         encoding="utf-8"
     )
 
-    assert home.index('id="services"') < home.index('class="decision-film"')
-    assert "cinematic-story" not in home
+    assert home.index('id="services"') < home.index('class="cinematic-story')
+    assert "بعد اختيار نقطة البداية" in home
+    assert "hero-capabilities" not in home
+    assert "hero__trust" not in home
+    assert "hero-ecosystem" in home
     assert home.count('class="service-scene-copy"') == 5
     assert "https://salla.com/themes/1609470678" in tharaa
     assert "299 ر.س" in tharaa
