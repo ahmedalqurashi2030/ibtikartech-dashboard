@@ -54,7 +54,8 @@ jobs:
     needs: test
     if: >-
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && github.head_ref == 'codex/deploy-service-pages-20260822')
 
     runs-on:
       - self-hosted
