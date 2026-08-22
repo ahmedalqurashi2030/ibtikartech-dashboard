@@ -223,3 +223,32 @@ def test_page_sections_are_inline_not_component_includes():
 
     assert "public_preview/components/" not in combined
     assert "{% include " not in combined
+
+
+def test_homepage_content_leads_with_goals_proof_and_scope():
+    source = _page_source("index.html")
+
+    assert 'id="goals"' in source
+    assert "ما النتيجة التي تحتاجها الآن؟" in source
+    assert "ثراء: ثيم منشور لمتاجر سلة" in source
+    assert "01 / DISCOVER" in source
+    assert "نفهم الهدف والسياق" in source
+
+
+def test_services_hub_uses_the_five_category_taxonomy():
+    source = _page_source("services.html")
+
+    for category in ("التجارة الإلكترونية", "المواقع", "الهوية والمحتوى", "النمو", "الأنظمة والأتمتة"):
+        assert category in source
+    assert "ابدأ من هدف مشروعك" in source
+
+
+def test_tharaa_page_supports_a_buyer_fit_decision_before_feature_depth():
+    source = _page_source("tharaa.html")
+
+    fit_position = source.index("هل ثراء مناسب لمتجرك؟")
+    features_position = source.index('id="features"')
+    assert fit_position < features_position
+    assert "شراء مرة واحدة" in source
+    assert "افتح دليل المستخدم" in source
+    assert "التركيب والتخصيص خدمة مستقلة عن الترخيص" in source
