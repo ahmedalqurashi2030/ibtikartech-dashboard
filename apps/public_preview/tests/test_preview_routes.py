@@ -238,7 +238,14 @@ def test_homepage_content_leads_with_goals_proof_and_scope():
 def test_services_hub_uses_the_five_category_taxonomy():
     source = _page_source("services.html")
 
-    for category in ("التجارة الإلكترونية", "المواقع", "الهوية والمحتوى", "النمو", "الأنظمة والأتمتة"):
+    categories = (
+        "التجارة الإلكترونية",
+        "المواقع",
+        "الهوية والمحتوى",
+        "النمو",
+        "الأنظمة والأتمتة",
+    )
+    for category in categories:
         assert category in source
     assert "ابدأ من هدف مشروعك" in source
 
