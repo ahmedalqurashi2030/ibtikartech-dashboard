@@ -118,7 +118,7 @@ function initForms() {
       window.IBTIKAR_ANALYTICS?.track(cfg.events?.formStart || 'form_start', { form: form.id || form.name });
     });
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const hp = qs(`[name="${honeypot}"]`, form);
       if (hp?.value) return;
@@ -133,14 +133,51 @@ function initForms() {
         return;
       }
 
+      const endpoint = form.dataset.submitEndpoint || (form.hasAttribute('data-live-form') ? cfg.forms?.endpoint : '');
       if (submit) {
         submit.disabled = true;
         submit.dataset.originalText = submit.textContent;
-        submit.textContent = 'جار الحفظ...';
+        submit.textContent = endpoint ? 'جار الإرسال...' : 'جار الحفظ...';
       }
       if (state) {
         state.className = 'form-message is-loading';
-        state.textContent = 'يتم تجهيز نسخة الطلب على هذا الجهاز...';
+        state.textContent = endpoint ? 'يتم إرسال الطلب بأمان...' : 'يتم تجهيز نسخة الطلب على هذا الجهاز...';
+      }
+
+      if (endpoint) {
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' },
+            credentials: 'same-origin'
+          });
+          const result = await response.json();
+          if (!response.ok || !result.ok) throw new Error(result.message || 'تعذر إرسال الطلب.');
+          if (state) {
+            state.className = 'form-message is-success';
+            state.textContent = `${result.message} رقم المرجع: ${result.reference}`;
+          }
+          window.IBTIKAR_ANALYTICS?.track(
+            cfg.events?.inquirySubmitted || form.dataset.analytics || 'inquiry_submitted',
+            { form: form.id, reference: result.reference }
+          );
+          form.dispatchEvent(new CustomEvent('ibtikar:form-submitted', { bubbles: true, detail: result }));
+          form.reset();
+          started = false;
+        } catch (error) {
+          if (state) {
+            state.className = 'form-message is-error';
+            state.textContent = error.message || 'تعذر إرسال الطلب الآن. حاول مرة أخرى.';
+          }
+          window.IBTIKAR_ANALYTICS?.track(cfg.events?.formError || 'form_error', { form: form.id });
+        } finally {
+          if (submit) {
+            submit.disabled = false;
+            submit.textContent = submit.dataset.originalText || 'إرسال';
+          }
+        }
+        return;
       }
 
       window.setTimeout(() => {

@@ -24,10 +24,11 @@ window.IBTIKAR_CONFIG = {
     ga4: "",
     gtm: "",
     metaPixel: "",
-    tiktokPixel: ""
+    tiktokPixel: "",
+    collectEndpoint: "/analytics/collect/"
   },
   forms: {
-    endpoint: "",
+    endpoint: "/contact/",
     honeypotField: "ibt_website"
   },
   commercial: {
@@ -39,13 +40,13 @@ window.IBTIKAR_CONFIG = {
   },
   products: {
     tharaa: {
-      demoUrl: "",
-      purchaseUrl: "",
-      price: "",
+      demoUrl: "https://demostore.salla.sa/intend/1767904576",
+      purchaseUrl: "https://salla.com/themes/1609470678",
+      price: "299",
       version: "",
       lastUpdated: "",
       changelogUrl: "",
-      documentationUrl: ""
+      documentationUrl: "https://tharaa.notion.site/3078191654f980c784b3de070e23dcfc?v=3298191654f981e188b2000c11dfa39e"
     }
   },
   events: {
@@ -58,6 +59,8 @@ window.IBTIKAR_CONFIG = {
     demoClick: "demo_click",
     formStart: "form_start",
     formSubmit: "form_submit",
+    inquirySubmitted: "inquiry_submitted",
+    tharaaMarketplaceClick: "tharaa_marketplace_click",
     formError: "form_error",
     quoteRequest: "quote_request",
     portfolioView: "portfolio_view"
