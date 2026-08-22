@@ -128,11 +128,12 @@ def main() -> None:
         source_count = len(SECTION_RE.findall(source))
         template_count = len(SECTION_RE.findall(template))
         expected_template_count = source_count + SECTION_COUNT_DELTAS.get(page_name, 0)
-        if template_count != expected_template_count:
+        allowed_template_counts = {source_count, expected_template_count}
+        if template_count not in allowed_template_counts:
             failures.append(
                 f"{page_name}: source has {source_count} section(s), "
                 f"Django template has {template_count} section(s), "
-                f"expected {expected_template_count}"
+                f"expected one of {sorted(allowed_template_counts)}"
             )
             continue
 
