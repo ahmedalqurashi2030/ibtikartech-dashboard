@@ -7,9 +7,10 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
 {% endblock %}
 
-{% block body_attrs %} class="inner-page platform-page" data-section="services"{% endblock %}
+{% block body_attrs %} class="inner-page platform-page category-hub service-category-page category-brand" data-section="services"{% endblock %}
 
 {% block body %}
 <main id="main-content">
@@ -21,6 +22,13 @@
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع الهوية الرقمية داخل منظومة ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>الهوية ليست شعارًا منفصلًا؛ هي قواعد ورسائل تظهر عبر كل نقطة اتصال.</figcaption></figure></div></section>
 
+<nav class="service-page-nav" aria-label="أقسام صفحة الخدمة"><div class="container service-page-nav__inner">
+  <a href="#capabilities">نظام العلامة</a>
+  <a href="#outputs">المخرجات</a>
+  <a href="#approach">طريقة العمل</a>
+  <a href="#fit">الملاءمة</a>
+</div></nav>
+
 <section class="platform-section platform-section--soft" id="capabilities"><div class="container"><div class="platform-heading reveal">
   <span class="section-kicker">مساران مترابطان</span>
   <h2>نظام العلامة أولًا، ثم المحتوى الذي يفعّله</h2>
@@ -30,28 +38,83 @@
 <article class="platform-card reveal"><small>02 / DIGITAL CONTENT</small><h3>المحتوى الرقمي</h3><ul><li>لغة العلامة ونبرة الخطاب</li><li>محتوى المواقع وصفحات الخدمات</li><li>محتوى المتاجر وصفحات المنتج</li><li>بنرات ورسائل وCTA مرتبطة بالهدف</li><li>نسخة إنجليزية أصلية عند اعتمادها ضمن النطاق</li></ul></article>
 </div></div></section>
 
-<section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">ما الذي يمكن طلبه</span><h2>مخرجات تُستخدم فعلًا، لا ملفات للعرض فقط</h2></div><div class="route-grid">
-<article class="route-card reveal"><small>01</small><h3>استراتيجية العلامة</h3><p>تموضع وشخصية ورسالة وأولويات ظهور تساعد بقية القرارات.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>02</small><h3>الهوية البصرية</h3><p>شعار وألوان وخطوط وقواعد استخدام متسقة عبر القنوات.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>03</small><h3>نظام واجهات رقمي</h3><p>توكنز ومكونات وحالات تترجم العلامة إلى تجربة قابلة للتوسع.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>04</small><h3>محتوى المواقع</h3><p>عناوين ورسائل وصفحات خدمات مصاغة لشرح القيمة والقرار.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>05</small><h3>محتوى المتاجر</h3><p>قوالب منتجات وبنرات ورسائل ثقة ومحتوى يساعد رحلة الشراء.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-<article class="route-card reveal"><small>06</small><h3>أصول الحملات</h3><p>تصاميم ورسائل مرتبطة بحملة أو صفحة محددة؛ إدارة الحملات أو الحسابات ليست ضمن هذا المسار إلا بنطاق مستقل.</p><a href="{% url 'public_preview:contact' %}#quote">ناقش هذا المسار ←</a></article>
-</div></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">منهج التنفيذ</span><h2>نبني نظامًا يمكن تطبيقه، لا ملفًا جميلًا فقط</h2><p>كل قرار بصري أو لغوي يجب أن يظهر في تجربة حقيقية يمكن للفريق الاستمرار عليها.</p><ul class="check-list"><li>اتجاه بصري ولفظي مبرر</li><li>قواعد قابلة للتطبيق على الويب والمتجر</li><li>قوالب للمحتوى المتكرر</li><li>تسليم منظم ومصادر واضحة</li></ul></div><div class="timeline reveal">
+<section class="platform-section platform-section--soft service-paths-section" id="outputs"><div class="container">
+  <div class="service-paths-header reveal">
+    <div class="service-paths-header__copy"><span class="section-kicker">مخرجات قابلة للاستخدام</span><h2>اختر المخرج الذي يحل فجوة العلامة الآن</h2><p>لكل مسار وظيفة واضحة وحدود محددة. يمكن جمع المسارات عند الحاجة، لكن لا نضيف مخرجًا لا يستخدمه الفريق.</p></div>
+    <aside class="service-paths-help" aria-label="مساعدة في اختيار المسار"><strong>أين تقع الفجوة؟</strong><span>إن لم تعرف هل المشكلة في الاستراتيجية أو الهوية أو المحتوى، أرسل أمثلة من قنواتك الحالية لنبدأ بالتشخيص.</span><a href="{% url 'public_preview:contact' %}?goal=brand&source=brand-paths#quote">شارك أمثلة العلامة</a></aside>
+  </div>
+  <div class="service-paths-grid" data-count="6">
+    
+<article class="service-path-card reveal" data-sequence="01">
+  <div class="service-path-card__meta"><span>01 / POSITIONING</span><span>قرار استراتيجي</span></div>
+  <h3>استراتيجية علامة تحسم الاتجاه</h3>
+  <p>تموضع ورسالة وشخصية وأولويات ظهور تساعد الفريق على اتخاذ قرارات متسقة.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>العلامة جديدة أو رسالتها تتغير من قناة إلى أخرى.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>التموضع</li><li>الرسالة</li><li>الشخصية</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=brand&service=strategy#quote">ناقش اتجاه العلامة</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="02">
+  <div class="service-path-card__meta"><span>02 / IDENTITY</span><span>نظام بصري</span></div>
+  <h3>هوية بصرية قابلة للتطبيق</h3>
+  <p>شعار وألوان وخطوط وقواعد استخدام مصممة لتعمل في القنوات الفعلية، لا في ملف عرض فقط.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>لديك استراتيجية واضحة وتحتاج نظامًا بصريًا يمكن للفريق استخدامه.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>الشعار</li><li>الألوان والخطوط</li><li>دليل الاستخدام</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=brand&service=identity#quote">حدد نطاق الهوية</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="03">
+  <div class="service-path-card__meta"><span>03 / DESIGN SYSTEM</span><span>اتساق رقمي</span></div>
+  <h3>نظام واجهات يترجم العلامة رقميًا</h3>
+  <p>مكونات وحالات وقواعد استخدام توحّد الموقع أو المتجر وتسهّل التوسع دون فقد الاتساق.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>الهوية موجودة لكن تطبيقها الرقمي متباين أو يصعب تطويره.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>UI Tokens</li><li>المكونات</li><li>حالات الاستخدام</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=brand&service=design-system#quote">راجع النظام الرقمي</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="04">
+  <div class="service-path-card__meta"><span>04 / WEB COPY</span><span>قيمة وقرار</span></div>
+  <h3>محتوى موقع يشرح القيمة</h3>
+  <p>عناوين ورسائل وصفحات خدمات تربط حاجة العميل بالقيمة والدليل والخطوة التالية.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>الموقع جميل لكن الزائر لا يفهم بسرعة ماذا تقدم ولماذا يختارك.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>رسائل أساسية</li><li>صفحات خدمات</li><li>CTA</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=content&service=website-copy#quote">ناقش محتوى الموقع</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="05">
+  <div class="service-path-card__meta"><span>05 / COMMERCE COPY</span><span>رحلة شراء</span></div>
+  <h3>محتوى متجر يزيل تردد الشراء</h3>
+  <p>قوالب منتجات وبنرات ورسائل ثقة تنظّم المعلومات حول أسئلة العميل قبل الشراء.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>المنتجات جيدة لكن الوصف والرسائل لا تساعد العميل على المقارنة والقرار.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>قالب المنتج</li><li>بنرات</li><li>رسائل الثقة</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:ecommerce' %}#product-page">اربط المحتوى بتجربة المتجر</a>
+</article>
+
+<article class="service-path-card reveal" data-sequence="06">
+  <div class="service-path-card__meta"><span>06 / CAMPAIGN</span><span>رسالة واحدة</span></div>
+  <h3>أصول حملة مرتبطة بهدف</h3>
+  <p>نحوّل رسالة معتمدة إلى مجموعة أصول متسقة لحملة أو صفحة محددة، ضمن نطاق إنتاج واضح.</p>
+  <div class="service-path-card__fit"><span>مناسب عندما</span><strong>لديك عرض وجمهور وهدف محدد وتحتاج تنفيذًا متسقًا عبر الأصول.</strong></div>
+  <ul class="service-path-card__scope" aria-label="يشمل المسار"><li>الفكرة المحورية</li><li>نسخ الحملة</li><li>أصول محددة</li></ul>
+  <a class="service-path-card__action" href="{% url 'public_preview:contact' %}?goal=content&service=campaign-assets#quote">حدد هدف الحملة</a>
+</article>
+  </div>
+</div></section>
+
+<section class="platform-section platform-section--soft" id="approach"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">منهج التنفيذ</span><h2>نبني نظامًا يمكن تطبيقه، لا ملفًا جميلًا فقط</h2><p>كل قرار بصري أو لغوي يجب أن يظهر في تجربة حقيقية يمكن للفريق الاستمرار عليها.</p><ul class="check-list"><li>اتجاه بصري ولفظي مبرر</li><li>قواعد قابلة للتطبيق على الويب والمتجر</li><li>قوالب للمحتوى المتكرر</li><li>تسليم منظم ومصادر واضحة</li></ul></div><div class="timeline reveal">
 <article><h3>تشخيص</h3><p>فهم النشاط والجمهور والسياق الحالي.</p></article>
 <article><h3>اتجاه واعتماد</h3><p>تحديد الرسالة والنظام قبل التوسع في الإنتاج.</p></article>
 <article><h3>تطبيق عملي</h3><p>تجربة الهوية والمحتوى على نقاط اتصال حقيقية.</p></article>
 <article><h3>تسليم</h3><p>مراجعة الاتساق وتسليم الأصول والقوالب المعتمدة.</p></article>
 </div></div></section>
 
-<section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">النطاق والملاءمة</span><h2>متى تحتاج هذا المسار؟</h2></div><div class="platform-grid platform-grid--2">
+<section class="platform-section" id="fit"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">النطاق والملاءمة</span><h2>متى تحتاج هذا المسار؟</h2></div><div class="platform-grid platform-grid--2">
 <article class="platform-card reveal"><h3>مناسب عندما</h3><ul><li>علامتك تبدو مختلفة بين القنوات</li><li>تحتاج إطلاقًا بهوية وموقع أو متجر متماسك</li><li>المحتوى موجود لكنه لا يعكس قيمة واضحة</li><li>تحتاج لغة عربية أصلية ونظامًا يسهل على الفريق استخدامه</li></ul></article>
 <article class="platform-card reveal"><h3>ليس ضمن النطاق تلقائيًا</h3><ul><li>إدارة يومية لحسابات التواصل</li><li>إدارة حملات إعلانية مستمرة</li><li>إنتاج تصوير أو فيديو ما لم يعتمد ضمن العرض</li><li>تنفيذ تقني كامل للموقع أو المتجر ما لم يضم للمشروع</li></ul></article>
 </div></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياج العلامة</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a></nav></div></section>
+<section class="platform-section platform-section--soft" id="related"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياج العلامة</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a></nav></div></section>
 
 <section class="page-cta">
   <div class="container">
