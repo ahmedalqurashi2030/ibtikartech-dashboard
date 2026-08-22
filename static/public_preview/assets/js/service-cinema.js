@@ -259,7 +259,7 @@
       ctx.beginPath();
       ctx.arc(centerX + node[0], centerY + node[1], index === 0 ? 13 : 7, 0, Math.PI * 2);
       ctx.fillStyle = index % 2 ? variant.accent2 : variant.accent;
-      ctx.shadowColor = hexToRgba(ctx.fillStyle, .38);
+      ctx.shadowColor = hexToRgba(index % 2 ? variant.accent2 : variant.accent, .38);
       ctx.shadowBlur = 18;
       ctx.fill();
     });
