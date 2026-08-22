@@ -57,7 +57,9 @@ def test_contact_post_reuses_existing_contact(client):
 @pytest.mark.django_db
 def test_contact_post_rejects_invalid_and_honeypot_submissions(client):
     invalid = client.post(reverse("public_preview:contact"), inquiry_payload(phone="123"))
-    spam = client.post(reverse("public_preview:contact"), inquiry_payload(ibt_website="bot.example"))
+    spam = client.post(
+        reverse("public_preview:contact"), inquiry_payload(ibt_website="bot.example")
+    )
 
     assert invalid.status_code == 400
     assert spam.status_code == 400
@@ -66,8 +68,12 @@ def test_contact_post_rejects_invalid_and_honeypot_submissions(client):
 
 
 def test_home_decision_order_and_tharaa_direct_purchase(settings):
-    home = (settings.BASE_DIR / "templates/public_preview/pages/index.html").read_text(encoding="utf-8")
-    tharaa = (settings.BASE_DIR / "templates/public_preview/pages/tharaa.html").read_text(encoding="utf-8")
+    home = (settings.BASE_DIR / "templates/public_preview/pages/index.html").read_text(
+        encoding="utf-8"
+    )
+    tharaa = (settings.BASE_DIR / "templates/public_preview/pages/tharaa.html").read_text(
+        encoding="utf-8"
+    )
 
     assert home.index('id="services"') < home.index('class="decision-film"')
     assert "cinematic-story" not in home

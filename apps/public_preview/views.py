@@ -93,17 +93,30 @@ def contact(request):
             {"page_key": "contact", "source_page_name": "contact.html", "inquiry_initial": initial},
         )
 
-    fingerprint = f"{request.META.get('REMOTE_ADDR', '')}:{request.META.get('HTTP_USER_AGENT', '')[:120]}"
+    fingerprint = (
+        f"{request.META.get('REMOTE_ADDR', '')}:"
+        f"{request.META.get('HTTP_USER_AGENT', '')[:120]}"
+    )
     rate_key = f"public-inquiry:{hashlib.sha256(fingerprint.encode()).hexdigest()}"
     attempts = cache.get(rate_key, 0)
     if attempts >= 5:
-        return JsonResponse({"ok": False, "message": "تم تجاوز عدد المحاولات. حاول بعد دقيقة."}, status=429)
+        return JsonResponse(
+            {
+                "ok": False,
+                "message": "تم تجاوز عدد المحاولات. حاول بعد دقيقة.",
+            },
+            status=429,
+        )
     cache.set(rate_key, attempts + 1, timeout=60)
 
     form = PublicInquiryForm(request.POST)
     if not form.is_valid():
         return JsonResponse(
-            {"ok": False, "message": "راجع الحقول المطلوبة ثم أعد الإرسال.", "errors": form.errors.get_json_data()},
+            {
+                "ok": False,
+                "message": "راجع الحقول المطلوبة ثم أعد الإرسال.",
+                "errors": form.errors.get_json_data(),
+            },
             status=400,
         )
 
@@ -135,7 +148,11 @@ def contact(request):
                 contact.first_source = data["source"] or "website"
             contact.save()
 
-        service = Service.objects.filter(slug=data["service"], is_active=True).first() if data["service"] else None
+        service = (
+            Service.objects.filter(slug=data["service"], is_active=True).first()
+            if data["service"]
+            else None
+        )
         inquiry = Inquiry.objects.create(
             contact=contact,
             service=service,
@@ -154,7 +171,10 @@ def contact(request):
         {
             "ok": True,
             "reference": f"IBT-{inquiry.id.hex[:8].upper()}",
-            "message": "وصل طلبك إلى الفريق. سنراجع النطاق ونتواصل معك عبر بيانات التواصل المرسلة.",
+            "message": (
+                "وصل طلبك إلى الفريق. سنراجع النطاق ونتواصل معك "
+                "عبر بيانات التواصل المرسلة."
+            ),
         },
         status=201,
     )
