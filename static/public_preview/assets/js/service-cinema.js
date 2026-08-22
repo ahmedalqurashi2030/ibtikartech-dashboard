@@ -338,18 +338,19 @@
     var topOffset = parseFloat(getComputedStyle(section).getPropertyValue("--service-cinema-top")) || 0;
     progress = clamp((topOffset - rect.top) / scrollable, 0, 1);
 
-    var introOpacity = 1 - ease(clamp((progress - .035) / .14, 0, 1));
+    var introOpacity = 1 - ease(clamp((progress - .02) / .085, 0, 1));
     header.style.opacity = String(introOpacity);
     header.style.transform = "translateY(" + (-18 * (1 - introOpacity)) + "px)";
 
     var start = .13;
     var end = help ? .83 : .91;
     var step = count > 1 ? (end - start) / (count - 1) : 1;
-    var half = Math.max(.095, Math.min(.18, step * .78));
+    var half = Math.max(.075, Math.min(.135, step * .54));
     cards.forEach(function (card, index) {
       var center = start + index * step;
       var distance = Math.abs(progress - center);
       var opacity = ease(clamp(1 - distance / half, 0, 1));
+      opacity *= ease(clamp((progress - .095) / .055, 0, 1));
       var direction = progress < center ? 1 : -1;
       card.style.opacity = String(opacity);
       card.style.transform = "translateY(" + (direction * (1 - opacity) * 30) + "px) scale(" + (.985 + opacity * .015) + ")";
