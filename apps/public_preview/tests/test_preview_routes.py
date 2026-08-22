@@ -239,7 +239,7 @@ def test_services_hub_uses_the_five_category_taxonomy():
     source = _page_source("services.html")
 
     categories = (
-        "التجارة الإلكترونية",
+        "المتاجر الإلكترونية",
         "المواقع",
         "الهوية والمحتوى",
         "النمو",
