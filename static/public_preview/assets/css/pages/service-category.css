@@ -400,9 +400,9 @@
 }
 
 .service-paths-section.is-cinematic-ready .service-paths-header h2 {
-  max-width: 16ch;
+  max-width: 18ch;
   margin: 14px auto;
-  font-size: clamp(42px, 6.1vw, 82px);
+  font-size: clamp(42px, 5.4vw, 70px);
   line-height: 1.08;
   letter-spacing: -.04em;
 }
@@ -447,7 +447,8 @@
 .service-paths-section.is-cinematic-ready .service-path-card:nth-child(2),
 .service-paths-section.is-cinematic-ready .service-path-card:nth-child(3) {
   position: absolute;
-  inset-inline-end: clamp(34px, 7vw, 90px);
+  right: clamp(34px, 7vw, 90px);
+  left: auto;
   bottom: clamp(58px, 8vh, 92px);
   width: min(570px, 52vw);
   min-height: 0;
