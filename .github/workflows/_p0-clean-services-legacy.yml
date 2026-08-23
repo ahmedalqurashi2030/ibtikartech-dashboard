@@ -21,6 +21,11 @@ jobs:
           ref: cleanup/p0-dashboard-services-legacy
           fetch-depth: 0
 
+      - name: Setup Node for syntax validation
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
       - name: Remove retired services shell and runtime hooks
         shell: bash
         run: |
