@@ -105,6 +105,8 @@ def test_services_experience_matches_current_five_family_taxonomy():
     assert all(position >= 0 for position in positions)
     assert positions == sorted(positions)
     assert "PRIMARY_FAMILIES.length" in source
+    assert "custom-systems.html#apps" in source
+    assert "custom-systems.html#automation" in source
     assert "ستة محاور" not in source
     assert "mode:'auto', index:'06'" not in source
 
