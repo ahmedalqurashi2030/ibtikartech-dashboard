@@ -46,16 +46,19 @@ def test_canonical_typography_system_keeps_required_responsive_roles():
     assert "@media (max-width: 520px)" in source
 
 
-def test_homepage_legacy_shell_is_removed_during_parse_without_losing_theme_restore():
+def test_homepage_legacy_artifacts_are_removed_during_parse_without_losing_theme_restore():
     head_source = _read_source(DOCUMENT_HEAD)
     home_runtime = _read_source(HOME_SOURCE_RUNTIME)
 
     assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" in head_source
     assert "classList.contains('source-home')" in head_source
     assert "if (!onHomepage()) return" in head_source
+    assert "body.source-home > .announcement" in head_source
+    assert "body.source-home > .skip-link" in head_source
+    assert "skipLinks[0] !== root" in head_source
     assert "MutationObserver" in head_source
     assert "observer.observe(document.documentElement" in head_source
-    assert "removeLegacyShell(document)" in head_source
+    assert "removeHomepageLegacy(document)" in head_source
     assert "observer.disconnect()" in head_source
     assert "localStorage.getItem('ibtikar-theme')" in home_runtime
 
