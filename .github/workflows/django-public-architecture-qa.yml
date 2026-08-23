@@ -70,6 +70,10 @@ jobs:
       - name: Verify native Django template contract
         run: python scripts/verify_django_template_contract.py
 
+      - name: Reset frontend verification temp directory
+        shell: bash
+        run: rm -rf /tmp/ibtikartech-source
+
       - name: Checkout approved frontend source
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
 
@@ -140,3 +144,8 @@ jobs:
           ! grep -R -n '/services/catalog/' templates/public_preview
 
           grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
+
+      - name: Cleanup frontend verification temp directory
+        if: always()
+        shell: bash
+        run: rm -rf /tmp/ibtikartech-source
