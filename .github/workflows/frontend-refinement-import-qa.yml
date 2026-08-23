@@ -43,9 +43,6 @@ jobs:
       - production
       - ibtikartech
     timeout-minutes: 10
-    concurrency:
-      group: ibtikartech-self-hosted-ci
-      cancel-in-progress: false
 
     steps:
       - name: Checkout dashboard
