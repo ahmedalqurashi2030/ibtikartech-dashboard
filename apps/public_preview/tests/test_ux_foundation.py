@@ -1,6 +1,7 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
 SHELL_RUNTIME = "static/public_preview/assets/js/ibtikar-shell.js"
+RELATED_RUNTIME = "static/public_preview/assets/js/service-related-cards.js"
 SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
 SERVICES_EXPERIENCE = "static/public_preview/assets/js/services-experience.js"
 INTERACTION_QA = "scripts/interaction_qa_clean_urls.cjs"
@@ -46,6 +47,7 @@ def test_canonical_typography_system_keeps_required_responsive_roles():
 def test_shared_related_services_runtime_is_deferred_and_single_owned():
     base_source = _read_source(BASE_TEMPLATE)
     shell_source = _read_source(SHELL_RUNTIME)
+    related_source = _read_source(RELATED_RUNTIME)
 
     expected = (
         "public_preview/assets/js/service-related-cards.js' %}\" "
@@ -55,6 +57,11 @@ def test_shared_related_services_runtime_is_deferred_and_single_owned():
     assert "relatedTracks" not in shell_source
     assert "ibt-related-track" not in shell_source
     assert "Product-like related-service sliders" not in shell_source
+
+    assert "const relatedSelectors" in related_source
+    assert "document.querySelector(relatedSelectors)" in related_source
+    assert "categoryPages" not in related_source
+    assert "body.dataset.page" not in related_source
 
 
 def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
