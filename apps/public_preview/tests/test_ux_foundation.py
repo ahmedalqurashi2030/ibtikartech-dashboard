@@ -1,5 +1,6 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
 DOCUMENT_HEAD = "templates/public_preview/components/document_head.html"
+SERVICES_TEMPLATE = "templates/public_preview/pages/services.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
 SHELL_STYLES = "static/public_preview/assets/css/ibtikar-shell.css"
 SHELL_RUNTIME = "static/public_preview/assets/js/ibtikar-shell.js"
@@ -98,6 +99,23 @@ def test_shared_related_services_runtime_is_deferred_and_single_owned():
     assert "document.querySelector(relatedSelectors)" in related_source
     assert "categoryPages" not in related_source
     assert "body.dataset.page" not in related_source
+
+
+def test_services_animation_vendors_are_deferred_in_dependency_order():
+    source = _read_source(SERVICES_TEMPLATE)
+    gsap = '<script src="/static/public_preview/assets/vendor/gsap.min.js" defer></script>'
+    scroll_trigger = (
+        '<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js" defer></script>'
+    )
+
+    assert source.count(gsap) == 1
+    assert source.count(scroll_trigger) == 1
+    assert source.find(gsap) < source.find(scroll_trigger)
+    assert '<script src="/static/public_preview/assets/vendor/gsap.min.js"></script>' not in source
+    assert (
+        '<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js"></script>'
+        not in source
+    )
 
 
 def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
