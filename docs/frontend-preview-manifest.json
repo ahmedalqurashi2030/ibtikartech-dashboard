@@ -1,9 +1,10 @@
 {
-  "source_repository": "ahmedalqurashi2030/ibtikartech",
+  "source_repository": "ahmedalqurashi2030/ibtikartech-dashboard",
   "source_ref": "main",
-  "mode": "temporary-static-django-preview",
-  "header_footer": "source-preserved-or-django-includes",
-  "source_commit": "4497d13c8aeb1a8d69315c09e46e4b656cc3f963",
+  "mode": "dashboard-authoritative",
+  "ownership": "single-repository",
+  "external_frontend_import": false,
+  "deployment_target": "ibtikartech.co",
   "business_model_binding": false,
   "required_pages": [
     "index.html",
