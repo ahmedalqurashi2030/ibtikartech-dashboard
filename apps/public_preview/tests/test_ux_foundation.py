@@ -61,7 +61,8 @@ def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
 def test_browser_qa_validates_semantic_services_count_not_legacy_six():
     source = _read_source(BROWSER_QA)
 
-    assert "servicesStageTotal" in source
+    assert "servicesStageText" in source
+    assert "String(metrics.servicesStageText || '').split('/')" in source
     assert "metrics.servicesAxes < 5" in source
-    assert "metrics.servicesStageTotal !== metrics.servicesAxes" in source
+    assert "stageTotal !== metrics.servicesAxes" in source
     assert "metrics.servicesAxes !== 6" not in source
