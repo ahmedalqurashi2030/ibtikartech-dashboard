@@ -1,5 +1,5 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
-TYPOGRAPHY_SYSTEM = "static/public_preview/dashboard/typography-system.css"
+TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
 
 
 def _read_source(path):
@@ -7,12 +7,13 @@ def _read_source(path):
         return source_file.read()
 
 
-def test_public_base_loads_one_protected_typography_system():
+def test_public_base_loads_one_stable_typography_system():
     source = _read_source(BASE_TEMPLATE)
 
     assert source.count("typography-system.css") == 1
-    assert "public_preview/dashboard/typography-system.css" in source
+    assert "public_preview/foundation/typography-system.css" in source
     assert "public_preview/assets/css/pages/typography-system.css" not in source
+    assert "public_preview/dashboard/typography-system.css" not in source
     assert "typography-scale-refinement-v1.css" not in source
     assert "typography-scale-refinement-v2.css" not in source
 
