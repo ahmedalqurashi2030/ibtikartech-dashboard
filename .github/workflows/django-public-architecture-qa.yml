@@ -39,6 +39,9 @@ jobs:
       - production
       - ibtikartech
     timeout-minutes: 10
+    concurrency:
+      group: ibtikartech-architecture-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - name: Checkout dashboard
@@ -81,9 +84,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
-          # Every public page inherits the shared shell, exposes one native
-          # Django body block, and keeps its page-specific sections inline.
           for page in templates/public_preview/pages/*.html; do
             grep -q 'extends "public_preview/base.html"' "$page"
             test "$(grep -c '{% block body %}' "$page")" -eq 1
@@ -95,8 +95,6 @@ jobs:
             ! grep -q 'public_preview/components/' "$page"
           done
 
-          # base.html composes the reusable shell through Django includes and
-          # exposes only the body content insertion point used by child pages.
           grep -q 'include "public_preview/components/document_head.html"' templates/public_preview/base.html
           grep -q 'include "public_preview/components/header.html"' templates/public_preview/base.html
           grep -q 'include "public_preview/components/footer.html"' templates/public_preview/base.html
@@ -108,24 +106,17 @@ jobs:
           ! grep -q 'id="ibtikarSiteHeader"' templates/public_preview/base.html
           ! grep -q 'class="ibt-shell-footer"' templates/public_preview/base.html
 
-          # Header owns desktop navigation and composes the shared mobile menu;
-          # footer remains a single reusable component for every route.
           grep -q 'id="ibtikarSiteHeader"' templates/public_preview/components/header.html
           grep -q 'include "public_preview/components/mobile_menu.html"' templates/public_preview/components/header.html
           grep -q 'id="ibtikarMobileMenu"' templates/public_preview/components/mobile_menu.html
           grep -q 'class="ibt-shell-footer"' templates/public_preview/components/footer.html
 
-          # Progressive enhancement must switch out of no-js before CSS can
-          # hide JS-owned controls such as the desktop mega-menu toggle.
           grep -q "classList.remove('no-js')" templates/public_preview/components/document_head.html
           grep -q "classList.add('js-ready')" templates/public_preview/components/document_head.html
 
-          # Canonical navigation must be native Django URLs everywhere in the
-          # reusable shell and page content; legacy .html URLs are redirects only.
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages templates/public_preview/components
 
-          # Browser routes must resolve through explicit Python view functions.
           ! grep -n 'preview_page' apps/public_preview/urls.py
           ! grep -n 'preview_page' apps/services/urls.py
           grep -q 'path("", views.home, name="home")' apps/public_preview/urls.py
@@ -135,11 +126,9 @@ jobs:
           grep -q '^def services(request):' apps/services/public_views.py
           grep -q '^def product_page_optimization(request):' apps/services/public_views.py
 
-          # Public service routing must stay explicit and never fall back to DB slugs.
           ! grep -n '<slug:' apps/services/urls.py
           ! grep -n 'views\.service_' apps/services/urls.py
           ! grep -R -n '/services/catalog/' templates/public_preview
-
           grep -q 'homepageSkipLinks.slice(1)' static/public_preview/assets/js/page-shell.js
 
       - name: Cleanup frontend verification temp directory
