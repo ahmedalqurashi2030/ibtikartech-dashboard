@@ -17,6 +17,9 @@ jobs:
       - production
       - ibtikartech
     timeout-minutes: 15
+    concurrency:
+      group: ibtikartech-ci-${{ github.ref }}
+      cancel-in-progress: true
 
     env:
       DJANGO_SETTINGS_MODULE: config.settings.test
