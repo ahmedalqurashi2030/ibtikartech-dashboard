@@ -31,7 +31,7 @@ function safeRm(target) {
   try {
     fs.rmSync(target, { recursive: true, force: true });
   } catch (_) {
-    // Best-effort cleanup.
+    // Best-effort cleanup only.
   }
 }
 
@@ -83,7 +83,7 @@ async function connectCdp(wsUrl) {
       return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
     },
     close() {
-      ws.close();
+      try { ws.close(); } catch (_) {}
     },
   };
 }
@@ -95,16 +95,23 @@ async function evaluate(client, expression) {
     awaitPromise: true,
   });
   const result = response?.result;
-  if (result?.subtype === 'error') {
-    throw new Error(result.description || 'Runtime evaluation error');
-  }
+  if (result?.subtype === 'error') throw new Error(result.description || 'Runtime evaluation error');
   return result?.value;
 }
 
-async function navigate(client, route, viewport, settle = 1800) {
+async function waitFor(client, expression, label, attempts = 60, interval = 100) {
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    if (await evaluate(client, `Boolean(${expression})`)) return;
+    await wait(interval);
+  }
+  throw new Error(`Timed out waiting for ${label}`);
+}
+
+async function navigate(client, route, viewport, extraSettle = 0) {
   await client.send('Emulation.setDeviceMetricsOverride', viewport);
   await client.send('Page.navigate', { url: `${baseUrl}${route}` });
-  await wait(settle);
+  await waitFor(client, "document.readyState === 'complete'", `${route} document readiness`);
+  if (extraSettle) await wait(extraSettle);
   const pathname = await evaluate(client, 'location.pathname');
   assert(pathname === route, `${route}: browser ended at ${pathname}`);
   assert(!pathname.includes('.html'), `${route}: legacy .html appeared in browser pathname`);
@@ -117,7 +124,6 @@ async function focus(client, selector, index = 0) {
     if (!el) return {ok:false, reason:'missing', count:nodes.length};
     el.scrollIntoView({block:'center', inline:'center'});
     el.focus({preventScroll:true});
-    const style = getComputedStyle(el);
     let ancestor = el.parentElement;
     let inertAncestor = null;
     while (ancestor) {
@@ -130,14 +136,9 @@ async function focus(client, selector, index = 0) {
     return {
       ok: document.activeElement === el,
       count: nodes.length,
-      tag: el.tagName,
       disabled: Boolean(el.disabled),
       tabIndex: el.tabIndex,
-      display: style.display,
-      visibility: style.visibility,
-      inert: el.hasAttribute('inert'),
       inertAncestor,
-      active: document.activeElement?.outerHTML?.slice(0, 180) || '',
       element: el.outerHTML?.slice(0, 220) || '',
     };
   })()`);
@@ -196,10 +197,8 @@ async function testDesktopMega(client) {
       activeHref: document.activeElement?.getAttribute?.('href') || '',
     };
   })()`);
-  assert(
-    state.expanded === 'true' && state.hidden === 'false' && state.open && state.focusInside,
-    `Desktop mega Enter failed: ${JSON.stringify(state)}`,
-  );
+  assert(state.expanded === 'true' && state.hidden === 'false' && state.open && state.focusInside,
+    `Desktop mega Enter failed: ${JSON.stringify(state)}`);
   assert(!/\.html(?:[?#]|$)/i.test(state.activeHref), `Mega focus landed on legacy URL ${state.activeHref}`);
 
   await key(client, 'Escape');
@@ -214,20 +213,15 @@ async function testDesktopMega(client) {
       focusBack: document.activeElement === toggle,
     };
   })()`);
-  assert(
-    state.expanded === 'false' && state.hidden === 'true' && !state.open && state.focusBack,
-    `Desktop mega Escape failed: ${JSON.stringify(state)}`,
-  );
+  assert(state.expanded === 'false' && state.hidden === 'true' && !state.open && state.focusBack,
+    `Desktop mega Escape failed: ${JSON.stringify(state)}`);
 
   await key(client, 'ArrowDown');
   await wait(120);
   state = await evaluate(client, `(() => {
     const toggle = document.querySelector(${JSON.stringify(selector)});
     const menu = document.getElementById('solutionsServicesMega');
-    return {
-      expanded: toggle?.getAttribute('aria-expanded'),
-      focusInside: menu?.contains(document.activeElement),
-    };
+    return {expanded:toggle?.getAttribute('aria-expanded'), focusInside:menu?.contains(document.activeElement)};
   })()`);
   assert(state.expanded === 'true' && state.focusInside, `Desktop mega ArrowDown failed: ${JSON.stringify(state)}`);
   await key(client, 'Escape');
@@ -252,10 +246,8 @@ async function testMobileMenu(client) {
       inert: menu?.hasAttribute('inert'),
     };
   })()`);
-  assert(
-    state.expanded === 'true' && state.hidden === 'false' && state.open && state.body && state.focusInside && !state.inert,
-    `Mobile menu open failed: ${JSON.stringify(state)}`,
-  );
+  assert(state.expanded === 'true' && state.hidden === 'false' && state.open && state.body && state.focusInside && !state.inert,
+    `Mobile menu open failed: ${JSON.stringify(state)}`);
 
   await key(client, 'Escape');
   await wait(100);
@@ -270,10 +262,8 @@ async function testMobileMenu(client) {
       inert: menu?.hasAttribute('inert'),
     };
   })()`);
-  assert(
-    state.expanded === 'false' && state.hidden === 'true' && !state.open && state.focusBack && state.inert,
-    `Mobile menu Escape failed: ${JSON.stringify(state)}`,
-  );
+  assert(state.expanded === 'false' && state.hidden === 'true' && !state.open && state.focusBack && state.inert,
+    `Mobile menu Escape failed: ${JSON.stringify(state)}`);
   console.log('✓ canonical mobile menu: open / focus / Escape / inert state');
 }
 
@@ -322,7 +312,8 @@ async function testContactSteps(client) {
       focusInside: panels[1]?.contains(document.activeElement),
     };
   })()`);
-  assert(state.firstHidden && !state.secondHidden && state.activeStep === 1 && state.focusInside, `Contact step 2 failed: ${JSON.stringify(state)}`);
+  assert(state.firstHidden && !state.secondHidden && state.activeStep === 1 && state.focusInside,
+    `Contact step 2 failed: ${JSON.stringify(state)}`);
 
   await setValue(client, '#quote-goal', 'إطلاق متجر');
   await setValue(client, '#quote-stage', 'جاهز للتنفيذ');
@@ -339,29 +330,47 @@ async function testContactSteps(client) {
       focusInside: panels[2]?.contains(document.activeElement),
     };
   })()`);
-  assert(state.secondHidden && !state.thirdHidden && state.activeStep === 2 && state.focusInside, `Contact step 3 failed: ${JSON.stringify(state)}`);
+  assert(state.secondHidden && !state.thirdHidden && state.activeStep === 2 && state.focusInside,
+    `Contact step 3 failed: ${JSON.stringify(state)}`);
 
-  await setValue(client, '#quote-details', 'اختبار تفاعل النموذج دون إرسال بيانات خارجية.');
+  await setValue(client, '#quote-details', 'اختبار تفاعل النموذج داخل بيئة الاختبار المحلية.');
   await focus(client, '#quote-form button[type="submit"]');
   await key(client, 'Enter');
-  await wait(750);
-  state = await evaluate(client, `(() => ({
-    saved: Boolean(localStorage.getItem('ibtikar:lastBrief')),
-    message: document.querySelector('[data-form-state]')?.textContent?.trim() || '',
-    firstVisible: !document.querySelectorAll('[data-step-panel]')[0]?.hidden,
-  }))()`);
-  assert(state.saved && /تم حفظ الطلب/.test(state.message) && state.firstVisible, `Contact local draft failed: ${JSON.stringify(state)}`);
-  console.log('✓ contact: three steps + local-only draft save');
+  await waitFor(
+    client,
+    "document.querySelector('[data-form-state]')?.classList.contains('is-success')",
+    'contact success state',
+    40,
+    100,
+  );
+  state = await evaluate(client, `(() => {
+    const panels = [...document.querySelectorAll('[data-step-panel]')];
+    const steps = [...document.querySelectorAll('[data-step]')];
+    const message = document.querySelector('[data-form-state]')?.textContent?.trim() || '';
+    const submit = document.querySelector('#quote-form button[type="submit"]');
+    return {
+      message,
+      firstVisible: !panels[0]?.hidden,
+      activeStep: steps.findIndex((step) => step.classList.contains('is-active')),
+      submitEnabled: !submit?.disabled,
+    };
+  })()`);
+  assert(/وصل طلبك إلى الفريق/.test(state.message), `Contact success message missing: ${JSON.stringify(state)}`);
+  assert(/رقم المرجع:\s*IBT-[A-Z0-9]+/.test(state.message), `Contact reference missing: ${JSON.stringify(state)}`);
+  assert(state.firstVisible && state.activeStep === 0 && state.submitEnabled,
+    `Contact reset after submit failed: ${JSON.stringify(state)}`);
+  console.log('✓ contact: three steps + live local-test submission + reference');
 }
 
 async function testTharaaStudio(client) {
-  await navigate(client, '/tharaa/', DESKTOP, 2200);
+  await navigate(client, '/tharaa/', DESKTOP, 500);
   let state = await evaluate(client, `(() => ({
     sectors: document.querySelectorAll('[data-sector]').length,
     views: document.querySelectorAll('[data-view]').length,
     devices: document.querySelectorAll('[data-device]').length,
   }))()`);
-  assert(state.sectors >= 2 && state.views >= 2 && state.devices >= 2, `Tharaa studio controls missing: ${JSON.stringify(state)}`);
+  assert(state.sectors >= 2 && state.views >= 2 && state.devices >= 2,
+    `Tharaa studio controls missing: ${JSON.stringify(state)}`);
 
   await focus(client, '[data-sector]', 1);
   await key(client, 'Enter');
@@ -391,7 +400,22 @@ async function testTharaaStudio(client) {
   console.log('✓ Tharaa studio: sector / view / device keyboard activation');
 }
 
-(async () => {
+async function terminateChrome(chrome) {
+  if (!chrome?.pid) return;
+  try {
+    if (process.platform !== 'win32') process.kill(-chrome.pid, 'SIGTERM');
+    else chrome.kill('SIGTERM');
+  } catch (_) {
+    try { chrome.kill('SIGTERM'); } catch (_) {}
+  }
+  await wait(180);
+  try {
+    if (process.platform !== 'win32') process.kill(-chrome.pid, 'SIGKILL');
+    else chrome.kill('SIGKILL');
+  } catch (_) {}
+}
+
+async function main() {
   const executable = chromePath();
   if (!executable) throw new Error('Chrome/Chromium executable not found');
   safeRm(profileDir);
@@ -406,7 +430,7 @@ async function testTharaaStudio(client) {
     `--remote-debugging-port=${debugPort}`,
     `--user-data-dir=${profileDir}`,
     'about:blank',
-  ], { stdio: 'ignore' });
+  ], { stdio: 'ignore', detached: process.platform !== 'win32' });
 
   let client;
   try {
@@ -437,11 +461,14 @@ async function testTharaaStudio(client) {
     console.log(`✓ Canonical interaction QA passed: ${tests.length} deep scenarios`);
   } finally {
     try { client?.close(); } catch (_) {}
-    try { chrome.kill('SIGTERM'); } catch (_) {}
-    await wait(250);
+    await terminateChrome(chrome);
     safeRm(profileDir);
   }
-})().catch((error) => {
-  console.error(`Canonical interaction QA failed: ${error.stack || error.message}`);
-  process.exit(1);
-});
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(`Canonical interaction QA failed: ${error.stack || error.message}`);
+    process.exit(1);
+  });
