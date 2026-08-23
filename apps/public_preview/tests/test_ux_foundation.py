@@ -1,13 +1,10 @@
 from pathlib import Path
 
-from django.conf import settings
 
-
-BASE_TEMPLATE = (
-    Path(settings.BASE_DIR) / "templates" / "public_preview" / "base.html"
-)
+BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_TEMPLATE = BASE_DIR / "templates" / "public_preview" / "base.html"
 TYPOGRAPHY_SYSTEM = (
-    Path(settings.BASE_DIR)
+    BASE_DIR
     / "static"
     / "public_preview"
     / "assets"
@@ -48,7 +45,4 @@ def test_canonical_typography_system_keeps_required_responsive_roles():
 def test_shared_related_services_runtime_is_deferred():
     source = BASE_TEMPLATE.read_text(encoding="utf-8")
 
-    assert (
-        "public_preview/assets/js/service-related-cards.js' %}\" defer>"
-        in source
-    )
+    assert "public_preview/assets/js/service-related-cards.js' %}\" defer>" in source
