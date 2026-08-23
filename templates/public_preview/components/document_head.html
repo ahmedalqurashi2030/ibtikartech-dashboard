@@ -8,11 +8,13 @@
 
   // P0 homepage shell stabilization: imported homepage markup still contains
   // retired, explicitly hidden navigation copies used by the preserved source.
-  // Remove only those marked legacy nodes as they are parsed. The canonical
-  // Django header/mobile menu are not matched by these selectors.
+  // Remove only those marked legacy nodes on source-home. Other pages keep
+  // their current runtime contracts until they are audited independently.
   (() => {
     const legacySelector = '[data-approved-legacy-shell], .ibtx-legacy-mobile-menu';
+    const onHomepage = () => document.body?.classList.contains('source-home') === true;
     const removeLegacyShell = (root) => {
+      if (!onHomepage()) return;
       if (!(root instanceof Element || root instanceof Document)) return;
       if (root instanceof Element && root.matches(legacySelector)) {
         root.remove();
