@@ -20,11 +20,13 @@ from apps.public_preview.manifest import REQUIRED_PAGES, RETIRED_PLATFORM_PAGES 
 MANIFEST_PATH = ROOT / "docs" / "frontend-preview-manifest.json"
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
 ASSETS_DIR = ROOT / "static" / "public_preview" / "assets"
+OWNERSHIP_WORKFLOW = ROOT / ".github" / "workflows" / "frontend-ownership-qa.yml"
 
 RETIRED_EXTERNAL_IMPORT_PATHS = (
     ROOT / "scripts" / "import_frontend_preview.py",
     ROOT / "scripts" / "verify_public_section_preservation.py",
     ROOT / ".github" / "workflows" / "frontend-preview-import.yml",
+    ROOT / ".github" / "workflows" / "frontend-refinement-import-qa.yml",
 )
 
 REQUIRED_OWNED_ASSETS = (
@@ -62,6 +64,8 @@ def verify_retired_importers_are_absent() -> None:
     restored = [str(path.relative_to(ROOT)) for path in RETIRED_EXTERNAL_IMPORT_PATHS if path.exists()]
     if restored:
         fail("External frontend import paths must stay retired: " + ", ".join(restored))
+    if not OWNERSHIP_WORKFLOW.is_file():
+        fail("Frontend Ownership QA workflow is missing.")
 
 
 def verify_dashboard_owned_pages() -> None:
