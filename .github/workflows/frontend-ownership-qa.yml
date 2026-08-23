@@ -1,0 +1,89 @@
+name: Frontend Ownership QA
+
+on:
+  pull_request:
+    paths:
+      - "templates/public_preview/**"
+      - "static/public_preview/**"
+      - "apps/public_preview/**"
+      - "scripts/refactor_public_preview_templates.py"
+      - "scripts/normalize_public_preview_metadata.py"
+      - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_django_template_contract.py"
+      - "scripts/verify_frontend_single_repo_ownership.py"
+      - "docs/frontend-preview-manifest.json"
+      - ".github/workflows/frontend-ownership-qa.yml"
+  push:
+    branches: [main]
+    paths:
+      - "templates/public_preview/**"
+      - "static/public_preview/**"
+      - "apps/public_preview/**"
+      - "scripts/refactor_public_preview_templates.py"
+      - "scripts/normalize_public_preview_metadata.py"
+      - "scripts/patch_public_runtime_accessibility.py"
+      - "scripts/verify_django_template_contract.py"
+      - "scripts/verify_frontend_single_repo_ownership.py"
+      - "docs/frontend-preview-manifest.json"
+      - ".github/workflows/frontend-ownership-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ownership-qa:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, production, ibtikartech]
+    timeout-minutes: 10
+    concurrency:
+      group: ibtikartech-frontend-ownership-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate ownership and transformation scripts
+        run: |
+          python -m py_compile scripts/verify_frontend_single_repo_ownership.py
+          python -m py_compile scripts/refactor_public_preview_templates.py
+          python -m py_compile scripts/normalize_public_preview_metadata.py
+          python -m py_compile scripts/patch_public_runtime_accessibility.py
+          python -m py_compile scripts/verify_django_template_contract.py
+
+      - name: Verify dashboard is the only frontend source of truth
+        run: python scripts/verify_frontend_single_repo_ownership.py
+
+      - name: Verify transformations are reproducible and committed
+        run: |
+          python scripts/refactor_public_preview_templates.py
+          python scripts/normalize_public_preview_metadata.py
+          python scripts/patch_public_runtime_accessibility.py
+          git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
+
+      - name: Verify native Django template contract
+        run: python scripts/verify_django_template_contract.py
+
+      - name: Verify committed refinement mirror
+        shell: bash
+        run: |
+          set -euo pipefail
+          for source in static/public_preview/dashboard/*.css; do
+            filename="$(basename "$source")"
+            target="static/public_preview/assets/css/pages/$filename"
+            test -f "$target"
+            cmp --silent "$source" "$target"
+          done
+
+      - name: Verify production-safe frontend paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components
+          ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages templates/public_preview/components
+          grep -q 'custom-systems.html#apps' static/public_preview/assets/js/services-experience.js
+          grep -q 'custom-systems.html#automation' static/public_preview/assets/js/services-experience.js
