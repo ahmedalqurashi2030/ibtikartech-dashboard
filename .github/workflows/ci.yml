@@ -11,7 +11,15 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
+    timeout-minutes: 15
+    concurrency:
+      group: ibtikartech-self-hosted-ci
+      cancel-in-progress: false
 
     env:
       DJANGO_SETTINGS_MODULE: config.settings.test
