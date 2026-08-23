@@ -1,5 +1,7 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
+SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
+BROWSER_QA = "scripts/browser_qa_clean_urls.cjs"
 
 
 def _read_source(path):
@@ -46,3 +48,20 @@ def test_shared_related_services_runtime_is_deferred():
         "defer></script>"
     )
     assert expected in source
+
+
+def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
+    source = _read_source(SERVICES_RUNTIME)
+
+    assert "String(items.length).padStart(2, '0')" in source
+    assert "!canvas || typeof canvas.getContext !== 'function'" in source
+    assert " / 06" not in source
+
+
+def test_browser_qa_validates_semantic_services_count_not_legacy_six():
+    source = _read_source(BROWSER_QA)
+
+    assert "servicesStageTotal" in source
+    assert "metrics.servicesAxes < 5" in source
+    assert "metrics.servicesStageTotal !== metrics.servicesAxes" in source
+    assert "metrics.servicesAxes !== 6" not in source
