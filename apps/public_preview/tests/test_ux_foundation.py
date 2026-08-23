@@ -1,6 +1,7 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
 SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
+SERVICES_EXPERIENCE = "static/public_preview/assets/js/services-experience.js"
 BROWSER_QA = "scripts/browser_qa_clean_urls.cjs"
 
 
@@ -56,6 +57,24 @@ def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
     assert "String(items.length).padStart(2, '0')" in source
     assert "!canvas || typeof canvas.getContext !== 'function'" in source
     assert " / 06" not in source
+
+
+def test_services_experience_matches_current_five_family_taxonomy():
+    source = _read_source(SERVICES_EXPERIENCE)
+
+    expected_order = (
+        "mode:'store', index:'01'",
+        "mode:'site', index:'02'",
+        "mode:'brand', index:'03'",
+        "mode:'growth', index:'04'",
+        "mode:'app', index:'05'",
+    )
+    positions = [source.find(marker) for marker in expected_order]
+    assert all(position >= 0 for position in positions)
+    assert positions == sorted(positions)
+    assert "PRIMARY_FAMILIES.length" in source
+    assert "ستة محاور" not in source
+    assert "mode:'auto', index:'06'" not in source
 
 
 def test_browser_qa_validates_semantic_services_count_not_legacy_six():
