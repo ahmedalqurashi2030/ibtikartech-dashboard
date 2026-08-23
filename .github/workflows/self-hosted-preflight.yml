@@ -64,41 +64,27 @@ jobs:
           command -v npm
           npm --version
 
-      - name: Provide user-space unzip shim for Chrome action
+      - name: Download pinned Chrome Headless Shell without sudo
+        id: headless-shell
         shell: bash
         run: |
           set -euo pipefail
-          shim_dir="$RUNNER_TEMP/ibtikar-user-bin"
-          mkdir -p "$shim_dir"
-          cat > "$shim_dir/unzip" <<'PY'
-          #!/usr/bin/env python
+          chrome_version="152.0.7977.54"
+          archive="$RUNNER_TEMP/chrome-headless-shell.zip"
+          install_dir="$RUNNER_TEMP/chrome-headless-shell"
+          rm -rf "$install_dir" "$archive"
+          mkdir -p "$install_dir"
+          curl --fail --location --retry 3 --retry-delay 2 \
+            "https://storage.googleapis.com/chrome-for-testing-public/${chrome_version}/linux64/chrome-headless-shell-linux64.zip" \
+            -o "$archive"
+          python - "$archive" "$install_dir" <<'PY'
           import os
-          import stat
           import sys
           import zipfile
           from pathlib import Path
 
-          args = sys.argv[1:]
-          archive = None
-          destination = Path('.')
-          index = 0
-          while index < len(args):
-              arg = args[index]
-              if arg == '-d':
-                  index += 1
-                  if index >= len(args):
-                      raise SystemExit('unzip shim: -d requires a destination')
-                  destination = Path(args[index])
-              elif arg.startswith('-'):
-                  pass
-              elif archive is None:
-                  archive = Path(arg)
-              index += 1
-
-          if archive is None:
-              raise SystemExit('unzip shim: archive path is required')
-
-          destination.mkdir(parents=True, exist_ok=True)
+          archive = Path(sys.argv[1])
+          destination = Path(sys.argv[2])
           with zipfile.ZipFile(archive) as bundle:
               bundle.extractall(destination)
               for info in bundle.infolist():
@@ -109,35 +95,63 @@ jobs:
                   if target.exists() and not target.is_symlink():
                       os.chmod(target, mode)
           PY
-          chmod 0755 "$shim_dir/unzip"
-          echo "$shim_dir" >> "$GITHUB_PATH"
-          "$shim_dir/unzip" --help >/dev/null 2>&1 || true
+          chrome_path="$(find "$install_dir" -type f -name 'chrome-headless-shell' -print -quit)"
+          test -n "$chrome_path"
+          test -x "$chrome_path"
+          echo "chrome-path=$chrome_path" >> "$GITHUB_OUTPUT"
+          echo "Pinned headless shell extracted to runner temp."
 
-      - name: Setup Chrome for Testing without sudo
-        id: setup-chrome
-        uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4
-        with:
-          chrome-version: stable
-          no-sudo: true
-
-      - name: Verify Chrome can launch headless
+      - name: Verify headless shell runtime dependencies
         env:
-          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          CHROME_PATH: ${{ steps.headless-shell.outputs.chrome-path }}
         shell: bash
         run: |
           set -euo pipefail
-          test -n "$CHROME_PATH"
-          test -x "$CHROME_PATH"
+          ldd "$CHROME_PATH" | tee "$RUNNER_TEMP/ibtikar-headless-ldd.txt"
+          if grep -q 'not found' "$RUNNER_TEMP/ibtikar-headless-ldd.txt"; then
+            echo "Missing shared libraries detected; refusing to modify the production host."
+            exit 1
+          fi
           "$CHROME_PATH" --version
-          timeout 30s "$CHROME_PATH" \
-            --headless=new \
+
+      - name: Verify headless shell can launch CDP
+        env:
+          CHROME_PATH: ${{ steps.headless-shell.outputs.chrome-path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          profile="$RUNNER_TEMP/ibtikar-headless-profile"
+          rm -rf "$profile"
+          "$CHROME_PATH" \
             --no-sandbox \
             --disable-gpu \
             --disable-dev-shm-usage \
-            --dump-dom about:blank > /tmp/ibtikar-chrome-preflight.html
-          test -s /tmp/ibtikar-chrome-preflight.html
-          rm -f /tmp/ibtikar-chrome-preflight.html
-          echo "Chrome headless launch succeeded."
+            --remote-debugging-port=9555 \
+            --user-data-dir="$profile" \
+            about:blank > "$RUNNER_TEMP/ibtikar-headless.log" 2>&1 &
+          pid=$!
+          cleanup() {
+            kill "$pid" 2>/dev/null || true
+            rm -rf "$profile"
+          }
+          trap cleanup EXIT
+          for i in {1..50}; do
+            if curl --fail --silent http://127.0.0.1:9555/json/version > "$RUNNER_TEMP/ibtikar-headless-version.json"; then
+              python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          payload = json.loads(Path(os.environ['RUNNER_TEMP'], 'ibtikar-headless-version.json').read_text())
+          assert payload.get('webSocketDebuggerUrl'), payload
+          print(payload.get('Browser', 'Headless shell CDP ready'))
+          PY
+              echo "Chrome Headless Shell CDP launch succeeded."
+              exit 0
+            fi
+            sleep 0.2
+          done
+          cat "$RUNNER_TEMP/ibtikar-headless.log"
+          exit 1
 
       - name: Confirm no privileged system change was required
         shell: bash
