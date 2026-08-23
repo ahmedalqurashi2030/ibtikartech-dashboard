@@ -1,7 +1,9 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
+SHELL_RUNTIME = "static/public_preview/assets/js/ibtikar-shell.js"
 SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
 SERVICES_EXPERIENCE = "static/public_preview/assets/js/services-experience.js"
+INTERACTION_QA = "scripts/interaction_qa_clean_urls.cjs"
 BROWSER_QA = "scripts/browser_qa_clean_urls.cjs"
 
 
@@ -41,14 +43,18 @@ def test_canonical_typography_system_keeps_required_responsive_roles():
     assert "@media (max-width: 520px)" in source
 
 
-def test_shared_related_services_runtime_is_deferred():
-    source = _read_source(BASE_TEMPLATE)
+def test_shared_related_services_runtime_is_deferred_and_single_owned():
+    base_source = _read_source(BASE_TEMPLATE)
+    shell_source = _read_source(SHELL_RUNTIME)
 
     expected = (
         "public_preview/assets/js/service-related-cards.js' %}\" "
         "defer></script>"
     )
-    assert expected in source
+    assert expected in base_source
+    assert "relatedTracks" not in shell_source
+    assert "ibt-related-track" not in shell_source
+    assert "Product-like related-service sliders" not in shell_source
 
 
 def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
@@ -85,3 +91,13 @@ def test_browser_qa_validates_semantic_services_count_not_legacy_six():
     assert "metrics.servicesAxes < 5" in source
     assert "stageTotal !== metrics.servicesAxes" in source
     assert "metrics.servicesAxes !== 6" not in source
+
+
+def test_deep_interaction_qa_uses_live_contact_submission_contract():
+    source = _read_source(INTERACTION_QA)
+
+    assert "live local-test submission + reference" in source
+    assert "وصل طلبك إلى الفريق" in source
+    assert "رقم المرجع:" in source
+    assert "ibtikar:lastBrief" not in source
+    assert "Contact local draft failed" not in source
