@@ -51,6 +51,8 @@ def test_homepage_legacy_shell_is_removed_during_parse_without_losing_theme_rest
     home_runtime = _read_source(HOME_SOURCE_RUNTIME)
 
     assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" in head_source
+    assert "classList.contains('source-home')" in head_source
+    assert "if (!onHomepage()) return" in head_source
     assert "MutationObserver" in head_source
     assert "observer.observe(document.documentElement" in head_source
     assert "removeLegacyShell(document)" in head_source
