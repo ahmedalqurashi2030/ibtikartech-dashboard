@@ -1,6 +1,7 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
 DOCUMENT_HEAD = "templates/public_preview/components/document_head.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
+SHELL_STYLES = "static/public_preview/assets/css/ibtikar-shell.css"
 SHELL_RUNTIME = "static/public_preview/assets/js/ibtikar-shell.js"
 RELATED_RUNTIME = "static/public_preview/assets/js/service-related-cards.js"
 SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
@@ -44,6 +45,22 @@ def test_canonical_typography_system_keeps_required_responsive_roles():
     assert "@media (max-width: 820px)" in source
     assert "@media (max-width: 560px)" in source
     assert "@media (max-width: 520px)" in source
+
+
+def test_public_shell_has_one_canonical_approved_cascade():
+    source = _read_source(SHELL_STYLES)
+
+    assert "P0 shell consolidation" in source
+    assert "V11 refined combined solutions/services header" not in source
+    assert "APPROVED VISUAL RECOVERY" not in source
+    assert "\n  top: 12px;" not in source
+    assert "@media (max-width: 1180px)" in source
+    assert 'html[data-theme="dark"] .ibt-shell-mega' in source
+    assert ".ibt-shell-menu-toggle::before" in source
+    assert "radial-gradient(circle at 5px 5px" in source
+    assert "body.source-home #home.hero" in source
+    assert "body.source-home .cinematic-story__brand" in source
+    assert "@media (prefers-reduced-motion: reduce)" in source
 
 
 def test_homepage_legacy_artifacts_are_removed_during_parse_without_losing_theme_restore():
