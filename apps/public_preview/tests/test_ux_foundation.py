@@ -118,6 +118,24 @@ def test_services_animation_vendors_are_deferred_in_dependency_order():
     )
 
 
+def test_services_page_has_no_retired_shell_or_runtime_hooks():
+    template_source = _read_source(SERVICES_TEMPLATE)
+    runtime_source = _read_source(SERVICES_RUNTIME)
+
+    assert "data-approved-legacy-shell" not in template_source
+    assert '<header class="header" id="header">' not in template_source
+    assert 'id="menuBtn"' not in template_source
+    assert 'id="mobileMenu"' not in template_source
+    assert '<a class="skip" href="#main">' not in template_source
+    assert '<footer data-approved-legacy-shell' not in template_source
+
+    assert "getElementById('header')" not in runtime_source
+    assert "getElementById('menuBtn')" not in runtime_source
+    assert "getElementById('mobileMenu')" not in runtime_source
+    assert "lastY" not in runtime_source
+    assert "getElementById('progressBar')" in runtime_source
+
+
 def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
     source = _read_source(SERVICES_RUNTIME)
 
