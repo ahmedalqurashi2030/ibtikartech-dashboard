@@ -64,6 +64,55 @@ jobs:
           command -v npm
           npm --version
 
+      - name: Provide user-space unzip shim for Chrome action
+        shell: bash
+        run: |
+          set -euo pipefail
+          shim_dir="$RUNNER_TEMP/ibtikar-user-bin"
+          mkdir -p "$shim_dir"
+          cat > "$shim_dir/unzip" <<'PY'
+          #!/usr/bin/env python
+          import os
+          import stat
+          import sys
+          import zipfile
+          from pathlib import Path
+
+          args = sys.argv[1:]
+          archive = None
+          destination = Path('.')
+          index = 0
+          while index < len(args):
+              arg = args[index]
+              if arg == '-d':
+                  index += 1
+                  if index >= len(args):
+                      raise SystemExit('unzip shim: -d requires a destination')
+                  destination = Path(args[index])
+              elif arg.startswith('-'):
+                  pass
+              elif archive is None:
+                  archive = Path(arg)
+              index += 1
+
+          if archive is None:
+              raise SystemExit('unzip shim: archive path is required')
+
+          destination.mkdir(parents=True, exist_ok=True)
+          with zipfile.ZipFile(archive) as bundle:
+              bundle.extractall(destination)
+              for info in bundle.infolist():
+                  mode = (info.external_attr >> 16) & 0o7777
+                  if not mode or info.is_dir():
+                      continue
+                  target = destination / info.filename
+                  if target.exists() and not target.is_symlink():
+                      os.chmod(target, mode)
+          PY
+          chmod 0755 "$shim_dir/unzip"
+          echo "$shim_dir" >> "$GITHUB_PATH"
+          "$shim_dir/unzip" --help >/dev/null 2>&1 || true
+
       - name: Setup Chrome for Testing without sudo
         id: setup-chrome
         uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4
