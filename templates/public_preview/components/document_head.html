@@ -5,4 +5,34 @@
   // page-shell.js repeats this defensively for cached/imported documents.
   document.documentElement.classList.remove('no-js');
   document.documentElement.classList.add('js-ready');
+
+  // P0 homepage shell stabilization: imported homepage markup still contains
+  // retired, explicitly hidden navigation copies used by the preserved source.
+  // Remove only those marked legacy nodes as they are parsed. The canonical
+  // Django header/mobile menu are not matched by these selectors.
+  (() => {
+    const legacySelector = '[data-approved-legacy-shell], .ibtx-legacy-mobile-menu';
+    const removeLegacyShell = (root) => {
+      if (!(root instanceof Element || root instanceof Document)) return;
+      if (root instanceof Element && root.matches(legacySelector)) {
+        root.remove();
+        return;
+      }
+      root.querySelectorAll?.(legacySelector).forEach((node) => node.remove());
+    };
+
+    const observer = new MutationObserver((records) => {
+      records.forEach((record) => {
+        record.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) removeLegacyShell(node);
+        });
+      });
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      removeLegacyShell(document);
+      observer.disconnect();
+    }, { once: true });
+  })();
 </script>
