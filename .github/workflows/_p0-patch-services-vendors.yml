@@ -6,12 +6,17 @@ on:
       - perf/p0-dashboard-services-loading
     paths:
       - ".github/workflows/_p0-patch-services-vendors.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/_p0-patch-services-vendors.yml"
 
 permissions:
   contents: write
 
 jobs:
   patch:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production, ibtikartech]
     timeout-minutes: 5
     steps:
