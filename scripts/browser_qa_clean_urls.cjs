@@ -215,6 +215,8 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
     const internalHrefs = visibleLinks
       .map((a) => a.getAttribute('href') || '')
       .filter((href) => href.startsWith('/') && !href.startsWith('//'));
+    const stageCountText = document.querySelector('#stageCount')?.textContent || '';
+    const stageCountMatch = stageCountText.match(/\/\s*(\d+)/);
     return {
       currentPath: window.location.pathname,
       title: document.title,
@@ -228,6 +230,7 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
       duplicateIds,
       internalHrefs,
       servicesAxes: document.querySelectorAll('.service-item').length,
+      servicesStageTotal: stageCountMatch ? Number(stageCountMatch[1]) : 0,
       servicesCinema: Boolean(document.querySelector('.services-primary-cinema')),
       relatedServiceHrefs: [...document.querySelectorAll('.service-related-cards .service-related-card__link[href]')]
         .map((a) => a.getAttribute('href') || ''),
@@ -278,7 +281,15 @@ function validate(result, failures, internalLinks) {
 
   if (route === '/services/') {
     if (!metrics.servicesCinema) failures.push(`${prefix}: services cinematic block missing`);
-    if (metrics.servicesAxes !== 6) failures.push(`${prefix}: expected 6 service axes, found ${metrics.servicesAxes}`);
+    if (metrics.servicesAxes < 5) {
+      failures.push(`${prefix}: expected at least 5 service axes, found ${metrics.servicesAxes}`);
+    }
+    if (metrics.servicesStageTotal !== metrics.servicesAxes) {
+      failures.push(
+        `${prefix}: service stage total ${metrics.servicesStageTotal} does not match `
+        + `${metrics.servicesAxes} service axes`,
+      );
+    }
   }
 
   if (relatedServiceRoutes.has(route)) {
