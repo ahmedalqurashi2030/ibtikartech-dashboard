@@ -23,14 +23,8 @@
 {% block body %}
 <script src="/static/public_preview/assets/js/page-shell.js"></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
-<a class="skip" href="#main">انتقل إلى المحتوى</a>
+
 <div class="noise" aria-hidden="true"></div><div class="progress"><span id="progressBar"></span></div>
-<header data-approved-legacy-shell hidden inert aria-hidden="true" class="header" id="header"><div class="container nav">
-<a class="brand" href="{% url 'public_preview:home' %}" aria-label="ابتكار تك — الرئيسية"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a>
-<nav class="desktop-nav" aria-label="التنقل الرئيسي"><a href="#goals">حسب هدفك</a><a class="active" href="#services">الخدمات</a><a href="#solutions">الحلول المركبة</a><a href="#faq">الأسئلة الشائعة</a></nav>
-<div class="nav-actions"><a class="btn btn-primary btn-small" href="#contact">ابدأ مشروعك</a><button class="menu-btn" id="menuBtn" aria-label="فتح القائمة" aria-expanded="false">☰</button></div>
-</div></header>
-<nav data-approved-legacy-shell hidden inert class="mobile-menu" id="mobileMenu" aria-label="قائمة الجوال"><a href="#goals">حسب هدفك</a><a href="#services">الخدمات</a><a href="#solutions">الحلول المركبة</a><a href="#faq">الأسئلة الشائعة</a><a href="#contact">ابدأ مشروعك</a></nav>
 <main id="main">
 <section class="hero" id="top"><div class="container hero-grid">
 <div class="hero-copy reveal"><span class="eyebrow"><i></i>خمس فئات واضحة لخمس احتياجات مختلفة</span><h1>ابدأ من هدف مشروعك.<span>ثم اختر نقطة البداية المناسبة.</span></h1><p>نساعدك على الانتقال من حالة المشروع إلى الفئة الصحيحة، ثم نثبت الملاءمة والمخرجات والحدود قبل أن نقترح التنفيذ.</p><div class="hero-actions"><a class="btn btn-primary" href="#goals">اختر حسب هدفك</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=unknown&source=services#quote">لا أعرف الخدمة المناسبة</a></div><div class="hero-proof"><span class="proof-chip"><b>01</b>تشخيص مختصر</span><span class="proof-chip"><b>02</b>نطاق قبل العرض</span><span class="proof-chip"><b>03</b>خطوة تالية واضحة</span></div></div>
@@ -67,8 +61,6 @@
 </div></div></section>
 <section class="cta" id="contact"><div class="container"><div class="cta-card reveal"><div class="cta-copy"><small>ابدأ من النتيجة التي تريدها</small><h2>دعنا نبني المسار المناسب لمشروعك.</h2><p>أرسل نشاطك وهدفك ووضعك الحالي، وسنقترح نقطة البداية والخدمات المطلوبة دون تعقيد.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}">استكشف حلول المتاجر</a></div></div></div></section>
 </main>
-<footer data-approved-legacy-shell hidden inert aria-hidden="true" class="footer"><div class="container"><div class="footer-grid"><div class="footer-brand"><a class="brand" href="#top"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية متكاملة تساعد المشاريع على الظهور والعمل والنمو.</p></div><div><h3>الخدمات</h3><a href="#services">المتاجر الإلكترونية</a><a href="#services">المواقع وصفحات الهبوط</a><a href="#services">التطبيقات والأنظمة</a><a href="#services">الهوية والمحتوى</a></div><div><h3>الحلول</h3><a href="#solutions">إطلاق متجر</a><a href="#solutions">حضور الشركات</a><a href="#solutions">النمو الرقمي</a><a href="#solutions">الحلول المخصصة</a></div><div><h3>ابدأ</h3><a href="#faq">الأسئلة الشائعة</a><a href="#contact">طلب عرض سعر</a><a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a></div></div><div class="footer-bottom"><span>© 2026 ابتكار تك. جميع الحقوق محفوظة.</span><span>استراتيجية · تصميم · تقنية · نمو</span></div></div></footer>
-
 <script src="/static/public_preview/assets/js/source-services.js" defer></script>
 
 <script src="/static/public_preview/assets/js/approved-source.js" defer></script>
