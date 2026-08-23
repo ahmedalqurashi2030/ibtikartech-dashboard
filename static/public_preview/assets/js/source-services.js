@@ -3,31 +3,13 @@
   'use strict';
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const header = document.getElementById('header');
   const bar = document.getElementById('progressBar');
-  let lastY = 0;
 
-  if (header || bar) {
+  if (bar) {
     addEventListener('scroll', () => {
-      const y = scrollY;
       const max = document.documentElement.scrollHeight - innerHeight;
-      if (bar) bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
-      if (header) header.classList.toggle('hide', y > lastY && y > 180);
-      lastY = y;
+      bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
     }, { passive: true });
-  }
-
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener('click', () => {
-      const open = mobileMenu.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded', String(open));
-    });
-    mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded', 'false');
-    }));
   }
 
   if ('IntersectionObserver' in window) {
