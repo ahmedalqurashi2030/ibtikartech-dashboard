@@ -10,6 +10,7 @@ on:
       - "static/public_preview/assets/js/**"
       - "static/public_preview/assets/css/**"
       - "scripts/browser_qa_clean_urls.cjs"
+      - "scripts/run_browser_qa.cjs"
       - "scripts/interaction_qa_clean_urls.cjs"
       - "config/settings/test.py"
       - ".github/workflows/django-clean-url-browser-qa.yml"
@@ -128,7 +129,7 @@ jobs:
           set +e
           last_status=1
           for attempt in 1 2; do
-            timeout 420s node scripts/browser_qa_clean_urls.cjs
+            timeout 300s node scripts/run_browser_qa.cjs
             status=$?
             if [ "$status" -eq 0 ]; then exit 0; fi
             last_status="$status"
