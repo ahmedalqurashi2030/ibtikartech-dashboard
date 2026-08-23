@@ -43,6 +43,9 @@ jobs:
       - production
       - ibtikartech
     timeout-minutes: 10
+    concurrency:
+      group: ibtikartech-importer-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - name: Checkout dashboard
