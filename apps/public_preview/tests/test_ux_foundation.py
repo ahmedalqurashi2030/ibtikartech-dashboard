@@ -1,9 +1,11 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
+DOCUMENT_HEAD = "templates/public_preview/components/document_head.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
 SHELL_RUNTIME = "static/public_preview/assets/js/ibtikar-shell.js"
 RELATED_RUNTIME = "static/public_preview/assets/js/service-related-cards.js"
 SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
 SERVICES_EXPERIENCE = "static/public_preview/assets/js/services-experience.js"
+HOME_SOURCE_RUNTIME = "static/public_preview/assets/js/source-home.js"
 INTERACTION_QA = "scripts/interaction_qa_clean_urls.cjs"
 BROWSER_QA = "scripts/browser_qa_clean_urls.cjs"
 
@@ -42,6 +44,18 @@ def test_canonical_typography_system_keeps_required_responsive_roles():
     assert "@media (max-width: 820px)" in source
     assert "@media (max-width: 560px)" in source
     assert "@media (max-width: 520px)" in source
+
+
+def test_homepage_legacy_shell_is_removed_during_parse_without_losing_theme_restore():
+    head_source = _read_source(DOCUMENT_HEAD)
+    home_runtime = _read_source(HOME_SOURCE_RUNTIME)
+
+    assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" in head_source
+    assert "MutationObserver" in head_source
+    assert "observer.observe(document.documentElement" in head_source
+    assert "removeLegacyShell(document)" in head_source
+    assert "observer.disconnect()" in head_source
+    assert "localStorage.getItem('ibtikar-theme')" in home_runtime
 
 
 def test_shared_related_services_runtime_is_deferred_and_single_owned():
