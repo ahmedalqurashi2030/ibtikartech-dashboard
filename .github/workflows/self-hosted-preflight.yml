@@ -16,10 +16,10 @@ jobs:
       - self-hosted
       - production
       - ibtikartech
-    timeout-minutes: 5
+    timeout-minutes: 8
 
     steps:
-      - name: Verify runner capabilities without changing the server
+      - name: Verify runner baseline without changing the server
         shell: bash
         run: |
           set -euo pipefail
@@ -30,33 +30,73 @@ jobs:
           df -h / | tail -n 1
           echo "Memory:"
           free -h | sed -n '1,2p'
+          command -v git
+          git --version
+          command -v python3
+          python3 --version
+          command -v curl
+          curl --version | head -n 1
 
-          probe() {
-            name="$1"
-            shift
-            if command -v "$name" >/dev/null 2>&1; then
-              printf '%-16s %s\n' "$name" "$(command -v "$name")"
-              "$@" || true
-            else
-              printf '%-16s %s\n' "$name" "MISSING"
-            fi
-          }
+      - name: Setup Python 3.12 in runner tool cache
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-          probe git git --version
-          probe python3 python3 --version
-          probe python python --version
-          probe node node --version
-          probe npm npm --version
-          probe curl curl --version
-          probe google-chrome google-chrome --version
-          probe google-chrome-stable google-chrome-stable --version
-          probe chromium chromium --version
-          probe chromium-browser chromium-browser --version
+      - name: Verify Python toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v python
+          python --version
+          python -m pip --version
 
+      - name: Setup Node 24 in runner tool cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Verify Node toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v node
+          node --version
+          command -v npm
+          npm --version
+
+      - name: Setup Chrome for Testing without sudo
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@48ad923757ca74d66703209fe939badbdf80f2f4
+        with:
+          chrome-version: stable
+          no-sudo: true
+
+      - name: Verify Chrome can launch headless
+        env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$CHROME_PATH"
+          test -x "$CHROME_PATH"
+          "$CHROME_PATH" --version
+          timeout 30s "$CHROME_PATH" \
+            --headless=new \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --dump-dom about:blank > /tmp/ibtikar-chrome-preflight.html
+          test -s /tmp/ibtikar-chrome-preflight.html
+          rm -f /tmp/ibtikar-chrome-preflight.html
+          echo "Chrome headless launch succeeded."
+
+      - name: Confirm no privileged system change was required
+        shell: bash
+        run: |
+          set -euo pipefail
           if command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
             echo "passwordless_sudo=yes"
           else
             echo "passwordless_sudo=no"
           fi
-
-          echo "Preflight completed without installing or modifying anything."
+          echo "Preflight completed using runner/user-space tool caches only."
