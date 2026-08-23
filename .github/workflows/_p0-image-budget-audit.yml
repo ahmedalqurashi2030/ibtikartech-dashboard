@@ -1,4 +1,4 @@
-name: P0 one-time image and inline asset budget audit
+name: P0 one-time extract inline hero images
 
 on:
   pull_request:
@@ -7,10 +7,10 @@ on:
       - ".github/workflows/_p0-image-budget-audit.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  audit:
+  extract:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production, ibtikartech]
     timeout-minutes: 5
@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: perf/p0-dashboard-image-budget
-          fetch-depth: 1
+          fetch-depth: 0
 
-      - name: Audit image and inline asset budgets
+      - name: Verify byte identity and replace inline images
         shell: bash
         run: |
           set -euo pipefail
@@ -31,106 +31,140 @@ jobs:
           import base64
           import hashlib
           import re
-          import struct
           from pathlib import Path
 
-          ROOT = Path('.')
-          IMAGE_ROOT = Path('static/public_preview/assets/images')
-          TEXT_ROOTS = [Path('templates/public_preview'), Path('static/public_preview/assets/css'), Path('static/public_preview/assets/js')]
-          IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif', '.svg'}
+          GROUPS = {
+              'services': {
+                  'asset': Path('static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg'),
+                  'public': '/static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg',
+                  'mime': 'jpeg',
+                  'templates': [
+                      Path('templates/public_preview/pages/growth.html'),
+                      Path('templates/public_preview/pages/custom-systems.html'),
+                      Path('templates/public_preview/pages/services.html'),
+                  ],
+              },
+              'ecommerce': {
+                  'asset': Path('static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg'),
+                  'public': '/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg',
+                  'mime': 'jpeg',
+                  'templates': [
+                      Path('templates/public_preview/pages/ecommerce-growth.html'),
+                      Path('templates/public_preview/pages/storefront-customization.html'),
+                      Path('templates/public_preview/pages/ecommerce.html'),
+                      Path('templates/public_preview/pages/ecommerce-support.html'),
+                      Path('templates/public_preview/pages/product-page-optimization.html'),
+                      Path('templates/public_preview/pages/store-launch.html'),
+                      Path('templates/public_preview/pages/store-redesign.html'),
+                  ],
+              },
+              'home': {
+                  'asset': Path('static/public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp'),
+                  'public': '/static/public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp',
+                  'mime': 'webp',
+                  'templates': [Path('templates/public_preview/pages/index.html')],
+              },
+          }
 
-          def dimensions(path: Path):
-              try:
-                  data = path.read_bytes()
-                  suffix = path.suffix.lower()
-                  if suffix == '.png' and data[:8] == b'\x89PNG\r\n\x1a\n' and len(data) >= 24:
-                      return struct.unpack('>II', data[16:24])
-                  if suffix == '.gif' and data[:3] == b'GIF' and len(data) >= 10:
-                      return struct.unpack('<HH', data[6:10])
-                  if suffix in {'.jpg', '.jpeg'} and data[:2] == b'\xff\xd8':
-                      i = 2
-                      while i + 9 < len(data):
-                          if data[i] != 0xFF:
-                              i += 1
-                              continue
-                          marker = data[i + 1]
-                          i += 2
-                          if marker in {0xD8, 0xD9} or 0xD0 <= marker <= 0xD7:
-                              continue
-                          if i + 2 > len(data):
-                              break
-                          length = int.from_bytes(data[i:i+2], 'big')
-                          if length < 2 or i + length > len(data):
-                              break
-                          if marker in {0xC0,0xC1,0xC2,0xC3,0xC5,0xC6,0xC7,0xC9,0xCA,0xCB,0xCD,0xCE,0xCF}:
-                              h = int.from_bytes(data[i+3:i+5], 'big')
-                              w = int.from_bytes(data[i+5:i+7], 'big')
-                              return (w, h)
-                          i += length
-                  if suffix == '.svg':
-                      head = data[:4096].decode('utf-8', errors='ignore')
-                      viewbox = re.search(r'viewBox=["\']\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)', head, re.I)
-                      if viewbox:
-                          return (round(float(viewbox.group(1))), round(float(viewbox.group(2))))
-              except Exception:
-                  return None
-              return None
+          DATA_URI = re.compile(
+              r'data:image/(?P<mime>[A-Za-z0-9.+-]+);base64,(?P<payload>[A-Za-z0-9+/=]+)'
+          )
 
-          text_files = []
-          for root in TEXT_ROOTS:
-              if not root.exists():
-                  continue
-              text_files.extend(p for p in root.rglob('*') if p.is_file() and p.suffix.lower() in {'.html','.css','.js','.svg'})
+          before_total = 0
+          after_total = 0
+          replaced = 0
+          decoded_shas = {}
 
-          texts = {}
-          for path in text_files:
-              try:
-                  texts[path] = path.read_text(encoding='utf-8')
-              except UnicodeDecodeError:
-                  pass
+          for group_name, group in GROUPS.items():
+              asset_path = group['asset']
+              if not asset_path.is_file():
+                  raise SystemExit(f'Missing expected hero asset: {asset_path}')
+              asset_bytes = asset_path.read_bytes()
+              asset_sha = hashlib.sha256(asset_bytes).hexdigest()
+              group_shas = set()
 
-          images = []
-          if IMAGE_ROOT.exists():
-              for path in IMAGE_ROOT.rglob('*'):
-                  if path.is_file() and path.suffix.lower() in IMAGE_EXTS:
-                      rel = path.relative_to(IMAGE_ROOT).as_posix()
-                      public = f'/static/public_preview/assets/images/{rel}'
-                      refs = [str(source) for source, text in texts.items() if public in text or rel in text]
-                      images.append((path.stat().st_size, path, dimensions(path), refs, hashlib.sha256(path.read_bytes()).hexdigest()[:12]))
+              for template_path in group['templates']:
+                  source = template_path.read_text(encoding='utf-8')
+                  matches = list(DATA_URI.finditer(source))
+                  if len(matches) != 1:
+                      raise SystemExit(
+                          f'Expected exactly one inline image in {template_path}, found {len(matches)}'
+                      )
 
-          images.sort(reverse=True, key=lambda row: row[0])
-          print('=== TOP IMAGE FILES ===')
-          for size, path, dims, refs, digest in images[:40]:
-              dim_text = f'{dims[0]}x{dims[1]}' if dims else '?'
-              print(f'{size/1024:9.1f} KiB | {dim_text:>12} | {path} | refs={len(refs)} | sha={digest}')
-              for ref in refs[:6]:
-                  print(f'    -> {ref}')
+                  match = matches[0]
+                  mime = match.group('mime').lower()
+                  if mime != group['mime']:
+                      raise SystemExit(
+                          f'Unexpected MIME in {template_path}: {mime}; expected {group["mime"]}'
+                      )
 
-          print('\n=== LARGE TEXT ASSETS ===')
-          large_text = sorted(((path.stat().st_size, path) for path in texts), reverse=True)
-          for size, path in large_text[:25]:
-              print(f'{size/1024:9.1f} KiB | {path}')
-
-          print('\n=== INLINE DATA IMAGES ===')
-          inline = []
-          pattern = re.compile(r'data:image/([a-zA-Z0-9.+-]+);base64,([A-Za-z0-9+/=\s]+)')
-          for path, text in texts.items():
-              for index, match in enumerate(pattern.finditer(text), start=1):
-                  payload = re.sub(r'\s+', '', match.group(2))
                   try:
-                      decoded_size = len(base64.b64decode(payload, validate=False))
-                  except Exception:
-                      decoded_size = int(len(payload) * 0.75)
-                  inline.append((decoded_size, path, match.group(1), index, len(payload)))
-          inline.sort(reverse=True, key=lambda row: row[0])
-          if not inline:
-              print('none')
-          for decoded_size, path, mime, index, encoded_chars in inline[:30]:
-              print(f'{decoded_size/1024:9.1f} KiB decoded | {encoded_chars/1024:9.1f} KiB base64 chars | image/{mime} | {path} | item={index}')
+                      decoded = base64.b64decode(match.group('payload'), validate=True)
+                  except Exception as exc:
+                      raise SystemExit(f'Invalid base64 in {template_path}: {exc}') from exc
 
-          print('\n=== SUMMARY ===')
-          total_images = sum(row[0] for row in images)
-          referenced = sum(1 for row in images if row[3])
-          print(f'image_files={len(images)} total_image_bytes={total_images} ({total_images/1024/1024:.2f} MiB) referenced_images={referenced}')
-          print(f'inline_images={len(inline)} inline_decoded_bytes={sum(row[0] for row in inline)} ({sum(row[0] for row in inline)/1024/1024:.2f} MiB)')
+                  decoded_sha = hashlib.sha256(decoded).hexdigest()
+                  group_shas.add(decoded_sha)
+                  if decoded != asset_bytes:
+                      raise SystemExit(
+                          f'Byte mismatch: {template_path} inline sha={decoded_sha[:12]} '
+                          f'!= {asset_path} sha={asset_sha[:12]}'
+                      )
+
+                  before_total += len(source.encode('utf-8'))
+                  updated = source[:match.start()] + group['public'] + source[match.end():]
+                  after_total += len(updated.encode('utf-8'))
+                  template_path.write_text(updated, encoding='utf-8')
+                  replaced += 1
+
+              if group_shas != {asset_sha}:
+                  raise SystemExit(
+                      f'Group {group_name} did not collapse to one exact asset sha: {group_shas}'
+                  )
+              decoded_shas[group_name] = asset_sha
+              print(
+                  f'{group_name}: templates={len(group["templates"])} '
+                  f'asset_bytes={len(asset_bytes)} sha256={asset_sha}'
+              )
+
+          expected_replacements = sum(len(group['templates']) for group in GROUPS.values())
+          if replaced != expected_replacements or replaced != 11:
+              raise SystemExit(
+                  f'Expected 11 replacements, completed {replaced} '
+                  f'(configured={expected_replacements})'
+              )
+
+          remaining = []
+          for path in Path('templates/public_preview').rglob('*.html'):
+              text = path.read_text(encoding='utf-8')
+              if 'data:image/' in text:
+                  remaining.append(str(path))
+          if remaining:
+              raise SystemExit(f'Inline data images remain in templates: {remaining}')
+
+          saved = before_total - after_total
+          if saved < 2_000_000:
+              raise SystemExit(f'Unexpectedly small HTML reduction: {saved} bytes')
+
+          print(f'replaced={replaced}')
+          print(f'html_before_bytes={before_total}')
+          print(f'html_after_bytes={after_total}')
+          print(f'html_bytes_removed={saved} ({saved / 1024 / 1024:.2f} MiB)')
+          for name, sha in decoded_shas.items():
+              print(f'{name}_sha256={sha}')
           PY
+
+          ! grep -R --include='*.html' -n 'data:image/' templates/public_preview
+          git diff --check
+
+      - name: Remove one-time workflow and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/_p0-image-budget-audit.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/public_preview/pages .github/workflows/_p0-image-budget-audit.yml
+          git diff --cached --check
+          git commit -m "perf: extract shared inline hero images"
+          git push origin HEAD:perf/p0-dashboard-image-budget
