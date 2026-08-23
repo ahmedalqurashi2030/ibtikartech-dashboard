@@ -17,6 +17,11 @@ def _read_source(path):
         return source_file.read()
 
 
+def _read_bytes(path):
+    with open(path, "rb") as source_file:
+        return source_file.read()
+
+
 def test_public_base_loads_one_stable_typography_system():
     source = _read_source(BASE_TEMPLATE)
 
@@ -134,6 +139,59 @@ def test_services_page_has_no_retired_shell_or_runtime_hooks():
     assert "getElementById('mobileMenu')" not in runtime_source
     assert "lastY" not in runtime_source
     assert "getElementById('progressBar')" in runtime_source
+
+
+def test_public_hero_images_are_shared_files_not_inline_base64():
+    groups = (
+        (
+            "static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg",
+            "/static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg",
+            (
+                "templates/public_preview/pages/growth.html",
+                "templates/public_preview/pages/custom-systems.html",
+                "templates/public_preview/pages/services.html",
+            ),
+            "jpeg",
+        ),
+        (
+            "static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg",
+            "/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg",
+            (
+                "templates/public_preview/pages/ecommerce-growth.html",
+                "templates/public_preview/pages/storefront-customization.html",
+                "templates/public_preview/pages/ecommerce.html",
+                "templates/public_preview/pages/ecommerce-support.html",
+                "templates/public_preview/pages/product-page-optimization.html",
+                "templates/public_preview/pages/store-launch.html",
+                "templates/public_preview/pages/store-redesign.html",
+            ),
+            "jpeg",
+        ),
+        (
+            "static/public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp",
+            "/static/public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp",
+            ("templates/public_preview/pages/index.html",),
+            "webp",
+        ),
+    )
+
+    template_count = 0
+    for asset_path, public_path, template_paths, image_type in groups:
+        asset = _read_bytes(asset_path)
+        assert asset
+        if image_type == "jpeg":
+            assert asset.startswith(b"\xff\xd8")
+        else:
+            assert asset.startswith(b"RIFF")
+            assert asset[8:12] == b"WEBP"
+
+        for template_path in template_paths:
+            source = _read_source(template_path)
+            assert ";base64," not in source
+            assert source.count(public_path) == 1
+            template_count += 1
+
+    assert template_count == 11
 
 
 def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
