@@ -72,6 +72,19 @@ jobs:
       - name: Checkout current frontend source
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
 
+      - name: Verify frontend owns canonical related-service assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          related_js=/tmp/ibtikartech-source/assets/js/service-related-cards.js
+          related_css=/tmp/ibtikartech-source/assets/css/pages/service-related-cards.css
+          test -f "$related_js"
+          test -f "$related_css"
+          grep -q "const relatedSelectors" "$related_js"
+          grep -q "document.querySelector(relatedSelectors)" "$related_js"
+          ! grep -q "categoryPages" "$related_js"
+          ! grep -q "body.dataset.page" "$related_js"
+
       - name: Preserve standardized inline service page contract
         shell: bash
         run: |
@@ -89,6 +102,18 @@ jobs:
             --source /tmp/ibtikartech-source \
             --destination "$GITHUB_WORKSPACE" \
             --source-commit "$source_commit"
+
+      - name: Verify related-service assets survive real import
+        shell: bash
+        run: |
+          set -euo pipefail
+          imported_js=static/public_preview/assets/js/service-related-cards.js
+          imported_css=static/public_preview/assets/css/pages/service-related-cards.css
+          test -f "$imported_js"
+          test -f "$imported_css"
+          grep -q "const relatedSelectors" "$imported_js"
+          grep -q "/static/public_preview/assets/images/" "$imported_js"
+          ! grep -q "body.dataset.page" "$imported_js"
 
       - name: Restore standardized inline service page contract
         shell: bash
