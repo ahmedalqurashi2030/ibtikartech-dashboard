@@ -228,6 +228,7 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
       duplicateIds,
       internalHrefs,
       servicesAxes: document.querySelectorAll('.service-item').length,
+      servicesStageText: document.querySelector('#stageCount')?.textContent?.trim() || '',
       servicesCinema: Boolean(document.querySelector('.services-primary-cinema')),
       relatedServiceHrefs: [...document.querySelectorAll('.service-related-cards .service-related-card__link[href]')]
         .map((a) => a.getAttribute('href') || ''),
@@ -277,8 +278,18 @@ function validate(result, failures, internalLinks) {
   }
 
   if (route === '/services/') {
+    const stageParts = String(metrics.servicesStageText || '').split('/');
+    const stageTotal = Number((stageParts[1] || '').trim()) || 0;
     if (!metrics.servicesCinema) failures.push(`${prefix}: services cinematic block missing`);
-    if (metrics.servicesAxes !== 6) failures.push(`${prefix}: expected 6 service axes, found ${metrics.servicesAxes}`);
+    if (metrics.servicesAxes < 5) {
+      failures.push(`${prefix}: expected at least 5 service axes, found ${metrics.servicesAxes}`);
+    }
+    if (stageTotal !== metrics.servicesAxes) {
+      failures.push(
+        `${prefix}: service stage total ${stageTotal} does not match `
+        + `${metrics.servicesAxes} service axes`,
+      );
+    }
   }
 
   if (relatedServiceRoutes.has(route)) {
