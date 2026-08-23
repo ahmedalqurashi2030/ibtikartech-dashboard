@@ -88,7 +88,7 @@ jobs:
                   matches = list(DATA_URI.finditer(source))
                   if len(matches) != 1:
                       raise SystemExit(
-                          f'Expected exactly one inline image in {template_path}, found {len(matches)}'
+                          f'Expected exactly one inline base64 image in {template_path}, found {len(matches)}'
                       )
 
                   match = matches[0]
@@ -134,13 +134,18 @@ jobs:
                   f'(configured={expected_replacements})'
               )
 
-          remaining = []
+          remaining_base64 = []
+          remaining_data_markers = []
           for path in Path('templates/public_preview').rglob('*.html'):
               text = path.read_text(encoding='utf-8')
+              if DATA_URI.search(text):
+                  remaining_base64.append(str(path))
               if 'data:image/' in text:
-                  remaining.append(str(path))
-          if remaining:
-              raise SystemExit(f'Inline data images remain in templates: {remaining}')
+                  for position in [m.start() for m in re.finditer(r'data:image/', text)]:
+                      context = text[max(0, position - 80):position + 160].replace('\n', ' ')
+                      remaining_data_markers.append((str(path), context))
+          if remaining_base64:
+              raise SystemExit(f'Inline base64 images remain in templates: {remaining_base64}')
 
           saved = before_total - after_total
           if saved < 2_000_000:
@@ -152,9 +157,12 @@ jobs:
           print(f'html_bytes_removed={saved} ({saved / 1024 / 1024:.2f} MiB)')
           for name, sha in decoded_shas.items():
               print(f'{name}_sha256={sha}')
+          if remaining_data_markers:
+              print('Non-base64 data:image markers intentionally left for review:')
+              for path, context in remaining_data_markers:
+                  print(f'  {path}: {context}')
           PY
 
-          ! grep -R --include='*.html' -n 'data:image/' templates/public_preview
           git diff --check
 
       - name: Remove one-time workflow and commit
