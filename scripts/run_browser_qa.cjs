@@ -11,6 +11,7 @@ const child = spawn(process.execPath, [script], {
 let verified = false;
 let finished = false;
 let outputBuffer = '';
+let errorBuffer = '';
 
 function terminateGroup(signal = 'SIGTERM') {
   if (!child.pid) return;
@@ -25,19 +26,22 @@ function terminateGroup(signal = 'SIGTERM') {
 function finish(code) {
   if (finished) return;
   finished = true;
+  process.exitCode = code;
   terminateGroup('SIGTERM');
-  const hardStop = setTimeout(() => terminateGroup('SIGKILL'), 500);
-  hardStop.unref();
-  setTimeout(() => process.exit(code), 120).unref();
+  setTimeout(() => {
+    terminateGroup('SIGKILL');
+    process.exit(code);
+  }, 500);
 }
 
-function inspectOutput(chunk) {
+function inspectStdout(chunk) {
   const text = String(chunk);
   process.stdout.write(text);
   outputBuffer = (outputBuffer + text).slice(-4096);
 
   if (
-    outputBuffer.includes('Clean URL Browser QA passed:')
+    !errorBuffer.includes('Clean URL Browser QA failed:')
+    && outputBuffer.includes('Clean URL Browser QA passed:')
     && outputBuffer.includes('unique visible internal routes')
   ) {
     verified = true;
@@ -45,8 +49,14 @@ function inspectOutput(chunk) {
   }
 }
 
-child.stdout.on('data', inspectOutput);
-child.stderr.on('data', (chunk) => process.stderr.write(chunk));
+function inspectStderr(chunk) {
+  const text = String(chunk);
+  process.stderr.write(text);
+  errorBuffer = (errorBuffer + text).slice(-4096);
+}
+
+child.stdout.on('data', inspectStdout);
+child.stderr.on('data', inspectStderr);
 
 child.on('error', (error) => {
   console.error(`Browser QA runner failed to start: ${error.message}`);
@@ -55,7 +65,7 @@ child.on('error', (error) => {
 
 child.on('exit', (code, signal) => {
   if (finished) return;
-  if (verified) return finish(0);
+  if (verified && !errorBuffer.includes('Clean URL Browser QA failed:')) return finish(0);
   if (signal) console.error(`Browser QA exited by signal ${signal}`);
   finish(code ?? 1);
 });
