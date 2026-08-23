@@ -37,8 +37,15 @@ permissions:
 
 jobs:
   importer-qa:
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
     timeout-minutes: 10
+    concurrency:
+      group: ibtikartech-self-hosted-ci
+      cancel-in-progress: false
 
     steps:
       - name: Checkout dashboard
@@ -68,6 +75,10 @@ jobs:
             test -f "$target"
             cmp --silent "$source" "$target"
           done
+
+      - name: Reset importer temp directories
+        shell: bash
+        run: rm -rf /tmp/ibtikartech-source /tmp/ibtikar-inline-contracts
 
       - name: Checkout current frontend source
         run: git clone --depth 1 https://github.com/ahmedalqurashi2030/ibtikartech.git /tmp/ibtikartech-source
@@ -187,3 +198,8 @@ jobs:
           grep -q "/static/public_preview/assets/css/pages/services-refinement-v1.css" static/public_preview/assets/js/page-shell.js
           grep -q "/static/public_preview/assets/css/pages/ecommerce-refinement-v1.css" static/public_preview/assets/js/page-shell.js
           grep -q "/static/public_preview/assets/css/pages/tharaa-refinement-v1.css" static/public_preview/assets/js/page-shell.js
+
+      - name: Cleanup importer temp directories
+        if: always()
+        shell: bash
+        run: rm -rf /tmp/ibtikartech-source /tmp/ibtikar-inline-contracts
