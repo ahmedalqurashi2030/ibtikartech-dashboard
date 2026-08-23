@@ -1,0 +1,60 @@
+name: P0 one-time services vendor patch
+
+on:
+  push:
+    branches:
+      - perf/p0-dashboard-services-loading
+    paths:
+      - ".github/workflows/_p0-patch-services-vendors.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: [self-hosted, production, ibtikartech]
+    timeout-minutes: 5
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: perf/p0-dashboard-services-loading
+          fetch-depth: 0
+
+      - name: Patch only the two services vendor tags
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('templates/public_preview/pages/services.html')
+          text = path.read_text(encoding='utf-8')
+          replacements = {
+              '<script src="/static/public_preview/assets/vendor/gsap.min.js"></script>':
+                  '<script src="/static/public_preview/assets/vendor/gsap.min.js" defer></script>',
+              '<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js"></script>':
+                  '<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js" defer></script>',
+          }
+          for old, new in replacements.items():
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one vendor tag, found {count}: {old}')
+              text = text.replace(old, new, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+          grep -Fq '<script src="/static/public_preview/assets/vendor/gsap.min.js" defer></script>' templates/public_preview/pages/services.html
+          grep -Fq '<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js" defer></script>' templates/public_preview/pages/services.html
+
+      - name: Remove one-time patch workflow and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/_p0-patch-services-vendors.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/public_preview/pages/services.html .github/workflows/_p0-patch-services-vendors.yml
+          git diff --cached --check
+          git commit -m "perf: defer services animation vendors"
+          git push origin HEAD:perf/p0-dashboard-services-loading
