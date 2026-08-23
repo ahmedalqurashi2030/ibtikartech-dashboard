@@ -12,10 +12,9 @@
   const PRIMARY_FAMILIES = [
     { mode:'store', index:'01', title:'المتاجر الإلكترونية', href:'ecommerce.html' },
     { mode:'site', index:'02', title:'المواقع وصفحات الهبوط', href:'websites.html' },
-    { mode:'app', index:'03', title:'التطبيقات والأنظمة المخصصة', href:'custom-systems.html#apps' },
-    { mode:'brand', index:'04', title:'الهوية والمحتوى', href:'brand-content.html' },
-    { mode:'growth', index:'05', title:'الظهور والقياس والنمو', href:'growth.html' },
-    { mode:'auto', index:'06', title:'الربط والأتمتة', href:'custom-systems.html#automation' }
+    { mode:'brand', index:'03', title:'الهوية والمحتوى', href:'brand-content.html' },
+    { mode:'growth', index:'04', title:'الظهور والقياس والنمو', href:'growth.html' },
+    { mode:'app', index:'05', title:'الأنظمة والربط والأتمتة', href:'custom-systems.html' }
   ];
 
   const DISCOVERY_SERVICES = [
@@ -89,7 +88,7 @@
     const title = heading?.querySelector('h2');
     const description = heading?.querySelector('p');
     if (kicker) kicker.textContent = 'مجالات الخبرة';
-    if (title) title.textContent = 'ستة محاور رئيسية لبناء تجربة رقمية متكاملة.';
+    if (title) title.textContent = `${PRIMARY_FAMILIES.length} محاور رئيسية لبناء تجربة رقمية متكاملة.`;
     description?.remove();
     lab.querySelector('.stage-caption small')?.remove();
 
