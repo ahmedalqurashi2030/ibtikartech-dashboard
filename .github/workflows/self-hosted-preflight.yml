@@ -1,0 +1,62 @@
+name: Self-hosted Runner Preflight
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/self-hosted-preflight.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on:
+      - self-hosted
+      - production
+      - ibtikartech
+    timeout-minutes: 5
+
+    steps:
+      - name: Verify runner capabilities without changing the server
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Runner labels matched: self-hosted / production / ibtikartech"
+          echo "Kernel: $(uname -srm)"
+          echo "Architecture: $(uname -m)"
+          echo "Disk:"
+          df -h / | tail -n 1
+          echo "Memory:"
+          free -h | sed -n '1,2p'
+
+          probe() {
+            name="$1"
+            shift
+            if command -v "$name" >/dev/null 2>&1; then
+              printf '%-16s %s\n' "$name" "$(command -v "$name")"
+              "$@" || true
+            else
+              printf '%-16s %s\n' "$name" "MISSING"
+            fi
+          }
+
+          probe git git --version
+          probe python3 python3 --version
+          probe python python --version
+          probe node node --version
+          probe npm npm --version
+          probe curl curl --version
+          probe google-chrome google-chrome --version
+          probe google-chrome-stable google-chrome-stable --version
+          probe chromium chromium --version
+          probe chromium-browser chromium-browser --version
+
+          if command -v sudo >/dev/null 2>&1 && sudo -n true 2>/dev/null; then
+            echo "passwordless_sudo=yes"
+          else
+            echo "passwordless_sudo=no"
+          fi
+
+          echo "Preflight completed without installing or modifying anything."
