@@ -7,11 +7,11 @@
   let lenis=null;
   if(typeof Lenis!=='undefined'&&hasGSAP&&!reduce){lenis=new Lenis({duration:1.1,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);window.lenis=lenis;}
   const q=(s,p=document)=>p.querySelector(s),qa=(s,p=document)=>Array.from(p.querySelectorAll(s));
-  qa('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const href=a.getAttribute('href');if(!href||href==='#')return;const t=q(href);if(t){e.preventDefault();mobileMenu.classList.remove('open');document.body.classList.remove('menu-open');menuBtn.setAttribute('aria-expanded','false');lenis?lenis.scrollTo(t):t.scrollIntoView({behavior:reduce?'auto':'smooth'});}}));
-  const header=q('#siteHeader'),progress=q('#pageProgress');
-  const updateHeader=()=>{const y=scrollY||document.documentElement.scrollTop;header.classList.toggle('scrolled',y>30);const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?y/max*100:0)+'%';};addEventListener('scroll',updateHeader,{passive:true});updateHeader();
-  const menuBtn=q('#menuBtn'),mobileMenu=q('#mobileMenu');menuBtn.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');document.body.classList.toggle('menu-open',open);menuBtn.setAttribute('aria-expanded',String(open));});
-  q('#themeToggle').addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';});
+  qa('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const href=a.getAttribute('href');if(!href||href==='#')return;const t=q(href);if(t){e.preventDefault();lenis?lenis.scrollTo(t):t.scrollIntoView({behavior:reduce?'auto':'smooth'});}}));
+  const progress=q('#pageProgress');
+  const updateProgress=()=>{const y=scrollY||document.documentElement.scrollTop;const max=document.documentElement.scrollHeight-innerHeight;if(progress)progress.style.width=(max>0?y/max*100:0)+'%';};addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+
+
   // modal
   const modal=q('#previewModal');qa('[data-open-preview]').forEach(b=>b.addEventListener('click',()=>{modal.classList.add('open');document.body.style.overflow='hidden';}));q('#closePreview').addEventListener('click',()=>{modal.classList.remove('open');document.body.style.overflow='';});modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('open');document.body.style.overflow='';}});addEventListener('keydown',e=>{if(e.key==='Escape'){modal.classList.remove('open');document.body.style.overflow='';}});
   // canvas helpers
