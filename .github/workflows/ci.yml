@@ -93,6 +93,19 @@ jobs:
       - name: Deploy production
         run: sudo -u deploy -H /usr/local/sbin/deploy-ibtikartech
 
+      - name: Ensure public image static permissions
+        shell: bash
+        run: |
+          set -euo pipefail
+          image_root=/srv/ibtikartech/app/staticfiles/public_preview/assets/images
+          test -d "$image_root"
+          # These are public static assets. Ensure nginx can traverse directories
+          # and read files even when collectstatic creates new deploy-owned folders.
+          sudo -u deploy -H chmod -R a+rX "$image_root"
+          test -r "$image_root/hero/ibtikar-connected-ecosystem-v1.webp"
+          test -r "$image_root/hero/ibtikar-ecommerce-journey-v1.jpg"
+          test -r "$image_root/hero/ibtikar-services-ecosystem-v1.jpg"
+
       - name: Verify production health
         run: |
           curl --fail --silent --show-error \
@@ -100,3 +113,17 @@ jobs:
             --retry-delay 3 \
             --retry-all-errors \
             https://ibtikartech.co/healthz/
+
+      - name: Verify production image delivery
+        shell: bash
+        run: |
+          set -euo pipefail
+          urls=(
+            https://ibtikartech.co/static/public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp
+            https://ibtikartech.co/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg
+            https://ibtikartech.co/static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg
+          )
+          for url in "${urls[@]}"; do
+            code="$(curl -L --silent --show-error --output /dev/null --write-out '%{http_code}' --retry 5 --retry-delay 2 --retry-all-errors "$url")"
+            test "$code" = "200" || { echo "$url returned HTTP $code"; exit 1; }
+          done
