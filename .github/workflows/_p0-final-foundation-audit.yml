@@ -25,10 +25,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # The patch was authored against the original browser workflow.
+          # Restore that file only inside this workspace so its assertions can run,
+          # then return the tracked branch version before committing.
+          git show origin/main:.github/workflows/django-clean-url-browser-qa.yml > .github/workflows/django-clean-url-browser-qa.yml
           python3 scripts/_p0_final_foundation_patch.py
-          # Workflow files require a higher GitHub App permission. Keep that
-          # change out of this runner push; it is applied directly afterward.
-          git checkout -- .github/workflows/django-clean-url-browser-qa.yml
+          git checkout HEAD -- .github/workflows/django-clean-url-browser-qa.yml
           git diff --check
 
       - name: Commit non-workflow foundation changes
