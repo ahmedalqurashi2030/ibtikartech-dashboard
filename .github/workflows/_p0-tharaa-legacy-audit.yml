@@ -1,0 +1,80 @@
+name: P0 one-time Tharaa legacy shell audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/_p0-tharaa-legacy-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, production, ibtikartech]
+    timeout-minutes: 5
+    steps:
+      - name: Checkout cleanup branch
+        uses: actions/checkout@v4
+        with:
+          ref: cleanup/p0-tharaa-legacy-shell
+          fetch-depth: 1
+
+      - name: Audit Tharaa legacy DOM and runtime hooks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          template_path = Path('templates/public_preview/pages/tharaa.html')
+          runtime_path = Path('static/public_preview/assets/js/source-tharaa.js')
+          template = template_path.read_text(encoding='utf-8')
+          runtime = runtime_path.read_text(encoding='utf-8')
+
+          template_markers = [
+              'data-approved-legacy-shell',
+              'id="siteHeader"',
+              'id="menuBtn"',
+              'id="mobileMenu"',
+              'id="themeToggle"',
+              '<a class="skip" href="#main">',
+              '<footer',
+          ]
+          runtime_markers = [
+              "q('#siteHeader')",
+              "q('#menuBtn')",
+              "q('#mobileMenu')",
+              "q('#themeToggle')",
+              'mobileMenu.classList',
+              'menuBtn.setAttribute',
+              'header.classList',
+              "q('#pageProgress')",
+          ]
+
+          print('=== THARAA TEMPLATE LEGACY MARKERS ===')
+          for marker in template_markers:
+              print(f'{marker}: {template.count(marker)}')
+
+          print('\n=== THARAA RUNTIME LEGACY MARKERS ===')
+          for marker in runtime_markers:
+              print(f'{marker}: {runtime.count(marker)}')
+
+          print('\n=== TEMPLATE LEGACY CONTEXT ===')
+          for marker in ('data-approved-legacy-shell', '<footer'):
+              start = 0
+              while True:
+                  pos = template.find(marker, start)
+                  if pos < 0:
+                      break
+                  print(template[max(0, pos-180):pos+500].replace('\n', ' '))
+                  start = pos + len(marker)
+
+          assert template.count('id="siteHeader"') == 1
+          assert template.count('id="menuBtn"') == 1
+          assert template.count('id="mobileMenu"') == 1
+          assert template.count('id="themeToggle"') == 1
+          assert runtime.count("q('#pageProgress')") == 1
+          print('\nAudit complete.')
+          PY
