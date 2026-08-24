@@ -26,14 +26,15 @@ jobs:
         run: |
           set -euo pipefail
           python3 scripts/_p0_final_foundation_patch.py
+          # Workflow files require a higher GitHub App permission. Keep that
+          # change out of this runner push; it is applied directly afterward.
+          git checkout -- .github/workflows/django-clean-url-browser-qa.yml
           git diff --check
 
-      - name: Remove one-time patch files and commit
+      - name: Commit non-workflow foundation changes
         shell: bash
         run: |
           set -euo pipefail
-          rm .github/workflows/_p0-final-foundation-audit.yml
-          rm .github/workflows/_p0-final-foundation-patch.yml
           rm scripts/_p0_final_foundation_patch.py
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
