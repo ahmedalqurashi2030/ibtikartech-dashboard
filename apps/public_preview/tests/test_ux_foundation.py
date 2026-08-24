@@ -1,12 +1,14 @@
 BASE_TEMPLATE = "templates/public_preview/base.html"
 DOCUMENT_HEAD = "templates/public_preview/components/document_head.html"
 SERVICES_TEMPLATE = "templates/public_preview/pages/services.html"
+THARAA_TEMPLATE = "templates/public_preview/pages/tharaa.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
 SHELL_STYLES = "static/public_preview/assets/css/ibtikar-shell.css"
 SHELL_RUNTIME = "static/public_preview/assets/js/ibtikar-shell.js"
 RELATED_RUNTIME = "static/public_preview/assets/js/service-related-cards.js"
 SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
 SERVICES_EXPERIENCE = "static/public_preview/assets/js/services-experience.js"
+THARAA_RUNTIME = "static/public_preview/assets/js/source-tharaa.js"
 HOME_SOURCE_RUNTIME = "static/public_preview/assets/js/source-home.js"
 INTERACTION_QA = "scripts/interaction_qa_clean_urls.cjs"
 BROWSER_QA = "scripts/browser_qa_clean_urls.cjs"
@@ -139,6 +141,47 @@ def test_services_page_has_no_retired_shell_or_runtime_hooks():
     assert "getElementById('mobileMenu')" not in runtime_source
     assert "lastY" not in runtime_source
     assert "getElementById('progressBar')" in runtime_source
+
+
+def test_tharaa_page_has_no_retired_shell_or_runtime_hooks():
+    template_source = _read_source(THARAA_TEMPLATE)
+    runtime_source = _read_source(THARAA_RUNTIME)
+
+    for marker in (
+        "data-approved-legacy-shell",
+        'id="siteHeader"',
+        'id="menuBtn"',
+        'id="mobileMenu"',
+        'id="themeToggle"',
+        '<a class="skip" href="#main">',
+        '<footer data-approved-legacy-shell',
+    ):
+        assert marker not in template_source
+
+    assert '<div class="progress"><span id="pageProgress"></span></div>' in template_source
+    assert 'class="sticky-cta"' in template_source
+    assert 'id="previewModal"' in template_source
+    assert 'id="heroCanvas"' in template_source
+
+    for marker in (
+        "q('#siteHeader')",
+        "q('#menuBtn')",
+        "q('#mobileMenu')",
+        "q('#themeToggle')",
+        "mobileMenu.classList",
+        "menuBtn.setAttribute",
+        "header.classList.toggle",
+        "classList.remove('menu-open')",
+    ):
+        assert marker not in runtime_source
+
+    assert "q('#pageProgress')" in runtime_source
+    assert "updateProgress" in runtime_source
+    assert "q('#previewModal')" in runtime_source
+    assert "q('#heroCanvas')" in runtime_source
+    assert "qa('#studioSwatches button')" in runtime_source
+    assert "q('.faq-answer',item)" in runtime_source
+    assert "q('#libraryTrack')" in runtime_source
 
 
 def test_public_hero_images_are_shared_files_not_inline_base64():
