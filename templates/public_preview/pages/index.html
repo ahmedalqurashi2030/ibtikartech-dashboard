@@ -1,8 +1,6 @@
 {% extends "public_preview/base.html" %}
 
 {% block head %}
-Ibtikar Tech Homepage V7 — cinematic hero + customer voices 
-
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta content="ابتكار تك تبني وتطوّر المتاجر والمواقع والهوية والقياس والأنظمة للمشاريع في السعودية والخليج، من تشخيص الهدف إلى التنفيذ والتحسين." name="description"/>
 <meta content="#0b1026" name="theme-color"/>
@@ -48,18 +46,11 @@ Ibtikar Tech Homepage V7 — cinematic hero + customer voices
 {% block body_attrs %} class="approved-source-page source-home" data-section="home" data-approved-source="Ibtikar_Tech_Homepage_Cinematic_Native_Fixed.html"{% endblock %}
 
 {% block body %}
-<script src="/static/public_preview/assets/js/page-shell.js"></script>
-<script src="/static/public_preview/assets/js/ibtikar-shell.js"></script>
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
 <div aria-hidden="true" class="cinematic-ambient-bg"></div>
 <div aria-hidden="true" class="scroll-progress"><span></span></div>
 <div aria-hidden="true" class="site-ambient"><i></i><i></i><i></i></div>
-<a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
-<div class="announcement">
-<div class="container announcement__inner">
-<span>حلول متكاملة للمتاجر والمشاريع الرقمية</span>
-<a href="#contact">احصل على استشارة أولية</a>
-</div>
-</div>
 
 <div class="ibtx-announcement">
   <div class="ibtx-container ibtx-announcement__inner">
@@ -68,137 +59,6 @@ Ibtikar Tech Homepage V7 — cinematic hero + customer voices
   </div>
 </div>
 
-<header data-approved-legacy-shell hidden inert aria-hidden="true" class="site-header ibtx-header" id="site-header">
-  <div class="ibtx-container ibtx-nav">
-    <a class="ibtx-brand" href="#home" aria-label="ابتكار تك — الرئيسية">
-      <span class="ibtx-brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibtx-brand__copy">
-        <strong>ابتكار تك</strong>
-        <small>للحلول والخدمات الرقمية</small>
-      </span>
-    </a>
-
-    <nav class="desktop-nav ibtx-desktop-nav" aria-label="القائمة الرئيسية">
-      <a href="#home" class="active">الرئيسية</a>
-
-      <div class="ibtx-menu-item">
-        <button class="ibtx-menu-trigger" type="button" aria-expanded="false">الحلول <span>⌄</span></button>
-        <div class="ibtx-mega">
-          <div class="ibtx-mega__grid">
-            <article class="ibtx-mega__featured">
-              <span class="ibtx-kicker">ابدأ من هدفك</span>
-              <h3>لا تختَر خدمة منفصلة.<br>ابدأ بالنتيجة.</h3>
-              <p>نحدد المسار المناسب بحسب وضع مشروعك ومرحلة نموه.</p>
-              <a class="ibtx-light-button" href="#services">اكتشف المسار المناسب</a>
-            </article>
-            <div class="ibtx-mega__links">
-              <a href="#services"><strong>أطلق</strong><small>هوية وموقع أو متجر وأساس القياس.</small></a>
-              <a href="#services"><strong>طوّر</strong><small>تحسين التجربة ورفع الجودة والتحويل.</small></a>
-              <a href="#services"><strong>اربط</strong><small>تكامل الأنظمة والبيانات والأتمتة.</small></a>
-              <a href="#services"><strong>انمُ</strong><small>SEO والتحليلات والحملات.</small></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="ibtx-menu-item">
-        <button class="ibtx-menu-trigger" type="button" aria-expanded="false">الخدمات <span>⌄</span></button>
-        <div class="ibtx-mega">
-          <div class="ibtx-mega__grid">
-            <article class="ibtx-mega__featured">
-              <span class="ibtx-kicker">منظومة متكاملة</span>
-              <h3>تقنية وتسويق<br>ضمن تجربة واحدة.</h3>
-              <p>من الهوية والمحتوى إلى البناء والربط والقياس والنمو.</p>
-              <a class="ibtx-light-button" href="#services">جميع الخدمات</a>
-            </article>
-            <div class="ibtx-mega__links">
-              <a href="#services"><strong>مواقع الشركات</strong><small>مواقع خدمات وشركات وصفحات هبوط.</small></a>
-              <a href="#services"><strong>المتاجر الإلكترونية</strong><small>سلة، زد، WooCommerce وShopify.</small></a>
-              <a href="#services"><strong>الهوية الرقمية</strong><small>استراتيجية وهوية ومحتوى.</small></a>
-              <a href="#services"><strong>الظهور والقياس والنمو</strong><small>SEO وتحليلات وصفحات حملات.</small></a>
-              <a href="#services"><strong>الأنظمة المخصصة</strong><small>تطبيقات ولوحات وحلول مخصصة.</small></a>
-              <a href="#services"><strong>الذكاء الاصطناعي</strong><small>أتمتة وتكاملات وتدفقات ذكية.</small></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="ibtx-menu-item">
-        <button class="ibtx-menu-trigger" type="button" aria-expanded="false">المنصات <span>⌄</span></button>
-        <div class="ibtx-mega ibtx-mega--compact">
-          <div class="ibtx-mega__links">
-            <a href="{% url 'public_preview:websites' %}#capabilities"><strong>WordPress</strong><small>مواقع مرنة وسهلة الإدارة.</small></a>
-            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>Salla</strong><small>متاجر سعودية وتجارب مخصصة.</small></a>
-            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>Zid</strong><small>تجارة إلكترونية للسوق المحلي.</small></a>
-            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>WooCommerce</strong><small>متاجر مرنة مبنية على WordPress.</small></a>
-            <a href="{% url 'public_preview:ecommerce' %}#platforms"><strong>Shopify</strong><small>تجارة قابلة للتوسع عالميًا.</small></a>
-            <a href="{% url 'public_preview:custom-systems' %}"><strong>حلول مخصصة</strong><small>أنظمة حسب الاحتياج.</small></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="ibtx-menu-item">
-        <button class="ibtx-menu-trigger" type="button" aria-expanded="false">منتجاتنا <span>⌄</span></button>
-        <div class="ibtx-mega ibtx-mega--compact">
-          <div class="ibtx-mega__links">
-            <a href="#tharaa"><strong>ثيم ثراء</strong><small>متجر يبدو كعلامة لا كقالب.</small></a>
-            <a href="{% url 'public_preview:knowledge' %}"><strong>الأدوات المجانية</strong><small>موارد مفيدة للمشاريع الرقمية.</small></a>
-            <a href="{% url 'public_preview:tharaa' %}"><strong>منتجات مستقبلية</strong><small>إضافات وقوالب وحلول قادمة.</small></a>
-          </div>
-        </div>
-      </div>
-
-      
-
-      <div class="ibtx-menu-item">
-        <button class="ibtx-menu-trigger" type="button" aria-expanded="false">المعرفة <span>⌄</span></button>
-        <div class="ibtx-mega ibtx-mega--compact">
-          <div class="ibtx-mega__links">
-            <a href="{% url 'public_preview:knowledge' %}"><strong>المدونة</strong><small>مقالات تقنية وتسويقية.</small></a>
-            <a href="{% url 'public_preview:portfolio' %}"><strong>دراسات الحالة</strong><small>المشكلة والحل والنتيجة.</small></a>
-            <a href="{% url 'public_preview:knowledge' %}"><strong>الأدلة</strong><small>مواد قابلة للتطبيق.</small></a>
-            <a href="#faq"><strong>الأسئلة الشائعة</strong><small>إجابات قبل بدء المشروع.</small></a>
-          </div>
-        </div>
-      </div>
-
-      
-    </nav>
-
-    <div class="ibtx-actions">
-      <button class="theme-toggle ibtx-icon-button" type="button" aria-label="تبديل الوضع">☀</button>
-      <a class="ibtx-primary-button" href="#contact">اطلب عرض سعر</a>
-      <button class="menu-toggle ibtx-mobile-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false">☰</button>
-    </div>
-  </div>
-</header>
-
-<!-- Legacy mobile menu hook kept hidden so the original page JavaScript never fails. -->
-<nav class="mobile-menu ibtx-legacy-mobile-menu" aria-hidden="true"></nav>
-
-<div data-approved-legacy-shell hidden inert class="ibtx-drawer" aria-hidden="true">
-  <div class="ibtx-drawer__backdrop"></div>
-  <aside class="ibtx-drawer__panel" aria-label="قائمة الجوال">
-    <div class="ibtx-drawer__head">
-      <a class="ibtx-brand" href="#home">
-        <span class="ibtx-brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="ibtx-brand__copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-      </a>
-      <button class="ibtx-icon-button" type="button" data-ibtx-close aria-label="إغلاق القائمة">×</button>
-    </div>
-    <nav class="ibtx-mobile-nav">
-      <a href="#home">الرئيسية</a>
-      <details><summary>الحلول</summary><a href="#services">أطلق</a><a href="#services">طوّر</a><a href="#services">اربط</a><a href="#services">انمُ</a></details>
-      <details><summary>الخدمات</summary><a href="#services">مواقع الشركات</a><a href="#services">المتاجر الإلكترونية</a><a href="#services">الهوية الرقمية</a><a href="#services">الظهور والقياس والنمو</a><a href="#services">الأنظمة المخصصة</a></details>
-      <details><summary>المنصات</summary><a href="{% url 'public_preview:websites' %}#capabilities">WordPress</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Salla</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Zid</a><a href="{% url 'public_preview:ecommerce' %}#platforms">WooCommerce</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Shopify</a></details>
-      <details><summary>منتجاتنا</summary><a href="#tharaa">ثيم ثراء</a><a href="{% url 'public_preview:knowledge' %}">الأدوات المجانية</a></details>
-      
-      <details><summary>المقالات</summary><a href="{% url 'public_preview:knowledge' %}">المدونة</a><a href="#faq">الأسئلة الشائعة</a></details>
-      
-      <a class="ibtx-primary-button ibtx-primary-button--full" href="#contact">اطلب عرض سعر</a>
-    </nav>
-  </aside>
-</div>
 
 <main id="main-content">
 <section class="hero hero--system" id="home">
@@ -456,28 +316,6 @@ Ibtikar Tech Homepage V7 — cinematic hero + customer voices
 <div class="cta-actions"><a class="btn btn--light magnetic" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a class="btn btn--ghost-light" href="{% url 'services:index' %}">استكشف الحلول والخدمات</a></div>
 </div>
 </section></main>
-
-<footer data-approved-legacy-shell hidden inert aria-hidden="true" class="ibtx-footer">
-  <div class="ibtx-container">
-    <div class="ibtx-footer__grid">
-      <div class="ibtx-footer__brand">
-        <a class="ibtx-brand" href="#home">
-          <span class="ibtx-brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="ibtx-brand__copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
-        </a>
-        <p>شريك تقني وتسويقي يبني منظومات رقمية متكاملة من الفكرة إلى النمو.</p>
-      </div>
-      <div><h3>الحلول</h3><a href="#services">أطلق</a><a href="#services">طوّر</a><a href="#services">اربط</a><a href="#services">انمُ</a></div>
-      <div><h3>الخدمات</h3><a href="#services">المواقع</a><a href="#services">المتاجر</a><a href="#services">الهوية</a><a href="#services">الأتمتة</a></div>
-      <div><h3>المنصات</h3><a href="{% url 'public_preview:websites' %}#capabilities">WordPress</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Salla</a><a href="{% url 'public_preview:ecommerce' %}#platforms">Shopify</a><a href="{% url 'public_preview:custom-systems' %}">حلول مخصصة</a></div>
-      <div><h3>المقالات</h3><a href="{% url 'public_preview:knowledge' %}">المدونة</a><a href="#faq">الأسئلة الشائعة</a><a href="#contact">تواصل معنا</a></div>
-    </div>
-    <div class="ibtx-footer__bottom">
-      <span>© <span id="legacy-year">2026</span> ابتكار تك. جميع الحقوق محفوظة.</span>
-      <span>السعودية والخليج · عربي / English</span>
-    </div>
-  </div>
-</footer>
 
 <nav aria-label="إجراءات سريعة" class="quick-dock">
 <a aria-label="العودة للأعلى" href="#home"><svg viewbox="0 0 24 24"><path d="m18 15-6-6-6 6"></path></svg><span>الأعلى</span></a>

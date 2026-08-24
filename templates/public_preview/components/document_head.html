@@ -1,59 +1,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-  // Apply the progressive-enhancement state before page CSS is evaluated.
-  // page-shell.js repeats this defensively for cached/imported documents.
+  // Apply enhancement and the persisted theme before page CSS is evaluated.
   document.documentElement.classList.remove('no-js');
   document.documentElement.classList.add('js-ready');
-
-  // P0 homepage stabilization: the imported homepage still carries retired
-  // shell copies plus an obsolete announcement/skip link. Remove only those
-  // known legacy artifacts while parsing; other pages keep their contracts.
-  (() => {
-    const legacyShellSelector = '[data-approved-legacy-shell], .ibtx-legacy-mobile-menu';
-    const onHomepage = () => document.body?.classList.contains('source-home') === true;
-
-    const removeHomepageLegacy = (root) => {
-      if (!onHomepage()) return;
-      if (!(root instanceof Element || root instanceof Document)) return;
-
-      if (root instanceof Element) {
-        if (root.matches(legacyShellSelector)) {
-          root.remove();
-          return;
-        }
-        if (root.matches('body.source-home > .announcement')) {
-          root.remove();
-          return;
-        }
-        if (root.matches('body.source-home > .skip-link')) {
-          const skipLinks = [...document.querySelectorAll('body.source-home > .skip-link')];
-          if (skipLinks[0] !== root) {
-            root.remove();
-            return;
-          }
-        }
-      }
-
-      root.querySelectorAll?.(legacyShellSelector).forEach((node) => node.remove());
-    };
-
-    const observer = new MutationObserver((records) => {
-      records.forEach((record) => {
-        record.addedNodes.forEach((node) => {
-          if (node.nodeType === Node.ELEMENT_NODE) removeHomepageLegacy(node);
-        });
-      });
-    });
-
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-    document.addEventListener('DOMContentLoaded', () => {
-      removeHomepageLegacy(document);
-      document.querySelector('body.source-home > .announcement')?.remove();
-      [...document.querySelectorAll('body.source-home > .skip-link')]
-        .slice(1)
-        .forEach((node) => node.remove());
-      observer.disconnect();
-    }, { once: true });
-  })();
+  try {
+    const savedTheme = localStorage.getItem('ibtikar-theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      document.documentElement.dataset.theme = savedTheme;
+    }
+  } catch (_) {}
 </script>

@@ -1,44 +1,5 @@
 /* Preserved source runtime block 1. */
 (() => {
-  const body = document.body;
-  const header = document.getElementById('site-header');
-  const menuToggle = document.querySelector('.menu-toggle');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  const themeToggle = document.querySelector('.theme-toggle');
-  const navLinks = [...document.querySelectorAll('.desktop-nav a')];
-  const allMobileLinks = [...document.querySelectorAll('.mobile-menu a')];
-
-  const updateHeader = () => header?.classList.toggle('scrolled', window.scrollY > 14);
-  updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
-
-  const closeMenu = () => {
-    mobileMenu?.classList.remove('open');
-    mobileMenu?.setAttribute('aria-hidden', 'true');
-    menuToggle?.setAttribute('aria-expanded', 'false');
-    body.classList.remove('menu-open');
-  };
-
-  menuToggle?.addEventListener('click', () => {
-    if (!mobileMenu) return;
-    const willOpen = !mobileMenu.classList.contains('open');
-    mobileMenu.classList.toggle('open', willOpen);
-    mobileMenu.setAttribute('aria-hidden', String(!willOpen));
-    menuToggle.setAttribute('aria-expanded', String(willOpen));
-    body.classList.toggle('menu-open', willOpen);
-  });
-
-  allMobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
-
-  const savedTheme = localStorage.getItem('ibtikar-theme');
-  if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-  themeToggle?.addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('ibtikar-theme', next);
-  });
-
   document.querySelectorAll('.accordion-item button').forEach(button => {
     button.addEventListener('click', () => {
       const item = button.closest('.accordion-item');
@@ -67,17 +28,6 @@
     revealItems.forEach(item => revealObserver.observe(item));
   } else {
     revealItems.forEach(item => item.classList.add('visible'));
-  }
-
-  const sections = [...document.querySelectorAll('main section[id]')];
-  if ('IntersectionObserver' in window) {
-    const sectionObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
-      });
-    }, { threshold: .25, rootMargin: '-20% 0px -55% 0px' });
-    sections.forEach(section => sectionObserver.observe(section));
   }
 
   const newsletterForm = document.getElementById('newsletter-form');
@@ -254,7 +204,6 @@
   const hero = document.querySelector('.hero');
   const heroGrid = document.querySelector('.hero__grid');
   const heroAura = document.querySelector('.hero-cinema-aura');
-  const header = document.getElementById('site-header');
   const ambient = document.querySelector('.cinematic-ambient-bg');
 
   if (hasGSAP) gsap.registerPlugin(ScrollTrigger);
@@ -288,17 +237,6 @@
     gsap.to(heroGrid,{scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true},y:-70,opacity:.12,scale:.96,ease:'none'});
     gsap.to(heroAura,{scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true},scale:1.65,opacity:0,ease:'none'});
   }
-
-  // Header hides while moving down and returns while moving up.
-  let lastY = scrollY;
-  const updateHeaderDirection = y => {
-    const delta = y - lastY;
-    if (y > 190 && delta > 2) header?.classList.add('cinematic-hidden');
-    if (delta < -2 || y < 120) header?.classList.remove('cinematic-hidden');
-    lastY = y;
-  };
-  if (lenis) lenis.on('scroll', e => updateHeaderDirection(e.animatedScroll));
-  else addEventListener('scroll', () => updateHeaderDirection(scrollY), {passive:true});
 
   // Subtle ambient color changes connect the main beats.
   const ambientMap = [
