@@ -1,0 +1,152 @@
+name: P0 one-time final foundation audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/_p0-final-foundation-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, production, ibtikartech]
+    timeout-minutes: 8
+    steps:
+      - name: Checkout foundation branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/p0-final-foundation-qa
+          fetch-depth: 1
+
+      - name: Audit shell, home legacy runtime, routes and interaction contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          from collections import Counter
+
+          pages_dir = Path('templates/public_preview/pages')
+          pages = sorted(pages_dir.glob('*.html'))
+          base = Path('templates/public_preview/base.html').read_text(encoding='utf-8')
+          head = Path('templates/public_preview/components/document_head.html').read_text(encoding='utf-8')
+          header = Path('templates/public_preview/components/header.html').read_text(encoding='utf-8')
+          mobile = Path('templates/public_preview/components/mobile_menu.html').read_text(encoding='utf-8')
+          footer = Path('templates/public_preview/components/footer.html').read_text(encoding='utf-8')
+          shell_js = Path('static/public_preview/assets/js/ibtikar-shell.js').read_text(encoding='utf-8')
+          shell_css = Path('static/public_preview/assets/css/ibtikar-shell.css').read_text(encoding='utf-8')
+          home_js = Path('static/public_preview/assets/js/source-home.js').read_text(encoding='utf-8')
+
+          print(f'pages={len(pages)}')
+          print('\n=== BASE SHARED SHELL CONTRACT ===')
+          for marker in (
+              '{% include "public_preview/components/header.html" %}',
+              '{% include "public_preview/components/footer.html" %}',
+              '{% include "public_preview/components/runtime.html" %}',
+              'class="skip-link" href="#main-content"',
+          ):
+              print(marker, base.count(marker))
+          print('shared_header_id', header.count('id="ibtikarSiteHeader"'))
+          print('shared_mobile_id', mobile.count('id="ibtikarMobileMenu"'))
+          print('shared_footer', footer.count('class="ibt-shell-footer"'))
+          print('shared_theme_toggle_markup', header.count('data-ibt-theme-toggle') + mobile.count('data-ibt-theme-toggle'))
+
+          print('\n=== PAGE SHELL / SKIP / MAIN AUDIT ===')
+          local_shell_patterns = {
+              'approved_legacy': 'data-approved-legacy-shell',
+              'legacy_home_header': 'id="site-header"',
+              'legacy_site_header_class': 'class="site-header',
+              'legacy_mobile_menu': 'class="mobile-menu',
+              'legacy_ibtx_mobile': 'ibtx-legacy-mobile-menu',
+              'legacy_footer': 'class="site-footer',
+              'local_skip_link': '<a class="skip-link"',
+              'local_skip': '<a class="skip"',
+          }
+          shell_findings = []
+          missing_base = []
+          main_targets = []
+          for path in pages:
+              text = path.read_text(encoding='utf-8')
+              if '{% extends "public_preview/base.html" %}' not in text:
+                  missing_base.append(path.name)
+              findings = {k: text.count(v) for k,v in local_shell_patterns.items() if text.count(v)}
+              if findings:
+                  shell_findings.append((path.name, findings))
+              main_targets.append((path.name, text.count('id="main-content"'), text.count('id="main"')))
+          print('missing_base=', missing_base)
+          print('shell_findings=')
+          for item in shell_findings: print(item)
+          print('main_targets (file, main-content, main)=')
+          for item in main_targets: print(item)
+
+          print('\n=== INTERNAL .HTML REFERENCES ===')
+          html_refs=[]
+          ref_re = re.compile(r'\b(?:href|action)=["\']([^"\']+\.html(?:[?#][^"\']*)?)["\']', re.I)
+          for path in pages:
+              text=path.read_text(encoding='utf-8')
+              refs=ref_re.findall(text)
+              if refs: html_refs.append((path.name, refs))
+          print('html_refs=', html_refs)
+
+          print('\n=== SAME-DOCUMENT ANCHORS ===')
+          broken=[]
+          duplicates=[]
+          for path in pages:
+              text=path.read_text(encoding='utf-8')
+              ids=re.findall(r'\bid=["\']([^"\']+)["\']', text)
+              counts=Counter(ids)
+              dup=[key for key,val in counts.items() if val>1]
+              if dup: duplicates.append((path.name,dup))
+              anchors=re.findall(r'\bhref=["\']#([^"\']+)["\']', text)
+              missing=sorted({a for a in anchors if a and a not in counts})
+              if missing: broken.append((path.name,missing))
+          print('duplicate_ids=', duplicates)
+          print('broken_same_doc_anchors=', broken)
+
+          print('\n=== HOMEPAGE LEGACY RUNTIME ===')
+          home_markers = (
+              "getElementById('site-header')",
+              "querySelector('.menu-toggle')",
+              "querySelector('.mobile-menu')",
+              "querySelector('.theme-toggle')",
+              "querySelectorAll('.desktop-nav a')",
+              "querySelectorAll('.mobile-menu a')",
+              'const closeMenu =',
+              "classList.remove('menu-open')",
+              "localStorage.getItem('ibtikar-theme')",
+              "const header = document.getElementById('site-header')",
+              "header?.classList.add('cinematic-hidden')",
+              "header?.classList.remove('cinematic-hidden')",
+          )
+          for marker in home_markers:
+              print(marker, home_js.count(marker))
+          print('homepage_sanitizer_legacy_selector', head.count('[data-approved-legacy-shell], .ibtx-legacy-mobile-menu'))
+          print('homepage_sanitizer_announcement', head.count('body.source-home > .announcement'))
+
+          print('\n=== SHARED INTERACTION / A11Y CONTRACT ===')
+          interaction_markers = (
+              "event.key === 'Escape'",
+              "event.key === 'Tab'",
+              "event.key === 'Enter'",
+              "event.key === ' '",
+              "firstItem?.focus",
+              "button.focus()",
+              "menu.setAttribute('inert','')",
+              "menu.removeAttribute('inert')",
+              "localStorage.getItem('ibtikar-theme')",
+              "localStorage.setItem('ibtikar-theme'",
+          )
+          for marker in interaction_markers:
+              print(marker, shell_js.count(marker))
+          print('css_focus_visible', shell_css.count(':focus-visible'))
+          print('css_reduced_motion', shell_css.count('@media (prefers-reduced-motion: reduce)'))
+          print('base_rtl', base.count('dir="rtl"'))
+          print('base_theme_dark', base.count('data-theme="dark"'))
+          print('page_theme_toggle_markers', sum(p.read_text(encoding='utf-8').count('themeToggle') + p.read_text(encoding='utf-8').count('data-ibt-theme-toggle') for p in pages))
+
+          print('\nAudit complete.')
+          PY
