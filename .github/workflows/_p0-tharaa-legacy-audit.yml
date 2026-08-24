@@ -84,11 +84,11 @@ jobs:
           assert runtime.count(old_progress) == 1
           runtime = runtime.replace(old_progress, new_progress, 1)
 
-          old_menu = "const menuBtn=q('#menuBtn'),mobileMenu=q('#mobileMenu');menuBtn.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');document.body.classList.toggle('menu-open',open);menuBtn.setAttribute('aria-expanded',String(open));});"
+          old_menu = "  const menuBtn=q('#menuBtn'),mobileMenu=q('#mobileMenu');menuBtn.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');document.body.classList.toggle('menu-open',open);menuBtn.setAttribute('aria-expanded',String(open));});"
           assert runtime.count(old_menu) == 1
           runtime = runtime.replace(old_menu, '', 1)
 
-          old_theme = "q('#themeToggle').addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';});"
+          old_theme = "  q('#themeToggle').addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';});"
           assert runtime.count(old_theme) == 1
           runtime = runtime.replace(old_theme, '', 1)
 
