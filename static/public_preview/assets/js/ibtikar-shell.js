@@ -176,16 +176,35 @@
     window.addEventListener('resize',() => { if (innerWidth > 1180 && menu.classList.contains('open')) closeMenu(); },{passive:true});
   });
 
-  managedThemeButtons.forEach((button) => {
+  const applySavedTheme = () => {
     try {
       const saved = localStorage.getItem('ibtikar-theme');
-      if (saved) document.documentElement.dataset.theme = saved;
+      if (saved === 'dark' || saved === 'light') document.documentElement.dataset.theme = saved;
     } catch {}
+  };
+  const syncThemeControls = () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    managedThemeButtons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(dark));
+      button.setAttribute('aria-label', dark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن');
+      const icon = button.querySelector('[data-ibt-theme-icon]');
+      if (icon) icon.textContent = dark ? '☀' : '☾';
+    });
+  };
+  applySavedTheme();
+  syncThemeControls();
+  managedThemeButtons.forEach((button) => {
     button.addEventListener('click',() => {
       const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = next;
       try { localStorage.setItem('ibtikar-theme',next); } catch {}
+      syncThemeControls();
     });
+  });
+  window.addEventListener('storage',(event) => {
+    if (event.key !== 'ibtikar-theme') return;
+    applySavedTheme();
+    syncThemeControls();
   });
 
   /* Shared mobile drawer ------------------------------------------------ */

@@ -295,6 +295,54 @@ async function testFaq(client) {
   console.log('✓ services FAQ keyboard activation');
 }
 
+async function testThemeRtlAndReducedMotion(client) {
+  await client.send('Emulation.setEmulatedMedia', { media: 'screen', features: [] });
+  await navigate(client, '/', DESKTOP);
+  let state = await evaluate(client, `(() => {
+    const button = document.querySelector('[data-ibt-theme-toggle]');
+    const style = button ? getComputedStyle(button) : null;
+    const rect = button?.getBoundingClientRect();
+    return {
+      dir: document.documentElement.getAttribute('dir') || '',
+      theme: document.documentElement.dataset.theme || '',
+      buttonVisible: Boolean(button && style?.display !== 'none' && style?.visibility !== 'hidden' && rect?.width > 0 && rect?.height > 0),
+      pressed: button?.getAttribute('aria-pressed') || '',
+      label: button?.getAttribute('aria-label') || '',
+    };
+  })()`);
+  assert(state.dir === 'rtl' && state.buttonVisible && ['dark','light'].includes(state.theme),
+    `Theme/RTL initial state failed: ${JSON.stringify(state)}`);
+  const before = state.theme;
+  await focus(client, '[data-ibt-theme-toggle]');
+  await key(client, 'Enter');
+  await wait(100);
+  state = await evaluate(client, `(() => ({
+    theme: document.documentElement.dataset.theme || '',
+    saved: localStorage.getItem('ibtikar-theme') || '',
+    pressed: document.querySelector('[data-ibt-theme-toggle]')?.getAttribute('aria-pressed') || '',
+    label: document.querySelector('[data-ibt-theme-toggle]')?.getAttribute('aria-label') || '',
+  }))()`);
+  assert(state.theme !== before && state.saved === state.theme,
+    `Theme toggle/persistence failed: ${JSON.stringify(state)}`);
+
+  await client.send('Emulation.setEmulatedMedia', {
+    media: 'screen',
+    features: [{ name: 'prefers-reduced-motion', value: 'reduce' }],
+  });
+  await navigate(client, '/', DESKTOP, 80);
+  const reduced = await evaluate(client, `(() => {
+    const header = document.querySelector('.ibt-shell-header');
+    return {
+      matches: matchMedia('(prefers-reduced-motion: reduce)').matches,
+      transitionDuration: header ? getComputedStyle(header).transitionDuration : '',
+    };
+  })()`);
+  assert(reduced.matches && /^0(?:s|ms)(?:,\s*0(?:s|ms))*$/.test(reduced.transitionDuration),
+    `Reduced-motion shell contract failed: ${JSON.stringify(reduced)}`);
+  await client.send('Emulation.setEmulatedMedia', { media: 'screen', features: [] });
+  console.log('✓ shared theme / RTL / reduced-motion interaction');
+}
+
 async function testContactSteps(client) {
   await navigate(client, '/contact/', DESKTOP);
   await setValue(client, '#quote-name', 'اختبار جودة');
@@ -446,6 +494,7 @@ async function main() {
     const tests = [
       ['desktop mega', testDesktopMega],
       ['mobile menu', testMobileMenu],
+      ['theme / RTL / reduced motion', testThemeRtlAndReducedMotion],
       ['FAQ', testFaq],
       ['contact steps', testContactSteps],
       ['Tharaa studio', testTharaaStudio],

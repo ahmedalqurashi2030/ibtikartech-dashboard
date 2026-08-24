@@ -221,6 +221,10 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
       h1Count: document.querySelectorAll('h1').length,
       headerVisible: visible(document.querySelector('.ibt-shell-header')),
       footerVisible: visible(document.querySelector('.ibt-shell-footer')),
+      htmlDir: document.documentElement.getAttribute('dir') || '',
+      themeToggleVisible: visible(document.querySelector('[data-ibt-theme-toggle]')),
+      mainContentCount: document.querySelectorAll('#main-content').length,
+      legacyShellCount: document.querySelectorAll('[data-approved-legacy-shell], .ibtx-legacy-mobile-menu, #site-header').length,
       scrollWidth: document.documentElement.scrollWidth,
       clientWidth: document.documentElement.clientWidth,
       overflowers,
@@ -253,6 +257,10 @@ function validate(result, failures, internalLinks) {
   if (metrics.h1Count !== 1) failures.push(`${prefix}: expected one H1, found ${metrics.h1Count}`);
   if (!metrics.headerVisible) failures.push(`${prefix}: shared header is not visible`);
   if (!metrics.footerVisible) failures.push(`${prefix}: shared footer is not visible`);
+  if (metrics.htmlDir !== 'rtl') failures.push(`${prefix}: document dir is ${metrics.htmlDir || 'missing'}, expected rtl`);
+  if (!metrics.themeToggleVisible) failures.push(`${prefix}: shared theme toggle is not visible`);
+  if (metrics.mainContentCount !== 1) failures.push(`${prefix}: expected one #main-content, found ${metrics.mainContentCount}`);
+  if (metrics.legacyShellCount) failures.push(`${prefix}: retired shell nodes are still rendered (${metrics.legacyShellCount})`);
   if (!metrics.keyboardMoved) failures.push(`${prefix}: keyboard Tab did not move across controls`);
   if (metrics.todoVisible) failures.push(`${prefix}: visible TODO placeholder found`);
   if (metrics.duplicateIds.length) {
@@ -316,25 +324,33 @@ function validate(result, failures, internalLinks) {
   }
 
   for (const href of metrics.internalHrefs) {
-    const pathname = href.split('#')[0].split('?')[0];
-    if (pathname) internalLinks.add(pathname);
+    if (href) internalLinks.add(href);
   }
 }
 
 async function verifyInternalLinks(internalLinks, failures) {
   const ignoredPrefixes = ['/static/', '/media/', '/django-admin/', '/control/'];
-  for (const pathname of [...internalLinks].sort()) {
+  for (const href of [...internalLinks].sort()) {
+    const url = new URL(href, baseUrl);
+    const pathname = url.pathname;
     if (ignoredPrefixes.some((prefix) => pathname.startsWith(prefix))) continue;
     try {
-      const response = await fetch(`${baseUrl}${pathname}`, { redirect: 'follow' });
+      const response = await fetch(url, { redirect: 'follow' });
       if (response.status >= 400) {
-        failures.push(`internal link ${pathname} returned ${response.status}`);
+        failures.push(`internal link ${href} returned ${response.status}`);
+        continue;
       }
-      if (/\\.html(?:[?#]|$)/i.test(response.url)) {
-        failures.push(`internal link ${pathname} ended on legacy .html URL ${response.url}`);
+      if (/\.html(?:[?#]|$)/i.test(response.url)) {
+        failures.push(`internal link ${href} ended on legacy .html URL ${response.url}`);
+      }
+      if (url.hash) {
+        const target = decodeURIComponent(url.hash.slice(1));
+        const html = await response.text();
+        const hasTarget = html.includes(`id="${target}"`) || html.includes(`id='${target}'`);
+        if (!hasTarget) failures.push(`internal link ${href} points to missing #${target}`);
       }
     } catch (error) {
-      failures.push(`internal link ${pathname} failed: ${error.message}`);
+      failures.push(`internal link ${href} failed: ${error.message}`);
     }
   }
 }

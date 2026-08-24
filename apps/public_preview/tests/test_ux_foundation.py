@@ -283,3 +283,87 @@ def test_deep_interaction_qa_uses_live_contact_submission_contract():
     assert "رقم المرجع:" in source
     assert "ibtikar:lastBrief" not in source
     assert "Contact local draft failed" not in source
+
+
+
+def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
+    import re
+    from collections import Counter
+    from pathlib import Path
+
+    pages = sorted(Path("templates/public_preview/pages").glob("*.html"))
+    assert len(pages) == 22
+    legacy_markers = (
+        "data-approved-legacy-shell",
+        'id="site-header"',
+        "ibtx-legacy-mobile-menu",
+        'class="mobile-menu',
+        '<a class="skip-link"',
+        '<a class="skip"',
+        'class="site-footer',
+        'class="ibtx-footer"',
+    )
+    html_ref = re.compile(r'\b(?:href|action)=["\']([^"\']+\.html(?:[?#][^"\']*)?)["\']', re.I)
+    id_ref = re.compile(r'\bid=["\']([^"\']+)["\']')
+    anchor_ref = re.compile(r'\bhref=["\']#([^"\']+)["\']')
+
+    for page in pages:
+        source = _read_source(str(page))
+        assert '{% extends "public_preview/base.html" %}' in source, page.name
+        assert source.count('id="main-content"') == 1, page.name
+        assert 'id="main"' not in source, page.name
+        for legacy in legacy_markers:
+            assert legacy not in source, f"{page.name}: {legacy}"
+        assert not html_ref.findall(source), page.name
+        ids = id_ref.findall(source)
+        counts = Counter(ids)
+        assert not [key for key, value in counts.items() if value > 1], page.name
+        missing = {anchor for anchor in anchor_ref.findall(source) if anchor and anchor not in counts}
+        assert not missing, f"{page.name}: {sorted(missing)}"
+
+
+def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
+    header = _read_source("templates/public_preview/components/header.html")
+    head = _read_source("templates/public_preview/components/document_head.html")
+    shell = _read_source(SHELL_RUNTIME)
+    styles = _read_source(SHELL_STYLES)
+    browser_workflow = _read_source(".github/workflows/django-clean-url-browser-qa.yml")
+    browser_qa = _read_source(BROWSER_QA)
+    interaction_qa = _read_source(INTERACTION_QA)
+    home_runtime = _read_source(HOME_SOURCE_RUNTIME)
+    page_shell = _read_source("static/public_preview/assets/js/page-shell.js")
+
+    assert header.count("data-ibt-theme-toggle") == 1
+    assert "data-ibt-theme-icon" in header
+    assert "localStorage.getItem('ibtikar-theme')" in head
+    assert "syncThemeControls" in shell
+    assert "localStorage.setItem('ibtikar-theme',next)" in shell
+    assert ":focus-visible" in styles
+    assert "@media (prefers-reduced-motion: reduce)" in styles
+
+    assert "runs-on: [self-hosted, production, ibtikartech]" in browser_workflow
+    assert "browser-actions/setup-chrome@v2" in browser_workflow
+    assert "no-sudo: true" in browser_workflow
+    assert "install-dependencies: true" not in browser_workflow
+    assert "themeToggleVisible" in browser_qa
+    assert "mainContentCount" in browser_qa
+    assert "legacyShellCount" in browser_qa
+    assert "points to missing #" in browser_qa
+    assert "testThemeRtlAndReducedMotion" in interaction_qa
+    assert "prefers-reduced-motion" in interaction_qa
+
+    for marker in (
+        "getElementById('site-header')",
+        "querySelector('.menu-toggle')",
+        "querySelector('.mobile-menu')",
+        "querySelector('.theme-toggle')",
+        "querySelectorAll('.desktop-nav a')",
+        "querySelectorAll('.mobile-menu a')",
+        "const closeMenu =",
+        "header?.classList.add('cinematic-hidden')",
+        "header?.classList.remove('cinematic-hidden')",
+    ):
+        assert marker not in home_runtime
+
+    assert "normalizeHomepageLegacyShell" not in page_shell
+    assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" not in head

@@ -161,22 +161,6 @@
     location.href = destination;
   }, true);
 
-  const normalizeHomepageLegacyShell = () => {
-    if (!document.body.classList.contains('source-home')) return;
-
-    [...document.body.childNodes].forEach((node) => {
-      if (node.nodeType === Node.TEXT_NODE && node.textContent?.includes('Ibtikar Tech Homepage V7')) {
-        node.remove();
-      }
-    });
-
-    document.querySelector('body.source-home > .announcement')?.remove();
-    // The Django base owns the canonical skip link. Remove only accidental
-    // duplicate legacy copies after imports; never remove the shared first link.
-    const homepageSkipLinks = [...document.querySelectorAll('body.source-home > .skip-link')];
-    homepageSkipLinks.slice(1).forEach((node) => node.remove());
-  };
-
   const normalizeProductionMetadata = () => {
     const robots = document.querySelector('meta[name="robots"]')?.content?.toLowerCase() || '';
     const indexable = !robots.includes('noindex');
@@ -210,10 +194,6 @@
   };
 
   normalizeProductionMetadata();
-  normalizeHomepageLegacyShell();
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', normalizeHomepageLegacyShell, { once: true });
-  }
 
   let section = document.body.dataset.section || '';
   document.body.dataset.page = pageKey;
