@@ -118,7 +118,7 @@ jobs:
           assert 'updateProgress' in runtime
           assert "q('#previewModal')" in runtime
           assert "q('#heroCanvas')" in runtime
-          assert "q('#studioSwatches button')" in runtime
+          assert "qa('#studioSwatches button')" in runtime
           assert "q('.faq-answer',item)" in runtime
           assert "q('#libraryTrack')" in runtime
 
