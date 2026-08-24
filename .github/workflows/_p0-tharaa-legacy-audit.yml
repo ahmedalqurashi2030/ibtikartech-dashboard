@@ -1,4 +1,4 @@
-name: P0 one-time Tharaa legacy shell audit
+name: P0 one-time remove Tharaa legacy shell
 
 on:
   pull_request:
@@ -7,10 +7,10 @@ on:
       - ".github/workflows/_p0-tharaa-legacy-audit.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  audit:
+  cleanup:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: [self-hosted, production, ibtikartech]
     timeout-minutes: 5
@@ -19,62 +19,124 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: cleanup/p0-tharaa-legacy-shell
-          fetch-depth: 1
+          fetch-depth: 0
 
-      - name: Audit Tharaa legacy DOM and runtime hooks
+      - name: Remove retired Tharaa shell DOM and runtime hooks
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
+          import re
 
           template_path = Path('templates/public_preview/pages/tharaa.html')
           runtime_path = Path('static/public_preview/assets/js/source-tharaa.js')
+
           template = template_path.read_text(encoding='utf-8')
           runtime = runtime_path.read_text(encoding='utf-8')
 
-          template_markers = [
+          assert template.count('data-approved-legacy-shell') == 3
+          assert template.count('id="siteHeader"') == 1
+          assert template.count('id="menuBtn"') == 1
+          assert template.count('id="mobileMenu"') == 1
+          assert template.count('id="themeToggle"') == 1
+          assert template.count('<a class="skip" href="#main">') == 1
+          assert template.count('<div class="progress"><span id="pageProgress"></span></div>') == 1
+
+          template, header_count = re.subn(
+              r'<header data-approved-legacy-shell hidden inert aria-hidden="true" class="site-header" id="siteHeader">.*?</header>\n',
+              '',
+              template,
+              count=1,
+              flags=re.S,
+          )
+          template, mobile_count = re.subn(
+              r'<div data-approved-legacy-shell hidden inert class="mobile-menu" id="mobileMenu">.*?</div>\n',
+              '',
+              template,
+              count=1,
+              flags=re.S,
+          )
+          template, footer_count = re.subn(
+              r'<footer data-approved-legacy-shell hidden inert aria-hidden="true" class="site-footer">.*?</footer>\n',
+              '',
+              template,
+              count=1,
+              flags=re.S,
+          )
+          assert (header_count, mobile_count, footer_count) == (1, 1, 1)
+          template = template.replace('<a class="skip" href="#main">تجاوز إلى المحتوى</a>\n', '', 1)
+
+          old_anchor = '''qa('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const href=a.getAttribute('href');if(!href||href==='#')return;const t=q(href);if(t){e.preventDefault();mobileMenu.classList.remove('open');document.body.classList.remove('menu-open');menuBtn.setAttribute('aria-expanded','false');lenis?lenis.scrollTo(t):t.scrollIntoView({behavior:reduce?'auto':'smooth'});}}));'''
+          new_anchor = '''qa('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const href=a.getAttribute('href');if(!href||href==='#')return;const t=q(href);if(t){e.preventDefault();lenis?lenis.scrollTo(t):t.scrollIntoView({behavior:reduce?'auto':'smooth'});}}));'''
+          assert runtime.count(old_anchor) == 1
+          runtime = runtime.replace(old_anchor, new_anchor, 1)
+
+          assert runtime.count("const header=q('#siteHeader'),progress=q('#pageProgress');") == 1
+          runtime = runtime.replace(
+              "const header=q('#siteHeader'),progress=q('#pageProgress');",
+              "const progress=q('#pageProgress');",
+              1,
+          )
+
+          old_progress = "const updateHeader=()=>{const y=scrollY||document.documentElement.scrollTop;header.classList.toggle('scrolled',y>30);const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?y/max*100:0)+'%';};addEventListener('scroll',updateHeader,{passive:true});updateHeader();"
+          new_progress = "const updateProgress=()=>{const y=scrollY||document.documentElement.scrollTop;const max=document.documentElement.scrollHeight-innerHeight;if(progress)progress.style.width=(max>0?y/max*100:0)+'%';};addEventListener('scroll',updateProgress,{passive:true});updateProgress();"
+          assert runtime.count(old_progress) == 1
+          runtime = runtime.replace(old_progress, new_progress, 1)
+
+          old_menu = "const menuBtn=q('#menuBtn'),mobileMenu=q('#mobileMenu');menuBtn.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');document.body.classList.toggle('menu-open',open);menuBtn.setAttribute('aria-expanded',String(open));});"
+          assert runtime.count(old_menu) == 1
+          runtime = runtime.replace(old_menu, '', 1)
+
+          old_theme = "q('#themeToggle').addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';});"
+          assert runtime.count(old_theme) == 1
+          runtime = runtime.replace(old_theme, '', 1)
+
+          for marker in (
               'data-approved-legacy-shell',
               'id="siteHeader"',
               'id="menuBtn"',
               'id="mobileMenu"',
               'id="themeToggle"',
               '<a class="skip" href="#main">',
-              '<footer',
-          ]
-          runtime_markers = [
+          ):
+              assert marker not in template, marker
+
+          for marker in (
               "q('#siteHeader')",
               "q('#menuBtn')",
               "q('#mobileMenu')",
               "q('#themeToggle')",
               'mobileMenu.classList',
               'menuBtn.setAttribute',
-              'header.classList',
-              "q('#pageProgress')",
-          ]
+              'header.classList.toggle',
+              "classList.remove('menu-open')",
+          ):
+              assert marker not in runtime, marker
 
-          print('=== THARAA TEMPLATE LEGACY MARKERS ===')
-          for marker in template_markers:
-              print(f'{marker}: {template.count(marker)}')
+          assert "q('#pageProgress')" in runtime
+          assert 'updateProgress' in runtime
+          assert "q('#previewModal')" in runtime
+          assert "q('#heroCanvas')" in runtime
+          assert "q('#studioSwatches button')" in runtime
+          assert "q('.faq-answer',item)" in runtime
+          assert "q('#libraryTrack')" in runtime
 
-          print('\n=== THARAA RUNTIME LEGACY MARKERS ===')
-          for marker in runtime_markers:
-              print(f'{marker}: {runtime.count(marker)}')
-
-          print('\n=== TEMPLATE LEGACY CONTEXT ===')
-          for marker in ('data-approved-legacy-shell', '<footer'):
-              start = 0
-              while True:
-                  pos = template.find(marker, start)
-                  if pos < 0:
-                      break
-                  print(template[max(0, pos-180):pos+500].replace('\n', ' '))
-                  start = pos + len(marker)
-
-          assert template.count('id="siteHeader"') == 1
-          assert template.count('id="menuBtn"') == 1
-          assert template.count('id="mobileMenu"') == 1
-          assert template.count('id="themeToggle"') == 1
-          assert runtime.count("q('#pageProgress')") == 1
-          print('\nAudit complete.')
+          template_path.write_text(template, encoding='utf-8')
+          runtime_path.write_text(runtime, encoding='utf-8')
+          print('Tharaa legacy shell DOM/runtime removed safely.')
           PY
+
+          git diff --check
+
+      - name: Remove one-time workflow and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/_p0-tharaa-legacy-audit.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add templates/public_preview/pages/tharaa.html static/public_preview/assets/js/source-tharaa.js .github/workflows/_p0-tharaa-legacy-audit.yml
+          git diff --cached --check
+          git commit -m "refactor: remove retired Tharaa shell runtime"
+          git push origin HEAD:cleanup/p0-tharaa-legacy-shell
