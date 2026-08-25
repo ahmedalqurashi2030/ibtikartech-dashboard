@@ -3,8 +3,8 @@ from urllib.parse import quote
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
@@ -12,7 +12,6 @@ from wagtail.fields import RichTextField
 from wagtail.models import Page
 
 from apps.services.models import Service
-
 
 phone_validator = RegexValidator(
     regex=r"^\+?[1-9]\d{6,14}$",
