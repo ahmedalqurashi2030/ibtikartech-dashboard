@@ -1,11 +1,35 @@
+{% load wagtailimages_tags %}
 <footer class="ibt-shell-footer">
   <div class="ibt-shell-footer-grid">
     <div class="ibt-shell-footer-main">
       <a class="ibt-shell-brand" href="{% url 'public_preview:home' %}">
-        <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
+        {% if site_config.brand.logo_inverse or site_config.brand.logo %}
+          {% if site_config.brand.logo_inverse %}
+            {% image site_config.brand.logo_inverse fill-76x76 as footer_logo %}
+          {% else %}
+            {% image site_config.brand.logo fill-76x76 as footer_logo %}
+          {% endif %}
+          <span class="ibt-shell-logo ibt-shell-logo--asset" aria-hidden="true"><img src="{{ footer_logo.url }}" alt="" width="38" height="38"></span>
+        {% else %}
+          <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
+        {% endif %}
+        <span class="ibt-shell-brand-copy"><strong>{{ site_config.brand.name }}</strong><small>{{ site_config.brand.tagline }}</small></span>
       </a>
-      <p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p>
+      <p>{{ site_config.footer_description }}</p>
+      {% if site_config.contact.email or site_config.contact.phone or site_config.contact.whatsapp_url %}
+        <div class="ibt-shell-footer-contact" aria-label="بيانات التواصل">
+          {% if site_config.contact.email %}<a href="mailto:{{ site_config.contact.email }}" data-analytics="email_click">{{ site_config.contact.email }}</a>{% endif %}
+          {% if site_config.contact.phone %}<a href="{{ site_config.contact.phone_url }}" data-analytics="phone_click">{{ site_config.contact.phone }}</a>{% endif %}
+          {% if site_config.contact.whatsapp_url %}<a href="{{ site_config.contact.whatsapp_url }}" rel="noopener noreferrer" data-analytics="whatsapp_click">واتساب</a>{% endif %}
+        </div>
+      {% endif %}
+      {% if site_config.social_links %}
+        <div class="ibt-shell-footer-social" aria-label="حسابات التواصل الاجتماعي">
+          {% for social in site_config.social_links %}
+            <a href="{{ social.url }}" rel="noopener noreferrer" aria-label="{{ social.label }}">{{ social.label }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
 
     <div>
@@ -31,7 +55,7 @@
     </div>
 
     <div>
-      <h3>ابتكار تك</h3>
+      <h3>{{ site_config.brand.name }}</h3>
       <a href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
       <a href="{% url 'public_preview:knowledge' %}">المعرفة</a>
       <a href="{% url 'public_preview:about' %}">عن ابتكار</a>
@@ -40,7 +64,7 @@
   </div>
 
   <div class="ibt-shell-footer-bottom">
-    <span>© <span id="year"></span> ابتكار تك. جميع الحقوق محفوظة.</span>
+    <span>© <span id="year"></span> {{ site_config.brand.name }}. {{ site_config.copyright_text }}</span>
     <div>
       <a href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
       <a href="{% url 'public_preview:knowledge' %}">المعرفة</a>

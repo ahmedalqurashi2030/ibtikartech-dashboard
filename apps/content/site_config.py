@@ -17,6 +17,7 @@ class BrandConfig:
     logo_inverse: object | None
     favicon: object | None
     default_social_image: object | None
+    default_social_image_url: str
 
 
 @dataclass(frozen=True)
@@ -75,6 +76,14 @@ def _site_root_url(request):
     return urlunsplit((parts.scheme, parts.netloc, "/", "", ""))
 
 
+def _absolute_media_url(request, image):
+    if image is None:
+        return ""
+    url = image.file.url
+    parts = urlsplit(url)
+    return url if parts.scheme and parts.netloc else request.build_absolute_uri(url)
+
+
 def _social_links(site_settings):
     configured = (
         ("x", "X", site_settings.x_url),
@@ -127,6 +136,10 @@ def resolve_site_config(request):
             logo_inverse=site_settings.logo_inverse,
             favicon=site_settings.favicon,
             default_social_image=site_settings.default_social_image,
+            default_social_image_url=_absolute_media_url(
+                request,
+                site_settings.default_social_image,
+            ),
         ),
         contact=ContactConfig(
             email=site_settings.contact_email,

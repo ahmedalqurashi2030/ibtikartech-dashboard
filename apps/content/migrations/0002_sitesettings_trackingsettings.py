@@ -1,5 +1,6 @@
 # Generated for the site-scoped public configuration foundation.
 
+import apps.content.models
 import django.core.validators
 import django.db.models.deletion
 from django.db import migrations, models
@@ -28,12 +29,12 @@ class Migration(migrations.Migration):
                 ("whatsapp_default_message", models.CharField(blank=True, max_length=500, verbose_name="رسالة واتساب الافتراضية")),
                 ("address", models.CharField(blank=True, max_length=300, verbose_name="العنوان")),
                 ("business_hours", models.CharField(blank=True, max_length=180, verbose_name="ساعات العمل")),
-                ("x_url", models.URLField(blank=True, verbose_name="X / Twitter")),
-                ("instagram_url", models.URLField(blank=True, verbose_name="Instagram")),
-                ("linkedin_url", models.URLField(blank=True, verbose_name="LinkedIn")),
-                ("youtube_url", models.URLField(blank=True, verbose_name="YouTube")),
-                ("tiktok_url", models.URLField(blank=True, verbose_name="TikTok")),
-                ("snapchat_url", models.URLField(blank=True, verbose_name="Snapchat")),
+                (""X / Twitter"",
+                (""Instagram"",
+                (""LinkedIn"",
+                (""YouTube"",
+                (""TikTok"",
+                (""Snapchat"",
                 ("default_seo_title", models.CharField(default="ابتكار تك | حلول رقمية للتجارة والأعمال في السعودية", max_length=70, verbose_name="عنوان SEO الافتراضي")),
                 ("default_meta_description", models.CharField(default="ابتكار تك تبني وتطوّر المتاجر والمواقع والهوية والقياس والأنظمة للمشاريع في السعودية والخليج.", max_length=170, verbose_name="وصف SEO الافتراضي")),
                 ("title_suffix", models.CharField(blank=True, default="ابتكار تك", max_length=80, verbose_name="لاحقة عنوان الصفحات")),

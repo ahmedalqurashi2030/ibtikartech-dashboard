@@ -718,3 +718,45 @@ body.source-home .cinematic-story__brand {
     transition: none !important;
   }
 }
+
+
+/* Site-scoped brand assets and optional public contact settings. */
+.ibt-shell-logo.ibt-shell-logo--asset {
+  display: block;
+  transform: none;
+  filter: none;
+  overflow: hidden;
+}
+
+.ibt-shell-logo--asset img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ibt-shell-logo-inverse {
+  display: none !important;
+}
+
+html[data-theme="dark"] .ibt-shell-header .ibt-shell-logo--has-inverse .ibt-shell-logo-default {
+  display: none;
+}
+
+html[data-theme="dark"] .ibt-shell-header .ibt-shell-logo--has-inverse .ibt-shell-logo-inverse {
+  display: block !important;
+}
+
+.ibt-shell-footer-contact,
+.ibt-shell-footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+
+.ibt-shell-footer-contact a,
+.ibt-shell-footer-social a {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
