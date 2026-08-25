@@ -313,7 +313,11 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
         ids = id_ref.findall(source)
         counts = Counter(ids)
         assert not [key for key, value in counts.items() if value > 1], page.name
-        missing = {anchor for anchor in anchor_ref.findall(source) if anchor and anchor not in counts}
+        missing = {
+            anchor
+            for anchor in anchor_ref.findall(source)
+            if anchor and anchor not in counts
+        }
         assert not missing, f"{page.name}: {sorted(missing)}"
 
 
