@@ -80,7 +80,7 @@ def test_document_head_restores_theme_without_legacy_shell_mutation():
     assert "localStorage.getItem('ibtikar-theme')" in head_source
     assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" not in head_source
     assert "MutationObserver" not in head_source
-    assert "localStorage.getItem('ibtikar-theme')" in home_runtime
+    assert "localStorage.getItem('ibtikar-theme')" not in home_runtime
 
 
 def test_shared_related_services_runtime_is_deferred_and_single_owned():
