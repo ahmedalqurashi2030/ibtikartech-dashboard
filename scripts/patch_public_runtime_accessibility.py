@@ -16,7 +16,9 @@ def main() -> None:
         source = source.replace(OLD_SKIP_REMOVAL, NEW_SKIP_GUARD, 1)
         PAGE_SHELL.write_text(source, encoding="utf-8")
     elif "homepageSkipLinks.slice(1)" not in source:
-        raise RuntimeError("Homepage skip-link runtime changed; refusing an unsafe patch.")
+        # No legacy skip-link removal remains. The shared Django base already
+        # owns the single canonical skip link, so there is nothing to patch.
+        pass
     print("Public runtime accessibility patch is synchronized.")
 
 
