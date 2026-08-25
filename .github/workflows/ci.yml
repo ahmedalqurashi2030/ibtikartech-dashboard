@@ -59,7 +59,7 @@ jobs:
         run: python manage.py check
 
       - name: Ruff
-        run: ruff check apps config tests --output-format=github
+        run: ruff check apps config tests --diff
 
       - name: Tests
         run: pytest
