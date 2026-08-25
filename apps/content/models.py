@@ -105,12 +105,36 @@ class SiteSettings(BaseSiteSetting):
     address = models.CharField(_("العنوان"), max_length=300, blank=True)
     business_hours = models.CharField(_("ساعات العمل"), max_length=180, blank=True)
 
-    x_url = models.URLField(_("X / Twitter"), blank=True, validators=[validate_https_url])
-    instagram_url = models.URLField(_("Instagram"), blank=True, validators=[validate_https_url])
-    linkedin_url = models.URLField(_("LinkedIn"), blank=True, validators=[validate_https_url])
-    youtube_url = models.URLField(_("YouTube"), blank=True, validators=[validate_https_url])
-    tiktok_url = models.URLField(_("TikTok"), blank=True, validators=[validate_https_url])
-    snapchat_url = models.URLField(_("Snapchat"), blank=True, validators=[validate_https_url])
+    x_url = models.URLField(
+        _("X / Twitter"),
+        blank=True,
+        validators=[validate_https_url],
+    )
+    instagram_url = models.URLField(
+        _("Instagram"),
+        blank=True,
+        validators=[validate_https_url],
+    )
+    linkedin_url = models.URLField(
+        _("LinkedIn"),
+        blank=True,
+        validators=[validate_https_url],
+    )
+    youtube_url = models.URLField(
+        _("YouTube"),
+        blank=True,
+        validators=[validate_https_url],
+    )
+    tiktok_url = models.URLField(
+        _("TikTok"),
+        blank=True,
+        validators=[validate_https_url],
+    )
+    snapchat_url = models.URLField(
+        _("Snapchat"),
+        blank=True,
+        validators=[validate_https_url],
+    )
 
     default_seo_title = models.CharField(
         _("عنوان SEO الافتراضي"),
