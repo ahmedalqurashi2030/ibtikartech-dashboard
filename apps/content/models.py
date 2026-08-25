@@ -206,7 +206,6 @@ class SiteSettings(BaseSiteSetting):
                 FieldPanel("logo"),
                 FieldPanel("logo_inverse"),
                 FieldPanel("favicon"),
-                FieldPanel("default_social_image"),
             ],
             heading=_("أصول الهوية"),
         ),
