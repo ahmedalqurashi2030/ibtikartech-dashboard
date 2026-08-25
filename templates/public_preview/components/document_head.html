@@ -1,5 +1,25 @@
+{% load wagtailimages_tags %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="{{ site_config.seo.canonical_url }}">
+<meta property="og:site_name" content="{{ site_config.brand.name }}">
+{% if site_config.brand.default_social_image_url %}
+<meta property="og:image" content="{{ site_config.brand.default_social_image_url }}">
+<meta name="twitter:card" content="summary_large_image">
+{% endif %}
+{% if site_config.seo.x_username %}
+<meta name="twitter:site" content="@{{ site_config.seo.x_username }}">
+{% endif %}
+{% if site_config.seo.google_site_verification %}
+<meta name="google-site-verification" content="{{ site_config.seo.google_site_verification }}">
+{% endif %}
+{% if site_config.seo.bing_site_verification %}
+<meta name="msvalidate.01" content="{{ site_config.seo.bing_site_verification }}">
+{% endif %}
+{% if site_config.brand.favicon %}
+  {% image site_config.brand.favicon width-64 as favicon_image %}
+  <link rel="icon" href="{{ favicon_image.url }}" sizes="64x64">
+{% endif %}
 <script>
   // Apply enhancement and the persisted theme before page CSS is evaluated.
   document.documentElement.classList.remove('no-js');

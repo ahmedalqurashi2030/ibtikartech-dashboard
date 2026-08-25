@@ -71,21 +71,16 @@ def test_public_shell_has_one_canonical_approved_cascade():
     assert "@media (prefers-reduced-motion: reduce)" in source
 
 
-def test_homepage_legacy_artifacts_are_removed_during_parse_without_losing_theme_restore():
+def test_document_head_restores_theme_without_legacy_shell_mutation():
     head_source = _read_source(DOCUMENT_HEAD)
     home_runtime = _read_source(HOME_SOURCE_RUNTIME)
 
-    assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" in head_source
-    assert "classList.contains('source-home')" in head_source
-    assert "if (!onHomepage()) return" in head_source
-    assert "body.source-home > .announcement" in head_source
-    assert "body.source-home > .skip-link" in head_source
-    assert "skipLinks[0] !== root" in head_source
-    assert "MutationObserver" in head_source
-    assert "observer.observe(document.documentElement" in head_source
-    assert "removeHomepageLegacy(document)" in head_source
-    assert "observer.disconnect()" in head_source
-    assert "localStorage.getItem('ibtikar-theme')" in home_runtime
+    assert "classList.remove('no-js')" in head_source
+    assert "classList.add('js-ready')" in head_source
+    assert "localStorage.getItem('ibtikar-theme')" in head_source
+    assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" not in head_source
+    assert "MutationObserver" not in head_source
+    assert "localStorage.getItem('ibtikar-theme')" not in home_runtime
 
 
 def test_shared_related_services_runtime_is_deferred_and_single_owned():
@@ -318,7 +313,11 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
         ids = id_ref.findall(source)
         counts = Counter(ids)
         assert not [key for key, value in counts.items() if value > 1], page.name
-        missing = {anchor for anchor in anchor_ref.findall(source) if anchor and anchor not in counts}
+        missing = {
+            anchor
+            for anchor in anchor_ref.findall(source)
+            if anchor and anchor not in counts
+        }
         assert not missing, f"{page.name}: {sorted(missing)}"
 
 
@@ -367,3 +366,18 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
 
     assert "normalizeHomepageLegacyShell" not in page_shell
     assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" not in head
+
+
+
+def test_public_shell_reads_only_resolved_site_configuration():
+    header = _read_source("templates/public_preview/components/header.html")
+    footer = _read_source("templates/public_preview/components/footer.html")
+    runtime = _read_source("templates/public_preview/components/runtime.html")
+    static_config = _read_source("static/public_preview/assets/js/site-config.js")
+
+    assert "{{ site_config.brand.name }}" in header
+    assert "{{ site_config.brand.name }}" in footer
+    assert "site_config.contact.whatsapp_url" in footer
+    assert "site_config.social_links" in footer
+    assert 'json_script:"ibtikar-runtime-config"' in runtime
+    assert "window.IBTIKAR_CONFIG = window.IBTIKAR_CONFIG ||" in static_config

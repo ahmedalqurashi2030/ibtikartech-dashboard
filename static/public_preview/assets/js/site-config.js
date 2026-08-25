@@ -1,4 +1,4 @@
-window.IBTIKAR_CONFIG = {
+window.IBTIKAR_CONFIG = window.IBTIKAR_CONFIG || {
   site: {
     nameAr: "ابتكار تك",
     nameEn: "Ibtikar Tech",

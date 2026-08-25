@@ -1,8 +1,20 @@
+{% load wagtailimages_tags %}
 <header class="ibt-shell-header" id="ibtikarSiteHeader" data-ibtikar-header>
   <div class="ibt-shell-nav">
-    <a class="ibt-shell-brand" href="{% url 'public_preview:home' %}" aria-label="ابتكار تك - الرئيسية">
-      <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
+    <a class="ibt-shell-brand" href="{% url 'public_preview:home' %}" aria-label="{{ site_config.brand.name }} - الرئيسية">
+      {% if site_config.brand.logo %}
+        {% image site_config.brand.logo fill-76x76 as brand_logo %}
+        <span class="ibt-shell-logo ibt-shell-logo--asset{% if site_config.brand.logo_inverse %} ibt-shell-logo--has-inverse{% endif %}" aria-hidden="true">
+          <img class="ibt-shell-logo-default" src="{{ brand_logo.url }}" alt="" width="38" height="38">
+          {% if site_config.brand.logo_inverse %}
+            {% image site_config.brand.logo_inverse fill-76x76 as brand_logo_inverse %}
+            <img class="ibt-shell-logo-inverse" src="{{ brand_logo_inverse.url }}" alt="" width="38" height="38">
+          {% endif %}
+        </span>
+      {% else %}
+        <span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span>
+      {% endif %}
+      <span class="ibt-shell-brand-copy"><strong>{{ site_config.brand.name }}</strong><small>{{ site_config.brand.tagline }}</small></span>
     </a>
 
     <nav class="ibt-shell-desktop-nav" aria-label="التنقل الرئيسي">

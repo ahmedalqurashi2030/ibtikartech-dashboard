@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "apps.public_preview",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
+    "wagtail.contrib.settings",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.locales",
@@ -84,6 +85,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.content.context_processors.site_configuration",
             ],
         },
     }
@@ -134,3 +136,8 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
 X_FRAME_OPTIONS = "DENY"
+
+ENABLE_EXTERNAL_TRACKING = os.getenv(
+    "ENABLE_EXTERNAL_TRACKING",
+    "false",
+).strip().lower() in {"1", "true", "yes", "on"}

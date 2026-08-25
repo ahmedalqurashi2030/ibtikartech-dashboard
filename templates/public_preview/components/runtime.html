@@ -1,1 +1,13 @@
+{{ runtime_config|json_script:"ibtikar-runtime-config" }}
+<script>
+  (() => {
+    const node = document.getElementById('ibtikar-runtime-config');
+    if (!node) return;
+    try {
+      window.IBTIKAR_CONFIG = JSON.parse(node.textContent);
+    } catch (_) {
+      window.IBTIKAR_CONFIG = {};
+    }
+  })();
+</script>
 <script src="/static/public_preview/dashboard/dom-contracts.js"></script>

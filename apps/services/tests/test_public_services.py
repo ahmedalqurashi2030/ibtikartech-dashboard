@@ -12,6 +12,7 @@ EXPLICIT_SERVICE_PAGES = (
 )
 
 
+@pytest.mark.django_db
 @pytest.mark.parametrize("route_name,expected_path", EXPLICIT_SERVICE_PAGES)
 def test_public_service_pages_use_explicit_named_routes(client, route_name, expected_path):
     url = reverse(f"services:{route_name}")
