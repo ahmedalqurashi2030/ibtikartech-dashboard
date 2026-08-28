@@ -1,0 +1,159 @@
+name: Temporary repository UI UX skill installer
+
+on:
+  push:
+    branches:
+      - chore/uiux-bootstrap-temp
+
+permissions:
+  contents: write
+
+jobs:
+  install-project-skill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate validate and commit repository skill
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          node --version
+          npm --version
+          python3 --version
+
+          git clone --quiet --branch chore/add-project-ui-ux-skill "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" work
+          cd work
+          echo "branch=$(git branch --show-current)"
+          echo "head=$(git rev-parse HEAD)"
+          git status --short
+          test "$(git rev-parse HEAD)" = "941e446862288bcf5afdfd99077658e277801b72"
+          test ! -e .agents/skills/ui-ux-pro-max
+          if git check-ignore -q .agents; then
+            echo ".agents is ignored; refusing to continue" >&2
+            exit 1
+          fi
+
+          export HOME="$RUNNER_TEMP/uiux-home"
+          export npm_config_cache="$RUNNER_TEMP/uiux-npm-cache"
+          mkdir -p "$HOME" "$npm_config_cache"
+          npm view ui-ux-pro-max-cli@2.15.0 version repository license dist.tarball dist.integrity --json | tee /tmp/uiux-npm-metadata.json
+          node <<'NODE'
+          const fs = require('fs');
+          const m = JSON.parse(fs.readFileSync('/tmp/uiux-npm-metadata.json','utf8'));
+          if (m.version !== '2.15.0') throw new Error(`Unexpected version: ${m.version}`);
+          const repo = typeof m.repository === 'string' ? m.repository : (m.repository && m.repository.url) || '';
+          if (!repo.includes('nextlevelbuilder/ui-ux-pro-max-skill')) throw new Error(`Unexpected repository: ${repo}`);
+          if (m.license !== 'MIT') throw new Error(`Unexpected npm license metadata: ${m.license}`);
+          if (!String(m['dist.tarball'] || '').includes('ui-ux-pro-max-cli-2.15.0.tgz')) throw new Error(`Unexpected tarball: ${m['dist.tarball']}`);
+          if (!String(m['dist.integrity'] || '').startsWith('sha512-')) throw new Error('Missing SHA-512 dist.integrity');
+          console.log(`verified integrity=${m['dist.integrity']}`);
+          NODE
+
+          npx --yes ui-ux-pro-max-cli@2.15.0 init --ai universal
+          test -d .agents/skills/ui-ux-pro-max
+          keep="$RUNNER_TEMP/ui-ux-pro-max"
+          mv .agents/skills/ui-ux-pro-max "$keep"
+          rm -rf .agents
+          mkdir -p .agents/skills
+          mv "$keep" .agents/skills/ui-ux-pro-max
+
+          python3 <<'PY'
+          from pathlib import Path
+          path = Path('AGENTS.md')
+          text = path.read_text(encoding='utf-8')
+          if '## Project UI/UX skill' in text:
+              raise SystemExit('Project UI/UX skill section already exists')
+          lines = [
+              '', '', '## Project UI/UX skill', '',
+              '- For every UI/UX design, implementation, review, or interface-fixing task, read `.agents/skills/ui-ux-pro-max/SKILL.md` in full before making UI decisions or edits.',
+              "- Use the skill's local search selectively for the domains or stack guidance that materially helps the task; do not run broad or unrelated searches by default.",
+              "- Treat the project's base UI context as Arabic RTL, responsive web, server-rendered Django Templates, and HTMX/lightweight JavaScript unless the repository code for the task shows otherwise.",
+              "- Do not assume React, Next.js, Tailwind CSS, or another framework. Detect and follow the stack actually used by the files being changed. The skill's `html-tailwind` corpus may be used only as the closest available HTML-oriented guidance when relevant; it does not authorize introducing Tailwind into this project.",
+              '- User instructions, project requirements, and this `AGENTS.md` take precedence over skill guidance when they conflict.',
+              "- Do not use the skill's `--persist` behavior unless the user explicitly asks to persist a generated design system.",
+              '- Prioritize UX clarity, accessibility, correct RTL behavior, mobile/responsive quality, performance, and conversion effectiveness over decorative novelty.',
+              ''
+          ]
+          path.write_text(text.rstrip() + '\n'.join(lines), encoding='utf-8')
+          PY
+
+          skill=.agents/skills/ui-ux-pro-max
+          test -f "$skill/SKILL.md"
+          test -f "$skill/scripts/search.py"
+          test -f "$skill/scripts/core.py"
+          test -f "$skill/scripts/design_system.py"
+          test -f "$skill/scripts/reasoning_contract.py"
+          test -d "$skill/data/stacks"
+          test -f "$skill/data/stacks/html-tailwind.csv"
+
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+          text = Path('.agents/skills/ui-ux-pro-max/SKILL.md').read_text(encoding='utf-8')
+          if not text.startswith('---\n'):
+              raise SystemExit('Missing YAML frontmatter')
+          parts = text.split('---\n', 2)
+          if len(parts) < 3:
+              raise SystemExit('Unclosed YAML frontmatter')
+          fields = {}
+          for line in parts[1].splitlines():
+              if line.strip() and not line[:1].isspace() and ':' in line:
+                  k, v = line.split(':', 1)
+                  fields[k.strip()] = v.strip()
+          if set(fields) != {'name', 'description'}:
+              raise SystemExit(f'Unexpected frontmatter keys: {sorted(fields)}')
+          name = fields['name'].strip('"').strip("'")
+          if name != 'ui-ux-pro-max' or not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', name):
+              raise SystemExit(f'Invalid skill name: {name}')
+          if not fields['description']:
+              raise SystemExit('Empty skill description')
+          print('SKILL.md frontmatter: OK')
+          PY
+
+          test -z "$(find "$skill" -type l -print -quit)"
+          test -z "$(find "$skill" \( -name node_modules -o -name __pycache__ -o -name '*.pyc' -o -name '*.tmp' -o -name '*.temp' \) -print -quit)"
+          if grep -RIlE '(-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|github_pat_[A-Za-z0-9_]{20,}|ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16})' "$skill" | grep -q .; then
+            echo 'Credential-like material detected in skill' >&2
+            exit 1
+          fi
+
+          echo "file_count=$(find "$skill" -type f | wc -l)"
+          echo "size_bytes=$(du -sb "$skill" | awk '{print $1}')"
+          echo "stack_count=$(find "$skill/data/stacks" -maxdepth 1 -type f -name '*.csv' | wc -l)"
+
+          python3 .agents/skills/ui-ux-pro-max/scripts/search.py "Arabic RTL service platform responsive accessibility" --domain ux | tee /tmp/uiux-search-ux.txt
+          python3 .agents/skills/ui-ux-pro-max/scripts/search.py "Django templates responsive RTL interface" --stack html-tailwind | tee /tmp/uiux-search-stack.txt
+          test -s /tmp/uiux-search-ux.txt
+          test -s /tmp/uiux-search-stack.txt
+          find "$skill" -type d -name __pycache__ -prune -exec rm -rf {} +
+          find "$skill" -type f -name '*.pyc' -delete
+
+          python3 <<'PY'
+          import subprocess
+          rows = subprocess.check_output(['git','status','--porcelain=v1','--untracked-files=all'], text=True).splitlines()
+          paths = []
+          for row in rows:
+              p = row[3:]
+              if ' -> ' in p:
+                  p = p.split(' -> ', 1)[1]
+              paths.append(p)
+          bad = [p for p in paths if p != 'AGENTS.md' and not p.startswith('.agents/skills/ui-ux-pro-max/')]
+          if bad:
+              raise SystemExit('Unexpected changed paths: ' + ', '.join(bad))
+          if 'AGENTS.md' not in paths or not any(p.startswith('.agents/skills/ui-ux-pro-max/') for p in paths):
+              raise SystemExit('Expected skill/AGENTS changes are missing')
+          print(f'Changed paths restricted correctly; {len(paths)} files')
+          PY
+
+          echo "FINAL_FILE_COUNT=$(find "$skill" -type f | wc -l)"
+          echo "FINAL_SIZE_BYTES=$(du -sb "$skill" | awk '{print $1}')"
+          git status --short --untracked-files=all
+          git diff -- AGENTS.md
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add AGENTS.md .agents/skills/ui-ux-pro-max
+          git diff --cached --check
+          git commit -m 'chore: add repository-scoped UI UX Pro Max skill'
+          git push --quiet origin HEAD:chore/add-project-ui-ux-skill
