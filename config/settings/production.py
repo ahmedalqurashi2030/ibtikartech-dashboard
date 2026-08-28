@@ -61,7 +61,7 @@ if EMAIL_HOST:
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+        "BACKEND": "apps.core.storage.PublicStaticFilesStorage",
     },
 }
 
