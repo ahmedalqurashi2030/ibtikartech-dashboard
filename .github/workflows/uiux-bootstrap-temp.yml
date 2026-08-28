@@ -42,6 +42,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          export HOME="$RUNNER_TEMP/uiux-home"
+          export npm_config_cache="$RUNNER_TEMP/uiux-npm-cache"
+          mkdir -p "$HOME" "$npm_config_cache"
           npm view ui-ux-pro-max-cli@2.15.0 version repository license dist.tarball dist.integrity --json | tee /tmp/uiux-npm-metadata.json
           node <<'NODE'
           const fs = require('fs');
@@ -52,13 +55,16 @@ jobs:
           if (m.license !== 'MIT') throw new Error(`Unexpected npm license metadata: ${m.license}`);
           if (!String(m['dist.tarball'] || '').includes('ui-ux-pro-max-cli-2.15.0.tgz')) throw new Error(`Unexpected tarball: ${m['dist.tarball']}`);
           if (!String(m['dist.integrity'] || '').startsWith('sha512-')) throw new Error('Missing SHA-512 dist.integrity');
+          console.log(`verified integrity=${m['dist.integrity']}`);
           NODE
 
       - name: Generate Universal repository skill
         shell: bash
         run: |
           set -euo pipefail
-          HOME="$RUNNER_TEMP/uiux-home" npm_config_cache="$RUNNER_TEMP/uiux-npm-cache" npx --yes ui-ux-pro-max-cli@2.15.0 init --ai universal
+          export HOME="$RUNNER_TEMP/uiux-home"
+          export npm_config_cache="$RUNNER_TEMP/uiux-npm-cache"
+          npx --yes ui-ux-pro-max-cli@2.15.0 init --ai universal
           test -d .agents/skills/ui-ux-pro-max
           keep="$RUNNER_TEMP/ui-ux-pro-max"
           mv .agents/skills/ui-ux-pro-max "$keep"
@@ -77,19 +83,20 @@ jobs:
           heading = '## Project UI/UX skill'
           if heading in text:
               raise SystemExit('Project UI/UX skill section already exists; refusing duplicate insertion')
-          section = r'''
-
-## Project UI/UX skill
-
-- For every UI/UX design, implementation, review, or interface-fixing task, read `.agents/skills/ui-ux-pro-max/SKILL.md` in full before making UI decisions or edits.
-- Use the skill's local search selectively for the domains or stack guidance that materially helps the task; do not run broad or unrelated searches by default.
-- Treat the project's base UI context as Arabic RTL, responsive web, server-rendered Django Templates, and HTMX/lightweight JavaScript unless the repository code for the task shows otherwise.
-- Do not assume React, Next.js, Tailwind CSS, or another framework. Detect and follow the stack actually used by the files being changed. The skill's `html-tailwind` corpus may be used only as the closest available HTML-oriented guidance when relevant; it does not authorize introducing Tailwind into this project.
-- User instructions, project requirements, and this `AGENTS.md` take precedence over skill guidance when they conflict.
-- Do not use the skill's `--persist` behavior unless the user explicitly asks to persist a generated design system.
-- Prioritize UX clarity, accessibility, correct RTL behavior, mobile/responsive quality, performance, and conversion effectiveness over decorative novelty.
-'''
-          path.write_text(text.rstrip() + section + '\n', encoding='utf-8')
+          lines = [
+              '', '',
+              '## Project UI/UX skill',
+              '',
+              '- For every UI/UX design, implementation, review, or interface-fixing task, read `.agents/skills/ui-ux-pro-max/SKILL.md` in full before making UI decisions or edits.',
+              "- Use the skill's local search selectively for the domains or stack guidance that materially helps the task; do not run broad or unrelated searches by default.",
+              "- Treat the project's base UI context as Arabic RTL, responsive web, server-rendered Django Templates, and HTMX/lightweight JavaScript unless the repository code for the task shows otherwise.",
+              "- Do not assume React, Next.js, Tailwind CSS, or another framework. Detect and follow the stack actually used by the files being changed. The skill's `html-tailwind` corpus may be used only as the closest available HTML-oriented guidance when relevant; it does not authorize introducing Tailwind into this project.",
+              '- User instructions, project requirements, and this `AGENTS.md` take precedence over skill guidance when they conflict.',
+              "- Do not use the skill's `--persist` behavior unless the user explicitly asks to persist a generated design system.",
+              '- Prioritize UX clarity, accessibility, correct RTL behavior, mobile/responsive quality, performance, and conversion effectiveness over decorative novelty.',
+              ''
+          ]
+          path.write_text(text.rstrip() + '\n'.join(lines), encoding='utf-8')
           PY
 
       - name: Validate skill structure and frontmatter
@@ -113,21 +120,22 @@ jobs:
           text = p.read_text(encoding='utf-8')
           if not text.startswith('---\n'):
               raise SystemExit('SKILL.md is missing YAML frontmatter')
-          try:
-              frontmatter = text.split('---\n', 2)[1]
-          except IndexError:
+          parts = text.split('---\n', 2)
+          if len(parts) < 3:
               raise SystemExit('SKILL.md frontmatter is not closed')
           fields = {}
-          for line in frontmatter.splitlines():
+          for line in parts[1].splitlines():
               if not line.strip() or line[:1].isspace() or ':' not in line:
                   continue
               key, value = line.split(':', 1)
               fields[key.strip()] = value.strip()
           if set(fields) != {'name', 'description'}:
               raise SystemExit(f'Unexpected frontmatter keys: {sorted(fields)}')
-          if fields['name'].strip('"\'') != 'ui-ux-pro-max':
-              raise SystemExit(f"Unexpected skill name: {fields['name']}")
-          name = fields['name'].strip('"\'')
+          name = fields['name']
+          if len(name) >= 2 and name[0] == name[-1] and name[0] in ('"', "'"):
+              name = name[1:-1]
+          if name != 'ui-ux-pro-max':
+              raise SystemExit(f'Unexpected skill name: {name}')
           if not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', name):
               raise SystemExit('Skill name is not lowercase hyphen-case')
           if not fields['description']:
@@ -141,10 +149,9 @@ jobs:
           fi
           if find "$skill" \( -name node_modules -o -name __pycache__ -o -name '*.pyc' -o -name '*.tmp' -o -name '*.temp' \) -print -quit | grep -q .; then
             echo 'Unexpected cache/temp content before tests' >&2
-            find "$skill" \( -name node_modules -o -name __pycache__ -o -name '*.pyc' -o -name '*.tmp' -o -name '*.temp' \) -print
             exit 1
           fi
-          if grep -RIlE --exclude='*.csv' --exclude='*.md' '(-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|github_pat_[A-Za-z0-9_]{20,}|ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16})' "$skill" | grep -q .; then
+          if grep -RIlE '(-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|github_pat_[A-Za-z0-9_]{20,}|ghp_[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16})' "$skill" | grep -q .; then
             echo 'Credential-like material detected in skill' >&2
             exit 1
           fi
@@ -160,7 +167,6 @@ jobs:
           python3 .agents/skills/ui-ux-pro-max/scripts/search.py "Django templates responsive RTL interface" --stack html-tailwind | tee /tmp/uiux-search-stack.txt
           test -s /tmp/uiux-search-ux.txt
           test -s /tmp/uiux-search-stack.txt
-          rm -rf .agents/skills/ui-ux-pro-max/scripts/__pycache__
           find .agents/skills/ui-ux-pro-max -type d -name __pycache__ -prune -exec rm -rf {} +
           find .agents/skills/ui-ux-pro-max -type f -name '*.pyc' -delete
 
