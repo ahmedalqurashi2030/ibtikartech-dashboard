@@ -94,6 +94,7 @@ jobs:
         run: sudo -u deploy -H /usr/local/sbin/deploy-ibtikartech
 
       - name: Ensure public image static permissions
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
@@ -107,6 +108,7 @@ jobs:
           test -r "$image_root/hero/ibtikar-services-ecosystem-v1.jpg"
 
       - name: Verify production health
+        if: always()
         run: |
           curl --fail --silent --show-error \
             --retry 5 \
@@ -115,6 +117,7 @@ jobs:
             https://ibtikartech.co/healthz/
 
       - name: Verify production image delivery
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
