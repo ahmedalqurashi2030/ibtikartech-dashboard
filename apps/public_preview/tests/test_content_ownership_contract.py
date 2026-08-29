@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from django.conf import settings
+
 from apps.public_preview.content_contract import (
     ACTIVE_SHARED_SETTING_MODELS,
     EDITORIAL_PAGE_CANDIDATES,
@@ -11,7 +13,6 @@ from apps.public_preview.content_contract import (
 )
 from apps.public_preview.manifest import REQUIRED_PAGES
 from apps.public_preview.template_contract import FAMILY_REQUIRED_BLOCKS
-from django.conf import settings
 
 ROOT = Path(settings.BASE_DIR)
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
