@@ -404,6 +404,7 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
 
 def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     header = _read_source("templates/public_preview/components/header.html")
+    mobile_menu = _read_source("templates/public_preview/components/mobile_menu.html")
     head = _read_source("templates/public_preview/components/document_head.html")
     shell = _read_source(SHELL_RUNTIME)
     styles = _read_source(SHELL_STYLES)
@@ -420,6 +421,17 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     assert "localStorage.setItem('ibtikar-theme',next)" in shell
     assert ":focus-visible" in styles
     assert "@media (prefers-reduced-motion: reduce)" in styles
+    assert header.count("data-ibt-mega-menu") == 2
+    assert header.count("aria-hidden=\"true\" inert data-ibt-mega-menu") == 2
+    assert "link.setAttribute('aria-haspopup'" not in shell
+    assert "'ArrowUp'" in shell
+    assert "focusMegaItem(toggle,event.key === 'ArrowUp' ? 'last' : 'first')" in shell
+    assert 'aria-hidden="true" inert' in mobile_menu
+    assert mobile_menu.count("data-ibt-menu-close") == 1
+    assert "document.createElement('div')" in shell
+    assert "ibt-mobile-backdrop" in styles
+    assert ".ibt-mobile-menu-close" in styles
+    assert ".ibt-shell-mobile-menu summary:focus-visible" in styles
 
     assert "runs-on: [self-hosted, production, ibtikartech]" in browser_workflow
     assert "browser-actions/setup-chrome@v2" in browser_workflow

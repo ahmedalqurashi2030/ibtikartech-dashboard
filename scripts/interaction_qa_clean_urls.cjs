@@ -151,6 +151,7 @@ async function key(client, keyName) {
     ' ': { key: ' ', code: 'Space', keyCode: 32, text: ' ' },
     Escape: { key: 'Escape', code: 'Escape', keyCode: 27 },
     ArrowDown: { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40 },
+    ArrowUp: { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38 },
   }[keyName];
   if (!meta) throw new Error(`Unsupported key ${keyName}`);
   const common = {
@@ -225,7 +226,22 @@ async function testDesktopMega(client) {
   })()`);
   assert(state.expanded === 'true' && state.focusInside, `Desktop mega ArrowDown failed: ${JSON.stringify(state)}`);
   await key(client, 'Escape');
-  console.log('✓ canonical desktop mega: focus / Enter / ArrowDown / Escape');
+
+  await key(client, 'ArrowUp');
+  await wait(120);
+  state = await evaluate(client, `(() => {
+    const toggle = document.querySelector(${JSON.stringify(selector)});
+    const menu = document.getElementById('solutionsServicesMega');
+    const items = [...(menu?.querySelectorAll('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])') || [])]
+      .filter((item) => !item.hidden && item.getClientRects().length);
+    return {
+      expanded: toggle?.getAttribute('aria-expanded'),
+      focusOnLast: items.length > 0 && document.activeElement === items.at(-1),
+    };
+  })()`);
+  assert(state.expanded === 'true' && state.focusOnLast, `Desktop mega ArrowUp failed: ${JSON.stringify(state)}`);
+  await key(client, 'Escape');
+  console.log('✓ canonical desktop mega: focus / Enter / ArrowDown / ArrowUp / Escape');
 }
 
 async function testMobileMenu(client) {
@@ -244,9 +260,10 @@ async function testMobileMenu(client) {
       body: document.body.classList.contains('menu-open'),
       focusInside: menu?.contains(document.activeElement),
       inert: menu?.hasAttribute('inert'),
+      closeButton: Boolean(menu?.querySelector('[data-ibt-menu-close]')),
     };
   })()`);
-  assert(state.expanded === 'true' && state.hidden === 'false' && state.open && state.body && state.focusInside && !state.inert,
+  assert(state.expanded === 'true' && state.hidden === 'false' && state.open && state.body && state.focusInside && !state.inert && state.closeButton,
     `Mobile menu open failed: ${JSON.stringify(state)}`);
 
   await key(client, 'Escape');

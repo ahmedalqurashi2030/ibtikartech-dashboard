@@ -43,14 +43,17 @@
     applyMegaState(toggle,open);
   }
 
-  function focusFirstMegaItem(toggle) {
+  function focusMegaItem(toggle, edge = 'first') {
     const menu = menuFor(toggle);
     if (!menu?.classList.contains('is-open')) return;
-    const first = menu.querySelector('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
-    if (!first) return;
+    const items = [...menu.querySelectorAll(
+      'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])'
+    )].filter((item) => !item.hidden && item.getClientRects().length);
+    const target = edge === 'last' ? items.at(-1) : items[0];
+    if (!target) return;
     const focusIfOpen = () => {
       if (!menu.classList.contains('is-open')) return;
-      first.focus({ preventScroll: true });
+      target.focus({ preventScroll: true });
     };
     focusIfOpen();
     window.setTimeout(() => {
@@ -65,10 +68,10 @@
       setMega(toggle,toggle.getAttribute('aria-expanded') !== 'true');
     });
     toggle.addEventListener('keydown',(event) => {
-      if (!['ArrowDown','Enter',' '].includes(event.key)) return;
+      if (!['ArrowDown','ArrowUp','Enter',' '].includes(event.key)) return;
       event.preventDefault();
       setMega(toggle,true);
-      focusFirstMegaItem(toggle);
+      focusMegaItem(toggle,event.key === 'ArrowUp' ? 'last' : 'first');
     });
   });
 
@@ -78,8 +81,8 @@
     const toggle = root.querySelector('[data-ibt-mega-toggle]');
     const menu = menuFor(toggle);
     if (!link || !toggle || !menu) return;
-    link.setAttribute('aria-haspopup','true');
-    link.setAttribute('aria-controls',menu.id);
+    // The destination link remains a plain link. The adjacent button alone
+    // owns popup semantics through aria-expanded and aria-controls.
 
     root.addEventListener('focusout',(event) => {
       const next = event.relatedTarget;
@@ -210,32 +213,25 @@
   /* Shared mobile drawer ------------------------------------------------ */
   const sharedMobileMenus = [...document.querySelectorAll('.ibt-shell-mobile-menu')];
   if (sharedMobileMenus.length) {
-    const backdrop = document.createElement('button');
-    backdrop.type = 'button';
+    const backdrop = document.createElement('div');
     backdrop.className = 'ibt-mobile-backdrop';
-    backdrop.setAttribute('aria-label','إغلاق القائمة الجانبية');
-    backdrop.tabIndex = -1;
+    backdrop.setAttribute('aria-hidden','true');
     document.body.appendChild(backdrop);
 
     const syncDrawer = (menu, toggle) => {
       const open = menu.classList.contains('open') || menu.classList.contains('is-open');
       backdrop.classList.toggle('is-open',open);
-      backdrop.tabIndex = open ? 0 : -1;
       menu.toggleAttribute('inert',!open);
       toggle?.setAttribute('aria-label',open ? 'إغلاق القائمة' : 'فتح القائمة');
     };
 
     sharedMobileMenus.forEach((menu) => {
       const toggle = document.querySelector(`[aria-controls="${menu.id}"]`);
-      if (!menu.querySelector('.ibt-mobile-menu-head')) {
-        const head = document.createElement('div');
-        head.className = 'ibt-mobile-menu-head';
-        head.innerHTML = '<span><strong>القائمة</strong><small>ابتكار تك للحلول والخدمات الرقمية</small></span><button class="ibt-mobile-menu-close" type="button" aria-label="إغلاق القائمة">×</button>';
-        menu.prepend(head);
-        head.querySelector('button')?.addEventListener('click',() => {
+      menu.querySelectorAll('[data-ibt-menu-close]').forEach((closeButton) => {
+        closeButton.addEventListener('click',() => {
           if (toggle?.getAttribute('aria-expanded') === 'true') toggle.click();
         });
-      }
+      });
       syncDrawer(menu,toggle);
       new MutationObserver(() => syncDrawer(menu,toggle)).observe(menu,{attributes:true,attributeFilter:['class','aria-hidden']});
       backdrop.addEventListener('click',() => {

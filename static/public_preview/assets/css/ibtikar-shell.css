@@ -418,6 +418,66 @@ html[data-theme="dark"] .ibt-shell-mega {
 }
 
 /* Mobile menu */
+.ibt-mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2180;
+  border: 0;
+  background: rgba(3, 7, 18, .58);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+.ibt-mobile-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ibt-mobile-menu-head {
+  min-height: 48px;
+  padding: 0 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--ibt-border);
+}
+
+.ibt-mobile-menu-head span {
+  display: grid;
+  gap: 2px;
+}
+
+.ibt-mobile-menu-head strong {
+  color: var(--ibt-text);
+  font-size: 14px;
+}
+
+.ibt-mobile-menu-head small {
+  color: var(--ibt-muted);
+  font-size: 11px;
+}
+
+.ibt-mobile-menu-close {
+  inline-size: 40px;
+  block-size: 40px;
+  flex: 0 0 40px;
+  border: 1px solid var(--ibt-border);
+  border-radius: 12px;
+  color: var(--ibt-text);
+  background: var(--ibt-bg-soft);
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ibt-mobile-menu-close:hover {
+  color: var(--ibt-blue);
+  border-color: color-mix(in srgb, var(--ibt-blue) 42%, var(--ibt-border));
+}
+
 .ibt-shell-mobile-menu,
 .mobile-menu.ibt-shell-mobile-menu {
   position: fixed;
@@ -600,6 +660,9 @@ html[data-theme="dark"] .ibt-shell-mega {
 
 .ibt-shell-header a:focus-visible,
 .ibt-shell-header button:focus-visible,
+.ibt-shell-mobile-menu a:focus-visible,
+.ibt-shell-mobile-menu summary:focus-visible,
+.ibt-shell-mobile-menu button:focus-visible,
 .ibt-shell-footer a:focus-visible {
   outline: 0;
   box-shadow: var(--ibt-focus);

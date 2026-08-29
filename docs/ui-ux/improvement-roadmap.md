@@ -18,32 +18,32 @@
 | 8 | Wagtail content evolution | تحرير المحتوى المستقر | blocks/snippets المختارة | CMS يفرض بنية غير ناضجة | عقود تحرير تعكس المكونات المستقرة |
 | 9 | Comprehensive QA | إطلاق آمن | جميع الصفحات والمقاسات | ثغرات بصرية ومتصفحات | Visual/a11y/performance regression كاملة |
 
-## المجموعة الحالية: Articles
+## المجموعة الحالية: Global shell hardening
 
-### الصفحات
+### النطاق
 
-- `templates/public_preview/pages/knowledge.html`
-- `templates/public_preview/pages/article-product-page.html`
-- `templates/public_preview/pages/article-store-launch.html`
-- `templates/public_preview/pages/article-store-redesign.html`
+- `templates/public_preview/components/header.html`
+- `templates/public_preview/components/mobile_menu.html`
+- `static/public_preview/assets/js/ibtikar-shell.js`
+- `static/public_preview/assets/css/ibtikar-shell.css`
 
-### العقد المعتمد
+### التحسينات المؤكدة
 
-- `article_detail_base.html` يملك شريط تقدم القراءة و`main` وحزمة
-  `articles.css` و`articles.js` المتطابقة للمقالات الثلاثة.
-- كل مقال يملك metadata وOpen Graph وJSON-LD ومحتوى المقال والعناصر المرتبطة.
-- `knowledge.html` يبقى صفحة مستقلة لأنه CollectionPage بفلترة ورحلة اكتشاف،
-  وليس مقالًا تفصيليًا.
-- ملكية أصول المقالات route-scoped ومحصورة في فهرس المعرفة والمقالات الثلاثة.
-- لا تُستخرج فقرات المقال أو جداول المحتوى إلى مكوّنات مشتركة؛ دلالتها تحريرية.
+- إزالة popup semantics من رابط الوجهة؛ زر السهم وحده يملك التوسيع.
+- جعل Mega Menu وقائمة الجوال `inert` في الحالة المغلقة منذ HTML الأولي.
+- دعم ArrowUp لفتح Mega Menu والتركيز على آخر عنصر، مع استمرار
+  Enter وSpace وArrowDown وEscape.
+- نقل رأس قائمة الجوال وزر الإغلاق من HTML مولّد داخل JavaScript إلى القالب.
+- جعل backdrop بصريًا وخارج ترتيب Tab لأن زر الإغلاق وEscape هما مسارا
+  لوحة المفاتيح المعتمدان.
+- إضافة focus-visible واضح لعناصر وروابط وsummary قائمة الجوال.
 
-### معايير القبول البنيوية
+### الحدود
 
-- title وdescription وOpen Graph وJSON-LD محفوظة لكل مقال.
-- بنية `article` و`aside` وTable of Contents والمحتوى المرتبط محفوظة.
-- رابط كل مقال وIDs الداخلية وتاريخ النشر بلا تغيير.
-- `articles.css` و`articles.js` يظهران مرة واحدة لكل مستهلك معتمد.
-- Browser QA وSEO rendering وa11y/performance الشاملة مؤجلة للمجموعة 9.
+- لا تغيير في بنية التنقل أو أسماء الروابط أو وجهاتها.
+- لا تغيير في الألوان أو المقاسات العامة للـHeader/Footer.
+- لا مكتبة جديدة ولا إعادة كتابة للـshell.
+- Browser QA والتوافق الفعلي عبر المقاسات مؤجلان للمجموعة 9 قبل الدمج.
 
 ## سياسة Pull Requests
 

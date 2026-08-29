@@ -56,7 +56,11 @@
 - `prefers-reduced-motion` يعطّل الحركة الانتقالية الطويلة.
 - الحاوية تستخدم `margin-inline`، ما يحافظ على RTL/LTR.
 - Header وMega Menu وقائمة الجوال مملوكة لـ`ibtikar-shell.css` و
-  `ibtikar-shell.js`.
+  `ibtikar-shell.js`. زر التوسيع وحده يملك popup ARIA، وقوائم Mega والجوال
+  تبدأ `inert`، وEscape يعيد التركيز إلى زر الفتح.
+- Mega Menu تدعم Enter وSpace وArrowDown لأول عنصر وArrowUp لآخر عنصر.
+- قائمة الجوال تملك زر إغلاق دلاليًا داخل القالب، وbackdrop بصريًا غير داخل
+  ترتيب Tab، مع focus trap داخل القائمة عند فتحها.
 - هوية الصفحة تمر عبر `body[data-page]`، وهو العقد المعتمد لسلوك JavaScript.
 - روابط الصفحات الداخلية يجب أن تستخدم Django named URLs.
 
