@@ -18,33 +18,25 @@
 | 8 | Wagtail content evolution | تحرير المحتوى المستقر | blocks/snippets المختارة | CMS يفرض بنية غير ناضجة | عقود تحرير تعكس المكونات المستقرة |
 | 9 | Comprehensive QA | إطلاق آمن | جميع الصفحات والمقاسات | ثغرات بصرية ومتصفحات | Visual/a11y/performance regression كاملة |
 
-## المجموعة الحالية: Wagtail content evolution
+## المجموعة التالية: Comprehensive QA
 
-### النتيجة المعمارية
+اكتملت مجموعات التطوير البنيوي والقياس وحوكمة المحتوى في PRs متسلسلة Draft.
+لا يوجد تغيير تطويري إضافي آمن قبل الاختبار؛ أي إصلاح جديد يجب أن ينتج عن عيب
+مثبت في QA، لا عن توسع جديد في النطاق.
 
-- `SiteSettings` و`TrackingSettings` هما المالكان النشطان للإعدادات العامة.
-- محتوى المسارات العامة الـ22 يبقى template-owned في هذه المرحلة.
-- نماذج Wagtail Page الحالية Editorial Candidates وليست مصادر عرض عامة.
-- `wagtail_page_binding=false` مسجل في manifest وعقد قابل للفحص.
-- لا models جديدة ولا migrations ولا نقل محتوى في هذه المجموعة.
+### نطاق البوابة
 
-### سبب عدم الربط المباشر
+- اختبارات Django والعقود والملكية.
+- 22 مسارًا على الجوال والكمبيوتر.
+- الصفحات الحرجة على المقاسات الوسطية.
+- Keyboard/focus/RTL/reduced-motion وaxe.
+- نموذج التواصل والـData Layer والـrate limit.
+- screenshots وvisual regression.
+- Lighthouse وملكية الأصول.
+- تحقق Browser QA على self-hosted runner دون اشتراك خارجي.
 
-توجد نماذج Wagtail جاهزة وظيفيًا، لكنها تعرض `content/standard_page.html`
-ولا تملك تطابقًا مثبتًا مع عائلات العرض وSEO وJSON-LD الحالية. تفعيلها الآن
-ينشئ dual ownership وfallback صامتًا ويعرّض المحتوى المنشور للتراجع.
-
-### بوابات التفعيل اللاحق
-
-- Field mapping.
-- Content migration + rollback.
-- SEO/structured-data parity.
-- Preview/publishing workflow.
-- Route cutover بلا مصدرين.
-- Visual regression approval.
-
-التفاصيل في `docs/ui-ux/content-ownership-contract.md`. بعد QA النهائي يبدأ
-Pilot منخفض المخاطر بمقال واحد أو صفحة قانونية، لا بالرئيسية أو ثراء.
+الخطة التنفيذية ومعايير الإيقاف والأدلة المطلوبة موثقة في
+`docs/ui-ux/comprehensive-qa-plan.md`. لا دمج ولا نشر قبل نجاحها.
 
 ## سياسة Pull Requests
 
