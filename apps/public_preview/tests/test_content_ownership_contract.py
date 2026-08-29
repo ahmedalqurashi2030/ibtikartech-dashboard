@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from django.conf import settings
-
 from apps.public_preview.content_contract import (
     ACTIVE_SHARED_SETTING_MODELS,
     EDITORIAL_PAGE_CANDIDATES,
@@ -13,7 +11,7 @@ from apps.public_preview.content_contract import (
 )
 from apps.public_preview.manifest import REQUIRED_PAGES
 from apps.public_preview.template_contract import FAMILY_REQUIRED_BLOCKS
-
+from django.conf import settings
 
 ROOT = Path(settings.BASE_DIR)
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
@@ -23,7 +21,7 @@ def test_public_content_has_one_declared_owner_without_wagtail_page_binding():
     assert PUBLIC_CONTENT_OWNER == "django-templates"
     assert SHARED_SETTINGS_OWNER == "wagtail-site-settings"
     assert WAGTAIL_PAGE_BINDING is False
-    assert PUBLIC_TEMPLATE_OWNED_PAGES == tuple(REQUIRED_PAGES)
+    assert tuple(REQUIRED_PAGES) == PUBLIC_TEMPLATE_OWNED_PAGES
     assert ACTIVE_SHARED_SETTING_MODELS == ("SiteSettings", "TrackingSettings")
     assert len(WAGTAIL_ACTIVATION_GATES) == 6
 
