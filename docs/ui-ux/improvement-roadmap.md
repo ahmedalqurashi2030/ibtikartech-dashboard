@@ -18,37 +18,33 @@
 | 8 | Wagtail content evolution | تحرير المحتوى المستقر | blocks/snippets المختارة | CMS يفرض بنية غير ناضجة | عقود تحرير تعكس المكونات المستقرة |
 | 9 | Comprehensive QA | إطلاق آمن | جميع الصفحات والمقاسات | ثغرات بصرية ومتصفحات | Visual/a11y/performance regression كاملة |
 
-## المجموعة الحالية: Unique conversion pages
+## المجموعة الحالية: Wagtail content evolution
 
-### الصفحات
+### النتيجة المعمارية
 
-- `index.html`
-- `services.html`
-- `tharaa.html`
-- `contact.html`
+- `SiteSettings` و`TrackingSettings` هما المالكان النشطان للإعدادات العامة.
+- محتوى المسارات العامة الـ22 يبقى template-owned في هذه المرحلة.
+- نماذج Wagtail Page الحالية Editorial Candidates وليست مصادر عرض عامة.
+- `wagtail_page_binding=false` مسجل في manifest وعقد قابل للفحص.
+- لا models جديدة ولا migrations ولا نقل محتوى في هذه المجموعة.
 
-### العقود المعتمدة
+### سبب عدم الربط المباشر
 
-- تبقى الصفحات الأربع page-owned ولا تُفرض عليها Page Family مشتركة.
-- أصول `source-home` و`source-services` و`source-tharaa` وحزمة
-  `conversion-funnel.css` لها مستهلكون صريحون في Asset Contract.
-- روابط طلب المشروع تحمل `quote_request` وlabel سياقيًا دون تغيير النص أو URL.
-- `inquiry_submitted` حدث نجاح، وليس click event على حاوية النموذج.
-- إرسال النموذج مقفول أثناء الطلب لمنع إنشاء Inquiry مكرر من الواجهة.
-- أخطاء Django field-level تعيد المستخدم إلى الخطوة والحقل الصحيحين.
+توجد نماذج Wagtail جاهزة وظيفيًا، لكنها تعرض `content/standard_page.html`
+ولا تملك تطابقًا مثبتًا مع عائلات العرض وSEO وJSON-LD الحالية. تفعيلها الآن
+ينشئ dual ownership وfallback صامتًا ويعرّض المحتوى المنشور للتراجع.
 
-### المشكلات المؤكدة التي عولجت
+### بوابات التفعيل اللاحق
 
-- `data-analytics` على عنصر `form` كان يسمح لـ`closest()` بتسجيل كل نقرة
-  داخل النموذج كتحويل مكتمل.
-- فشل تحقق الخادم كان يظهر رسالة عامة ولا يكشف الحقل أو الخطوة المرتبطة.
-- لم يوجد قفل صريح يمنع submit متزامنًا مكررًا.
-- CTA الداخلية للرئيسية والخدمات وثراء لم تكن تملك labels قياس متسقة.
+- Field mapping.
+- Content migration + rollback.
+- SEO/structured-data parity.
+- Preview/publishing workflow.
+- Route cutover بلا مصدرين.
+- Visual regression approval.
 
-### المؤجل
-
-- التحقق الفعلي من Data Layer وطلب POST واختبارات المقاسات والمتصفحات.
-- screenshots وa11y وperformance إلى مجموعة QA النهائية قبل الدمج.
+التفاصيل في `docs/ui-ux/content-ownership-contract.md`. بعد QA النهائي يبدأ
+Pilot منخفض المخاطر بمقال واحد أو صفحة قانونية، لا بالرئيسية أو ثراء.
 
 ## سياسة Pull Requests
 

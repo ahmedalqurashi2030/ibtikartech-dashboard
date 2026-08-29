@@ -19,6 +19,12 @@ from apps.public_preview.asset_contract import (  # noqa: E402
     FAMILY_ASSET_EXTENSION_BLOCKS,
     ROUTE_SCOPED_ASSET_CONSUMERS,
 )
+from apps.public_preview.content_contract import (  # noqa: E402
+    PUBLIC_CONTENT_OWNER,
+    PUBLIC_TEMPLATE_OWNED_PAGES,
+    SHARED_SETTINGS_OWNER,
+    WAGTAIL_PAGE_BINDING,
+)
 from apps.public_preview.manifest import REQUIRED_PAGES, RETIRED_PLATFORM_PAGES  # noqa: E402
 from apps.public_preview.template_contract import (  # noqa: E402
     BASE_TEMPLATE_PARENT,
@@ -67,6 +73,12 @@ def verify_manifest() -> None:
         fail("Frontend manifest mode must be dashboard-authoritative.")
     if data.get("external_frontend_import") is not False:
         fail("Frontend manifest must explicitly disable external_frontend_import.")
+    if data.get("public_content_owner") != PUBLIC_CONTENT_OWNER:
+        fail("Frontend manifest public_content_owner drifted from content contract.")
+    if data.get("shared_settings_owner") != SHARED_SETTINGS_OWNER:
+        fail("Frontend manifest shared_settings_owner drifted from content contract.")
+    if data.get("wagtail_page_binding") is not WAGTAIL_PAGE_BINDING:
+        fail("Frontend manifest wagtail_page_binding drifted from content contract.")
     if tuple(data.get("required_pages", ())) != tuple(REQUIRED_PAGES):
         fail("Frontend manifest required_pages drifted from apps.public_preview.manifest.")
     if tuple(data.get("retired_platform_pages", ())) != tuple(RETIRED_PLATFORM_PAGES):
@@ -200,6 +212,47 @@ def verify_route_scoped_asset_consumers() -> None:
         fail("Route-scoped frontend asset contract failed:\n- " + "\n- ".join(invalid))
 
 
+
+def verify_public_content_ownership() -> None:
+    if PUBLIC_TEMPLATE_OWNED_PAGES != tuple(REQUIRED_PAGES):
+        fail("Public content ownership must cover every required page exactly once.")
+
+    forbidden_view_markers = (
+        "from apps.content.models import",
+        "import apps.content.models",
+        "from wagtail.models import Page",
+        "Page.objects",
+        ".specific",
+    )
+    view_paths = (
+        ROOT / "apps" / "public_preview" / "views.py",
+        ROOT / "apps" / "services" / "public_views.py",
+    )
+    invalid: list[str] = []
+    for path in view_paths:
+        source = path.read_text(encoding="utf-8")
+        for marker in forbidden_view_markers:
+            if marker in source:
+                invalid.append(
+                    f"{path.relative_to(ROOT)} binds public rendering to {marker!r}"
+                )
+
+    template_paths = [
+        *(PAGES_DIR / page_name for page_name in REQUIRED_PAGES),
+        *(ROOT / "templates" / parent for parent in FAMILY_REQUIRED_BLOCKS),
+    ]
+    for path in template_paths:
+        source = path.read_text(encoding="utf-8")
+        for marker in ("{{ page.", "{% include_block", "{{ self."):
+            if marker in source:
+                invalid.append(
+                    f"{path.relative_to(ROOT)} has undeclared Wagtail field binding {marker!r}"
+                )
+
+    if invalid:
+        fail("Public content ownership contract failed:\n- " + "\n- ".join(invalid))
+
+
 def verify_no_external_frontend_clone_contract() -> None:
     # Build the old repository token dynamically so this guard does not trigger itself.
     old_repo = "ahmedalqurashi2030/" + "ibtikartech"
@@ -232,12 +285,14 @@ def main() -> None:
     verify_dashboard_owned_pages()
     verify_dashboard_owned_assets()
     verify_route_scoped_asset_consumers()
+    verify_public_content_ownership()
     verify_no_external_frontend_clone_contract()
     print(
         "Dashboard frontend ownership verified: "
         f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page families, "
         f"{len(REQUIRED_OWNED_ASSETS)} canonical assets, and "
-        f"{len(ROUTE_SCOPED_ASSET_CONSUMERS)} route-scoped asset contracts "
+        f"{len(ROUTE_SCOPED_ASSET_CONSUMERS)} route-scoped asset contracts, and "
+        f"{len(PUBLIC_TEMPLATE_OWNED_PAGES)} template-owned content contracts "
         "are repository-owned."
     )
 

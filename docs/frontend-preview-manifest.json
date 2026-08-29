@@ -36,5 +36,8 @@
     "shopify.html",
     "woocommerce.html",
     "wordpress.html"
-  ]
+  ],
+  "public_content_owner": "django-templates",
+  "shared_settings_owner": "wagtail-site-settings",
+  "wagtail_page_binding": false
 }
