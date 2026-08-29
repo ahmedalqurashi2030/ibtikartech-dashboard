@@ -354,8 +354,14 @@ def test_non_commerce_service_categories_offer_local_section_navigation():
 
 def test_service_category_pages_load_shared_cinematic_runtime():
     """Every service category progressively enhances its decision paths with one shared runtime."""
+    family_source = _family_source(page_parent(SERVICE_CATEGORY_PAGES[0]))
     for page_name in SERVICE_CATEGORY_PAGES:
-        source = _effective_page_source(page_name)
+        page_source = _page_source(page_name)
+        source = (
+            page_source
+            if "{% block category_scripts %}" in page_source
+            else family_source
+        )
         assert source.count("service-cinema.js") == 1
 
 
