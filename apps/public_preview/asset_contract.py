@@ -31,6 +31,13 @@ HOMEPAGE_SURFACE_ASSET = (
 )
 ARTICLE_STYLES = "public_preview/assets/css/pages/articles.css"
 ARTICLE_RUNTIME = "public_preview/assets/js/articles.js"
+CONVERSION_FUNNEL_STYLES = "public_preview/assets/css/pages/conversion-funnel.css"
+HOME_SOURCE_STYLES = "public_preview/assets/css/pages/source-home.css"
+HOME_SOURCE_RUNTIME = "public_preview/assets/js/source-home.js"
+SERVICES_SOURCE_STYLES = "public_preview/assets/css/pages/source-services.css"
+SERVICES_SOURCE_RUNTIME = "public_preview/assets/js/source-services.js"
+THARAA_SOURCE_STYLES = "public_preview/assets/css/pages/source-tharaa.css"
+THARAA_SOURCE_RUNTIME = "public_preview/assets/js/source-tharaa.js"
 
 SECTION_LAYOUT_CONSUMERS = (
     "index.html",
@@ -59,6 +66,13 @@ ROUTE_SCOPED_ASSET_CONSUMERS = {
     HOMEPAGE_SURFACE_ASSET: ("index.html",),
     ARTICLE_STYLES: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
     ARTICLE_RUNTIME: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
+    CONVERSION_FUNNEL_STYLES: ("index.html", "services.html", "tharaa.html"),
+    HOME_SOURCE_STYLES: ("index.html",),
+    HOME_SOURCE_RUNTIME: ("index.html",),
+    SERVICES_SOURCE_STYLES: ("services.html",),
+    SERVICES_SOURCE_RUNTIME: ("services.html",),
+    THARAA_SOURCE_STYLES: ("tharaa.html",),
+    THARAA_SOURCE_RUNTIME: ("tharaa.html",),
 }
 
 FAMILY_ASSET_EXTENSION_BLOCKS = {

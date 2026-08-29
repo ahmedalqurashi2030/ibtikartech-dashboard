@@ -18,32 +18,37 @@
 | 8 | Wagtail content evolution | تحرير المحتوى المستقر | blocks/snippets المختارة | CMS يفرض بنية غير ناضجة | عقود تحرير تعكس المكونات المستقرة |
 | 9 | Comprehensive QA | إطلاق آمن | جميع الصفحات والمقاسات | ثغرات بصرية ومتصفحات | Visual/a11y/performance regression كاملة |
 
-## المجموعة الحالية: Global shell hardening
+## المجموعة الحالية: Unique conversion pages
 
-### النطاق
+### الصفحات
 
-- `templates/public_preview/components/header.html`
-- `templates/public_preview/components/mobile_menu.html`
-- `static/public_preview/assets/js/ibtikar-shell.js`
-- `static/public_preview/assets/css/ibtikar-shell.css`
+- `index.html`
+- `services.html`
+- `tharaa.html`
+- `contact.html`
 
-### التحسينات المؤكدة
+### العقود المعتمدة
 
-- إزالة popup semantics من رابط الوجهة؛ زر السهم وحده يملك التوسيع.
-- جعل Mega Menu وقائمة الجوال `inert` في الحالة المغلقة منذ HTML الأولي.
-- دعم ArrowUp لفتح Mega Menu والتركيز على آخر عنصر، مع استمرار
-  Enter وSpace وArrowDown وEscape.
-- نقل رأس قائمة الجوال وزر الإغلاق من HTML مولّد داخل JavaScript إلى القالب.
-- جعل backdrop بصريًا وخارج ترتيب Tab لأن زر الإغلاق وEscape هما مسارا
-  لوحة المفاتيح المعتمدان.
-- إضافة focus-visible واضح لعناصر وروابط وsummary قائمة الجوال.
+- تبقى الصفحات الأربع page-owned ولا تُفرض عليها Page Family مشتركة.
+- أصول `source-home` و`source-services` و`source-tharaa` وحزمة
+  `conversion-funnel.css` لها مستهلكون صريحون في Asset Contract.
+- روابط طلب المشروع تحمل `quote_request` وlabel سياقيًا دون تغيير النص أو URL.
+- `inquiry_submitted` حدث نجاح، وليس click event على حاوية النموذج.
+- إرسال النموذج مقفول أثناء الطلب لمنع إنشاء Inquiry مكرر من الواجهة.
+- أخطاء Django field-level تعيد المستخدم إلى الخطوة والحقل الصحيحين.
 
-### الحدود
+### المشكلات المؤكدة التي عولجت
 
-- لا تغيير في بنية التنقل أو أسماء الروابط أو وجهاتها.
-- لا تغيير في الألوان أو المقاسات العامة للـHeader/Footer.
-- لا مكتبة جديدة ولا إعادة كتابة للـshell.
-- Browser QA والتوافق الفعلي عبر المقاسات مؤجلان للمجموعة 9 قبل الدمج.
+- `data-analytics` على عنصر `form` كان يسمح لـ`closest()` بتسجيل كل نقرة
+  داخل النموذج كتحويل مكتمل.
+- فشل تحقق الخادم كان يظهر رسالة عامة ولا يكشف الحقل أو الخطوة المرتبطة.
+- لم يوجد قفل صريح يمنع submit متزامنًا مكررًا.
+- CTA الداخلية للرئيسية والخدمات وثراء لم تكن تملك labels قياس متسقة.
+
+### المؤجل
+
+- التحقق الفعلي من Data Layer وطلب POST واختبارات المقاسات والمتصفحات.
+- screenshots وa11y وperformance إلى مجموعة QA النهائية قبل الدمج.
 
 ## سياسة Pull Requests
 

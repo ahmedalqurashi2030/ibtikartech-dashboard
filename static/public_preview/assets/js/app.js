@@ -111,8 +111,32 @@ function initForms() {
     const state = qs('[data-form-state]', form);
     const submit = qs('button[type="submit"]', form);
     let started = false;
+    let submitting = false;
 
-    form.addEventListener('input', () => {
+    const applyServerErrors = (errors = {}) => {
+      let firstField = null;
+      let firstMessage = '';
+      Object.entries(errors).forEach(([name, items]) => {
+        const field = qsa('[name]', form).find((candidate) => candidate.name === name);
+        if (field) {
+          field.setAttribute('aria-invalid', 'true');
+          if (!firstField) firstField = field;
+        }
+        if (!firstMessage && items?.[0]?.message) firstMessage = items[0].message;
+      });
+      if (firstField) {
+        form.dispatchEvent(new CustomEvent('ibtikar:focus-field', {
+          detail: { field: firstField }
+        }));
+        requestAnimationFrame(() => firstField.focus({ preventScroll: true }));
+      }
+      return firstMessage;
+    };
+
+    form.addEventListener('input', (event) => {
+      if (event.target?.matches?.('[aria-invalid="true"]')) {
+        event.target.removeAttribute('aria-invalid');
+      }
       if (started) return;
       started = true;
       window.IBTIKAR_ANALYTICS?.track(cfg.events?.formStart || 'form_start', { form: form.id || form.name });
@@ -120,6 +144,7 @@ function initForms() {
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
+      if (submitting) return;
       const hp = qs(`[name="${honeypot}"]`, form);
       if (hp?.value) return;
 
@@ -134,6 +159,10 @@ function initForms() {
       }
 
       const endpoint = form.dataset.submitEndpoint || (form.hasAttribute('data-live-form') ? cfg.forms?.endpoint : '');
+      submitting = true;
+      form.setAttribute('aria-busy', 'true');
+      qsa('[aria-invalid="true"]', form).forEach((field) => field.removeAttribute('aria-invalid'));
+      if (state) state.removeAttribute('role');
       if (submit) {
         submit.disabled = true;
         submit.dataset.originalText = submit.textContent;
@@ -153,25 +182,33 @@ function initForms() {
             credentials: 'same-origin'
           });
           const result = await response.json();
-          if (!response.ok || !result.ok) throw new Error(result.message || 'تعذر إرسال الطلب.');
+          if (!response.ok || !result.ok) {
+            const submissionError = new Error(result.message || 'تعذر إرسال الطلب.');
+            submissionError.fieldErrors = result.errors || {};
+            throw submissionError;
+          }
           if (state) {
             state.className = 'form-message is-success';
             state.textContent = `${result.message} رقم المرجع: ${result.reference}`;
           }
           window.IBTIKAR_ANALYTICS?.track(
-            cfg.events?.inquirySubmitted || form.dataset.analytics || 'inquiry_submitted',
+            cfg.events?.inquirySubmitted || form.dataset.successEvent || 'inquiry_submitted',
             { form: form.id, reference: result.reference }
           );
           form.dispatchEvent(new CustomEvent('ibtikar:form-submitted', { bubbles: true, detail: result }));
           form.reset();
           started = false;
         } catch (error) {
+          const fieldMessage = applyServerErrors(error.fieldErrors);
           if (state) {
             state.className = 'form-message is-error';
-            state.textContent = error.message || 'تعذر إرسال الطلب الآن. حاول مرة أخرى.';
+            state.setAttribute('role', 'alert');
+            state.textContent = fieldMessage || error.message || 'تعذر إرسال الطلب الآن. حاول مرة أخرى.';
           }
           window.IBTIKAR_ANALYTICS?.track(cfg.events?.formError || 'form_error', { form: form.id });
         } finally {
+          submitting = false;
+          form.removeAttribute('aria-busy');
           if (submit) {
             submit.disabled = false;
             submit.textContent = submit.dataset.originalText || 'إرسال';
@@ -198,7 +235,7 @@ function initForms() {
         }
 
         if (saved) {
-          window.IBTIKAR_ANALYTICS?.track(form.dataset.analytics || cfg.events?.formSubmit || 'form_submit', { form: form.id });
+          window.IBTIKAR_ANALYTICS?.track(form.dataset.successEvent || cfg.events?.formSubmit || 'form_submit', { form: form.id });
           form.dispatchEvent(new CustomEvent('ibtikar:form-saved', { bubbles: true }));
           form.reset();
           started = false;
@@ -206,6 +243,8 @@ function initForms() {
           window.IBTIKAR_ANALYTICS?.track(cfg.events?.formError || 'form_error', { form: form.id });
         }
 
+        submitting = false;
+        form.removeAttribute('aria-busy');
         if (submit) {
           submit.disabled = false;
           submit.textContent = submit.dataset.originalText || 'إرسال';
@@ -250,6 +289,11 @@ function initContactSteps() {
   }));
 
   prevBtns.forEach((btn) => btn.addEventListener('click', () => showStep(current - 1, true)));
+  wrap.addEventListener('ibtikar:focus-field', (event) => {
+    const field = event.detail?.field;
+    const target = panels.findIndex((panel) => panel.contains(field));
+    if (target >= 0) showStep(target);
+  });
   wrap.addEventListener('reset', () => requestAnimationFrame(() => showStep(0)));
   showStep(0);
 }

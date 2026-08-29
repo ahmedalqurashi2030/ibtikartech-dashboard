@@ -113,7 +113,7 @@
 <a href="{% url 'public_preview:growth' %}"><small>03</small><h3>حسّن الظهور والقياس</h3><p>ثبّت أساس البيانات ثم رتّب فرص التحسين حسب الأولوية.</p><span>ابدأ من النمو ←</span></a>
 <a href="{% url 'public_preview:custom-systems' %}"><small>04</small><h3>اربط عملية متكررة</h3><p>تكامل أو أتمتة أو نظام مخصص عندما لا يكفي الحل الجاهز.</p><span>ابدأ من الأنظمة ←</span></a>
 </div>
-<div class="home-goal-router__unknown"><span>لست متأكدًا من نقطة البداية؟</span><a href="{% url 'public_preview:contact' %}?goal=unknown&source=home-goals#quote">ابدأ تشخيصًا مختصرًا</a></div>
+<div class="home-goal-router__unknown"><span>لست متأكدًا من نقطة البداية؟</span><a href="{% url 'public_preview:contact' %}?goal=unknown&source=home-goals#quote" data-analytics="quote_request" data-analytics-label="home-goals-diagnostic">ابدأ تشخيصًا مختصرًا</a></div>
 </div>
 </section>
 <section class="home-proof-band" aria-labelledby="homeProofTitle">
@@ -172,8 +172,8 @@
 </div>
 <div aria-hidden="true" class="cinematic-story__rail"><div class="cinematic-story__line"><span id="cinematicRailProgress"></span></div><div class="cinematic-story__steps"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span></div></div>
 <div aria-hidden="true" class="cinematic-story__cue"><i></i><span>تابع المسار بالتمرير</span><i></i></div>
-<a class="cinematic-story__final-action" href="{% url 'public_preview:contact' %}?source=home-film#quote" id="cinematicFinalAction">ابدأ بتحديد نطاق مشروعك</a>
-<div class="cinematic-story__fallback"><div><strong>بعد اختيار نقطة البداية</strong><span>نثبت الهدف والنطاق، ثم نبني ونسلّم ونحسّن ضمن مسار واضح.</span><a class="btn btn--gradient" href="{% url 'public_preview:contact' %}?source=home-film#quote">ابدأ تشخيص مشروعك</a></div></div>
+<a class="cinematic-story__final-action" href="{% url 'public_preview:contact' %}?source=home-film#quote" id="cinematicFinalAction" data-analytics="quote_request" data-analytics-label="home-film-final">ابدأ بتحديد نطاق مشروعك</a>
+<div class="cinematic-story__fallback"><div><strong>بعد اختيار نقطة البداية</strong><span>نثبت الهدف والنطاق، ثم نبني ونسلّم ونحسّن ضمن مسار واضح.</span><a class="btn btn--gradient" href="{% url 'public_preview:contact' %}?source=home-film#quote" data-analytics="quote_request" data-analytics-label="home-film-brief">ابدأ تشخيص مشروعك</a></div></div>
 </div>
 </section>
 
@@ -300,7 +300,7 @@
 
 <section class="section section--soft faq-section" id="faq">
 <div class="container faq-grid">
-<div class="faq-intro reveal"><span class="section-kicker">الأسئلة الشائعة</span><h2>إجابات قبل أن تبدأ</h2><p>أهم الأسئلة المتعلقة بالخدمات، المدة، المنصات، الأسعار، والدعم.</p><a class="btn btn--outline" href="{% url 'public_preview:contact' %}#quote">لدي سؤال عن مشروعي</a></div>
+<div class="faq-intro reveal"><span class="section-kicker">الأسئلة الشائعة</span><h2>إجابات قبل أن تبدأ</h2><p>أهم الأسئلة المتعلقة بالخدمات، المدة، المنصات، الأسعار، والدعم.</p><a class="btn btn--outline" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-question">لدي سؤال عن مشروعي</a></div>
 <div class="accordion reveal">
 <article class="accordion-item open"><button aria-expanded="true" type="button"><span>هل تعملون على سلة فقط؟</span><i></i></button><div class="accordion-content"><p>لا. نقدم خدمات على سلة وزد وWooCommerce وWordPress، إضافة إلى مواقع وحلول مخصصة حسب المشروع.</p></div></article>
 <article class="accordion-item"><button aria-expanded="false" type="button"><span>هل تشمل الخدمة رسوم المنصة والدومين؟</span><i></i></button><div class="accordion-content"><p>رسوم المنصات والدومين والتطبيقات الخارجية لا تدخل ضمن سعر التنفيذ إلا إذا ذُكرت صراحة في عرض السعر.</p></div></article>
@@ -314,14 +314,14 @@
 <div class="container cta-card reveal">
 <div class="cta-shape cta-shape--one"></div><div class="cta-shape cta-shape--two"></div>
 <div><span>خطوتك القادمة تبدأ هنا</span><h2>جاهز تبني مشروعك الرقمي؟</h2><p>شاركنا فكرتك أو رابط متجرك، وسنقترح عليك المسار الأقرب لهدفك.</p></div>
-<div class="cta-actions"><a class="btn btn--light magnetic" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a><a class="btn btn--ghost-light" href="{% url 'services:index' %}">استكشف الحلول والخدمات</a></div>
+<div class="cta-actions"><a class="btn btn--light magnetic" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-final-project">ابدأ مشروعك</a><a class="btn btn--ghost-light" href="{% url 'services:index' %}">استكشف الحلول والخدمات</a></div>
 </div>
 </section></main>
 
 <nav aria-label="إجراءات سريعة" class="quick-dock">
 <a aria-label="العودة للأعلى" href="#home"><svg viewbox="0 0 24 24"><path d="m18 15-6-6-6 6"></path></svg><span>الأعلى</span></a>
 <button aria-label="البحث السريع" class="dock-search" type="button"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span>بحث</span></button>
-<a class="dock-primary" data-open-brief="" href="{% url 'public_preview:contact' %}#quote"><svg viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg><span>ابدأ مشروعك</span></a>
+<a class="dock-primary" data-open-brief="" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-mobile-dock"><svg viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg><span>ابدأ مشروعك</span></a>
 </nav>
 <div aria-hidden="true" aria-label="البحث السريع" aria-modal="true" class="command-palette" role="dialog">
 <div class="command-panel">

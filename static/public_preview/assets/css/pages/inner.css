@@ -363,7 +363,8 @@ html[data-theme="dark"] body.inner-page {
 
 .field input:invalid:not(:placeholder-shown),
 .field textarea:invalid:not(:placeholder-shown),
-.field select:invalid:not(:focus) {
+.field select:invalid:not(:focus),
+.field [aria-invalid="true"] {
   border-color: color-mix(in srgb, var(--ibt-error) 65%, var(--ibt-border));
 }
 

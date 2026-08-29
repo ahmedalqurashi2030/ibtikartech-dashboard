@@ -62,6 +62,8 @@ def test_contact_post_rejects_invalid_and_honeypot_submissions(client):
     )
 
     assert invalid.status_code == 400
+    assert invalid.json()["ok"] is False
+    assert invalid.json()["errors"]["phone"][0]["message"] == "أدخل رقم تواصل صحيحًا."
     assert spam.status_code == 400
     assert Contact.objects.count() == 0
     assert Inquiry.objects.count() == 0
@@ -83,3 +85,20 @@ def test_home_service_first_cinematic_order_and_tharaa_direct_purchase(settings)
     assert home.count('class="service-scene-copy"') == 5
     assert "https://salla.com/themes/1609470678" in tharaa
     assert "299 ر.س" in tharaa
+
+def test_unique_conversion_pages_keep_explicit_quote_measurement(settings):
+    pages = {
+        "index.html": 6,
+        "services.html": 2,
+        "tharaa.html": 2,
+    }
+    pages_dir = settings.BASE_DIR / "templates/public_preview/pages"
+    for page_name, expected in pages.items():
+        source = (pages_dir / page_name).read_text(encoding="utf-8")
+        assert source.count('data-analytics="quote_request"') == expected
+        assert source.count("data-analytics-label=") >= expected
+
+    contact = (pages_dir / "contact.html").read_text(encoding="utf-8")
+    assert 'data-analytics="inquiry_submitted"' not in contact
+    assert contact.count('data-success-event="inquiry_submitted"') == 1
+

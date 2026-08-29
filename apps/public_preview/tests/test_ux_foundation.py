@@ -154,6 +154,39 @@ def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
         assert actual_consumers == set(expected_consumers), asset
 
 
+
+def test_conversion_events_are_bound_to_actions_and_success():
+    contact = _read_source("templates/public_preview/pages/contact.html")
+    home = _read_source("templates/public_preview/pages/index.html")
+    services = _read_source("templates/public_preview/pages/services.html")
+    tharaa = _read_source("templates/public_preview/pages/tharaa.html")
+    app_runtime = _read_source("static/public_preview/assets/js/app.js")
+    analytics_runtime = _read_source(
+        "static/public_preview/assets/js/modules/analytics.js"
+    )
+
+    assert 'data-analytics="inquiry_submitted"' not in contact
+    assert contact.count('data-success-event="inquiry_submitted"') == 1
+    assert contact.count('data-analytics="quote_request"') == 0
+    assert home.count('data-analytics="quote_request"') == 6
+    assert services.count('data-analytics="quote_request"') == 2
+    assert tharaa.count('data-analytics="quote_request"') == 2
+
+    assert "form.dataset.successEvent" in app_runtime
+    assert "form.dataset.analytics ||" not in app_runtime
+    assert "if (submitting) return;" in app_runtime
+    assert "form.setAttribute('aria-busy', 'true')" in app_runtime
+    assert "applyServerErrors(error.fieldErrors)" in app_runtime
+    assert "ibtikar:focus-field" in app_runtime
+
+    actionable_selector = (
+        "\"a[data-analytics], button[data-analytics], "
+        "[role='button'][data-analytics]\""
+    )
+    assert actionable_selector in analytics_runtime
+    assert 'closest("[data-analytics]")' not in analytics_runtime
+
+
 def test_related_services_runtime_keeps_one_guarded_behavior_owner():
     shell_source = _read_source(SHELL_RUNTIME)
     related_source = _read_source(RELATED_RUNTIME)

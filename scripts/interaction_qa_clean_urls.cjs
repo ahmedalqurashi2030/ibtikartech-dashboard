@@ -362,6 +362,7 @@ async function testThemeRtlAndReducedMotion(client) {
 
 async function testContactSteps(client) {
   await navigate(client, '/contact/', DESKTOP);
+  await evaluate(client, "(() => { window.dataLayer = []; return true; })()");
   await setValue(client, '#quote-name', 'اختبار جودة');
   await setValue(client, '#quote-phone', '0500000000');
   await focus(client, '[data-step-next]', 0);
@@ -418,12 +419,16 @@ async function testContactSteps(client) {
       firstVisible: !panels[0]?.hidden,
       activeStep: steps.findIndex((step) => step.classList.contains('is-active')),
       submitEnabled: !submit?.disabled,
+      formBusy: document.getElementById('quote-form')?.getAttribute('aria-busy'),
+      inquiryEvents: (window.dataLayer || []).filter((item) => item?.event === 'inquiry_submitted').length,
     };
   })()`);
   assert(/وصل طلبك إلى الفريق/.test(state.message), `Contact success message missing: ${JSON.stringify(state)}`);
   assert(/رقم المرجع:\s*IBT-[A-Z0-9]+/.test(state.message), `Contact reference missing: ${JSON.stringify(state)}`);
-  assert(state.firstVisible && state.activeStep === 0 && state.submitEnabled,
+  assert(state.firstVisible && state.activeStep === 0 && state.submitEnabled && state.formBusy === null,
     `Contact reset after submit failed: ${JSON.stringify(state)}`);
+  assert(state.inquiryEvents === 1,
+    `Contact conversion must emit once after success: ${JSON.stringify(state)}`);
   console.log('✓ contact: three steps + live local-test submission + reference');
 }
 

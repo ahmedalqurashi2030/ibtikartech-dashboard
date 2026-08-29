@@ -33,7 +33,9 @@
     if (initialized) return;
     initialized = true;
     document.addEventListener("click", (event) => {
-      const el = event.target.closest("[data-analytics]");
+      const el = event.target.closest(
+        "a[data-analytics], button[data-analytics], [role='button'][data-analytics]"
+      );
       if (!el) return;
       track(el.dataset.analytics, {
         label: el.dataset.analyticsLabel || el.textContent?.trim()?.slice(0, 80),
