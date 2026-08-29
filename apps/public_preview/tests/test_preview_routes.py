@@ -6,6 +6,11 @@ from django.conf import settings
 from django.urls import reverse
 
 from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
+from apps.public_preview.template_contract import (
+    SERVICE_DETAIL_FAMILY_PARENT,
+    extends_tag,
+    page_parent,
+)
 
 PLATFORM_FAMILY_PAGES = (
     "websites.html",
@@ -102,13 +107,25 @@ def _component_source(component_name: str) -> str:
     ).read_text(encoding="utf-8")
 
 
-def test_imported_pages_extend_shared_base_without_duplicate_shell():
+def _family_source(parent: str) -> str:
+    return (
+        Path(settings.BASE_DIR) / "templates" / parent
+    ).read_text(encoding="utf-8")
+
+
+def test_imported_pages_follow_approved_inheritance_without_duplicate_shell():
     for page_name in REQUIRED_PAGES:
         source = _page_source(page_name)
-        assert source.lstrip().startswith('{% extends "public_preview/base.html" %}')
+        assert source.lstrip().startswith(extends_tag(page_parent(page_name)))
         assert 'id="ibtikarSiteHeader"' not in source
         assert 'class="ibt-shell-footer"' not in source
         assert "public_preview/components/" not in source
+
+    family = _family_source(SERVICE_DETAIL_FAMILY_PARENT)
+    assert family.lstrip().startswith(extends_tag("public_preview/base.html"))
+    assert 'id="ibtikarSiteHeader"' not in family
+    assert 'class="ibt-shell-footer"' not in family
+    assert "public_preview/components/" not in family
 
 
 def test_global_shell_is_composed_from_shared_template_includes():
@@ -166,41 +183,44 @@ def test_service_detail_pages_share_one_structural_contract():
 
     for page_name in SERVICE_DETAIL_PAGES:
         source = _page_source(page_name)
+        contract_source = source
+        if page_parent(page_name) == SERVICE_DETAIL_FAMILY_PARENT:
+            contract_source = f"{_family_source(SERVICE_DETAIL_FAMILY_PARENT)}\n{source}"
 
-        assert '<main id="main-content" class="service-detail-main">' in source
-        assert 'class="service-detail-shell"' in source
-        assert 'class="service-detail-breadcrumb"' in source
-        assert 'class="service-commerce-hero"' in source
-        assert 'class="service-commerce-hero__card" data-service-commerce-hero' in source
-        assert 'class="service-gallery"' in source
-        assert 'class="service-gallery__main" data-service-gallery-main' in source
-        assert 'data-service-gallery-src=' in source
-        assert 'class="service-commerce-copy"' in source
-        assert 'class="service-detail-badge"' in source
-        assert 'class="service-platform-chips"' in source
-        assert 'class="service-purchase-box"' in source
-        assert 'class="service-assurance"' in source
-        assert 'class="service-commerce-actions"' in source
-        assert 'class="service-quick-info"' in source
-        assert 'class="service-decision-nav"' in source
+        assert '<main id="main-content" class="service-detail-main">' in contract_source
+        assert 'class="service-detail-shell"' in contract_source
+        assert 'class="service-detail-breadcrumb"' in contract_source
+        assert 'class="service-commerce-hero"' in contract_source
+        assert 'class="service-commerce-hero__card" data-service-commerce-hero' in contract_source
+        assert 'class="service-gallery"' in contract_source
+        assert 'class="service-gallery__main" data-service-gallery-main' in contract_source
+        assert 'data-service-gallery-src=' in contract_source
+        assert 'class="service-commerce-copy"' in contract_source
+        assert 'class="service-detail-badge"' in contract_source
+        assert 'class="service-platform-chips"' in contract_source
+        assert 'class="service-purchase-box"' in contract_source
+        assert 'class="service-assurance"' in contract_source
+        assert 'class="service-commerce-actions"' in contract_source
+        assert 'class="service-quick-info"' in contract_source
+        assert 'class="service-decision-nav"' in contract_source
         decision_tabs_marker = (
             'class="service-detail-shell service-decision-tabs" '
             'data-service-decision-tabs'
         )
-        assert decision_tabs_marker in source
-        assert 'class="service-detail-heading"' in source
+        assert decision_tabs_marker in contract_source
+        assert 'class="service-detail-heading"' in contract_source
         assert (
-            'class="page-cta"' in source
-            or 'class="service-final-cta"' in source
+            'class="page-cta"' in contract_source
+            or 'class="service-final-cta"' in contract_source
         )
-        assert 'commerce-service-detail.js' in source
+        assert 'commerce-service-detail.js' in contract_source
 
         for key in SERVICE_DECISION_KEYS:
-            assert f'data-service-decision-tab="{key}"' in source
-            assert f'data-service-decision-panel="{key}"' in source
+            assert f'data-service-decision-tab="{key}"' in contract_source
+            assert f'data-service-decision-panel="{key}"' in contract_source
 
         for marker in forbidden_legacy_markers:
-            assert marker not in source
+            assert marker not in contract_source
 
 
 def test_service_detail_pages_keep_equivalent_panel_grid_vocabulary():
