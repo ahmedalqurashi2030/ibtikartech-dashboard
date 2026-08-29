@@ -113,6 +113,43 @@ jobs:
             --retry-all-errors \
             https://ibtikartech.co/healthz/
 
+      - name: Verify production public routes
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          routes=(
+            /
+            /services/
+            /ecommerce/
+            /websites/
+            /brand-content/
+            /growth/
+            /custom-systems/
+            /tharaa/
+            /portfolio/
+            /knowledge/
+            /knowledge/product-page/
+            /knowledge/store-launch/
+            /knowledge/store-redesign/
+            /about/
+            /contact/
+            /services/store-launch/
+            /services/storefront-customization/
+            /services/store-redesign/
+            /services/product-page-optimization/
+            /services/ecommerce-growth/
+            /services/ecommerce-support/
+          )
+          response_body="$(mktemp)"
+          trap 'rm -f "$response_body"' EXIT
+          for route in "${routes[@]}"; do
+            url="https://ibtikartech.co${route}"
+            code="$(curl -L --silent --show-error --output "$response_body" --write-out '%{http_code}' --max-time 30 --retry 5 --retry-delay 2 --retry-all-errors "$url")"
+            test "$code" = "200" || { echo "$url returned HTTP $code"; exit 1; }
+            grep -q 'id="main-content"' "$response_body" || { echo "$url is missing the main content landmark"; exit 1; }
+          done
+
       - name: Verify production image delivery
         if: always()
         shell: bash
