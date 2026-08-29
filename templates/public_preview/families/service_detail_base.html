@@ -1,0 +1,51 @@
+{% extends "public_preview/base.html" %}
+
+{% block head %}
+<title>{% block service_page_title %}{% endblock %}</title>
+<meta name="description" content="{% block service_meta_description %}{% endblock %}">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+{% endblock %}
+
+{% block body_attrs %} class="inner-page service-detail-page" data-section="services"{% endblock %}
+
+{% block body %}
+<main id="main-content" class="service-detail-main">
+  <div class="service-detail-shell">
+    <nav class="service-detail-breadcrumb" aria-label="مسار التنقل">
+      <a href="{% url 'public_preview:home' %}">الرئيسية</a>
+      <span aria-hidden="true">←</span>
+      <a href="{% url 'services:index' %}">الحلول والخدمات</a>
+      <span aria-hidden="true">←</span>
+      <a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
+      <span aria-hidden="true">←</span>
+      <b aria-current="page">{% block service_breadcrumb_current %}{% endblock %}</b>
+    </nav>
+  </div>
+
+  {% block service_hero %}{% endblock %}
+
+  <nav class="service-decision-nav" id="decision-center" aria-label="دليل قرار الخدمة">
+    <div class="service-detail-shell service-decision-tabs" data-service-decision-tabs>
+      <button class="is-active" type="button" data-service-decision-tab="problems">المشكلات</button>
+      <button type="button" data-service-decision-tab="fit">هل تناسبك؟</button>
+      <button type="button" data-service-decision-tab="scope">نطاق التنفيذ</button>
+      <button type="button" data-service-decision-tab="deliverables">المخرجات</button>
+      <button type="button" data-service-decision-tab="exclusions">غير المشمول</button>
+    </div>
+  </nav>
+
+  {% block service_content %}{% endblock %}
+</main>
+
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/site-config.js" defer></script>
+<script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
+<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/app.js" defer></script>
+<script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
+{% endblock %}

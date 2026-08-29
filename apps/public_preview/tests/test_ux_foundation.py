@@ -286,8 +286,19 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
     from collections import Counter
     from pathlib import Path
 
+    from apps.public_preview.template_contract import (
+        BASE_TEMPLATE_PARENT,
+        FAMILY_REQUIRED_BLOCKS,
+        extends_tag,
+        page_parent,
+    )
+
     pages = sorted(Path("templates/public_preview/pages").glob("*.html"))
     assert len(pages) == 22
+    family_sources = {
+        parent: _read_source(str(Path("templates") / parent))
+        for parent in FAMILY_REQUIRED_BLOCKS
+    }
     legacy_markers = (
         "data-approved-legacy-shell",
         'id="site-header"',
@@ -303,8 +314,14 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
     anchor_ref = re.compile(r'\bhref=["\']#([^"\']+)["\']')
 
     for page in pages:
-        source = _read_source(str(page))
-        assert '{% extends "public_preview/base.html" %}' in source, page.name
+        page_source = _read_source(str(page))
+        parent = page_parent(page.name)
+        assert extends_tag(parent) in page_source, page.name
+
+        source = page_source
+        if parent != BASE_TEMPLATE_PARENT:
+            source = family_sources[parent] + "\n" + page_source
+
         assert source.count('id="main-content"') == 1, page.name
         assert 'id="main"' not in source, page.name
         for legacy in legacy_markers:
@@ -319,7 +336,6 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
             if anchor and anchor not in counts
         }
         assert not missing, f"{page.name}: {sorted(missing)}"
-
 
 def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     header = _read_source("templates/public_preview/components/header.html")

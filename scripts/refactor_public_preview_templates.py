@@ -6,11 +6,10 @@ only changes document architecture and URLs: the global document shell moves to
 base.html, while every page keeps the complete HTML for all of its own sections.
 No section is replaced by a reusable include or database-backed model.
 
-Public child templates use one presentation contract:
-- ``{% extends \"public_preview/base.html\" %}``
-- page metadata in ``{% block head %}``
-- body attributes in ``{% block body_attrs %}``
-- all page sections and page-owned runtime in ``{% block body %}``
+Public templates use an approved presentation contract:
+- ordinary pages extend ``public_preview/base.html`` and own one body block;
+- allowlisted pilot pages may extend an approved page-family template;
+- page-family templates own repeated structure and page-specific assets.
 
 There is intentionally no ``page_scripts`` block. Page-owned external scripts
 that used to live after the shared footer are moved to the end of ``body`` and
@@ -31,6 +30,11 @@ from apps.public_preview.manifest import (  # noqa: E402
     PUBLIC_PAGE_ROUTES,
     REQUIRED_PAGES,
     SERVICE_PAGE_ROUTES,
+)
+from apps.public_preview.template_contract import (  # noqa: E402
+    BASE_TEMPLATE_PARENT,
+    extends_tag,
+    page_parent,
 )
 
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
@@ -214,11 +218,24 @@ def convert_page(page_name: str) -> None:
     path = PAGES_DIR / page_name
     source = path.read_text(encoding="utf-8")
 
-    if source.lstrip().startswith('{% extends "public_preview/base.html" %}'):
-        updated = normalize_existing_child(source, page_name)
+    parent = page_parent(page_name)
+    expected_extends = extends_tag(parent)
+
+    if source.lstrip().startswith(expected_extends):
+        if parent == BASE_TEMPLATE_PARENT:
+            updated = normalize_existing_child(source, page_name)
+        else:
+            # Family children already follow the reviewed composition contract.
+            # Keep import normalization idempotent without flattening the family.
+            updated = rewrite_named_urls(source)
         if updated != source:
             path.write_text(updated, encoding="utf-8")
         return
+
+    if parent != BASE_TEMPLATE_PARENT:
+        raise RuntimeError(
+            f"Approved family child lost its inheritance contract: {page_name}"
+        )
 
     source = IMPORT_COMMENT_RE.sub("", source, count=1)
     document = DOCUMENT_RE.search(source)

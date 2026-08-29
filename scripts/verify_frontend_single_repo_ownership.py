@@ -16,6 +16,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from apps.public_preview.manifest import REQUIRED_PAGES, RETIRED_PLATFORM_PAGES  # noqa: E402
+from apps.public_preview.template_contract import (  # noqa: E402
+    BASE_TEMPLATE_PARENT,
+    FAMILY_REQUIRED_BLOCKS,
+    extends_tag,
+    page_parent,
+)
 
 MANIFEST_PATH = ROOT / "docs" / "frontend-preview-manifest.json"
 PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
@@ -77,14 +83,28 @@ def verify_dashboard_owned_pages() -> None:
             missing.append(page_name)
             continue
         source = path.read_text(encoding="utf-8")
-        if not source.lstrip().startswith('{% extends "public_preview/base.html" %}'):
-            invalid.append(f"{page_name}: missing public_preview/base.html inheritance")
-        if source.count("{% block body %}") != 1:
-            invalid.append(f"{page_name}: expected exactly one body block")
+        parent = page_parent(page_name)
+        if not source.lstrip().startswith(extends_tag(parent)):
+            invalid.append(f"{page_name}: missing approved {parent} inheritance")
+        expected_body_blocks = 1 if parent == BASE_TEMPLATE_PARENT else 0
+        if source.count("{% block body %}") != expected_body_blocks:
+            invalid.append(
+                f"{page_name}: expected {expected_body_blocks} body block(s)"
+            )
         if "{% block content %}" in source or "page_scripts" in source:
             invalid.append(f"{page_name}: legacy template block contract returned")
+
+    for parent in FAMILY_REQUIRED_BLOCKS:
+        family = ROOT / "templates" / parent
+        if not family.is_file():
+            missing.append(parent)
+        elif not family.read_text(encoding="utf-8").lstrip().startswith(
+            extends_tag(BASE_TEMPLATE_PARENT)
+        ):
+            invalid.append(f"{parent}: family must extend {BASE_TEMPLATE_PARENT}")
+
     if missing:
-        fail("Dashboard-owned public pages missing: " + ", ".join(missing))
+        fail("Dashboard-owned public templates missing: " + ", ".join(missing))
     if invalid:
         fail("Dashboard-owned public page contract failed:\n- " + "\n- ".join(invalid))
 
@@ -129,7 +149,8 @@ def main() -> None:
     verify_no_external_frontend_clone_contract()
     print(
         "Dashboard frontend ownership verified: "
-        f"{len(REQUIRED_PAGES)} pages and {len(REQUIRED_OWNED_ASSETS)} canonical assets are repository-owned."
+        f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page family, "
+        f"and {len(REQUIRED_OWNED_ASSETS)} canonical assets are repository-owned."
     )
 
 

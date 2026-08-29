@@ -39,3 +39,29 @@ def test_public_services_do_not_expose_database_catalog(client):
 def test_public_services_do_not_resolve_dynamic_model_slugs(client, path):
     response = client.get(path)
     assert response.status_code == 404
+
+PILOT_SERVICE_FAMILY_PAGES = (
+    ("store-launch", "إطلاق متجر إلكتروني | ابتكار تك"),
+    ("ecommerce-growth", "الربط والقياس والنمو للمتاجر | ابتكار تك"),
+)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("route_name,expected_title", PILOT_SERVICE_FAMILY_PAGES)
+def test_service_family_pilot_renders_one_structural_contract(
+    client,
+    route_name,
+    expected_title,
+):
+    response = client.get(reverse(f"services:{route_name}"))
+    html = response.content.decode()
+
+    assert response.status_code == 200
+    assert f"<title>{expected_title}</title>" in html
+    assert html.count('id="main-content"') == 1
+    assert html.count('id="decision-center"') == 1
+    assert html.count("commerce-service-detail.css") == 1
+    assert html.count("commerce-service-detail.js") == 1
+    assert 'aria-label="مسار التنقل"' in html
+    assert 'aria-label="دليل قرار الخدمة"' in html
+

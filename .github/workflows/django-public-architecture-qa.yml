@@ -66,22 +66,10 @@ jobs:
           git diff --exit-code -- templates/public_preview/pages static/public_preview/assets/js/page-shell.js
       - name: Verify native Django template contract
         run: python scripts/verify_django_template_contract.py
-      - name: Template architecture guards
+      - name: Verify production-safe template links
         shell: bash
         run: |
           set -euo pipefail
-          for page in templates/public_preview/pages/*.html; do
-            grep -q 'extends "public_preview/base.html"' "$page"
-            test "$(grep -c '{% block body %}' "$page")" -eq 1
-            ! grep -q '{% block content %}' "$page"
-            ! grep -q 'page_scripts' "$page"
-            ! grep -q 'id="ibtikarSiteHeader"' "$page"
-            ! grep -q 'class="ibt-shell-footer"' "$page"
-          done
-          grep -q 'include "public_preview/components/document_head.html"' templates/public_preview/base.html
-          grep -q 'include "public_preview/components/header.html"' templates/public_preview/base.html
-          grep -q 'include "public_preview/components/footer.html"' templates/public_preview/base.html
-          grep -q 'include "public_preview/components/runtime.html"' templates/public_preview/base.html
-          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components
+          ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components templates/public_preview/families
           ! grep -n '<slug:' apps/services/urls.py
           ! grep -R -n '/services/catalog/' templates/public_preview

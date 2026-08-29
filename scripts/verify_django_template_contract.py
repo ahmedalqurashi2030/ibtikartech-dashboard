@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Verify the public website follows the native Django template contract.
+"""Verify the approved Django template contracts for the public website.
 
-This guard intentionally checks presentation architecture only. It never imports
-models, reads the database, or mutates backend state.
+This guard checks presentation architecture only. It never imports models,
+reads the database, or mutates backend state.
 """
 
 from __future__ import annotations
@@ -20,6 +20,13 @@ from apps.public_preview.manifest import (  # noqa: E402
     REQUIRED_PAGES,
     SERVICE_PAGE_ROUTES,
 )
+from apps.public_preview.template_contract import (  # noqa: E402
+    BASE_TEMPLATE_PARENT,
+    FAMILY_REQUIRED_BLOCKS,
+    block_tag,
+    extends_tag,
+    page_parent,
+)
 
 TEMPLATES = ROOT / "templates" / "public_preview"
 PAGES_DIR = TEMPLATES / "pages"
@@ -32,7 +39,8 @@ PAGE_SCRIPTS_OPEN = "{% block page_scripts %}"
 BLOCK_END = "{% endblock %}"
 
 LEGACY_PAGE_LINK_RE = re.compile(
-    r'(?:href|action)=(["\'])[^"\']+\.html(?:[?#][^"\']*)?\1', re.IGNORECASE
+    r'(?:href|action)=(["\'])[^"\']+\.html(?:[?#][^"\']*)?\1',
+    re.IGNORECASE,
 )
 LOCAL_ROUTE_RE = re.compile(
     r'(?P<attr>href|action)=(?P<quote>["\'])'
@@ -41,6 +49,10 @@ LOCAL_ROUTE_RE = re.compile(
     re.IGNORECASE,
 )
 SCRIPT_OPEN_RE = re.compile(r"<script(?P<attrs>[^>]*)>", re.IGNORECASE)
+
+
+def family_path(parent: str) -> Path:
+    return ROOT / "templates" / parent
 
 
 def known_clean_paths() -> dict[str, str]:
@@ -75,53 +87,106 @@ def external_script_is_nonblocking(attrs: str) -> bool:
     return bool(re.search(r"\btype\s*=\s*([\"\'])module\1", lowered))
 
 
-def verify_page(path: Path, failures: list[str]) -> None:
-    source = path.read_text(encoding="utf-8")
-    name = path.name
-
-    if not source.lstrip().startswith('{% extends "public_preview/base.html" %}'):
-        failures.append(f"{name}: does not extend public_preview/base.html")
-    if source.count(BODY_OPEN) != 1:
-        failures.append(f"{name}: expected exactly one {{% block body %}}")
-    if CONTENT_OPEN in source:
-        failures.append(f"{name}: legacy {{% block content %}} remains")
-    if PAGE_SCRIPTS_OPEN in source or "page_scripts" in source:
-        failures.append(f"{name}: legacy page_scripts contract remains")
-    if "{% include " in source or "public_preview/components/" in source:
-        failures.append(f"{name}: page-specific sections must stay inline")
-    if 'id="ibtikarSiteHeader"' in source or 'class="ibt-shell-footer"' in source:
-        failures.append(f"{name}: shared header/footer duplicated inside child template")
+def verify_internal_links(source: str, label: str, failures: list[str]) -> None:
     if LEGACY_PAGE_LINK_RE.search(source):
-        failures.append(f"{name}: legacy .html href/action remains")
+        failures.append(f"{label}: legacy .html href/action remains")
 
     for match in LOCAL_ROUTE_RE.finditer(source):
         clean_path = match.group("path")
         route_name = KNOWN_CLEAN_PATHS.get(clean_path)
         if route_name:
             failures.append(
-                f"{name}: literal internal route {clean_path} remains; "
+                f"{label}: literal internal route {clean_path} remains; "
                 f"use {{% url '{route_name}' %}}"
             )
 
-    try:
-        body = block_payload(source, BODY_OPEN)
-    except RuntimeError as exc:
-        failures.append(f"{name}: {exc}")
+
+def verify_tail_scripts(source: str, label: str, failures: list[str]) -> None:
+    main_end = source.lower().rfind("</main>")
+    if main_end < 0:
+        return
+    tail = source[main_end + len("</main>") :]
+    for script in SCRIPT_OPEN_RE.finditer(tail):
+        attrs = script.group("attrs")
+        if not external_script_is_nonblocking(attrs):
+            failures.append(
+                f"{label}: page-owned tail script must use defer/async/module: "
+                f"<script{attrs}>"
+            )
+
+
+def verify_page(path: Path, failures: list[str]) -> None:
+    source = path.read_text(encoding="utf-8")
+    name = path.name
+    parent = page_parent(name)
+
+    if not source.lstrip().startswith(extends_tag(parent)):
+        failures.append(f"{name}: does not extend approved parent {parent}")
+    if CONTENT_OPEN in source:
+        failures.append(f"{name}: legacy {{% block content %}} remains")
+    if PAGE_SCRIPTS_OPEN in source or "page_scripts" in source:
+        failures.append(f"{name}: legacy page_scripts contract remains")
+    if "{% include " in source or "public_preview/components/" in source:
+        failures.append(f"{name}: page content must not import shell components")
+    if 'id="ibtikarSiteHeader"' in source or 'class="ibt-shell-footer"' in source:
+        failures.append(f"{name}: shared header/footer duplicated inside child template")
+
+    if parent == BASE_TEMPLATE_PARENT:
+        if source.count(BODY_OPEN) != 1:
+            failures.append(f"{name}: expected exactly one {{% block body %}}")
+        try:
+            body = block_payload(source, BODY_OPEN)
+        except RuntimeError as exc:
+            failures.append(f"{name}: {exc}")
+        else:
+            verify_tail_scripts(body, name, failures)
+    else:
+        if source.count(BODY_OPEN) != 0:
+            failures.append(f"{name}: family child must not override the body block")
+        for block_name in FAMILY_REQUIRED_BLOCKS[parent]:
+            if source.count(block_tag(block_name)) != 1:
+                failures.append(
+                    f"{name}: expected exactly one {{% block {block_name} %}}"
+                )
+
+    verify_internal_links(source, name, failures)
+
+
+def verify_family(parent: str, failures: list[str]) -> None:
+    path = family_path(parent)
+    label = str(path.relative_to(ROOT))
+    if not path.is_file():
+        failures.append(f"{label}: approved family template is missing")
         return
 
-    # Page-owned scripts that were historically rendered after the shared footer
-    # now live at the tail of body. Keep those external scripts non-blocking so
-    # the footer/runtime can parse before page initialization executes.
-    main_end = body.lower().rfind("</main>")
-    if main_end >= 0:
-        tail = body[main_end + len("</main>") :]
-        for script in SCRIPT_OPEN_RE.finditer(tail):
-            attrs = script.group("attrs")
-            if not external_script_is_nonblocking(attrs):
-                failures.append(
-                    f"{name}: page-owned tail script must use defer/async/module: "
-                    f"<script{attrs}>"
-                )
+    source = path.read_text(encoding="utf-8")
+    if not source.lstrip().startswith(extends_tag(BASE_TEMPLATE_PARENT)):
+        failures.append(f"{label}: family must extend {BASE_TEMPLATE_PARENT}")
+    if source.count(BODY_OPEN) != 1:
+        failures.append(f"{label}: expected exactly one {{% block body %}}")
+    if source.count('id="main-content"') != 1:
+        failures.append(f"{label}: expected one main-content landmark")
+    if source.count('id="decision-center"') != 1:
+        failures.append(f"{label}: expected one decision-center anchor")
+    if source.count("commerce-service-detail.css") != 1:
+        failures.append(f"{label}: service-detail stylesheet must load once")
+    if source.count("commerce-service-detail.js") != 1:
+        failures.append(f"{label}: service-detail runtime must load once")
+    if 'aria-label="مسار التنقل"' not in source:
+        failures.append(f"{label}: breadcrumb navigation requires an accessible name")
+    if 'aria-label="دليل قرار الخدمة"' not in source:
+        failures.append(f"{label}: decision navigation requires an accessible name")
+    if "{% include " in source:
+        failures.append(f"{label}: pilot family must not import arbitrary partials")
+
+    for block_name in FAMILY_REQUIRED_BLOCKS[parent]:
+        if source.count(block_tag(block_name)) != 1:
+            failures.append(
+                f"{label}: expected exactly one {{% block {block_name} %}}"
+            )
+
+    verify_internal_links(source, label, failures)
+    verify_tail_scripts(source, label, failures)
 
 
 def verify_base(failures: list[str]) -> None:
@@ -146,6 +211,9 @@ def main() -> None:
     failures: list[str] = []
     verify_base(failures)
 
+    for parent in FAMILY_REQUIRED_BLOCKS:
+        verify_family(parent, failures)
+
     for page_name in REQUIRED_PAGES:
         path = PAGES_DIR / page_name
         if not path.is_file():
@@ -158,7 +226,8 @@ def main() -> None:
 
     print(
         "Django public template contract passed for "
-        f"{len(REQUIRED_PAGES)}/{len(REQUIRED_PAGES)} pages."
+        f"{len(REQUIRED_PAGES)}/{len(REQUIRED_PAGES)} pages and "
+        f"{len(FAMILY_REQUIRED_BLOCKS)} approved family template(s)."
     )
 
 
