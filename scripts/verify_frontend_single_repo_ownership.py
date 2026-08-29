@@ -16,12 +16,14 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from apps.public_preview.asset_contract import (  # noqa: E402
+    FAMILY_ASSET_EXTENSION_BLOCKS,
     ROUTE_SCOPED_ASSET_CONSUMERS,
 )
 from apps.public_preview.manifest import REQUIRED_PAGES, RETIRED_PLATFORM_PAGES  # noqa: E402
 from apps.public_preview.template_contract import (  # noqa: E402
     BASE_TEMPLATE_PARENT,
     FAMILY_REQUIRED_BLOCKS,
+    block_tag,
     extends_tag,
     page_parent,
 )
@@ -123,6 +125,35 @@ def verify_dashboard_owned_assets() -> None:
 
 
 
+def block_payload(source: str, block_name: str) -> str | None:
+    opener = block_tag(block_name)
+    start = source.find(opener)
+    if start < 0:
+        return None
+    body_start = start + len(opener)
+    end = source.find("{% endblock %}", body_start)
+    if end < 0:
+        fail(f"Unclosed template block: {block_name}")
+    return source[body_start:end]
+
+
+def effective_family_asset_count(
+    page_source: str,
+    family_source: str,
+    parent: str,
+    asset: str,
+) -> int:
+    block_name = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {}).get(
+        Path(asset).suffix
+    )
+    if block_name:
+        override = block_payload(page_source, block_name)
+        if override is not None:
+            return override.count(asset)
+        return family_source.count(asset)
+    return page_source.count(asset) + family_source.count(asset)
+
+
 def verify_route_scoped_asset_consumers() -> None:
     base_source = BASE_TEMPLATE.read_text(encoding="utf-8")
     family_sources = {
@@ -142,9 +173,12 @@ def verify_route_scoped_asset_consumers() -> None:
             if parent == BASE_TEMPLATE_PARENT:
                 effective_count = page_source.count(asset)
             else:
-                effective_count = page_source.count(asset)
-                if effective_count == 0:
-                    effective_count = family_sources[parent].count(asset)
+                effective_count = effective_family_asset_count(
+                    page_source,
+                    family_sources[parent],
+                    parent,
+                    asset,
+                )
 
             if effective_count not in (0, 1):
                 invalid.append(
@@ -201,7 +235,7 @@ def main() -> None:
     verify_no_external_frontend_clone_contract()
     print(
         "Dashboard frontend ownership verified: "
-        f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page family, "
+        f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page families, "
         f"{len(REQUIRED_OWNED_ASSETS)} canonical assets, and "
         f"{len(ROUTE_SCOPED_ASSET_CONSUMERS)} route-scoped asset contracts "
         "are repository-owned."

@@ -1,11 +1,12 @@
 """Approved template inheritance contracts for the public website.
 
-The allowlist keeps the page-family migration explicit. New families must be
+The allowlist keeps every page-family migration explicit. New families must be
 reviewed here together with their template guards and rendering tests.
 """
 
 BASE_TEMPLATE_PARENT = "public_preview/base.html"
 SERVICE_DETAIL_FAMILY_PARENT = "public_preview/families/service_detail_base.html"
+SERVICE_CATEGORY_FAMILY_PARENT = "public_preview/families/service_category_base.html"
 
 PAGE_PARENT_OVERRIDES = {
     "store-launch.html": SERVICE_DETAIL_FAMILY_PARENT,
@@ -14,6 +15,11 @@ PAGE_PARENT_OVERRIDES = {
     "product-page-optimization.html": SERVICE_DETAIL_FAMILY_PARENT,
     "ecommerce-growth.html": SERVICE_DETAIL_FAMILY_PARENT,
     "ecommerce-support.html": SERVICE_DETAIL_FAMILY_PARENT,
+    "ecommerce.html": SERVICE_CATEGORY_FAMILY_PARENT,
+    "websites.html": SERVICE_CATEGORY_FAMILY_PARENT,
+    "brand-content.html": SERVICE_CATEGORY_FAMILY_PARENT,
+    "growth.html": SERVICE_CATEGORY_FAMILY_PARENT,
+    "custom-systems.html": SERVICE_CATEGORY_FAMILY_PARENT,
 }
 
 FAMILY_REQUIRED_BLOCKS = {
@@ -24,6 +30,12 @@ FAMILY_REQUIRED_BLOCKS = {
         "service_hero",
         "service_content",
     ),
+    SERVICE_CATEGORY_FAMILY_PARENT: (
+        "category_page_title",
+        "category_meta_description",
+        "category_body_attrs",
+        "category_content",
+    ),
 }
 
 FAMILY_EXTENSION_BLOCKS = {
@@ -31,6 +43,26 @@ FAMILY_EXTENSION_BLOCKS = {
         "service_styles",
         "service_after_main",
         "service_scripts",
+    ),
+    SERVICE_CATEGORY_FAMILY_PARENT: (
+        "category_styles",
+        "category_scripts",
+    ),
+}
+
+FAMILY_REQUIRED_MARKERS = {
+    SERVICE_DETAIL_FAMILY_PARENT: (
+        'id="main-content"',
+        'id="decision-center"',
+        "commerce-service-detail.css",
+        "commerce-service-detail.js",
+        'aria-label="مسار التنقل"',
+        'aria-label="دليل قرار الخدمة"',
+    ),
+    SERVICE_CATEGORY_FAMILY_PARENT: (
+        'id="main-content"',
+        "service-category.css",
+        "service-cinema.js",
     ),
 }
 

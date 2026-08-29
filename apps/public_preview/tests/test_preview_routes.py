@@ -7,12 +7,14 @@ from django.urls import reverse
 
 from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
 from apps.public_preview.template_contract import (
-    SERVICE_DETAIL_FAMILY_PARENT,
+    BASE_TEMPLATE_PARENT,
+    FAMILY_REQUIRED_BLOCKS,
     extends_tag,
     page_parent,
 )
 
 PLATFORM_FAMILY_PAGES = (
+    "ecommerce.html",
     "websites.html",
     "brand-content.html",
     "growth.html",
@@ -113,6 +115,14 @@ def _family_source(parent: str) -> str:
     ).read_text(encoding="utf-8")
 
 
+def _effective_page_source(page_name: str) -> str:
+    source = _page_source(page_name)
+    parent = page_parent(page_name)
+    if parent == BASE_TEMPLATE_PARENT:
+        return source
+    return f"{_family_source(parent)}\n{source}"
+
+
 def test_imported_pages_follow_approved_inheritance_without_duplicate_shell():
     for page_name in REQUIRED_PAGES:
         source = _page_source(page_name)
@@ -121,11 +131,12 @@ def test_imported_pages_follow_approved_inheritance_without_duplicate_shell():
         assert 'class="ibt-shell-footer"' not in source
         assert "public_preview/components/" not in source
 
-    family = _family_source(SERVICE_DETAIL_FAMILY_PARENT)
-    assert family.lstrip().startswith(extends_tag("public_preview/base.html"))
-    assert 'id="ibtikarSiteHeader"' not in family
-    assert 'class="ibt-shell-footer"' not in family
-    assert "public_preview/components/" not in family
+    for parent in FAMILY_REQUIRED_BLOCKS:
+        family = _family_source(parent)
+        assert family.lstrip().startswith(extends_tag(BASE_TEMPLATE_PARENT))
+        assert 'id="ibtikarSiteHeader"' not in family
+        assert 'class="ibt-shell-footer"' not in family
+        assert "public_preview/components/" not in family
 
 
 def test_global_shell_is_composed_from_shared_template_includes():
@@ -155,7 +166,7 @@ def test_global_shell_is_composed_from_shared_template_includes():
 def test_platform_family_pages_share_one_section_structure_contract():
     """Same-function sections in platform-family pages use one DOM vocabulary."""
     for page_name in PLATFORM_FAMILY_PAGES:
-        source = _page_source(page_name)
+        source = _effective_page_source(page_name)
         assert '<main id="main-content">' in source
         assert '<section class="platform-hero">' in source
         assert 'class="container platform-hero__grid"' in source
@@ -182,10 +193,7 @@ def test_service_detail_pages_share_one_structural_contract():
     )
 
     for page_name in SERVICE_DETAIL_PAGES:
-        source = _page_source(page_name)
-        contract_source = source
-        if page_parent(page_name) == SERVICE_DETAIL_FAMILY_PARENT:
-            contract_source = f"{_family_source(SERVICE_DETAIL_FAMILY_PARENT)}\n{source}"
+        contract_source = _effective_page_source(page_name)
 
         assert '<main id="main-content" class="service-detail-main">' in contract_source
         assert 'class="service-detail-shell"' in contract_source
@@ -300,7 +308,7 @@ NON_COMMERCE_CATEGORY_PAGES = (
 def test_service_category_pages_use_decision_path_contract():
     """Category pages lead with fit, scope and a contextual action instead of generic cards."""
     for page_name in SERVICE_CATEGORY_PAGES:
-        source = _page_source(page_name)
+        source = _effective_page_source(page_name)
         assert "service-category.css" in source
         assert "service-category-page" in source
         assert "service-paths-section" in source
@@ -326,7 +334,7 @@ def test_non_commerce_service_categories_offer_local_section_navigation():
 def test_service_category_pages_load_shared_cinematic_runtime():
     """Every service category progressively enhances its decision paths with one shared runtime."""
     for page_name in SERVICE_CATEGORY_PAGES:
-        source = _page_source(page_name)
+        source = _effective_page_source(page_name)
         assert source.count("service-cinema.js") == 1
 
 

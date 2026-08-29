@@ -18,62 +18,36 @@
 | 8 | Wagtail content evolution | تحرير المحتوى المستقر | blocks/snippets المختارة | CMS يفرض بنية غير ناضجة | عقود تحرير تعكس المكونات المستقرة |
 | 9 | Comprehensive QA | إطلاق آمن | جميع الصفحات والمقاسات | ثغرات بصرية ومتصفحات | Visual/a11y/performance regression كاملة |
 
-## المجموعة التالية: Template architecture pilot
+## المجموعة الحالية: Category pages
 
 ### الصفحات
 
-- `templates/public_preview/pages/store-launch.html`
-- `templates/public_preview/pages/ecommerce-growth.html`
+- `templates/public_preview/pages/ecommerce.html`
+- `templates/public_preview/pages/websites.html`
+- `templates/public_preview/pages/brand-content.html`
+- `templates/public_preview/pages/growth.html`
+- `templates/public_preview/pages/custom-systems.html`
 
-### سبب الاختيار
+### العقد المعتمد
 
-الصفحتان تشتركان في رحلة قرار واحدة، لكن محتواهما مختلف بما يكفي لاختبار مرونة
-العائلة: الأولى خدمة تأسيس، والثانية خدمة قياس وتحسين لمتجر قائم.
+- `service_category_base.html` يملك document-family shell و`main` وحزمة
+  CSS/JavaScript المتطابقة.
+- كل صفحة تملك عنوان SEO ووصفه وخصائص `body` وجميع أقسام المحتوى.
+- `ecommerce.html` يحتفظ بامتدادات أصول صريحة لأنه يستخدم
+  `approved-source.css` و`ecommerce-category.css` و`approved-source.js`
+  ولا يستخدم بطاقات الخدمات المرتبطة.
+- اختلاف السرد أو ترتيب الأقسام لا يتحول إلى شروط داخل القالب المشترك.
+- أي أصل route-scoped يُحسب من block الفعّال؛ override مختلف لا يرث أصلًا
+  لم تطلبه الصفحة.
 
-### المشترك المؤكد
+### معايير القبول البنيوية
 
-- حزمة CSS وJavaScript.
-- `body` attributes و`main` shell.
-- Breadcrumb hierarchy.
-- Hero + gallery + decision information.
-- Quick information strip.
-- Decision navigation بخمس حالات.
-- Problems، fit، scope، deliverables، exclusions.
-- Process، related services، final CTA.
-
-### التنفيذ المقترح
-
-1. التقاط baseline للجوال والكمبيوتر للصفحتين.
-2. إنشاء `templates/public_preview/families/service_detail_base.html`.
-3. مشاركة الهيكل العام وDecision Navigation والأصول أولًا.
-4. إبقاء محتوى Hero وPanels وProcess وCTA داخل الصفحة في الـPilot.
-5. السماح بالمكونات الصغيرة لاحقًا فقط بعد ثبوت تطابق دلالتها.
-6. تحديث `test_template_body_contract.py` و
-   `verify_django_template_contract.py` وأدوات التحويل وworkflow guards في commit
-   واحد مع القالب الجديد.
-7. تشغيل الاختبارات المستهدفة ثم CI الكامل؛ لا دمج قبل نجاح الاثنين.
-
-### ممنوع في الـPilot
-
-- تغيير النصوص أو الصور أو الروابط أو SEO.
-- تعديل models أو migrations أو إعدادات النشر.
-- نقل المحتوى إلى قاعدة البيانات أو StreamField.
-- إزالة ملفات CSS المكررة في نفس PR.
-- إعادة تصميم الصفحة أو إضافة Animation جديدة.
-- ترحيل الصفحات الست دفعة واحدة.
-
-### معايير القبول
-
-- URLs وnamed routes دون تغيير.
-- عنوان الصفحة والوصف وanalytics attributes محفوظة.
-- DOM الدلالي وIDs الفعالة بلا تكرار.
-- Decision tabs وgallery تعمل بالنقر ولوحة المفاتيح.
-- لا overflow عند 375px ولا كسر RTL.
-- reduced-motion وfocus states محفوظان.
-- page-family asset يظهر مرة واحدة فقط في HTML الناتج.
-- أدوات التحويل reproducible ولا تعيد الصفحة إلى العقد القديم.
-- اختبارات services وtemplate contract وUX foundation ناجحة.
-- مقارنة screenshots لا تكشف تغييرًا بصريًا مقصودًا.
+- الروابط والصور والنصوص وanalytics attributes وIDs محفوظة بلا تغيير.
+- كل صفحة ترث عائلة واحدة مع blocks المطلوبة مرة واحدة.
+- كل أصل CSS/JavaScript فعّال يظهر مرة واحدة فقط للمستهلكين المعتمدين.
+- أدوات التحويل تبقى idempotent ولا تسطّح صفحات العائلات.
+- Browser QA والمقارنة البصرية وa11y/performance الشاملة تُنفّذ في المجموعة 9
+  قبل الدمج النهائي.
 
 ## سياسة Pull Requests
 

@@ -1,21 +1,10 @@
-{% extends "public_preview/base.html" %}
+{% extends "public_preview/families/service_category_base.html" %}
 
-{% block head %}
-<title>تصميم وتطوير المواقع وصفحات الهبوط | ابتكار تك</title>
-<meta name="description" content="مواقع شركات وصفحات هبوط وتجارب عربية سريعة توضّح القيمة وتقود الزائر إلى الإجراء المناسب، من بنية المحتوى إلى النشر والقياس.">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
-{% endblock %}
+{% block category_page_title %}تصميم وتطوير المواقع وصفحات الهبوط | ابتكار تك{% endblock %}
+{% block category_meta_description %}مواقع شركات وصفحات هبوط وتجارب عربية سريعة توضّح القيمة وتقود الزائر إلى الإجراء المناسب، من بنية المحتوى إلى النشر والقياس.{% endblock %}
+{% block category_body_attrs %} class="inner-page platform-page category-hub service-category-page category-websites" data-section="services"{% endblock %}
 
-{% block body_attrs %} class="inner-page platform-page category-hub service-category-page category-websites" data-section="services"{% endblock %}
-
-{% block body %}
-<main id="main-content">
+{% block category_content %}
 <section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
 <nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">المواقع وصفحات الهبوط</span></nav>
 <span class="platform-kicker">WEB EXPERIENCE</span><h1>موقع يوضح قيمتك. <span>ويحوّل الزيارة إلى خطوة مفهومة.</span></h1>
@@ -133,9 +122,4 @@
     </div>
   </div>
 </section>
-</main>
-
-<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
-<script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
-<script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
 {% endblock %}

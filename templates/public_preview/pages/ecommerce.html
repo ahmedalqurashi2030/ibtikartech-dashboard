@@ -1,9 +1,11 @@
-{% extends "public_preview/base.html" %}
+{% extends "public_preview/families/service_category_base.html" %}
 
-{% block head %}
-<title>حلول المتاجر الإلكترونية | ابتكار تك</title>
-  <meta name="description" content="حلول إطلاق وتخصيص وإعادة تصميم وتحسين وقياس ودعم المتاجر على سلة وزد وWooCommerce وShopify، بحسب حالة المتجر ونقطة البداية.">
-  <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
+{% block category_page_title %}حلول المتاجر الإلكترونية | ابتكار تك{% endblock %}
+{% block category_meta_description %}حلول إطلاق وتخصيص وإعادة تصميم وتحسين وقياس ودعم المتاجر على سلة وزد وWooCommerce وShopify، بحسب حالة المتجر ونقطة البداية.{% endblock %}
+{% block category_body_attrs %} class="inner-page platform-page approved-source-page source-ecommerce category-hub service-category-page category-ecommerce" data-section="services" data-approved-source="ecommerce.html"{% endblock %}
+
+{% block category_styles %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/ecommerce-category.css">
@@ -14,11 +16,7 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
 {% endblock %}
 
-{% block body_attrs %} class="inner-page platform-page approved-source-page source-ecommerce category-hub service-category-page category-ecommerce" data-section="services" data-approved-source="ecommerce.html"{% endblock %}
-
-{% block body %}
-<main id="main-content">
-
+{% block category_content %}
 <section class="platform-hero">
   <div class="container platform-hero__grid">
     <div class="hero-copy reveal">
@@ -192,9 +190,9 @@
     </div>
   </div>
 </section>
+{% endblock %}
 
-  </main>
-
+{% block category_scripts %}
 <script src="/static/public_preview/assets/js/page-shell.js" defer></script>
   <script src="/static/public_preview/assets/js/site-config.js" defer></script>
   <script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>

@@ -8,7 +8,7 @@ No section is replaced by a reusable include or database-backed model.
 
 Public templates use an approved presentation contract:
 - ordinary pages extend ``public_preview/base.html`` and own one body block;
-- allowlisted service-detail pages extend an approved page-family template;
+- allowlisted pages extend an approved page-family template;
 - page-family templates own repeated structure and shared assets;
 - child templates keep explicit extension blocks for page-specific assets.
 

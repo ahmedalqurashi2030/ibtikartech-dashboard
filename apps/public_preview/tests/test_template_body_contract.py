@@ -13,6 +13,7 @@ from apps.public_preview.template_contract import (
     BASE_TEMPLATE_PARENT,
     FAMILY_EXTENSION_BLOCKS,
     FAMILY_REQUIRED_BLOCKS,
+    FAMILY_REQUIRED_MARKERS,
     block_tag,
     extends_tag,
     page_parent,
@@ -96,13 +97,10 @@ def test_approved_family_templates_own_one_stable_page_structure():
 
         assert source.lstrip().startswith(extends_tag(BASE_TEMPLATE_PARENT)), parent
         assert source.count("{% block body %}") == 1, parent
-        assert source.count('id="main-content"') == 1, parent
-        assert source.count('id="decision-center"') == 1, parent
-        assert source.count("commerce-service-detail.css") == 1, parent
-        assert source.count("commerce-service-detail.js") == 1, parent
-        assert 'aria-label="مسار التنقل"' in source, parent
-        assert 'aria-label="دليل قرار الخدمة"' in source, parent
         assert "{% include " not in source, parent
+
+        for marker in FAMILY_REQUIRED_MARKERS[parent]:
+            assert source.count(marker) == 1, (parent, marker)
 
         for block_name in required_blocks:
             assert source.count(block_tag(block_name)) == 1, (
@@ -116,10 +114,13 @@ def test_approved_family_templates_own_one_stable_page_structure():
                 block_name,
             )
 
-        assert source.index("</main>") < source.index(block_tag("service_after_main"))
-        assert source.index(block_tag("service_after_main")) < source.index(
-            block_tag("service_scripts")
-        )
+        if "service_after_main" in FAMILY_EXTENSION_BLOCKS[parent]:
+            assert source.index("</main>") < source.index(
+                block_tag("service_after_main")
+            )
+            assert source.index(block_tag("service_after_main")) < source.index(
+                block_tag("service_scripts")
+            )
 
 
 def test_service_detail_children_keep_explicit_asset_and_after_main_exceptions():

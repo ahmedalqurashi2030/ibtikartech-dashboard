@@ -24,6 +24,36 @@ def _read_bytes(path):
         return source_file.read()
 
 
+def _block_payload(source, block_name):
+    from apps.public_preview.template_contract import block_tag
+
+    opener = block_tag(block_name)
+    start = source.find(opener)
+    if start < 0:
+        return None
+    body_start = start + len(opener)
+    end = source.find("{% endblock %}", body_start)
+    if end < 0:
+        raise AssertionError(f"Unclosed template block: {block_name}")
+    return source[body_start:end]
+
+
+def _effective_family_asset_count(page_source, family_source, parent, asset):
+    from pathlib import Path
+
+    from apps.public_preview.asset_contract import FAMILY_ASSET_EXTENSION_BLOCKS
+
+    block_name = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {}).get(
+        Path(asset).suffix
+    )
+    if block_name:
+        override = _block_payload(page_source, block_name)
+        if override is not None:
+            return override.count(asset)
+        return family_source.count(asset)
+    return page_source.count(asset) + family_source.count(asset)
+
+
 def test_public_base_loads_one_stable_typography_system():
     source = _read_source(BASE_TEMPLATE)
 
@@ -110,11 +140,12 @@ def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
             if parent == BASE_TEMPLATE_PARENT:
                 effective_count = page_source.count(asset)
             else:
-                # A child override replaces the family extension block. Prefer
-                # the child reference when present; otherwise use the default.
-                effective_count = page_source.count(asset)
-                if effective_count == 0:
-                    effective_count = family_sources[parent].count(asset)
+                effective_count = _effective_family_asset_count(
+                    page_source,
+                    family_sources[parent],
+                    parent,
+                    asset,
+                )
 
             assert effective_count in (0, 1), (page.name, asset, effective_count)
             if effective_count == 1:

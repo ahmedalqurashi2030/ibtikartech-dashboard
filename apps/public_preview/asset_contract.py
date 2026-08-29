@@ -6,6 +6,10 @@ back into the global base template.
 """
 
 from apps.public_preview.manifest import SERVICE_PAGE_ROUTES
+from apps.public_preview.template_contract import (
+    SERVICE_CATEGORY_FAMILY_PARENT,
+    SERVICE_DETAIL_FAMILY_PARENT,
+)
 
 SERVICE_DETAIL_PAGE_NAMES = tuple(SERVICE_PAGE_ROUTES)
 
@@ -45,4 +49,15 @@ ROUTE_SCOPED_ASSET_CONSUMERS = {
     RELATED_CARDS_STYLES: RELATED_CARDS_CONSUMERS,
     RELATED_CARDS_RUNTIME: RELATED_CARDS_CONSUMERS,
     HOMEPAGE_SURFACE_ASSET: ("index.html",),
+}
+
+FAMILY_ASSET_EXTENSION_BLOCKS = {
+    SERVICE_DETAIL_FAMILY_PARENT: {
+        ".css": "service_styles",
+        ".js": "service_scripts",
+    },
+    SERVICE_CATEGORY_FAMILY_PARENT: {
+        ".css": "category_styles",
+        ".js": "category_scripts",
+    },
 }

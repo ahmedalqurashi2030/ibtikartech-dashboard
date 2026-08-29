@@ -22,7 +22,9 @@ from apps.public_preview.manifest import (  # noqa: E402
 )
 from apps.public_preview.template_contract import (  # noqa: E402
     BASE_TEMPLATE_PARENT,
+    FAMILY_EXTENSION_BLOCKS,
     FAMILY_REQUIRED_BLOCKS,
+    FAMILY_REQUIRED_MARKERS,
     block_tag,
     extends_tag,
     page_parent,
@@ -164,26 +166,32 @@ def verify_family(parent: str, failures: list[str]) -> None:
         failures.append(f"{label}: family must extend {BASE_TEMPLATE_PARENT}")
     if source.count(BODY_OPEN) != 1:
         failures.append(f"{label}: expected exactly one {{% block body %}}")
-    if source.count('id="main-content"') != 1:
-        failures.append(f"{label}: expected one main-content landmark")
-    if source.count('id="decision-center"') != 1:
-        failures.append(f"{label}: expected one decision-center anchor")
-    if source.count("commerce-service-detail.css") != 1:
-        failures.append(f"{label}: service-detail stylesheet must load once")
-    if source.count("commerce-service-detail.js") != 1:
-        failures.append(f"{label}: service-detail runtime must load once")
-    if 'aria-label="مسار التنقل"' not in source:
-        failures.append(f"{label}: breadcrumb navigation requires an accessible name")
-    if 'aria-label="دليل قرار الخدمة"' not in source:
-        failures.append(f"{label}: decision navigation requires an accessible name")
     if "{% include " in source:
-        failures.append(f"{label}: pilot family must not import arbitrary partials")
+        failures.append(f"{label}: family must not import arbitrary partials")
+
+    for marker in FAMILY_REQUIRED_MARKERS[parent]:
+        if source.count(marker) != 1:
+            failures.append(f"{label}: expected exactly one required marker {marker!r}")
 
     for block_name in FAMILY_REQUIRED_BLOCKS[parent]:
         if source.count(block_tag(block_name)) != 1:
             failures.append(
                 f"{label}: expected exactly one {{% block {block_name} %}}"
             )
+
+    for block_name in FAMILY_EXTENSION_BLOCKS[parent]:
+        if source.count(block_tag(block_name)) != 1:
+            failures.append(
+                f"{label}: expected exactly one {{% block {block_name} %}}"
+            )
+
+    if "service_after_main" in FAMILY_EXTENSION_BLOCKS[parent]:
+        if not (
+            source.index("</main>")
+            < source.index(block_tag("service_after_main"))
+            < source.index(block_tag("service_scripts"))
+        ):
+            failures.append(f"{label}: after-main content and scripts are out of order")
 
     verify_internal_links(source, label, failures)
     verify_tail_scripts(source, label, failures)

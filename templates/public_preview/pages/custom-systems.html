@@ -1,21 +1,10 @@
-{% extends "public_preview/base.html" %}
+{% extends "public_preview/families/service_category_base.html" %}
 
-{% block head %}
-<title>الأنظمة والربط والأتمتة | ابتكار تك</title>
-<meta name="description" content="تحليل العمليات ثم اختيار التكامل أو الأتمتة أو النظام المخصص المناسب، مع حدود وملكية وتسليم واضح.">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
-{% endblock %}
+{% block category_page_title %}الأنظمة والربط والأتمتة | ابتكار تك{% endblock %}
+{% block category_meta_description %}تحليل العمليات ثم اختيار التكامل أو الأتمتة أو النظام المخصص المناسب، مع حدود وملكية وتسليم واضح.{% endblock %}
+{% block category_body_attrs %} class="inner-page platform-page category-hub service-category-page category-systems" data-section="services"{% endblock %}
 
-{% block body_attrs %} class="inner-page platform-page category-hub service-category-page category-systems" data-section="services"{% endblock %}
-
-{% block body %}
-<main id="main-content">
+{% block category_content %}
 <section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
 <nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">الأنظمة والأتمتة</span></nav>
 <span class="platform-kicker">SYSTEMS & AUTOMATION</span><h1>بسّط العملية أولًا. <span>ثم ابنِ ما لا يوفره الجاهز.</span></h1>
@@ -133,9 +122,4 @@
     </div>
   </div>
 </section>
-</main>
-
-<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
-<script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
-<script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
 {% endblock %}
