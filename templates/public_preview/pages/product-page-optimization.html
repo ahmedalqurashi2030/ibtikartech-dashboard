@@ -1,8 +1,9 @@
-{% extends "public_preview/base.html" %}
+{% extends "public_preview/families/service_detail_base.html" %}
 
-{% block head %}
-<meta name="description" content="تحسين صفحة المنتج وترتيب الصور والمعلومات والخيارات والثقة والإجراء الأساسي مع مراجعة الجوال وإمكانات منصة المتجر.">
-<title>تحسين صفحة المنتج | ابتكار تك</title>
+{% block service_page_title %}تحسين صفحة المنتج | ابتكار تك{% endblock %}
+{% block service_meta_description %}تحسين صفحة المنتج وترتيب الصور والمعلومات والخيارات والثقة والإجراء الأساسي مع مراجعة الجوال وإمكانات منصة المتجر.{% endblock %}
+
+{% block service_styles %}
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/source-product-page.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
@@ -13,18 +14,10 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 {% endblock %}
+{% block service_breadcrumb_current %}تحسين صفحة المنتج{% endblock %}
 
-{% block body_attrs %} class="inner-page service-detail-page approved-source-page source-product-service" data-section="services" data-approved-source="Ibtikar_Tech_Product_Page_Optimization-2.html"{% endblock %}
-
-{% block body %}
-<main id="main-content" class="service-detail-main">
-  <div class="service-detail-shell">
-    <nav class="service-detail-breadcrumb" aria-label="مسار الصفحة">
-      <a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الخدمات</a><span>←</span><a href="{% url 'public_preview:ecommerce' %}">خدمات المتاجر</a><span>←</span><b aria-current="page">تحسين صفحة المنتج</b>
-    </nav>
-  </div>
-
-  <section class="service-commerce-hero" aria-labelledby="service-title">
+{% block service_hero %}
+<section class="service-commerce-hero" aria-labelledby="service-title">
     <div class="service-detail-shell">
       <div class="service-commerce-hero__card" data-service-commerce-hero>
         <div class="service-gallery">
@@ -54,18 +47,10 @@
       <div class="service-quick-info" aria-label="معلومات الخدمة السريعة"><span><strong>نوع الخدمة</strong><small>تحسين وتطوير</small></span><span><strong>مناسب لـ</strong><small>متجر قائم</small></span><span><strong>المنصات</strong><small>سلة · زد · Shopify · WooCommerce</small></span><span><strong>التنفيذ</strong><small>تشخيص ثم نطاق معتمد</small></span><span><strong>المدة التقديرية</strong><small>1–3 أسابيع حسب المنصة والمحتوى</small></span><span><strong>التسعير</strong><small>عرض مخصص بعد التشخيص</small></span><span><strong>الدعم</strong><small>وفق العرض المعتمد</small></span></div>
     </div>
   </section>
+{% endblock %}
 
-  <nav class="service-decision-nav" id="decision-center" aria-label="دليل قرار الخدمة">
-    <div class="service-detail-shell service-decision-tabs" data-service-decision-tabs>
-      <button type="button" data-service-decision-tab="problems" class="is-active">المشكلات</button>
-      <button type="button" data-service-decision-tab="fit">هل تناسبك؟</button>
-      <button type="button" data-service-decision-tab="scope">نطاق التنفيذ</button>
-      <button type="button" data-service-decision-tab="deliverables">المخرجات</button>
-      <button type="button" data-service-decision-tab="exclusions">غير المشمول</button>
-    </div>
-  </nav>
-
-  <section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
+{% block service_content %}
+<section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>علامات تشير إلى حاجة الصفحة للتحسين</span><h2>هل تواجه هذه المشكلات؟</h2></div>
       <div class="service-problem-grid"><article><i class="ph-duotone ph-paint-brush-broad"></i><h3>معرض صور لا يشرح المنتج</h3><p>لا يحصل العميل على تفاصيل بصرية كافية قبل اتخاذ القرار.</p></article><article><i class="ph-duotone ph-file-text"></i><h3>المعلومات المهمة مشتتة</h3><p>السعر والمزايا والسياسات موزعة دون تسلسل واضح.</p></article><article><i class="ph-duotone ph-circles-four"></i><h3>الخيارات مربكة</h3><p>المقاسات أو الألوان لا تعرض بصورة سهلة الفهم.</p></article><article><i class="ph-duotone ph-shield-check"></i><h3>عناصر الثقة بعيدة</h3><p>الشحن والاستبدال والضمان لا تظهر قرب قرار الشراء.</p></article><article><i class="ph-duotone ph-device-mobile-camera"></i><h3>تجربة الجوال مزدحمة</h3><p>العناصر تتنافس على مساحة صغيرة وتزيد الجهد المطلوب.</p></article><article><i class="ph-duotone ph-shopping-cart-simple"></i><h3>الإجراء الأساسي غير واضح</h3><p>زر الإضافة للسلة لا يحصل على الأولوية البصرية المناسبة.</p></article></div>
@@ -137,10 +122,13 @@
       </div>
     </div>
   </section>
-</main>
+{% endblock %}
 
+{% block service_after_main %}
 <div class="sticky-service-cta"><a class="button" href="#service-contact">ابدأ تقييم صفحة المنتج</a></div>
+{% endblock %}
 
+{% block service_scripts %}
 <script src="/static/public_preview/assets/js/page-shell.js" defer></script>
 <script src="/static/public_preview/assets/js/site-config.js" defer></script>
 <script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>

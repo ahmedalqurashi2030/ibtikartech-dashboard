@@ -3,12 +3,14 @@
 {% block head %}
 <title>{% block service_page_title %}{% endblock %}</title>
 <meta name="description" content="{% block service_meta_description %}{% endblock %}">
+{% block service_styles %}
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+{% endblock %}
 {% endblock %}
 
 {% block body_attrs %} class="inner-page service-detail-page" data-section="services"{% endblock %}
@@ -42,10 +44,14 @@
   {% block service_content %}{% endblock %}
 </main>
 
+{% block service_after_main %}{% endblock %}
+
+{% block service_scripts %}
 <script src="/static/public_preview/assets/js/page-shell.js" defer></script>
 <script src="/static/public_preview/assets/js/site-config.js" defer></script>
 <script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
 <script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
 <script src="/static/public_preview/assets/js/app.js" defer></script>
 <script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
+{% endblock %}
 {% endblock %}

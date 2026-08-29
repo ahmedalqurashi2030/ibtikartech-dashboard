@@ -9,7 +9,11 @@ SERVICE_DETAIL_FAMILY_PARENT = "public_preview/families/service_detail_base.html
 
 PAGE_PARENT_OVERRIDES = {
     "store-launch.html": SERVICE_DETAIL_FAMILY_PARENT,
+    "storefront-customization.html": SERVICE_DETAIL_FAMILY_PARENT,
+    "store-redesign.html": SERVICE_DETAIL_FAMILY_PARENT,
+    "product-page-optimization.html": SERVICE_DETAIL_FAMILY_PARENT,
     "ecommerce-growth.html": SERVICE_DETAIL_FAMILY_PARENT,
+    "ecommerce-support.html": SERVICE_DETAIL_FAMILY_PARENT,
 }
 
 FAMILY_REQUIRED_BLOCKS = {
@@ -19,6 +23,14 @@ FAMILY_REQUIRED_BLOCKS = {
         "service_breadcrumb_current",
         "service_hero",
         "service_content",
+    ),
+}
+
+FAMILY_EXTENSION_BLOCKS = {
+    SERVICE_DETAIL_FAMILY_PARENT: (
+        "service_styles",
+        "service_after_main",
+        "service_scripts",
     ),
 }
 

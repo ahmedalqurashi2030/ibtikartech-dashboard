@@ -1,27 +1,10 @@
-{% extends "public_preview/base.html" %}
+{% extends "public_preview/families/service_detail_base.html" %}
 
-{% block head %}
-<title>تخصيص واجهة المتجر | ابتكار تك</title>
-  <meta name="description" content="تخصيص واجهة متجر قائم وتطبيق الهوية على الثيم والأقسام والبطاقات والبنرات مع مراجعة الجوال وحدود المنصة.">
-  <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
-  <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
-  <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-{% endblock %}
+{% block service_page_title %}تخصيص واجهة المتجر | ابتكار تك{% endblock %}
+{% block service_meta_description %}تخصيص واجهة متجر قائم وتطبيق الهوية على الثيم والأقسام والبطاقات والبنرات مع مراجعة الجوال وحدود المنصة.{% endblock %}
+{% block service_breadcrumb_current %}تخصيص واجهة المتجر{% endblock %}
 
-{% block body_attrs %} class="inner-page service-detail-page" data-section="services"{% endblock %}
-
-{% block body %}
-<main id="main-content" class="service-detail-main">
-
-<div class="service-detail-shell">
-  <nav class="service-detail-breadcrumb" aria-label="مسار التنقل">
-    <a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><span>←</span><b aria-current="page">تخصيص واجهة المتجر</b>
-  </nav>
-</div>
-
+{% block service_hero %}
 <section class="service-commerce-hero">
   <div class="service-detail-shell">
     <div class="service-commerce-hero__card" data-service-commerce-hero>
@@ -72,17 +55,9 @@
     </div>
   </div>
 </section>
+{% endblock %}
 
-<nav class="service-decision-nav" id="decision-center" aria-label="دليل قرار الخدمة">
-  <div class="service-detail-shell service-decision-tabs" data-service-decision-tabs>
-    <button class="is-active" type="button" data-service-decision-tab="problems">المشكلات</button>
-    <button type="button" data-service-decision-tab="fit">هل تناسبك؟</button>
-    <button type="button" data-service-decision-tab="scope">نطاق التنفيذ</button>
-    <button type="button" data-service-decision-tab="deliverables">المخرجات</button>
-    <button type="button" data-service-decision-tab="exclusions">غير المشمول</button>
-  </div>
-</nav>
-
+{% block service_content %}
 <section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
   <div class="service-detail-shell"><div class="service-detail-heading"><span>قبل أن نغيّر الشكل</span><h2>هل واجهة متجرك تعاني من هذه العلامات؟</h2><p>التخصيص الجيد يبدأ بتشخيص ما يجعل الواجهة تبدو عامة أو مشتتة، لا بمجرد تغيير الألوان.</p></div>
     <div class="service-problem-grid">
@@ -183,14 +158,8 @@
 <section class="service-final-cta" id="service-contact">
   <div class="service-detail-shell"><div class="service-final-cta__card"><div><h2>أرسل رابط متجرك قبل أن تقرر حجم التخصيص.</h2><p>سنبدأ من الحالة الحالية ونحدد هل تحتاج تخصيص واجهة، تحسينًا مركزًا، أم مسار إعادة تصميم أوسع.</p></div><div class="service-final-cta__actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization final">ابدأ تقييم الواجهة</a><a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}">العودة لحلول المتاجر</a></div></div></div>
 </section>
+{% endblock %}
 
-</main>
-
+{% block service_after_main %}
 <div class="service-sticky-cta"><a class="btn btn-primary" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization sticky">ابدأ تقييم واجهة متجرك</a></div>
-<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
-<script src="/static/public_preview/assets/js/site-config.js" defer></script>
-<script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
-<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
-<script src="/static/public_preview/assets/js/app.js" defer></script>
-<script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
 {% endblock %}

@@ -8,8 +8,9 @@ No section is replaced by a reusable include or database-backed model.
 
 Public templates use an approved presentation contract:
 - ordinary pages extend ``public_preview/base.html`` and own one body block;
-- allowlisted pilot pages may extend an approved page-family template;
-- page-family templates own repeated structure and page-specific assets.
+- allowlisted service-detail pages extend an approved page-family template;
+- page-family templates own repeated structure and shared assets;
+- child templates keep explicit extension blocks for page-specific assets.
 
 There is intentionally no ``page_scripts`` block. Page-owned external scripts
 that used to live after the shared footer are moved to the end of ``body`` and

@@ -11,6 +11,7 @@ from apps.public_preview.manifest import (
 )
 from apps.public_preview.template_contract import (
     BASE_TEMPLATE_PARENT,
+    FAMILY_EXTENSION_BLOCKS,
     FAMILY_REQUIRED_BLOCKS,
     block_tag,
     extends_tag,
@@ -108,6 +109,42 @@ def test_approved_family_templates_own_one_stable_page_structure():
                 parent,
                 block_name,
             )
+
+        for block_name in FAMILY_EXTENSION_BLOCKS[parent]:
+            assert source.count(block_tag(block_name)) == 1, (
+                parent,
+                block_name,
+            )
+
+        assert source.index("</main>") < source.index(block_tag("service_after_main"))
+        assert source.index(block_tag("service_after_main")) < source.index(
+            block_tag("service_scripts")
+        )
+
+
+def test_service_detail_children_keep_explicit_asset_and_after_main_exceptions():
+    product_source = (
+        PAGES_DIR / "product-page-optimization.html"
+    ).read_text(encoding="utf-8")
+    assert product_source.count(block_tag("service_styles")) == 1
+    assert product_source.count(block_tag("service_scripts")) == 1
+    for asset in (
+        "source-product-page.css",
+        "tokens.css",
+        "approved-source.css",
+        "source-product-page.js",
+        "approved-source.js",
+    ):
+        assert product_source.count(asset) == 1, asset
+
+    sticky_cta_markers = {
+        "storefront-customization.html": 'class="service-sticky-cta"',
+        "product-page-optimization.html": 'class="sticky-service-cta"',
+    }
+    for page_name, marker in sticky_cta_markers.items():
+        source = (PAGES_DIR / page_name).read_text(encoding="utf-8")
+        assert source.count(block_tag("service_after_main")) == 1, page_name
+        assert source.count(marker) == 1, page_name
 
 
 def test_known_internal_page_links_use_django_named_urls_in_templates():
