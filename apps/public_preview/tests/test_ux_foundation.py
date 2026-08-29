@@ -83,16 +83,50 @@ def test_document_head_restores_theme_without_legacy_shell_mutation():
     assert "localStorage.getItem('ibtikar-theme')" not in home_runtime
 
 
-def test_shared_related_services_runtime_is_deferred_and_single_owned():
+def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
+    from pathlib import Path
+
+    from apps.public_preview.asset_contract import ROUTE_SCOPED_ASSET_CONSUMERS
+    from apps.public_preview.template_contract import (
+        BASE_TEMPLATE_PARENT,
+        FAMILY_REQUIRED_BLOCKS,
+        page_parent,
+    )
+
     base_source = _read_source(BASE_TEMPLATE)
+    pages = sorted(Path("templates/public_preview/pages").glob("*.html"))
+    family_sources = {
+        parent: _read_source(str(Path("templates") / parent))
+        for parent in FAMILY_REQUIRED_BLOCKS
+    }
+
+    for asset, expected_consumers in ROUTE_SCOPED_ASSET_CONSUMERS.items():
+        assert asset not in base_source, asset
+        actual_consumers = set()
+
+        for page in pages:
+            page_source = _read_source(str(page))
+            parent = page_parent(page.name)
+            if parent == BASE_TEMPLATE_PARENT:
+                effective_count = page_source.count(asset)
+            else:
+                # A child override replaces the family extension block. Prefer
+                # the child reference when present; otherwise use the default.
+                effective_count = page_source.count(asset)
+                if effective_count == 0:
+                    effective_count = family_sources[parent].count(asset)
+
+            assert effective_count in (0, 1), (page.name, asset, effective_count)
+            if effective_count == 1:
+                actual_consumers.add(page.name)
+
+        assert actual_consumers == set(expected_consumers), asset
+
+
+def test_related_services_runtime_keeps_one_guarded_behavior_owner():
     shell_source = _read_source(SHELL_RUNTIME)
     related_source = _read_source(RELATED_RUNTIME)
 
-    expected = (
-        "public_preview/assets/js/service-related-cards.js' %}\" "
-        "defer></script>"
-    )
-    assert expected in base_source
     assert "relatedTracks" not in shell_source
     assert "ibt-related-track" not in shell_source
     assert "Product-like related-service sliders" not in shell_source

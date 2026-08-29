@@ -15,6 +15,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from apps.public_preview.asset_contract import (  # noqa: E402
+    ROUTE_SCOPED_ASSET_CONSUMERS,
+)
 from apps.public_preview.manifest import REQUIRED_PAGES, RETIRED_PLATFORM_PAGES  # noqa: E402
 from apps.public_preview.template_contract import (  # noqa: E402
     BASE_TEMPLATE_PARENT,
@@ -24,7 +27,9 @@ from apps.public_preview.template_contract import (  # noqa: E402
 )
 
 MANIFEST_PATH = ROOT / "docs" / "frontend-preview-manifest.json"
-PAGES_DIR = ROOT / "templates" / "public_preview" / "pages"
+TEMPLATES_DIR = ROOT / "templates" / "public_preview"
+PAGES_DIR = TEMPLATES_DIR / "pages"
+BASE_TEMPLATE = TEMPLATES_DIR / "base.html"
 ASSETS_DIR = ROOT / "static" / "public_preview" / "assets"
 OWNERSHIP_WORKFLOW = ROOT / ".github" / "workflows" / "frontend-ownership-qa.yml"
 
@@ -115,6 +120,52 @@ def verify_dashboard_owned_assets() -> None:
         fail("Dashboard-owned frontend assets missing: " + ", ".join(missing))
 
 
+
+
+
+def verify_route_scoped_asset_consumers() -> None:
+    base_source = BASE_TEMPLATE.read_text(encoding="utf-8")
+    family_sources = {
+        parent: (ROOT / "templates" / parent).read_text(encoding="utf-8")
+        for parent in FAMILY_REQUIRED_BLOCKS
+    }
+    invalid: list[str] = []
+
+    for asset, expected_consumers in ROUTE_SCOPED_ASSET_CONSUMERS.items():
+        if asset in base_source:
+            invalid.append(f"{asset}: route-scoped asset returned to base.html")
+        actual_consumers: set[str] = set()
+
+        for page_name in REQUIRED_PAGES:
+            page_source = (PAGES_DIR / page_name).read_text(encoding="utf-8")
+            parent = page_parent(page_name)
+            if parent == BASE_TEMPLATE_PARENT:
+                effective_count = page_source.count(asset)
+            else:
+                effective_count = page_source.count(asset)
+                if effective_count == 0:
+                    effective_count = family_sources[parent].count(asset)
+
+            if effective_count not in (0, 1):
+                invalid.append(
+                    f"{page_name}: expected zero or one effective {asset} reference, "
+                    f"found {effective_count}"
+                )
+            elif effective_count == 1:
+                actual_consumers.add(page_name)
+
+        expected = set(expected_consumers)
+        if actual_consumers != expected:
+            missing = sorted(expected - actual_consumers)
+            unexpected = sorted(actual_consumers - expected)
+            invalid.append(
+                f"{asset}: missing consumers={missing}, unexpected consumers={unexpected}"
+            )
+
+    if invalid:
+        fail("Route-scoped frontend asset contract failed:\n- " + "\n- ".join(invalid))
+
+
 def verify_no_external_frontend_clone_contract() -> None:
     # Build the old repository token dynamically so this guard does not trigger itself.
     old_repo = "ahmedalqurashi2030/" + "ibtikartech"
@@ -146,11 +197,14 @@ def main() -> None:
     verify_retired_importers_are_absent()
     verify_dashboard_owned_pages()
     verify_dashboard_owned_assets()
+    verify_route_scoped_asset_consumers()
     verify_no_external_frontend_clone_contract()
     print(
         "Dashboard frontend ownership verified: "
         f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page family, "
-        f"and {len(REQUIRED_OWNED_ASSETS)} canonical assets are repository-owned."
+        f"{len(REQUIRED_OWNED_ASSETS)} canonical assets, and "
+        f"{len(ROUTE_SCOPED_ASSET_CONSUMERS)} route-scoped asset contracts "
+        "are repository-owned."
     )
 
 
