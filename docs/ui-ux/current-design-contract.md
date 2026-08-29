@@ -14,8 +14,11 @@
   `templates/services/detail.html`.
 - صفحات تفاصيل خدمات التجارة الست ترث
   `public_preview/families/service_detail_base.html`، وصفحات فئات الحلول الخمس
-  ترث `public_preview/families/service_category_base.html`. تملك العائلة الغلاف
-  والأصول المتطابقة فقط، وتبقى الأقسام السردية والمحتوى داخل الصفحة المالكة.
+  ترث `public_preview/families/service_category_base.html`. صفحات المقالات
+  الثلاث ترث `public_preview/families/article_detail_base.html`، بينما يبقى
+  فهرس المعرفة `knowledge.html` صفحة مستقلة لاختلاف رحلة التصفح والتصفية.
+  تملك العائلات الغلاف والأصول المتطابقة فقط، وتبقى الأقسام السردية وSEO
+  والمحتوى داخل الصفحة المالكة.
 - لا تُدمج منظومتا العرض ولا تُحذف القوالب غير النشطة قبل تدقيق المسارات
   والمراجع واتخاذ قرار معماري مستقل.
 

@@ -22,6 +22,12 @@ PLATFORM_FAMILY_PAGES = (
     "about.html",
 )
 
+ARTICLE_DETAIL_PAGES = (
+    "article-product-page.html",
+    "article-store-launch.html",
+    "article-store-redesign.html",
+)
+
 SERVICE_DETAIL_PAGES = (
     "store-launch.html",
     "storefront-customization.html",
@@ -244,6 +250,21 @@ def test_service_detail_pages_keep_equivalent_panel_grid_vocabulary():
         source = _page_source(page_name)
         for marker in expected_markers:
             assert marker in source
+
+
+
+def test_article_detail_pages_share_one_semantic_reading_contract():
+    for page_name in ARTICLE_DETAIL_PAGES:
+        source = _effective_page_source(page_name)
+        assert 'id="progressBar"' in source
+        assert '<main id="main-content">' in source
+        assert '<article>' in source
+        assert 'class="article-hero"' in source
+        assert 'class="article-aside"' in source
+        assert 'class="article-body"' in source
+        assert 'class="related-articles"' in source
+        assert "articles.css" in source
+        assert "articles.js" in source
 
 
 def test_page_sections_are_inline_not_component_includes():

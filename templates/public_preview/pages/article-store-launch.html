@@ -1,20 +1,15 @@
-{% extends "public_preview/base.html" %}
+{% extends "public_preview/families/article_detail_base.html" %}
 
-{% block head %}
-<title>دليل إطلاق متجر إلكتروني من الفكرة إلى أول طلب | ابتكار تك</title>
-<meta name="description" content="دليل عملي لإطلاق متجر إلكتروني: تجهيز المنتجات والدفع والشحن والمحتوى، اختبار رحلة الشراء، والقياس بعد الإطلاق."><meta name="robots" content="index,follow,max-image-preview:large"><meta name="theme-color" content="#060b19">
-<meta property="og:locale" content="ar_SA"><meta property="og:type" content="article"><meta property="og:title" content="دليل إطلاق متجر إلكتروني من الفكرة إلى أول طلب"><meta property="og:description" content="خريطة عملية لإطلاق متجر جاهز للبيع والقياس."><meta property="article:published_time" content="2026-08-13">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/articles.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+{% block article_head_metadata %}
+<div class="reading-progress" id="progressBar" aria-hidden="true"></div>
+{% endblock %}
+
+{% block article_structured_data %}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"دليل إطلاق متجر إلكتروني من الفكرة إلى أول طلب","description":"دليل عملي لإطلاق متجر إلكتروني جاهز للبيع والقياس","datePublished":"2026-08-13","dateModified":"2026-08-13","inLanguage":"ar-SA","author":{"@type":"Organization","name":"ابتكار تك"},"publisher":{"@type":"Organization","name":"ابتكار تك"},"mainEntityOfPage":"https://ibtikartech.co{% url 'public_preview:article-store-launch' %}"}</script>
 {% endblock %}
 
-{% block body_attrs %} class="inner-page article-page" data-section="knowledge"{% endblock %}
-
-{% block body %}
-<div class="reading-progress" id="progressBar" aria-hidden="true"></div>
-
-
-<main id="main-content"><article>
+{% block article_content %}
+<article>
 <header class="article-hero"><div class="container"><div class="article-header"><nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'public_preview:knowledge' %}">المقالات</a><span>←</span><span aria-current="page">إطلاق المتجر</span></nav><span class="article-topic">المتاجر الإلكترونية</span><h1>دليل إطلاق متجر إلكتروني من الفكرة إلى <span>أول طلب.</span></h1><p class="article-deck">الإطلاق الجيد لا يبدأ من اختيار لون الواجهة؛ يبدأ من اكتمال القرارات التجارية والمحتوى وتجربة الشراء، وينتهي بقياس ما يحدث بعد وصول أول زائر.</p><div class="article-meta"><span>8 دقائق قراءة</span><span><time datetime="2026-08-13">13 أغسطس 2026</time></span><span>فريق ابتكار تك</span></div></div><div class="article-cover" aria-hidden="true"><strong>01</strong></div></div></header>
 <section class="article-content-section"><div class="container article-layout"><aside class="article-aside" aria-label="أدوات المقال"><div class="article-toc"><strong>في هذا المقال</strong><nav><a href="#before-build">قبل البناء</a><a href="#launch-pillars">محاور الإطلاق</a><a href="#qa">اختبار رحلة الشراء</a><a href="#after-launch">بعد الإطلاق</a><a href="#final-checklist">قائمة التحقق</a></nav></div><div class="article-share"><strong>احتفظ بالدليل</strong><button class="copy-link" type="button" data-copy-link>نسخ رابط المقال</button></div></aside>
 <div class="article-body"><p>المتجر الجاهز للإطلاق ليس المتجر الذي اكتمل شكله فقط، بل المتجر الذي يستطيع عميل حقيقي أن يفهم عرضه، ويختار منتجه، ويدفع، ويعرف ما سيحدث بعد الطلب دون ارتباك.</p>
@@ -28,7 +23,4 @@
 <h2 id="final-checklist">قائمة تحقق مختصرة قبل الإعلان</h2><div class="article-steps"><div class="article-step"><h3>اكتملت المنتجات الأساسية</h3><p>المحتوى والصور والخيارات والأسعار والمخزون متطابقة.</p></div><div class="article-step"><h3>تم طلب تجريبي كامل</h3><p>من المنتج إلى إشعار التأكيد، مع اختبار الدفع والشحن.</p></div><div class="article-step"><h3>تمت مراجعة الجوال</h3><p>التنقل والبحث والسلة وصفحة المنتج واضحة وسريعة.</p></div><div class="article-step"><h3>القياس قابل للتحقق</h3><p>الأحداث الأساسية تعمل دون تكرار، والفريق يعرف ماذا يراقب.</p></div></div>
 <div class="article-end"><h2>ابدأ صغيرًا، لكن لا تبدأ ناقصًا</h2><p>يمكن أن ينطلق المتجر بعدد محدود من المنتجات والخصائص، بشرط أن تكون الرحلة الأساسية مكتملة وموثوقة. النطاق الأصغر يسهل اختباره وتحسينه، بينما النطاق الكبير الناقص يضاعف مصادر الخطأ.</p><a class="btn btn-primary" href="{% url 'services:store-launch' %}">استكشف خدمة إطلاق المتجر</a></div></div></div></section></article>
 <section class="related-articles"><div class="container"><div class="articles-heading"><div><span class="section-kicker">تابع القراءة</span><h2>مقالات مرتبطة بالمرحلة التالية</h2></div></div><div class="articles-grid"><article class="article-card article-card--product"><div class="article-card__visual" data-label="PRODUCT UX"><span class="article-card__number">02</span></div><div class="article-card__body"><span class="article-topic">تجربة المستخدم</span><h3>صفحة المنتج التي تجيب قبل أن يتردد العميل</h3><a class="article-link" href="{% url 'public_preview:article-product-page' %}">اقرأ المقال</a></div></article><article class="article-card article-card--strategy"><div class="article-card__visual" data-label="SCOPE"><span class="article-card__number">03</span></div><div class="article-card__body"><span class="article-topic">الاستراتيجية</span><h3>تخصيص الواجهة أم إعادة تصميم المتجر؟</h3><a class="article-link" href="{% url 'public_preview:article-store-redesign' %}">اقرأ المقال</a></div></article></div></div></section>
-</main>
-
-<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/articles.js" defer></script>
 {% endblock %}

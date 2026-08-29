@@ -18,36 +18,32 @@
 | 8 | Wagtail content evolution | تحرير المحتوى المستقر | blocks/snippets المختارة | CMS يفرض بنية غير ناضجة | عقود تحرير تعكس المكونات المستقرة |
 | 9 | Comprehensive QA | إطلاق آمن | جميع الصفحات والمقاسات | ثغرات بصرية ومتصفحات | Visual/a11y/performance regression كاملة |
 
-## المجموعة الحالية: Category pages
+## المجموعة الحالية: Articles
 
 ### الصفحات
 
-- `templates/public_preview/pages/ecommerce.html`
-- `templates/public_preview/pages/websites.html`
-- `templates/public_preview/pages/brand-content.html`
-- `templates/public_preview/pages/growth.html`
-- `templates/public_preview/pages/custom-systems.html`
+- `templates/public_preview/pages/knowledge.html`
+- `templates/public_preview/pages/article-product-page.html`
+- `templates/public_preview/pages/article-store-launch.html`
+- `templates/public_preview/pages/article-store-redesign.html`
 
 ### العقد المعتمد
 
-- `service_category_base.html` يملك document-family shell و`main` وحزمة
-  CSS/JavaScript المتطابقة.
-- كل صفحة تملك عنوان SEO ووصفه وخصائص `body` وجميع أقسام المحتوى.
-- `ecommerce.html` يحتفظ بامتدادات أصول صريحة لأنه يستخدم
-  `approved-source.css` و`ecommerce-category.css` و`approved-source.js`
-  ولا يستخدم بطاقات الخدمات المرتبطة.
-- اختلاف السرد أو ترتيب الأقسام لا يتحول إلى شروط داخل القالب المشترك.
-- أي أصل route-scoped يُحسب من block الفعّال؛ override مختلف لا يرث أصلًا
-  لم تطلبه الصفحة.
+- `article_detail_base.html` يملك شريط تقدم القراءة و`main` وحزمة
+  `articles.css` و`articles.js` المتطابقة للمقالات الثلاثة.
+- كل مقال يملك metadata وOpen Graph وJSON-LD ومحتوى المقال والعناصر المرتبطة.
+- `knowledge.html` يبقى صفحة مستقلة لأنه CollectionPage بفلترة ورحلة اكتشاف،
+  وليس مقالًا تفصيليًا.
+- ملكية أصول المقالات route-scoped ومحصورة في فهرس المعرفة والمقالات الثلاثة.
+- لا تُستخرج فقرات المقال أو جداول المحتوى إلى مكوّنات مشتركة؛ دلالتها تحريرية.
 
 ### معايير القبول البنيوية
 
-- الروابط والصور والنصوص وanalytics attributes وIDs محفوظة بلا تغيير.
-- كل صفحة ترث عائلة واحدة مع blocks المطلوبة مرة واحدة.
-- كل أصل CSS/JavaScript فعّال يظهر مرة واحدة فقط للمستهلكين المعتمدين.
-- أدوات التحويل تبقى idempotent ولا تسطّح صفحات العائلات.
-- Browser QA والمقارنة البصرية وa11y/performance الشاملة تُنفّذ في المجموعة 9
-  قبل الدمج النهائي.
+- title وdescription وOpen Graph وJSON-LD محفوظة لكل مقال.
+- بنية `article` و`aside` وTable of Contents والمحتوى المرتبط محفوظة.
+- رابط كل مقال وIDs الداخلية وتاريخ النشر بلا تغيير.
+- `articles.css` و`articles.js` يظهران مرة واحدة لكل مستهلك معتمد.
+- Browser QA وSEO rendering وa11y/performance الشاملة مؤجلة للمجموعة 9.
 
 ## سياسة Pull Requests
 

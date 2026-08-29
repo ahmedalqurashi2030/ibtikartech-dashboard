@@ -1,0 +1,27 @@
+{% extends "public_preview/base.html" %}
+
+{% block head %}
+{% block article_head_metadata %}{% endblock %}
+{% block article_styles %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/articles.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+{% endblock %}
+{% block article_structured_data %}{% endblock %}
+{% endblock %}
+
+{% block body_attrs %} class="inner-page article-page" data-section="knowledge"{% endblock %}
+
+{% block body %}
+<div class="reading-progress" id="progressBar" aria-hidden="true"></div>
+
+<main id="main-content">
+{% block article_content %}{% endblock %}
+</main>
+
+{% block article_scripts %}
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/articles.js" defer></script>
+{% endblock %}
+{% endblock %}

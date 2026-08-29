@@ -148,6 +148,31 @@ def test_service_detail_children_keep_explicit_asset_and_after_main_exceptions()
         assert source.count(marker) == 1, page_name
 
 
+
+def test_article_detail_children_keep_page_owned_seo_and_semantic_content():
+    article_pages = (
+        "article-product-page.html",
+        "article-store-launch.html",
+        "article-store-redesign.html",
+    )
+    for page_name in article_pages:
+        source = (PAGES_DIR / page_name).read_text(encoding="utf-8")
+        metadata = block_tag("article_head_metadata")
+        structured_data = block_tag("article_structured_data")
+        content = block_tag("article_content")
+
+        assert source.count(metadata) == 1, page_name
+        assert source.count(structured_data) == 1, page_name
+        assert source.count(content) == 1, page_name
+        assert source.count("<title>") == 1, page_name
+        assert source.count('name="description"') == 1, page_name
+        assert source.count('property="og:type" content="article"') == 1, page_name
+        assert source.count('type="application/ld+json"') == 1, page_name
+        assert source.count("<article>") == 1, page_name
+        assert source.count('class="article-body"') == 1, page_name
+        assert source.count('class="related-articles"') == 1, page_name
+
+
 def test_known_internal_page_links_use_django_named_urls_in_templates():
     sources = [
         *(PAGES_DIR / page_name for page_name in REQUIRED_PAGES),
