@@ -21,6 +21,7 @@
   var variant = variants.filter(function (item) { return bodyClass.indexOf(item.match) !== -1; })[0] || variants[0];
   var count = cards.length;
   var media = window.matchMedia("(max-width: 760px), (prefers-reduced-motion: reduce)");
+  if (media.matches) return;
 
   section.dataset.cinemaInitialized = "true";
   section.dataset.count = String(count);

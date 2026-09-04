@@ -22,19 +22,59 @@
   };
 
   const hotspotInfo = document.querySelector('.hotspot-info');
-  document.querySelectorAll('.hotspot').forEach((button) => {
-    button.addEventListener('click', () => {
-      const data = hotspotCopy[button.dataset.id];
-      if (!data || !hotspotInfo) return;
-      hotspotInfo.innerHTML = `<h3>${data[0]}</h3><p>${data[1]}</p>`;
+  const hotspotTitle = hotspotInfo?.querySelector('[data-product-hotspot-title]');
+  const hotspotText = hotspotInfo?.querySelector('[data-product-hotspot-text]');
+  const hotspots = [...document.querySelectorAll('.hotspot')];
+
+  const activateHotspot = (activeButton) => {
+    const data = hotspotCopy[activeButton.dataset.id];
+    if (!data || !hotspotTitle || !hotspotText) return;
+
+    hotspots.forEach((button) => {
+      button.setAttribute('aria-pressed', String(button === activeButton));
     });
+    hotspotTitle.textContent = data[0];
+    hotspotText.textContent = data[1];
+  };
+
+  hotspots.forEach((button) => {
+    button.type = 'button';
+    button.setAttribute('aria-pressed', 'false');
+    if (hotspotInfo?.id) button.setAttribute('aria-controls', hotspotInfo.id);
+    button.addEventListener('click', () => activateHotspot(button));
   });
+  if (hotspots[0]) activateHotspot(hotspots[0]);
 
   const sticky = document.querySelector('.sticky-service-cta');
   const hero = document.querySelector('.service-commerce-hero');
-  if (sticky && hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => {
-      sticky.classList.toggle('is-visible', !entry.isIntersecting);
-    }, { threshold: .05 }).observe(hero);
+  const finalCta = document.querySelector('#service-contact');
+  const mobileViewport = window.matchMedia('(max-width: 680px)');
+  let frameRequested = false;
+
+  const updateSticky = () => {
+    frameRequested = false;
+    if (!sticky || !hero || !finalCta) return;
+
+    const shouldShow = mobileViewport.matches
+      && hero.getBoundingClientRect().bottom < 0
+      && finalCta.getBoundingClientRect().top > window.innerHeight;
+
+    sticky.classList.toggle('is-visible', shouldShow);
+    sticky.setAttribute('aria-hidden', String(!shouldShow));
+    sticky.toggleAttribute('inert', !shouldShow);
+    document.body.classList.toggle('product-sticky-cta-visible', shouldShow);
+  };
+
+  const requestStickyUpdate = () => {
+    if (frameRequested) return;
+    frameRequested = true;
+    window.requestAnimationFrame(updateSticky);
+  };
+
+  if (sticky && hero && finalCta) {
+    window.addEventListener('scroll', requestStickyUpdate, { passive: true });
+    window.addEventListener('resize', requestStickyUpdate, { passive: true });
+    mobileViewport.addEventListener?.('change', requestStickyUpdate);
+    requestStickyUpdate();
   }
 })();

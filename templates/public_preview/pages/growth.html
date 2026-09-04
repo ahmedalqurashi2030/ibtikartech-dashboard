@@ -9,7 +9,7 @@
 <nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">الظهور والقياس والنمو</span></nav>
 <span class="platform-kicker">VISIBILITY · MEASUREMENT · GROWTH</span><h1>ثبّت أساس القياس. <span>ثم حسّن ما يستحق الأولوية.</span></h1>
 <p>نبدأ بالسؤال الذي تريد البيانات أن تجيب عنه، ثم نراجع SEO والتتبع والأحداث وصفحات الهبوط ونرتب التحسينات وفق أثر يمكن ملاحظته.</p>
-<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">راجع مسارات القياس</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=measurement&source=growth-hero#quote">ابدأ بتدقيق الأساس</a></div>
+<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">راجع مسارات القياس</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=measurement&source=growth-hero#quote" data-analytics="quote_request" data-analytics-label="growth-hero">ابدأ بتدقيق الأساس</a></div>
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg" alt="منظومة قياس ونمو تربط التجربة بالبيانات والتحسين" width="1280" height="853" fetchpriority="high"><figcaption>القياس لا يعوض تجربة ضعيفة؛ لذلك نربط البيانات بسرعة الموقع والمحتوى ورحلة المستخدم.</figcaption></figure></div></section>
 
@@ -17,6 +17,7 @@
   <a href="#capabilities">مسارات النمو</a>
   <a href="#approach">دورة العمل</a>
   <a href="#fit">النطاق والقرار</a>
+  <a href="#faq">الأسئلة</a>
 </div></nav>
 
 
@@ -95,7 +96,17 @@
 <article class="platform-card reveal"><h3>ليس ضمن النطاق تلقائيًا</h3><ul><li>ضمان ترتيب أو عدد مبيعات محدد</li><li>إدارة إعلانات مدفوعة أو ميزانيات حملات إلا بنطاق مستقل</li><li>تتبع لا توجد له موافقة أو غرض واضح</li><li>إصلاح مشكلات المنتج أو التشغيل التي لا يحلها التسويق</li></ul></article>
 </div></div></section>
 
-<section class="platform-section"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ بما يمنعك من اتخاذ القرار</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
+<section class="platform-section platform-section--soft" id="faq"><div class="container service-category-faq">
+  <div class="service-category-faq__intro reveal"><span class="section-kicker">قبل القياس</span><h2>أسئلة تمنع توقعات مضللة</h2><p>النمو مسار تعلم وتحسين؛ لذلك نوضح البيانات والصلاحيات والحدود قبل إضافة أداة أو توصية.</p></div>
+  <div class="service-category-faq__list">
+    <details class="service-category-faq__item reveal"><summary>هل تضمنون ترتيبًا أو عدد مبيعات محددًا؟</summary><div class="service-category-faq__answer"><p>لا. نصلح الأساس ونحسن الظهور والقياس والتجربة وفق أدلة، لكن النتائج تتأثر أيضًا بالمنتج والسعر والمنافسة والتشغيل والاستثمار التسويقي.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>ما الوصول الذي تحتاجونه؟</summary><div class="service-category-faq__answer"><p>بحسب النطاق قد نحتاج صلاحيات محدودة للموقع وSearch Console وGA4 وGTM والمنصة الإعلانية. نطلب أقل صلاحية لازمة ولا تُرسل الأسرار عبر النموذج العام.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>كيف تتعاملون مع الخصوصية والموافقة؟</summary><div class="service-category-faq__answer"><p>نربط كل حدث بغرض واضح ونراجع آلية الموافقة المتاحة. لا ننفذ تتبعًا مخفيًا أو نجمع بيانات لا يحتاجها القرار.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>هل إدارة الإعلانات ضمن الخدمة؟</summary><div class="service-category-faq__answer"><p>ليست ضمن المسار تلقائيًا. يمكن تجهيز القياس وصفحات الهبوط أو اعتماد إدارة الحملات كنطاق مستقل بميزانية ومسؤوليات واضحة.</p></div></details>
+  </div>
+</div></section>
+
+<section class="platform-section" id="related"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ بما يمنعك من اتخاذ القرار</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
 <section class="page-cta">
   <div class="container">
@@ -106,7 +117,7 @@
         <p>أرسل الرابط والأدوات الحالية والسؤال الذي تريد الإجابة عنه، وسنحدد هل المشكلة في الظهور أو القياس أو التجربة.</p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a>
+<a class="btn btn-white" href="{% url 'public_preview:contact' %}?goal=measurement&source=growth-final#quote" data-analytics="quote_request" data-analytics-label="growth-final">ابدأ التشخيص</a>
         <a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a>
       </div>
     </div>

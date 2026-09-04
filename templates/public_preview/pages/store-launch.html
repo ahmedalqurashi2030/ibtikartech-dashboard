@@ -5,22 +5,266 @@
 {% block service_breadcrumb_current %}إطلاق متجر إلكتروني{% endblock %}
 
 {% block service_hero %}
-<section class="service-commerce-hero"><div class="service-detail-shell">
-<div class="service-commerce-hero__card" data-service-commerce-hero>
-<div class="service-gallery" aria-label="معرض توضيحي للخدمة"><div class="service-gallery__stage"><img class="service-gallery__main" data-service-gallery-main src="/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg" alt="رحلة إطلاق متجر إلكتروني من تجهيز المنتجات إلى الدفع والقياس والتسليم" width="1280" height="853" fetchpriority="high"><span class="service-gallery__label">معاينات توضيحية — وليست مشروع عميل</span></div><div class="service-gallery__thumbs" aria-label="زوايا الخدمة"><button class="is-active" type="button" data-service-gallery-src="/static/public_preview/assets/images/services/ecommerce/store-launch.svg" data-service-gallery-alt="تصور مسار إطلاق متجر" aria-label="عرض الإطلاق"><img src="/static/public_preview/assets/images/services/ecommerce/store-launch.svg" alt="" width="160" height="100"></button><button type="button" data-service-gallery-src="/static/public_preview/assets/images/services/ecommerce/storefront-customization.svg" data-service-gallery-alt="تصور تخصيص واجهة المتجر" aria-label="عرض الواجهة"><img src="/static/public_preview/assets/images/services/ecommerce/storefront-customization.svg" alt="" width="160" height="100"></button><button type="button" data-service-gallery-src="/static/public_preview/assets/images/services/ecommerce/product-experience.svg" data-service-gallery-alt="تصور صفحة المنتج" aria-label="عرض صفحة المنتج"><img src="/static/public_preview/assets/images/services/ecommerce/product-experience.svg" alt="" width="160" height="100"></button><button type="button" data-service-gallery-src="/static/public_preview/assets/images/showcase/ecommerce-experience-source.png" data-service-gallery-alt="تصور تجربة متجر إلكتروني متكاملة" aria-label="عرض تجربة المتجر"><img src="/static/public_preview/assets/images/showcase/ecommerce-experience-source.png" alt="" width="160" height="100"></button></div></div>
-<div class="service-commerce-copy"><span class="service-detail-badge">خدمات المتاجر الإلكترونية · STORE LAUNCH</span><h1>أطلق متجرًا جاهزًا للتشغيل. <span>لا مجرد واجهة منشورة.</span></h1><p>نحوّل الفكرة والمنتجات والهوية إلى متجر قابل للتشغيل: نراجع ملاءمة المنصة، نبني الهيكل، نجهز الواجهة والمحتوى المتفق عليه، ثم نختبر المسارات الأساسية قبل الإطلاق.</p><div class="service-platform-chips"><span>Salla</span><span>Zid</span><span>Shopify</span><span>WooCommerce</span><span>Mobile-first</span></div><div class="service-purchase-box" aria-label="معلومات قرار الخدمة"><div><small>طريقة التسعير</small><strong>حسب المنصة والنطاق والمحتوى والتكاملات</strong></div><div><small>نقطة البداية</small><strong>تشخيص المشروع قبل تثبيت الخطة</strong></div></div><ul class="service-assurance"><li>نطاق ومخرجات معتمدة قبل البناء</li><li>اختبار Desktop وTablet وMobile</li><li>لا نفترض تطبيقات أو خصائص غير متاحة</li></ul><div class="service-commerce-actions"><a class="btn btn-primary" href="{% url 'public_preview:contact' %}?service=store-launch&source=service-hero#quote" data-analytics="quote_request">ابدأ تشخيص إطلاق متجرك</a><a class="service-text-link" href="#decision-center" data-open-service-tab="problems">هل تحتاج إطلاقًا كاملًا؟ ←</a></div></div>
-</div>
-<div class="service-quick-info"><span><strong>نوع الخدمة</strong><small>إطلاق وتجهيز متجر</small></span><span><strong>مناسبة لـ</strong><small>مشروع جديد</small></span><span><strong>المنصات</strong><small>سلة · زد · Shopify · WooCommerce</small></span><span><strong>التنفيذ</strong><small>تشخيص → نطاق → بناء → QA</small></span><span><strong>المدة التقديرية</strong><small>3–6 أسابيع بعد جاهزية المحتوى</small></span><span><strong>التسعير</strong><small>عرض مخصص</small></span><span><strong>التسليم</strong><small>وفق قائمة معتمدة</small></span></div>
-</div></section>
+<section class="service-commerce-hero">
+  <div class="service-detail-shell">
+    <div class="service-commerce-hero__card" data-service-commerce-hero>
+      <div class="service-gallery" aria-label="معرض توضيحي للخدمة">
+        <div class="service-gallery__stage">
+          <img class="service-gallery__main" data-service-gallery-main src="/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg" alt="رحلة إطلاق متجر إلكتروني من تجهيز المنتجات إلى الدفع والقياس والتسليم" width="1280" height="853" fetchpriority="high">
+          <span class="service-gallery__label">معاينات توضيحية — وليست مشروع عميل</span>
+        </div>
+        <div class="service-gallery__thumbs" aria-label="زوايا الخدمة">
+          <button class="is-active" type="button" data-service-gallery-src="/static/public_preview/assets/images/services/ecommerce/store-launch.svg" data-service-gallery-alt="تصور يوضح مراحل إطلاق متجر إلكتروني" aria-label="عرض مراحل الإطلاق"><img src="/static/public_preview/assets/images/services/ecommerce/store-launch.svg" alt="" width="160" height="100"></button>
+        </div>
+      </div>
+      <div class="service-commerce-copy">
+        <span class="service-detail-badge">STORE LAUNCH</span>
+        <h1>أطلق متجرًا جاهزًا للتشغيل. <span>لا مجرد واجهة منشورة.</span></h1>
+        <p>نحوّل الفكرة والمنتجات والهوية إلى متجر قابل للتشغيل: نراجع ملاءمة المنصة، نبني الهيكل، نجهز الواجهة والمحتوى، ونختبر المسارات الأساسية قبل الإطلاق.</p>
+        <div class="service-platform-chips">
+          <span>Salla</span><span>Zid</span><span>Shopify</span><span>WooCommerce</span><span>Mobile-first</span>
+        </div>
+        <div class="service-purchase-box" aria-label="معلومات قرار الخدمة">
+          <div><small>طريقة التسعير</small><strong>حسب المنصة والنطاق والمحتوى</strong></div>
+          <div><small>نقطة البداية</small><strong>تشخيص المشروع وتحديد النطاق</strong></div>
+        </div>
+        <ul class="service-assurance">
+          <li>نطاق ومخرجات معتمدة للحد من المفاجآت</li>
+          <li>اختبار Desktop وTablet وMobile</li>
+        </ul>
+        <div class="service-commerce-actions">
+          <a class="btn btn-primary" href="{% url 'public_preview:contact' %}?service=store-launch&source=service-hero#quote" data-analytics="quote_request" data-analytics-label="store launch hero">ابدأ تشخيص وإطلاق متجرك</a>
+          <a class="service-text-link" href="#decision-center">لماذا نفشل في الإطلاق؟ ←</a>
+        </div>
+      </div>
+    </div>
+    <div class="service-quick-info" aria-label="معلومات الخدمة السريعة"><span><strong>نوع الخدمة</strong><small>تأسيس وإطلاق</small></span><span><strong>مناسب لـ</strong><small>مشروع جديد أو متجر غير مكتمل</small></span><span><strong>المنصات</strong><small>سلة · زد · Shopify · WooCommerce</small></span><span><strong>البداية</strong><small>تشخيص ونطاق معتمد</small></span><span><strong>المدة</strong><small>تحدد بعد جاهزية المحتوى والنطاق</small></span><span><strong>التسعير</strong><small>عرض مخصص بعد التشخيص</small></span></div>
+  </div>
+</section>
 {% endblock %}
 
 {% block service_content %}
-<section class="service-detail-section service-decision-panel" data-service-decision-panel="problems"><div class="service-detail-shell"><div class="service-detail-heading"><span>قبل أول منتج</span><h2>الإطلاق يتعثر عندما تبدأ المنصة قبل الخطة.</h2><p>نراجع القرارات التي إذا تأخرت تتحول لاحقًا إلى إعادة عمل.</p></div><div class="service-problem-grid"><article><b>01 / PLATFORM</b><h3>اختيار منصة بلا ملاءمة</h3><p>اختيار التقنية قبل فهم التشغيل والتخصيص المطلوب قد يخلق قيودًا غير محسوبة.</p></article><article><b>02 / STRUCTURE</b><h3>تصنيفات وصفحات بلا منطق</h3><p>المنتجات موجودة لكن رحلة الاكتشاف لم تُصمم.</p></article><article><b>03 / CONTENT</b><h3>المحتوى غير جاهز</h3><p>صور وأوصاف وسياسات ناقصة تؤخر التنفيذ وتضعف القرار.</p></article><article><b>04 / BRAND</b><h3>واجهة عامة</h3><p>الثيم مركب لكن العلامة لا تظهر كنظام بصري متماسك.</p></article><article><b>05 / OPERATIONS</b><h3>الشحن والدفع متأخران</h3><p>قرارات التشغيل الحرجة يجب أن تدخل الاختبار قبل الإطلاق.</p></article><article><b>06 / QA</b><h3>النشر قبل الاختبار</h3><p>الجوال والروابط والخيارات والسلة تحتاج سيناريوهات تحقق واضحة.</p></article></div></div></section>
-<section class="service-detail-section service-decision-panel" data-service-decision-panel="fit" hidden><div class="service-detail-shell"><div class="service-detail-heading"><span>اختيار صحيح</span><h2>هل تحتاج إطلاقًا كاملًا أم خدمة مركزة؟</h2></div><div class="service-fit-grid"><article class="service-fit-card service-fit-card--good"><h3>تناسبك عندما</h3><ul><li>المتجر لم يُبنَ بعد أو يحتاج تأسيسًا فعليًا.</li><li>تحتاج مسارًا من المنصة إلى الإطلاق.</li><li>تستطيع توفير المحتوى والموافقات المطلوبة.</li><li>تريد جهة واحدة تنظم مراحل التنفيذ.</li></ul></article><article class="service-fit-card"><h3>اختر خدمة أخرى عندما</h3><ul><li>المتجر قائم والمشكلة في الواجهة فقط — <a href="{% url 'services:storefront-customization' %}">تخصيص الواجهة</a>.</li><li>المتجر قائم ويحتاج إعادة بناء التجربة — <a href="{% url 'services:store-redesign' %}">إعادة التصميم</a>.</li><li>المشكلة مركزة في صفحة المنتج — <a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a>.</li></ul></article></div></div></section>
-<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="scope" hidden><div class="service-detail-shell"><div class="service-detail-heading"><span>Scope first</span><h2>نطاق الإطلاق يتحدد قبل السعر.</h2></div><div class="service-scope-grid"><article><b>01</b><h3>الاستراتيجية والهيكل</h3><p>الهدف، المنصة، الصفحات، التصنيفات والمسارات الرئيسية.</p></article><article><b>02</b><h3>الواجهة</h3><p>إعداد الثيم أو القالب وتطبيق الاتجاه البصري ضمن المتفق عليه.</p></article><article><b>03</b><h3>المحتوى</h3><p>عدد المنتجات والصفحات والبنرات ومسؤولية كل طرف تُثبت في العرض.</p></article><article><b>04</b><h3>التجارة</h3><p>إعدادات الدفع والشحن والسياسات المتاحة ضمن صلاحيات المشروع.</p></article><article><b>05</b><h3>القياس</h3><p>الأحداث أو الأدوات الأساسية إذا كانت ضمن النطاق ومعلوماتها جاهزة.</p></article><article><b>06</b><h3>الاختبار والتسليم</h3><p>سيناريوهات رئيسية وتحقق متجاوب وتسليم الملاحظات والحسابات.</p></article></div></div></section>
-<section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables" hidden><div class="service-detail-shell"><div class="service-detail-heading"><span>مخرجات</span><h2>ما الذي يمكن أن تستلمه؟</h2><p>القائمة النهائية تُثبت في العرض، وهذه عائلات المخرجات الممكنة.</p></div><ul class="service-deliverable-grid"><li>خريطة صفحات وتصنيفات</li><li>واجهة متجر متجاوبة</li><li>إعدادات ثيم ضمن النطاق</li><li>قوالب عرض منتجات</li><li>بنرات وأقسام متفق عليها</li><li>إعدادات تجارة أساسية</li><li>قائمة QA قبل الإطلاق</li><li>ملاحظات وتسليم منظم</li></ul></div></section>
-<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions" hidden><div class="service-detail-shell"><div class="service-detail-heading"><span>حدود واضحة</span><h2>ما لا نفترضه تلقائيًا داخل الخدمة.</h2></div><ul class="service-exclusion-list"><li>إدخال غير محدود للمنتجات</li><li>تصوير المنتجات</li><li>اشتراكات التطبيقات أو المنصة</li><li>خصائص لا تسمح بها المنصة</li><li>حملات إعلانية</li><li>كتابة محتوى غير متفق عليه</li><li>تكاملات خارج النطاق</li><li>ضمان مبيعات أو ترتيب</li></ul></div></section>
-<section class="service-detail-section"><div class="service-detail-shell"><div class="service-detail-heading"><span>رحلة التنفيذ</span><h2>من التشخيص إلى إطلاق يمكن اختباره.</h2></div><div class="timeline"><article><h3>تشخيص</h3><p>النشاط والعميل والمحتوى والتشغيل والمنصة.</p></article><article><h3>نطاق</h3><p>الصفحات والمخرجات والمسؤوليات والموافقات.</p></article><article><h3>بناء</h3><p>هيكل وواجهة ومحتوى وإعدادات حسب الأولوية.</p></article><article><h3>QA وإطلاق</h3><p>الجوال والشراء والروابط والحالات الأساسية ثم التسليم.</p></article></div></div></section>
-<section class="service-detail-section service-detail-section--soft"><div class="service-detail-shell"><div class="service-detail-heading"><span>خدمات مرتبطة</span><h2>بعد الإطلاق، اختر التدخل حسب الحاجة.</h2></div><nav class="related-nav"><a href="{% url 'services:storefront-customization' %}">تخصيص الواجهة</a><a href="{% url 'services:store-redesign' %}">إعادة تصميم متجر</a><a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a><a href="{% url 'services:ecommerce-growth' %}">الربط والقياس والنمو</a><a href="{% url 'services:ecommerce-support' %}">الدعم المستمر</a></nav></div></section>
-<section class="page-cta"><div class="service-detail-shell"><div class="cta-card"><div><span class="section-kicker">STORE LAUNCH</span><h2>جهز نقطة البداية قبل أن تدفع ثمن إعادة العمل.</h2><p>أرسل الفكرة والمنصة إن وجدت وحالة الهوية والمحتوى، وسنحدد النطاق الأولي.</p></div><div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ تشخيص الإطلاق</a><a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}#subservices">كل خدمات المتاجر</a></div></div></div></section>
+<!-- Subservice Cards Grid -> Problems Panel -->
+<section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>الأخطاء الشائعة</span>
+      <h2>لماذا يتعثر الإطلاق الدائم؟</h2>
+      <p>الإطلاق يتعثر عندما تبدأ المنصة قبل الخطة، وتُستنزف الميزانية في تفاصيل فنية قبل تأمين الأساسيات.</p>
+    </div>
+    <div class="service-problem-grid">
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>اختيار منصة بلا ملاءمة</h3>
+          <p>اختيار التقنية قبل فهم التشغيل قد يخلق قيودًا غير محسوبة وتكاليف خفية مستمرة.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>تصنيفات بلا مسارات</h3>
+          <p>المنتجات موجودة، لكن رحلة اكتشافها من قبل العميل لم تُصمم لتلائم سلوك التسوق.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>محتوى غير جاهز</h3>
+          <p>صور وأوصاف وسياسات ناقصة تؤخر التنفيذ، وتحبط المستخدمين عند الشراء.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>واجهة عامة جدًا</h3>
+          <p>استخدام ثيم أساسي دون دمج هوية العلامة التجارية يلغي التميز في السوق.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>الناحية اللوجستية متأخرة</h3>
+          <p>الشحن والدفع تأتي كفكرة أخيرة، مما يعطل الإطلاق الفعلي.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>النشر بلا سيناريوهات QA</h3>
+          <p>إطلاق المتجر قبل اختبار مسارات الشراء والاستعراض يؤدي لخسارة عملاء متحمسين.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Anatomy View -> Fit Panel -->
+<section class="service-detail-section service-decision-panel" data-service-decision-panel="fit" hidden>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>الملاءمة</span>
+      <h2 id="store-launch-anatomy-title">هل تناسبك هذه الخدمة؟</h2>
+      <p>خدمة موجهة نحو المتاجر التي تُبنى من الصفر أو المتاجر التي تحتاج لإعادة تأسيس جذري.</p>
+    </div>
+    <div class="service-fit-grid">
+      <article class="service-fit-card service-fit-card--good"><h3>تناسبك الخدمة عندما</h3><ul><li>لديك مشروع جديد ومنتجات وهوية أو اتجاه واضح.</li><li>تستطيع توفير المحتوى والموافقات والصلاحيات المطلوبة.</li><li>تريد متجرًا قابلًا للتشغيل على منصة مناسبة، لا مجرد تصميم.</li></ul></article>
+      <article class="service-fit-card"><h3>قد تحتاج مسارًا آخر عندما</h3><ul><li>المتجر قائم والمشكلة في المظهر فقط — راجع تخصيص الواجهة.</li><li>المشكلة تشمل رحلة متجر قائم كاملة — راجع إعادة تصميم المتجر.</li><li>لا توجد منتجات أو سياسات أو محتوى جاهز — نحدد مرحلة تجهيز مستقلة أولًا.</li></ul></article>
+    </div>
+    <!-- Interactive Anatomy Primitive -->
+    <div class="service-anatomy-layout" role="group" aria-labelledby="store-launch-anatomy-title">
+      <!-- Fallback or mock image -->
+      <img src="/static/public_preview/assets/images/showcase/ecommerce-experience-source.png" alt="تصور لواجهة متجر إلكتروني يوضح نقاط الجاهزية قبل الإطلاق" width="1200" height="800" loading="lazy" decoding="async">
+      <button class="service-hotspot" type="button" style="top:20%; left:30%;" aria-expanded="false" aria-controls="store-launch-hotspot-new" aria-label="مشروع جديد"><span class="sr-only">مشروع جديد</span></button>
+      <div class="service-hotspot-info" id="store-launch-hotspot-new" style="top:24%; left:32%;" hidden>المتجر لم يُبنَ بعد أو يحتاج تأسيسًا فعليًا.</div>
+
+      <button class="service-hotspot" type="button" style="top:60%; left:70%;" aria-expanded="false" aria-controls="store-launch-hotspot-content" aria-label="جاهزية المحتوى"><span class="sr-only">جاهزية المحتوى</span></button>
+      <div class="service-hotspot-info" id="store-launch-hotspot-content" style="top:64%; left:72%;" hidden>تستطيع توفير المحتوى والموافقات المطلوبة.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Scope Panel -->
+<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="scope" hidden>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>Scope first</span>
+      <h2>نطاق الإطلاق يتحدد قبل السعر.</h2>
+    </div>
+    <!-- Extracted scope styling from decision-nav primitive context -->
+    <div class="service-scope-grid">
+      <article><b>01</b><h3>الاستراتيجية والهيكل</h3><p>الهدف، المنصة، مسارات التصفح الرئيسية.</p></article>
+      <article><b>02</b><h3>الواجهة</h3><p>إعداد الثيم ضمن حدود المتفق عليه.</p></article>
+      <article><b>03</b><h3>التجارة</h3><p>إعدادات الدفع والشحن والسياسات المتاحة.</p></article>
+      <article><b>04</b><h3>التسليم</h3><p>اختبار الجوال والمسارات وإغلاق QA.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- Deliverables Panel -->
+<section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables" hidden>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>المخرجات</span>
+      <h2>ما الذي يمكن أن تستلمه؟</h2>
+    </div>
+    <ul class="service-deliverable-grid">
+      <li>خريطة صفحات للمتجر</li>
+      <li>واجهة متجر متجاوبة</li>
+      <li>قوالب الأقسام الرئيسية</li>
+      <li>إعدادات البوابات (الدفع/الشحن)</li>
+      <li>قائمة فحص النهائي QA</li>
+      <li>وثيقة تسليم للملاحظات</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Exclusions Panel -->
+<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions" hidden>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>حدود واضحة</span>
+      <h2>ما لا نفترضه تلقائيًا.</h2>
+    </div>
+    <ul class="service-exclusion-list">
+      <li>إدخال غير محدود للمنتجات (توضيح عدد الأصول)</li>
+      <li>تصوير واحترافية المنتجات (على العميل)</li>
+      <li>دفع اشتراكات التطبيقات (على العميل)</li>
+      <li>مهام تخرج من النطاق بعد الاعتماد</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Timeline primitive -->
+<section class="service-detail-section">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>خارطة التنفيذ</span>
+      <h2>من التشخيص إلى إطلاق يمكن اختباره.</h2>
+    </div>
+    <div class="timeline">
+      <article><h3>تشخيص ونطاق</h3><p>النشاط، العميل، والمنصة والقيود.</p></article>
+      <article><h3>بناء الواجهة</h3><p>الهيكل، والتصنيفات والتصميم.</p></article>
+      <article><h3>إعداد العمليات</h3><p>المحتوى والإعدادات الضرورية.</p></article>
+      <article><h3>QA وإطلاق</h3><p>الاختبار المتجاوب، الإطلاق، والتسليم.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="service-detail-section service-detail-section--soft" id="requirements">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>قبل بدء التنفيذ</span>
+      <h2>ما الذي نحتاجه لبدء إطلاق متجرك؟</h2>
+      <p>جاهزية هذه العناصر تقلل التأخير وتساعدنا على تثبيت نطاق واقعي قبل البناء.</p>
+    </div>
+    <ul class="service-requirements">
+      <li>وصف النشاط والعميل المستهدف</li>
+      <li>الهوية والشعار بصيغ قابلة للاستخدام</li>
+      <li>قائمة المنتجات والتصنيفات ذات الأولوية</li>
+      <li>صور وأوصاف المنتجات المتاحة</li>
+      <li>متطلبات الدفع والشحن والمناطق المخدومة</li>
+      <li>السياسات والبيانات النظامية المتاحة</li>
+      <li>أي منصة أو تطبيقات مرشحة حاليًا</li>
+      <li>شخص واحد مخول بالمراجعة والاعتماد</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FAQ primitive -->
+<section class="service-detail-section" id="faq">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>الأسئلة الشائعة</span>
+      <h2>احصل على الوضوح الكامل.</h2>
+    </div>
+    <div class="service-faq">
+      <details class="service-faq-item" id="faq-launch-duration">
+        <summary class="service-faq-summary">كم يستغرق إطلاق المتجر الفعلي؟</summary>
+        <p>تعتمد المدة على المنصة والنطاق وجاهزية المحتوى وسرعة الاعتمادات. نثبت الجدول التقديري في العرض بعد التشخيص، ويبدأ احتسابه بعد استلام المتطلبات المتفق عليها.</p>
+      </details>
+      <details class="service-faq-item" id="faq-platform-fees">
+        <summary class="service-faq-summary">هل يشمل ذلك رسوم باقات سلة أو زد؟</summary>
+        <p>لا، باقات الاشتراك الشهرية للمنصات وتكاليف الإضافات تتحملها أنت مباشرة عبر لوحة التحكم.</p>
+      </details>
+      <details class="service-faq-item" id="faq-product-entry">
+        <summary class="service-faq-summary">هل تقومون بإدخال جميع منتجاتي؟</summary>
+        <p>عدد المنتجات ومسؤولية تجهيز بياناتها يثبتان في العرض قبل التنفيذ. لا نفترض إدخالًا غير محدود أو محتوى غير جاهز ضمن الخدمة تلقائيًا.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Related Nav Primitive -->
+<section class="service-detail-section">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>خدمات مرتبطة</span>
+      <h2>بعد الإطلاق، اختر التدخل حسب الحاجة.</h2>
+    </div>
+    <nav class="related-nav">
+      <a href="{% url 'services:storefront-customization' %}">تخصيص الواجهة</a>
+      <a href="{% url 'services:store-redesign' %}">إعادة تصميم متجر</a>
+      <a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a>
+    </nav>
+  </div>
+</section>
+
+<!-- Unified CTA Card Primitive -->
+<section class="service-detail-section">
+  <div class="service-detail-shell">
+    <div class="page-cta">
+      <div>
+        <span class="service-detail-badge">STORE LAUNCH</span>
+        <h2>جهز نقطة البداية الصحيحة قبل أن تدفع ثمن إعادة العمل.</h2>
+        <p>أرسل الفكرة وحالة المحتوى لكي نحدد النطاق بشكل أدق مع خبرائنا.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}?service=store-launch&source=service-final#quote" data-analytics="quote_request" data-analytics-label="store launch final">ابدأ التشخيص</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block service_after_main %}
+<!-- Sticky Mobile CTA -->
+<div class="service-sticky-cta" aria-hidden="true" inert>
+  <a class="btn btn-primary" href="{% url 'public_preview:contact' %}?service=store-launch&source=service-sticky#quote" data-analytics="quote_request" data-analytics-label="store launch sticky">بدء إطلاق المتجر</a>
+</div>
 {% endblock %}

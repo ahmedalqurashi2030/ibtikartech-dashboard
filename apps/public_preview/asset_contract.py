@@ -26,6 +26,8 @@ RELATED_CARDS_STYLES = (
     "public_preview/assets/css/pages/service-related-cards.css"
 )
 RELATED_CARDS_RUNTIME = "public_preview/assets/js/service-related-cards.js"
+SERVICE_PRIMITIVES_STYLES = "public_preview/assets/css/service-primitives.css"
+SERVICE_PRIMITIVES_RUNTIME = "public_preview/assets/js/service-primitives.js"
 HOMEPAGE_SURFACE_ASSET = (
     "public_preview/assets/css/pages/homepage-surface-refinement-v1.css"
 )
@@ -52,6 +54,7 @@ SECTION_LAYOUT_CONSUMERS = (
 
 RELATED_CARDS_CONSUMERS = (
     "portfolio.html",
+    "ecommerce.html",
     "websites.html",
     "brand-content.html",
     "growth.html",
@@ -59,10 +62,18 @@ RELATED_CARDS_CONSUMERS = (
     *SERVICE_DETAIL_PAGE_NAMES,
 )
 
+SERVICE_PRIMITIVE_CONSUMERS = tuple(
+    page_name
+    for page_name in SERVICE_DETAIL_PAGE_NAMES
+    if page_name != "product-page-optimization.html"
+)
+
 ROUTE_SCOPED_ASSET_CONSUMERS = {
     SECTION_LAYOUT_ASSET: SECTION_LAYOUT_CONSUMERS,
     RELATED_CARDS_STYLES: RELATED_CARDS_CONSUMERS,
     RELATED_CARDS_RUNTIME: RELATED_CARDS_CONSUMERS,
+    SERVICE_PRIMITIVES_STYLES: SERVICE_PRIMITIVE_CONSUMERS,
+    SERVICE_PRIMITIVES_RUNTIME: SERVICE_PRIMITIVE_CONSUMERS,
     HOMEPAGE_SURFACE_ASSET: ("index.html",),
     ARTICLE_STYLES: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
     ARTICLE_RUNTIME: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),

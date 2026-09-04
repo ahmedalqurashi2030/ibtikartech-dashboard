@@ -22,14 +22,14 @@
       </div>
 
       <div class="service-commerce-copy">
-        <span class="service-detail-badge">خدمات المتاجر الإلكترونية · STOREFRONT</span>
+        <span class="service-detail-badge">STOREFRONT</span>
         <h1>واجهة متجر تعكس علامتك <span>بدل أن تبدو قالبًا عامًا.</span></h1>
         <p>نخصص الثيم والصفحة الرئيسية والأقسام والبطاقات والبنرات والإيقاع البصري بما يناسب هوية المتجر ورحلة العميل، مع مراجعة الجوال وحدود المنصة قبل اعتماد أي تعديل.</p>
         <div class="service-platform-chips"><span>Salla</span><span>Zid</span><span>Shopify</span><span>WooCommerce</span><span>RTL + Mobile</span></div>
 
         <div class="service-purchase-box" aria-label="معلومات قرار الخدمة">
           <div><small>طريقة التسعير</small><strong>عرض مخصص بعد تقييم المتجر والثيم</strong></div>
-          <div><small>التقييمات</small><strong>تظهر فقط عند توفر تقييمات موثقة</strong></div>
+          <div><small>نقطة البداية</small><strong>فحص وتشخيص أولي لحالة الواجهة</strong></div>
         </div>
 
         <ul class="service-assurance">
@@ -39,127 +39,250 @@
         </ul>
         <div class="service-commerce-actions">
           <a class="btn btn-primary" href="{% url 'public_preview:contact' %}?service=storefront-customization&source=service-hero#quote" data-analytics="quote_request" data-analytics-label="storefront customization hero">ابدأ تقييم واجهة متجرك</a>
-          <a class="service-text-link" href="#decision-center" data-open-service-tab="problems">افهم تفاصيل الخدمة ←</a>
+          <a class="service-text-link" href="#decision-center">افهم تفاصيل الخدمة ←</a>
         </div>
       </div>
     </div>
-
-    <div class="service-quick-info" aria-label="معلومات الخدمة السريعة">
-      <span><strong>نوع الخدمة</strong><small>تخصيص وتطوير واجهة</small></span>
-      <span><strong>مناسبة لـ</strong><small>متجر قائم</small></span>
-      <span><strong>المنصات</strong><small>سلة · زد · Shopify · WooCommerce</small></span>
-      <span><strong>التنفيذ</strong><small>فحص → نطاق → تنفيذ → QA</small></span>
-      <span><strong>المدة التقديرية</strong><small>1–3 أسابيع حسب الثيم والنطاق</small></span>
-      <span><strong>التسعير</strong><small>عرض مخصص بعد التشخيص</small></span>
-      <span><strong>الدعم</strong><small>وفق العرض المعتمد</small></span>
-    </div>
+    <div class="service-quick-info" aria-label="معلومات الخدمة السريعة"><span><strong>نوع الخدمة</strong><small>تخصيص واجهة قائمة</small></span><span><strong>مناسب لـ</strong><small>متجر يعمل ويحتاج هوية أوضح</small></span><span><strong>المنصات</strong><small>سلة · زد · Shopify · WooCommerce</small></span><span><strong>البداية</strong><small>فحص الثيم والواجهة</small></span><span><strong>التنفيذ</strong><small>حسب حدود المنصة والثيم</small></span><span><strong>التسعير</strong><small>عرض مخصص بعد التقييم</small></span></div>
   </div>
 </section>
 {% endblock %}
 
 {% block service_content %}
 <section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>قبل أن نغيّر الشكل</span><h2>هل واجهة متجرك تعاني من هذه العلامات؟</h2><p>التخصيص الجيد يبدأ بتشخيص ما يجعل الواجهة تبدو عامة أو مشتتة، لا بمجرد تغيير الألوان.</p></div>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>قبل أن نغيّر الشكل</span>
+      <h2>هل واجهة متجرك تعاني من هذه العلامات؟</h2>
+      <p>التخصيص الجيد يبدأ بتشخيص ما يجعل الواجهة تبدو عامة أو مشتتة، لا بمجرد تغيير الألوان.</p>
+    </div>
     <div class="service-problem-grid">
-      <article><b>01 / TEMPLATE LOOK</b><h3>المتجر يبدو كقالب جاهز</h3><p>الثيم يعمل، لكن لا توجد بصمة واضحة تجعل العميل يتذكر العلامة أو يميزها عن متاجر تستخدم البنية نفسها.</p></article>
-      <article><b>02 / BRAND GAP</b><h3>الهوية غير مطبقة على الواجهة</h3><p>الألوان والخطوط والبنرات والأقسام لا تعمل كنظام واحد.</p></article>
-      <article><b>03 / HERO</b><h3>الـHero جميل لكنه لا يقود لقرار</h3><p>الصورة تأخذ المساحة دون رسالة أو CTA واضح.</p></article>
-      <article><b>04 / RHYTHM</b><h3>الأقسام تبدو مكدسة</h3><p>المسافات والأحجام والتباين لا تصنع هرمية بصرية مريحة.</p></article>
-      <article><b>05 / CARDS</b><h3>بطاقات المنتجات خارج الهوية</h3><p>الصورة والسعر والعنوان والإجراء لا تبدو جزءًا متسقًا من تجربة العلامة.</p></article>
-      <article><b>06 / MOBILE</b><h3>الجوال نسخة مضغوطة من سطح المكتب</h3><p>تحتاج بعض الأقسام ترتيبًا أو حجمًا أو سلوكًا مختلفًا على الشاشة الصغيرة.</p></article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>المتجر يبدو كقالب جاهز</h3>
+          <p>الثيم يعمل، لكن لا توجد بصمة واضحة تجعل العميل يتذكر العلامة أو يميزها عن متاجر تستخدم البنية نفسها.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>الهوية غير مطبقة على الواجهة</h3>
+          <p>الألوان والخطوط والبنرات والأقسام لا تعمل كنظام واحد، مما يضعف الثقة.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>الـHero جميل لكن بلا قرار</h3>
+          <p>الصورة تأخذ المساحة دون رسالة واضحة تدفع المستخدم للتفاعل والشراء.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>الأقسام تبدو مكدسة</h3>
+          <p>المسافات والأحجام لا تصنع هرمية بصرية مريحة، مما يصعب قراءة المحتوى والتصفح.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>بطاقات المنتجات خارج الهوية</h3>
+          <p>الصورة والسعر والعنوان لا تبدو جزءًا متسقًا من تجربة العلامة التجارية.</p>
+        </div>
+      </article>
+      <article class="service-problem-card">
+        <div class="service-problem-card__body">
+          <h3>الجوال نسخة مضغوطة</h3>
+          <p>تحتاج الأقسام سلوكًا مبسطًا على الشاشة الصغيرة لضمان تجربة الشراء بسهولة.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <section class="service-detail-section service-decision-panel" data-service-decision-panel="fit" hidden>
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>اختيار المسار الصحيح</span><h2>هل تخصيص الواجهة هو الخدمة المناسبة لك؟</h2></div>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>اختيار المسار الصحيح</span>
+      <h2>هل تخصيص الواجهة هو الخدمة المناسبة لك؟</h2>
+    </div>
     <div class="service-fit-grid">
-      <article class="service-fit-card service-fit-card--good"><h3>تناسبك عندما</h3><ul><li>لديك متجر قائم ويعمل.</li><li>لديك هوية أو اتجاه بصري يمكن البناء عليه.</li><li>تريد تطوير الواجهة دون إعادة بناء المتجر بالكامل.</li><li>تحتاج ترتيب الصفحة الرئيسية والأقسام والبطاقات والجوال.</li><li>يمكنك توفير المحتوى والصور والصلاحيات اللازمة.</li></ul></article>
-      <article class="service-fit-card"><h3>قد تحتاج مسارًا آخر عندما</h3><ul><li>لا يوجد متجر بعد — <a href="{% url 'public_preview:ecommerce' %}#service-launch">ابدأ بخدمة إطلاق المتجر</a>.</li><li>البنية كاملة أصبحت قديمة أو مشتتة — <a href="{% url 'public_preview:ecommerce' %}#service-redesign">راجع خدمة إعادة التصميم</a>.</li><li>المشكلة محصورة في صفحة المنتج — <a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a>.</li><li>الهوية نفسها غير جاهزة — <a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a>.</li></ul></article>
+      <article class="service-fit-card service-fit-card--good">
+        <h3>تناسبك عندما</h3>
+        <ul>
+          <li>لديك متجر قائم ويعمل.</li>
+          <li>لديك هوية يمكن البناء عليها.</li>
+          <li>تريد تطوير الواجهة دون إعادة بناء شاملة.</li>
+          <li>يمكنك توفير المحتوى والصلاحيات.</li>
+        </ul>
+      </article>
+      <article class="service-fit-card">
+        <h3>قد تحتاج مسارًا آخر عندما</h3>
+        <ul>
+          <li>لا يوجد متجر بعد — <a href="{% url 'public_preview:ecommerce' %}#service-launch">بدء الإطلاق</a>.</li>
+          <li>البنية مشتتة بالكامل — <a href="{% url 'public_preview:ecommerce' %}#service-redesign">إعادة التصميم</a>.</li>
+          <li>الهوية غير جاهزة — <a href="{% url 'public_preview:brand-content' %}">تجهيز الهوية</a>.</li>
+        </ul>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="service-detail-section service-detail-section--soft service-decision-panel" id="scope" data-service-decision-panel="scope" hidden>
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>نطاق قابل للاعتماد</span><h2>ماذا يمكن أن ننفذ داخل هذه الخدمة؟</h2><p>النطاق النهائي يثبت بعد فحص الثيم والمنصة؛ هذه هي عائلات العمل وليست وعدًا بأن كل مشروع يشملها جميعًا.</p></div>
-    <div class="service-scope-grid">
-      <article><b>01 / AUDIT</b><h3>فحص الواجهة الحالية</h3><ul><li>الثيم والأقسام الحالية</li><li>الهرمية البصرية</li><li>سلوك الجوال</li><li>التعارضات والتخصيصات السابقة</li></ul></article>
-      <article><b>02 / DIRECTION</b><h3>الاتجاه البصري</h3><ul><li>الألوان والخطوط</li><li>المسافات والإيقاع</li><li>معالجة البنرات</li><li>أسلوب البطاقات والمكونات</li></ul></article>
-      <article><b>03 / STOREFRONT</b><h3>تخصيص الصفحة الرئيسية</h3><ul><li>Hero والرسائل</li><li>المجموعات والأقسام</li><li>المنتجات والروابط السريعة</li><li>CTA وعناصر الثقة</li></ul></article>
-      <article class="service-scope-extra" data-service-scope-extra hidden><b>04 / IMPLEMENT</b><h3>التطوير والإعداد</h3><ul><li>إعدادات الثيم المدعومة</li><li>CSS مخصص عند الحاجة</li><li>JavaScript محدود عند الحاجة والدعم</li><li>تطبيق الأصول المعتمدة</li></ul></article>
-      <article class="service-scope-extra" data-service-scope-extra hidden><b>05 / MOBILE</b><h3>معالجة الجوال</h3><ul><li>الأحجام والمسافات</li><li>السحب والتصفح</li><li>تسلسل الأقسام</li><li>الإجراءات المهمة</li></ul></article>
-      <article class="service-scope-extra" data-service-scope-extra hidden><b>06 / QA</b><h3>الاختبار والتسليم</h3><ul><li>Desktop وTablet وMobile</li><li>روابط وتفاعلات أساسية</li><li>مراجعة RTL</li><li>قائمة التغييرات والتسليم</li></ul></article>
+<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="scope" hidden>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>نطاق قابل للاعتماد</span>
+      <h2>ماذا يمكن أن ننفذ داخل هذه الخدمة؟</h2>
     </div>
-    <button class="btn btn-outline service-scope-toggle" type="button" aria-expanded="false" data-service-scope-toggle>عرض النطاق الكامل</button>
+    <div class="service-scope-grid">
+      <article><b>01</b><h3>فحص الواجهة الحالية</h3><p>الثيم والهرمية وسلوك الجوال.</p></article>
+      <article><b>02</b><h3>الاتجاه البصري</h3><p>الألوان والخطوط والمسافات.</p></article>
+      <article><b>03</b><h3>الصفحة الرئيسية</h3><p>Hero والأقسام والمنتجات.</p></article>
+      <article><b>04</b><h3>التطوير</h3><p>إعداد الثيم وCSS المخصص للإضافات.</p></article>
+      <article><b>05</b><h3>معالجة الجوال</h3><p>تبسيط عرض المحتوى وسلاسة التصفح.</p></article>
+      <article><b>06</b><h3>الاختبار</h3><p>Tablet و Mobile وروابط رئيسية.</p></article>
+    </div>
   </div>
 </section>
 
 <section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables" hidden>
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>مخرجات يمكن التحقق منها</span><h2>ماذا تستلم في نهاية المسار؟</h2></div>
-    <ul class="service-deliverable-grid"><li>تقرير فحص وأولويات</li><li>اتجاه بصري معتمد</li><li>تخصيص الأقسام المتفق عليها</li><li>معالجة نسخة الجوال</li><li>تنفيذ CSS/JS المعتمد إن لزم</li><li>اختبار نهائي للواجهة</li><li>قائمة بالتغييرات</li><li>ملاحظات تسليم ودعم</li></ul>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>مخرجات</span>
+      <h2>ماذا تستلم في نهاية المسار؟</h2>
+    </div>
+    <ul class="service-deliverable-grid">
+      <li>تقرير فحص للواجهة</li>
+      <li>اتجاه بصري معتمد</li>
+      <li>تخصيص الأقسام</li>
+      <li>معالجة الجوال</li>
+      <li>تنفيذ CSS مخصص (ضمن النطاق)</li>
+      <li>اختبار نهائي</li>
+    </ul>
   </div>
 </section>
 
 <section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions" hidden>
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>حدود تمنع تضخم المشروع</span><h2>ما الذي لا يدخل تلقائيًا ضمن النطاق؟</h2></div>
-    <ul class="service-exclusion-list"><li>بناء هوية بصرية كاملة</li><li>التصوير الاحترافي</li><li>كتابة جميع المحتويات</li><li>إدخال منتجات غير محدود</li><li>شراء التطبيقات والاشتراكات</li><li>وظائف غير مدعومة من المنصة</li><li>إعادة بناء المتجر بالكامل</li><li>دعم مفتوح دون مدة ونطاق</li></ul>
-    <p class="service-note">يمكن إضافة أي عنصر غير مشمول إلى عرض المشروع بعد تقييمه واعتماد التكلفة والمدة الخاصة به.</p>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>حدود الخدمة</span>
+      <h2>ما لا يدخل تلقائيًا ضمن النطاق.</h2>
+    </div>
+    <ul class="service-exclusion-list">
+      <li>بناء هوية كاملة من الصفر</li>
+      <li>كتابة المحتوى أو التصوير</li>
+      <li>شراء التطبيقات والاشتراكات</li>
+      <li>وظائف غير مدعومة برمجيًا</li>
+    </ul>
   </div>
 </section>
 
-<section class="service-detail-section service-detail-section--soft" id="visual-explanation">
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>STOREFRONT ANATOMY</span><h2>نخصص الواجهة كمنظومة، لا كألوان منفصلة.</h2><p>اضغط على النقاط داخل المتجر المصغر لترى ما الذي نراجعه في كل طبقة.</p></div>
-    <div class="storefront-anatomy">
-      <div class="storefront-anatomy__canvas">
-        <div class="storefront-anatomy__browser"><div class="storefront-anatomy__top"></div><div class="storefront-anatomy__hero"></div><div class="storefront-anatomy__products"><i></i><i></i><i></i></div></div>
-        <button class="storefront-hotspot" type="button" data-storefront-hotspot="header" aria-label="الهيدر والتنقل">1</button>
-        <button class="storefront-hotspot" type="button" data-storefront-hotspot="hero" aria-label="الهيرو والرسالة">2</button>
-        <button class="storefront-hotspot" type="button" data-storefront-hotspot="sections" aria-label="الأقسام والمجموعات">3</button>
-        <button class="storefront-hotspot" type="button" data-storefront-hotspot="cards" aria-label="بطاقات المنتجات">4</button>
-      </div>
-      <aside class="storefront-anatomy__info" aria-live="polite"><small>نقطة تخصيص</small><h3 data-storefront-anatomy-title>الهيدر والتنقل</h3><p data-storefront-anatomy-text></p><ul data-storefront-anatomy-list></ul></aside>
+<section class="service-detail-section" id="visual-explanation">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>STOREFRONT ANATOMY</span>
+      <h2 id="storefront-anatomy-title">نخصص الواجهة كمنظومة تفاعلية.</h2>
+      <p>اكتشف النقاط التي نعالجها لتحسين تجربة المستخدم البصرية.</p>
+    </div>
+    <div class="service-anatomy-layout" role="group" aria-labelledby="storefront-anatomy-title">
+      <img src="/static/public_preview/assets/images/services/ecommerce/storefront-customization.svg" alt="تصور لواجهة متجر يوضح مواضع تحسين التنقل وبطاقات المنتجات" width="800" height="500" loading="lazy" decoding="async">
+      <button class="service-hotspot" type="button" style="top:10%; left:20%;" aria-expanded="false" aria-controls="storefront-hotspot-header"><span class="sr-only">الهيدر</span></button>
+      <div class="service-hotspot-info" id="storefront-hotspot-header" style="top:14%; left:22%;" hidden>تخصيص الهيدر وسهولة الوصول.</div>
+
+      <button class="service-hotspot" type="button" style="top:35%; left:60%;" aria-expanded="false" aria-controls="storefront-hotspot-cards"><span class="sr-only">البطاقات</span></button>
+      <div class="service-hotspot-info" id="storefront-hotspot-cards" style="top:39%; left:62%;" hidden>توحيد هرمية وأسلوب بطاقات المنتجات.</div>
+    </div>
+  </div>
+</section>
+
+<section class="service-detail-section service-detail-section--soft" id="process">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>رحلة التنفيذ</span>
+      <h2>من فحص الثيم إلى واجهة قابلة للاعتماد.</h2>
+    </div>
+    <div class="timeline">
+      <article><h3>فحص وتحديد أولويات</h3><p>نراجع الثيم والجوال والأقسام ونحدد ما يحتاج تدخلًا فعليًا.</p></article>
+      <article><h3>اتجاه بصري</h3><p>نعتمد الهرمية والألوان والخطوط والأصول التي ستبنى عليها الواجهة.</p></article>
+      <article><h3>تخصيص وتنفيذ</h3><p>نطبق الأقسام والتعديلات المتفق عليها ضمن إمكانات المنصة والثيم.</p></article>
+      <article><h3>QA وتسليم</h3><p>نراجع الشاشات والروابط والحالات الداخلة في النطاق ثم نوثق التسليم.</p></article>
     </div>
   </div>
 </section>
 
 <section class="service-detail-section" id="requirements">
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>قبل بدء الجدول التنفيذي</span><h2>متطلبات بدء الخدمة</h2><p>اكتمالها يقلل الرجوع والتأخير ويجعل التقييم الأولي أدق.</p></div>
-    <ul class="service-requirements"><li>رابط المتجر</li><li>اسم الثيم وإصداره إن أمكن</li><li>صلاحيات الوصول اللازمة فقط</li><li>الشعار والهوية</li><li>الصور والمحتوى المتاح</li><li>قائمة الصفحات والأقسام ذات الأولوية</li><li>التطبيقات وCSS المخصص الحالي</li><li>الشخص المخول بالاعتماد</li></ul>
-  </div>
-</section>
-
-<section class="service-detail-section service-detail-section--soft" id="related-services">
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>قبلها أو بعدها</span><h2>خدمات مرتبطة بمسار واجهة المتجر</h2></div>
-    <div class="service-related-grid">
-      <article class="service-related-card"><img src="/static/public_preview/assets/images/services/ecommerce/store-redesign.svg" alt="إعادة تصميم متجر قائم" width="800" height="500" loading="lazy"><div class="service-related-card__body"><small>مسار أوسع</small><h3>إعادة تصميم متجر قائم</h3><p>عندما تكون المشكلة في بنية وتجربة المتجر كاملة، وليس التخصيص البصري فقط.</p><a href="{% url 'public_preview:ecommerce' %}#service-redesign">استكشف المسار ←</a></div></article>
-      <article class="service-related-card"><img src="/static/public_preview/assets/images/services/ecommerce/product-experience.svg" alt="تحسين صفحة المنتج" width="800" height="500" loading="lazy"><div class="service-related-card__body"><small>خدمة متخصصة</small><h3>تحسين صفحة المنتج</h3><p>عندما يتركز الاحتياج في الصور والمعلومات والخيارات والثقة وقرار الشراء.</p><a href="{% url 'services:product-page-optimization' %}">تفاصيل الخدمة ←</a></div></article>
-      <article class="service-related-card"><img src="/static/public_preview/assets/images/showcase/tharaa-experience-source.png" alt="ثيم ثراء لمتاجر سلة" width="1200" height="800" loading="lazy"><div class="service-related-card__body"><small>منتج من ابتكار تك</small><h3>ثيم ثراء</h3><p>خيار منتج جاهز لمتاجر سلة؛ ترخيص الثيم منفصل عن خدمة التركيب والتخصيص.</p><a href="{% url 'public_preview:tharaa' %}">استكشف ثراء ←</a></div></article>
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>قبل بدء التخصيص</span>
+      <h2>ما الذي نحتاجه لتقييم الواجهة بدقة؟</h2>
+      <p>اكتمال هذه العناصر يقلل الرجوع ويجعل النطاق والمدة أكثر واقعية.</p>
     </div>
+    <ul class="service-requirements">
+      <li>رابط المتجر والمنصة واسم الثيم</li>
+      <li>الهوية والشعار والخطوط المعتمدة</li>
+      <li>الصور والمحتوى المتاح</li>
+      <li>الأقسام والصفحات ذات الأولوية</li>
+      <li>التطبيقات وCSS المخصص الحالي</li>
+      <li>أمثلة للمشكلات على الجوال</li>
+      <li>أهداف الواجهة وحدود التغيير</li>
+      <li>شخص مخول بالمراجعة والاعتماد</li>
+    </ul>
   </div>
 </section>
 
-<section class="service-detail-section" id="faq">
-  <div class="service-detail-shell"><div class="service-detail-heading"><span>قبل طلب التقييم</span><h2>أسئلة شائعة عن تخصيص واجهة المتجر</h2></div>
+<section class="service-detail-section service-detail-section--soft" id="faq">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>الأسئلة الشائعة</span>
+      <h2>نوضّح كل مسار قبل التنفيذ.</h2>
+    </div>
     <div class="service-faq">
-      <details><summary>هل الخدمة تعني تصميم متجر جديد بالكامل؟</summary><p>لا. الخدمة موجهة أساسًا لمتجر قائم يحتاج تخصيصًا للواجهة والثيم. إذا كانت البنية نفسها تحتاج إعادة تأسيس فقد يكون مسار إعادة التصميم أو الإطلاق أنسب.</p></details>
-      <details><summary>هل يمكن تخصيص أي ثيم بنفس الدرجة؟</summary><p>لا. إمكانات التخصيص تختلف حسب المنصة والثيم والتطبيقات والتعديلات الحالية؛ لذلك نفحص البيئة قبل تثبيت النطاق.</p></details>
-      <details><summary>هل تشمل الخدمة البنرات والصور؟</summary><p>يمكن تضمين تصميم أصول محددة إذا نص العرض على ذلك، لكنها لا تدخل تلقائيًا وبلا حد ضمن الخدمة.</p></details>
-      <details><summary>هل يشمل العمل صفحة المنتج؟</summary><p>يمكن ضبط التناسق العام، لكن تحسين صفحة المنتج كرحلة قرار كاملة له خدمة مستقلة ونطاق أعمق.</p></details>
-      <details><summary>هل تراجعون الجوال؟</summary><p>نعم، الجوال جزء أساسي من مراجعة الواجهة، ويُختبر ضمن الصفحات والأقسام الداخلة في النطاق.</p></details>
-      <details><summary>هل تحتاجون كلمة مرور حسابي؟</summary><p>لا نطلب كلمات مرور عبر النماذج العامة. نحدد أقل صلاحية لازمة وطريقة الوصول المناسبة بعد الاتفاق.</p></details>
-      <details><summary>كيف تحددون السعر والمدة؟</summary><p>بعد فحص المتجر والثيم والمنصة وعدد الأقسام والأصول المطلوبة والتخصيصات الحالية واعتماد نطاق واضح.</p></details>
-      <details><summary>هل تضمنون زيادة المبيعات بعد التخصيص؟</summary><p>لا نقدم ضمانًا رقميًا غير واقعي. الهدف هو تحسين الاتساق والوضوح وتجربة الواجهة، بينما تتأثر المبيعات بعوامل أخرى مثل المنتج والسعر والتسويق والتشغيل.</p></details>
-      <details><summary>ماذا يحدث إذا طلبت تعديلات خارج النطاق؟</summary><p>يتم تقييمها بشكل منفصل قبل التنفيذ حتى يظل الجدول والتكلفة واضحين للطرفين.</p></details>
-      <details><summary>هل يوجد دعم بعد التسليم؟</summary><p>نطاق الدعم ومدته وقناته تُحدد داخل العرض المعتمد حسب طبيعة التنفيذ.</p></details>
+      <details class="service-faq-item" id="faq-storefront-theme">
+        <summary class="service-faq-summary">هل يشمل ذلك تغيير القالب (الثيم) بالكامل؟</summary>
+        <p>نحن نعمل على تخصيص الثيم الحالي أو تركيب وتخصيص ثيم جديد حسب النطاق المتفق عليه، التكلفة لا تشمل سعر شراء ثيم مدفوع ما لم يُذكر في العرض.</p>
+      </details>
+      <details class="service-faq-item" id="faq-storefront-banners">
+        <summary class="service-faq-summary">هل ستصممون لي البنرات الإعلانية؟</summary>
+        <p>عدد البنرات والأصول ومسؤولية تجهيزها تثبت في العرض. لا نفترض إنتاج حملات دورية أو عددًا غير محدود ضمن خدمة تخصيص الواجهة.</p>
+      </details>
+      <details class="service-faq-item" id="faq-storefront-mobile">
+        <summary class="service-faq-summary">ماذا عن توافق الجوال؟</summary>
+        <p>تشمل المراجعة الشاشة الصغيرة والتباعد وأحجام عناصر اللمس والحالات الأساسية، ثم نختبر النطاق المعتمد على المقاسات المتفق عليها قبل التسليم.</p>
+      </details>
     </div>
   </div>
 </section>
 
-<section class="service-final-cta" id="service-contact">
-  <div class="service-detail-shell"><div class="service-final-cta__card"><div><h2>أرسل رابط متجرك قبل أن تقرر حجم التخصيص.</h2><p>سنبدأ من الحالة الحالية ونحدد هل تحتاج تخصيص واجهة، تحسينًا مركزًا، أم مسار إعادة تصميم أوسع.</p></div><div class="service-final-cta__actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization final">ابدأ تقييم الواجهة</a><a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}">العودة لحلول المتاجر</a></div></div></div>
+<section class="service-detail-section">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading">
+      <span>خدمات بديلة ومكملة</span>
+      <h2>استكشف المسارات المتعلقة بتحديث المتجر.</h2>
+    </div>
+    <nav class="related-nav">
+      <a href="{% url 'services:store-redesign' %}">إعادة التصميم الشامل</a>
+      <a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a>
+      <a href="{% url 'services:ecommerce-support' %}">الدعم التقني</a>
+    </nav>
+  </div>
 </section>
+
+<section class="service-detail-section service-detail-section--soft">
+  <div class="service-detail-shell">
+    <div class="page-cta">
+      <div>
+        <span class="service-detail-badge">CUSTOMIZATION</span>
+        <h2>واجهة أوضح تساعد العميل على فهم منتجاتك.</h2>
+        <p>شارِكنا رابط المتجر والاحتياج لتحديد أولويات التخصيص الفعالة مع الخبراء.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-white" href="{% url 'public_preview:contact' %}?service=storefront-customization&source=service-final#quote" data-analytics="quote_request" data-analytics-label="storefront customization final">طلب مراجعة الواجهة</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
 
 {% block service_after_main %}
-<div class="service-sticky-cta"><a class="btn btn-primary" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="storefront customization sticky">ابدأ تقييم واجهة متجرك</a></div>
+<div class="service-sticky-cta" aria-hidden="true" inert>
+  <a class="btn btn-primary" href="{% url 'public_preview:contact' %}?service=storefront-customization&source=service-sticky#quote" data-analytics="quote_request" data-analytics-label="storefront customization sticky">ابدأ تقييم الواجهة</a>
+</div>
 {% endblock %}

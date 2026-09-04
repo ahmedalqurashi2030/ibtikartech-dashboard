@@ -27,6 +27,7 @@
 body.inner-page:not(.article-page) main :is(
   .platform-hero .hero-copy,
   .service-commerce-copy,
+  .svc-hero-copy,
   .svc-hero__copy,
   .commerce-hero__copy,
   .product-hero__copy,
@@ -44,6 +45,7 @@ body.inner-page:not(.article-page) main :is(
 body.inner-page:not(.article-page) main :is(
   .platform-hero .hero-copy,
   .service-commerce-copy,
+  .svc-hero-copy,
   .svc-hero__copy,
   .commerce-hero__copy,
   .product-hero__copy,

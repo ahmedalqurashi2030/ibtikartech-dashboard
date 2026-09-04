@@ -1,20 +1,5 @@
 /* Preserved source runtime block 1. */
 (() => {
-  document.querySelectorAll('.accordion-item button').forEach(button => {
-    button.addEventListener('click', () => {
-      const item = button.closest('.accordion-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.accordion-item').forEach(entry => {
-        entry.classList.remove('open');
-        entry.querySelector('button')?.setAttribute('aria-expanded', 'false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        button.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
-
   const revealItems = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver(entries => {

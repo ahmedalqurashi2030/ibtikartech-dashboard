@@ -7,8 +7,6 @@
 
 :root {
   --ibt-ux-gutter: clamp(18px, 3vw, 28px);
-  --ibt-ux-section: clamp(72px, 7vw, 104px);
-  --ibt-ux-section-mobile: clamp(52px, 12vw, 68px);
   --ibt-ux-reading: 68ch;
   --ibt-ux-radius-sm: 10px;
   --ibt-ux-radius-md: 16px;
@@ -25,7 +23,7 @@ html {
 }
 
 body {
-  min-width: 320px;
+  min-width: 0;
 }
 
 main :where(p, li) {

@@ -240,34 +240,79 @@
     });
   }
 
-  const enhancePageContent = () => {
-    /* One accordion behavior for every shared FAQ variant. */
-    const faqButtonItems = [...document.querySelectorAll('#faq .accordion-item, #faq .faq-item, #faq .accordion > .faq, #faq .faq-list > .faq')];
-    faqButtonItems.forEach((item) => {
-      const button = item.querySelector('button');
-      if (!button) return;
-      button.addEventListener('click',() => requestAnimationFrame(() => {
-        const open = item.classList.contains('open') || item.classList.contains('active');
-        if (!open) return;
-        faqButtonItems.forEach((other) => {
-          if (other === item || other.closest('#faq') !== item.closest('#faq')) return;
-          other.classList.remove('open','active');
-          other.querySelector('button')?.setAttribute('aria-expanded','false');
-          const answer = other.querySelector('.faq-answer,.accordion-content');
-          if (answer) answer.style.maxHeight = '0px';
-        });
-      }));
-    });
+  const initSharedFaq = () => {
+    const faqRoots = [...document.querySelectorAll('#faq, .faq-section, .service-faq-grid, [data-faq-accordion]')];
+    const rootsToProcess = faqRoots.length ? faqRoots : [document.body];
 
-    document.querySelectorAll('#faq details').forEach((details) => {
-      details.addEventListener('toggle',() => {
-        if (!details.open) return;
-        const list = details.parentElement;
-        list?.querySelectorAll(':scope > details[open]').forEach((other) => {
-          if (other !== details) other.open = false;
+    rootsToProcess.forEach((faqRoot) => {
+      const items = [...faqRoot.querySelectorAll('.accordion-item, .faq-item, .accordion > .faq, .faq-list > .faq')];
+      const getButton = (item) => item.querySelector(':scope > button');
+      const getAnswer = (item, button) => {
+        const controlsId = button?.getAttribute('aria-controls');
+        if (controlsId) return document.getElementById(controlsId);
+        return item.querySelector('.faq-answer, .accordion-content');
+      };
+
+      const setItemState = (item, open) => {
+        const button = getButton(item);
+        const answer = getAnswer(item, button);
+        if (!button) return;
+
+        item.classList.toggle('open', open);
+        item.classList.toggle('active', open);
+        button.setAttribute('aria-expanded', String(open));
+
+        if (answer) {
+          answer.hidden = !open;
+          answer.setAttribute('aria-hidden', String(!open));
+          if (item.classList.contains('faq-item') || answer.classList.contains('faq-answer')) {
+            answer.style.maxHeight = open ? `${answer.scrollHeight}px` : '0px';
+          }
+        }
+
+        const icon = button.querySelector('i');
+        if (icon && /^[+\-−]$/.test(icon.textContent.trim())) {
+          icon.textContent = open ? '−' : '+';
+        }
+      };
+
+      items.forEach((item) => {
+        const button = getButton(item);
+        if (!button || button.dataset.ibtFaqReady === 'true') return;
+        button.dataset.ibtFaqReady = 'true';
+        if (!button.type) button.type = 'button';
+
+        const initiallyOpen = item.classList.contains('open')
+          || item.classList.contains('active')
+          || button.getAttribute('aria-expanded') === 'true';
+        setItemState(item, initiallyOpen);
+
+        button.addEventListener('click', () => {
+          const willOpen = !(item.classList.contains('open') || item.classList.contains('active'));
+          if (willOpen) {
+            items.forEach((other) => {
+              if (other !== item) setItemState(other, false);
+            });
+          }
+          setItemState(item, willOpen);
+        });
+      });
+
+      faqRoot.querySelectorAll('details').forEach((details) => {
+        if (details.dataset.ibtFaqReady === 'true') return;
+        details.dataset.ibtFaqReady = 'true';
+        details.addEventListener('toggle', () => {
+          if (!details.open) return;
+          faqRoot.querySelectorAll('details[open]').forEach((other) => {
+            if (other !== details) other.open = false;
+          });
         });
       });
     });
+  };
+
+  const enhancePageContent = () => {
+    initSharedFaq();
   };
 
   if (document.readyState === 'loading') {

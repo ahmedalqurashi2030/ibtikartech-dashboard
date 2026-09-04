@@ -5,7 +5,16 @@ THARAA_TEMPLATE = "templates/public_preview/pages/tharaa.html"
 TYPOGRAPHY_SYSTEM = "static/public_preview/foundation/typography-system.css"
 SHELL_STYLES = "static/public_preview/assets/css/ibtikar-shell.css"
 SHELL_RUNTIME = "static/public_preview/assets/js/ibtikar-shell.js"
+UX_SYSTEM = "static/public_preview/assets/css/pages/ux-system-v1.css"
 RELATED_RUNTIME = "static/public_preview/assets/js/service-related-cards.js"
+SERVICE_PRIMITIVES_STYLES = "static/public_preview/assets/css/service-primitives.css"
+SERVICE_PRIMITIVES_RUNTIME = "static/public_preview/assets/js/service-primitives.js"
+SERVICE_DETAIL_FAMILY = "templates/public_preview/families/service_detail_base.html"
+STORE_LAUNCH_TEMPLATE = "templates/public_preview/pages/store-launch.html"
+STOREFRONT_TEMPLATE = "templates/public_preview/pages/storefront-customization.html"
+PRODUCT_PAGE_TEMPLATE = "templates/public_preview/pages/product-page-optimization.html"
+PRODUCT_PAGE_RUNTIME = "static/public_preview/assets/js/source-product-page.js"
+PRODUCT_PAGE_A11Y = "static/public_preview/assets/css/pages/product-page-accessibility.css"
 SERVICES_RUNTIME = "static/public_preview/assets/js/source-services.js"
 SERVICES_EXPERIENCE = "static/public_preview/assets/js/services-experience.js"
 THARAA_RUNTIME = "static/public_preview/assets/js/source-tharaa.js"
@@ -101,6 +110,13 @@ def test_public_shell_has_one_canonical_approved_cascade():
     assert "@media (prefers-reduced-motion: reduce)" in source
 
 
+def test_ux_system_does_not_override_launch_typography_tokens():
+    source = _read_source(UX_SYSTEM)
+
+    assert "--ibt-ux-section:" not in source
+    assert "--ibt-ux-section-mobile:" not in source
+
+
 def test_document_head_restores_theme_without_legacy_shell_mutation():
     head_source = _read_source(DOCUMENT_HEAD)
     home_runtime = _read_source(HOME_SOURCE_RUNTIME)
@@ -187,6 +203,21 @@ def test_conversion_events_are_bound_to_actions_and_success():
     assert 'closest("[data-analytics]")' not in analytics_runtime
 
 
+def test_service_categories_track_hero_and_final_quote_actions():
+    category_templates = (
+        "websites.html",
+        "ecommerce.html",
+        "brand-content.html",
+        "growth.html",
+        "custom-systems.html",
+    )
+
+    for template_name in category_templates:
+        source = _read_source(f"templates/public_preview/pages/{template_name}")
+        assert source.count('data-analytics="quote_request"') >= 2, template_name
+        assert "source=" in source, template_name
+
+
 def test_related_services_runtime_keeps_one_guarded_behavior_owner():
     shell_source = _read_source(SHELL_RUNTIME)
     related_source = _read_source(RELATED_RUNTIME)
@@ -199,6 +230,69 @@ def test_related_services_runtime_keeps_one_guarded_behavior_owner():
     assert "document.querySelector(relatedSelectors)" in related_source
     assert "categoryPages" not in related_source
     assert "body.dataset.page" not in related_source
+
+
+def test_service_primitives_keep_one_accessible_behavior_owner():
+    family_source = _read_source(SERVICE_DETAIL_FAMILY)
+    primitive_source = _read_source(SERVICE_PRIMITIVES_RUNTIME)
+    commerce_source = _read_source(
+        "static/public_preview/assets/js/commerce-service-detail.js"
+    )
+    primitive_styles = _read_source(SERVICE_PRIMITIVES_STYLES)
+
+    assert family_source.count("service-primitives.css") == 1
+    assert family_source.count("service-primitives.js") == 1
+    assert "data-service-decision-tab" not in primitive_source
+    assert "data-service-decision-tab" in commerce_source
+    assert "prefers-reduced-motion: reduce" in primitive_styles
+    assert "toggleAttribute('inert', !visible)" in primitive_source
+    assert "aria-current" in primitive_source
+
+
+def test_migrated_service_hotspots_are_named_and_control_content():
+    for template_path in (STORE_LAUNCH_TEMPLATE, STOREFRONT_TEMPLATE):
+        source = _read_source(template_path)
+        hotspot_lines = [
+            line
+            for line in source.splitlines()
+            if 'class="service-hotspot"' in line
+        ]
+        info_lines = [
+            line
+            for line in source.splitlines()
+            if 'class="service-hotspot-info"' in line
+        ]
+
+        assert hotspot_lines
+        assert len(hotspot_lines) == len(info_lines)
+        assert all('type="button"' in line for line in hotspot_lines)
+        assert all('aria-controls="' in line for line in hotspot_lines)
+        assert all(' id="' in line and ' hidden' in line for line in info_lines)
+
+
+def test_store_launch_inherits_service_family_assets():
+    source = _read_source(STORE_LAUNCH_TEMPLATE)
+
+    assert _block_payload(source, "service_styles") is None
+
+
+def test_product_page_interactions_preserve_accessible_state():
+    source = _read_source(PRODUCT_PAGE_TEMPLATE)
+    runtime = _read_source(PRODUCT_PAGE_RUNTIME)
+    styles = _read_source(PRODUCT_PAGE_A11Y)
+
+    assert source.count("tokens.css") == 1
+    assert source.count('id="product-hotspot-info"') == 1
+    assert source.count('class="hotspot"') == 4
+    assert source.count('type="button" class="hotspot"') == 4
+    assert 'aria-labelledby="product-hotspot-title"' in source
+    assert 'class="sticky-service-cta" aria-hidden="true" inert' in source
+    assert "innerHTML" not in runtime
+    assert "textContent" in runtime
+    assert "toggleAttribute('inert', !shouldShow)" in runtime
+    assert "product-sticky-cta-visible" in runtime
+    assert "min-width: 44px" in styles
+    assert "prefers-reduced-motion: reduce" in styles
 
 
 def test_services_animation_vendors_are_deferred_in_dependency_order():
@@ -507,3 +601,114 @@ def test_public_shell_reads_only_resolved_site_configuration():
     assert "site_config.social_links" in footer
     assert 'json_script:"ibtikar-runtime-config"' in runtime
     assert "window.IBTIKAR_CONFIG = window.IBTIKAR_CONFIG ||" in static_config
+
+
+def test_service_category_mobile_and_reduced_motion_keep_all_paths_sequential():
+    category_styles = _read_source(
+        "static/public_preview/assets/css/pages/service-category.css"
+    )
+    ecommerce_styles = _read_source(
+        "static/public_preview/assets/css/pages/ecommerce-category.css"
+    )
+    cinema_runtime = _read_source("static/public_preview/assets/js/service-cinema.js")
+
+    assert "min-height: 44px" in category_styles
+    assert "font-size: var(--ibt-text-xs, 12px)" in category_styles
+    assert 'matchMedia("(max-width: 760px), (prefers-reduced-motion: reduce)")' in cinema_runtime
+    assert "if (media.matches) return;" in cinema_runtime
+    assert "scroll-snap-type: x mandatory" not in category_styles
+    assert "scroll-snap-type:x mandatory" not in ecommerce_styles
+    assert ".commerce-category-nav a{flex:none;min-height:44px" in ecommerce_styles
+
+
+def test_category_decision_faqs_and_related_routes_are_complete():
+    category_templates = (
+        "templates/public_preview/pages/websites.html",
+        "templates/public_preview/pages/brand-content.html",
+        "templates/public_preview/pages/growth.html",
+        "templates/public_preview/pages/custom-systems.html",
+    )
+
+    for template in category_templates:
+        source = _read_source(template)
+        assert 'href="#faq"' in source, template
+        assert 'id="faq"' in source, template
+        assert source.count("<details class=\"service-category-faq__item reveal\">") >= 4
+        assert 'id="related"' in source, template
+
+    ecommerce = _read_source("templates/public_preview/pages/ecommerce.html")
+    assert 'href="#related"' in ecommerce
+    assert 'id="related"' in ecommerce
+    assert "service-related-cards.css" in ecommerce
+    assert "service-related-cards.js" in ecommerce
+
+
+def test_services_page_uses_semantic_icons_and_connected_faq_controls():
+    template = _read_source(SERVICES_TEMPLATE)
+    runtime = _read_source(SERVICES_RUNTIME)
+
+    assert template.count('<div class="goal-icon" aria-hidden="true"><svg') == 4
+    for glyph in (">↗<", ">◎<", ">⌁<", ">⚙<"):
+        assert glyph not in template
+    assert template.count('type="button" aria-expanded="false" aria-controls="services-faq-') == 5
+    assert template.count('class="faq-answer" id="services-faq-') == 5
+    assert "candidateAnswer.hidden = true" in runtime
+    assert "answer.hidden = !open" in runtime
+    assert "requestAnimationFrame(() =>" in runtime
+    assert "canvasObserver.observe(canvas)" in runtime
+
+
+def test_service_style_overrides_preserve_the_shared_shell_and_hero_roles():
+    ecommerce = _read_source("templates/public_preview/pages/ecommerce.html")
+    product = _read_source(PRODUCT_PAGE_TEMPLATE)
+    typography = _read_source(TYPOGRAPHY_SYSTEM)
+
+    for source in (ecommerce, product):
+        assert source.count("pages/inner.css") == 1
+        assert source.count("css/ibtikar-shell.css") == 1
+
+    assert typography.count(".svc-hero-copy,") >= 2
+
+
+def test_shared_mobile_controls_keep_minimum_touch_targets():
+    shell = _read_source(SHELL_STYLES)
+    related = _read_source(
+        "static/public_preview/assets/css/pages/service-related-cards.css"
+    )
+
+    assert shell.count("min-height: 44px;") >= 2
+    assert "width: 38px;\n    height: 38px;\n    min-height: 38px;" not in shell
+    assert related.count("width: 44px;") >= 2
+    assert "width: 40px;\n    height: 40px;" not in related
+
+
+def test_platform_pilots_share_accessible_touch_and_preview_contracts():
+    base = _read_source(BASE_TEMPLATE)
+    tokens = _read_source("static/public_preview/assets/css/tokens.css")
+    shell = _read_source(SHELL_STYLES)
+    layout = _read_source(
+        "static/public_preview/assets/css/pages/section-layout-refinement-v2.css"
+    )
+    tharaa_runtime = _read_source(THARAA_RUNTIME)
+    home = _read_source("templates/public_preview/pages/index.html")
+    page_shell = _read_source("static/public_preview/assets/js/page-shell.js")
+    home_runtime = _read_source("static/public_preview/assets/js/home-enhancements.js")
+    strategy_runtime = _read_source(
+        "static/public_preview/assets/js/strategy-enhancements.js"
+    )
+
+    assert "page_refinements" in base
+    assert "ux-system-v1.css" in base
+    assert "service-category-refinement-v1.css" in base
+    assert "strategy-enhancements.css" in base
+    assert "--ibt-target-min: 44px" in tokens
+    assert "min-height: var(--ibt-target-min);" in shell
+    assert "width: 40px !important;\n    height: 40px !important;" not in layout
+    assert 'class="ibtx-store-demo-action" aria-hidden="true"' in home
+    assert "studioSwatchLabels" in tharaa_runtime
+    assert "tab.setAttribute('role','tab')" in tharaa_runtime
+    assert "tab.setAttribute('aria-controls','v4StudioScreen')" in tharaa_runtime
+    assert "['ArrowRight','ArrowLeft','Home','End']" in tharaa_runtime
+    assert "ensureStylesheet" not in page_shell
+    assert "function ensureCss()" not in home_runtime
+    assert "function ensureCss()" not in strategy_runtime

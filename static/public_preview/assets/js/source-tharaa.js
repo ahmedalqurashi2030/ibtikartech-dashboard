@@ -7,6 +7,12 @@
   let lenis=null;
   if(typeof Lenis!=='undefined'&&hasGSAP&&!reduce){lenis=new Lenis({duration:1.1,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);window.lenis=lenis;}
   const q=(s,p=document)=>p.querySelector(s),qa=(s,p=document)=>Array.from(p.querySelectorAll(s));
+  const studioSwatchLabels=['اختيار اللون البني','اختيار اللون البنفسجي','اختيار اللون الأزرق'];
+  qa('#studioSwatches button').forEach((button,index)=>{
+    button.type='button';
+    if(!button.getAttribute('aria-label')) button.setAttribute('aria-label',studioSwatchLabels[index]||'اختيار لون الواجهة');
+  });
+  q('#closePreview')?.setAttribute('type','button');
   qa('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const href=a.getAttribute('href');if(!href||href==='#')return;const t=q(href);if(t){e.preventDefault();lenis?lenis.scrollTo(t):t.scrollIntoView({behavior:reduce?'auto':'smooth'});}}));
   const progress=q('#pageProgress');
   const updateProgress=()=>{const y=scrollY||document.documentElement.scrollTop;const max=document.documentElement.scrollHeight-innerHeight;if(progress)progress.style.width=(max>0?y/max*100:0)+'%';};addEventListener('scroll',updateProgress,{passive:true});updateProgress();
@@ -22,8 +28,7 @@
   // original story and live-lab sections removed
   // retained customization studio
   qa('#studioSwatches button').forEach(b=>b.addEventListener('click',()=>{qa('#studioSwatches button').forEach(x=>x.classList.remove('active'));b.classList.add('active');q('#studioSite').style.setProperty('--studio-accent',b.dataset.studio);}));
-  // FAQ
-  qa('.faq-item button').forEach(btn=>btn.addEventListener('click',()=>{const item=btn.closest('.faq-item'),ans=q('.faq-answer',item),open=item.classList.toggle('open');btn.setAttribute('aria-expanded',String(open));ans.style.maxHeight=open?ans.scrollHeight+'px':'0px';}));
+  // FAQ accordion: ibtikar-shell.js owns toggle (q('.faq-answer',item) contract).
   // form demo
   const requestForm=q('#requestForm');if(requestForm)requestForm.addEventListener('submit',e=>{e.preventDefault();const btn=q('button[type="submit"]',e.currentTarget),old=btn.textContent;btn.textContent='تم استلام الطلب التجريبي ✓';btn.disabled=true;setTimeout(()=>{btn.textContent=old;btn.disabled=false;e.currentTarget.reset();},2800);});
   // reveals
@@ -48,6 +53,22 @@
     home:{brand:'ثراء للمنزل',eyebrow:'مساحات تلهمك',title:'تفاصيل تصنع المكان',product:'قطعة منزلية بوصف واضح',accent:'#1e9b8d',paper:'#f1fbf8',ink:'#203632'}
   };
   const studioScreen=$('#v4StudioScreen'),studioDevice=$('#v4StudioDevice');
+  $$('[role="tablist"]').forEach(group=>{
+    const tabs=$$('button[aria-selected]',group);
+    tabs.forEach((tab,index)=>{
+      tab.setAttribute('role','tab');
+      tab.setAttribute('aria-controls','v4StudioScreen');
+      tab.tabIndex=tab.getAttribute('aria-selected')==='true'?0:-1;
+      tab.addEventListener('click',()=>tabs.forEach(candidate=>{candidate.tabIndex=candidate===tab?0:-1;}));
+      tab.addEventListener('keydown',event=>{
+        if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;
+        event.preventDefault();
+        const nextIndex=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowLeft'?1:-1)+tabs.length)%tabs.length;
+        tabs[nextIndex].focus();
+        tabs[nextIndex].click();
+      });
+    });
+  });
   $$('[data-sector]').forEach(btn=>btn.addEventListener('click',()=>{
     const data=sectors[btn.dataset.sector]; if(!data)return;
     $$('[data-sector]').forEach(b=>b.setAttribute('aria-selected',String(b===btn)));

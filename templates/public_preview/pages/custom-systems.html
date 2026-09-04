@@ -9,7 +9,7 @@
 <nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">الأنظمة والأتمتة</span></nav>
 <span class="platform-kicker">SYSTEMS & AUTOMATION</span><h1>بسّط العملية أولًا. <span>ثم ابنِ ما لا يوفره الجاهز.</span></h1>
 <p>نرسم العملية والمستخدمين والبيانات ونقاط التعطل، ثم نختار أقل حل يزيل المشكلة: تكامل، أتمتة، لوحة، بوابة أو نظام مخصص.</p>
-<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">اختبر ملاءمة الحل</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=automation&source=systems-hero#quote">صف العملية الحالية</a></div>
+<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">اختبر ملاءمة الحل</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=automation&source=systems-hero#quote" data-analytics="quote_request" data-analytics-label="systems-hero">صف العملية الحالية</a></div>
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg" alt="تكاملات وأنظمة وأتمتة تربط العمليات والبيانات" width="1280" height="853" fetchpriority="high"><figcaption>لا نبني شاشة إضافية إذا كان تكامل أبسط يزيل المشكلة من جذورها.</figcaption></figure></div></section>
 
@@ -18,6 +18,7 @@
   <a href="#approach">طريقة التصميم</a>
   <a href="#continuity">الملكية</a>
   <a href="#fit">الملاءمة</a>
+  <a href="#faq">الأسئلة</a>
 </div></nav>
 
 
@@ -105,6 +106,16 @@
 <article class="platform-card reveal"><h3>لا نبدأ بنظام مخصص عندما</h3><ul><li>أداة جاهزة بسيطة تحل المشكلة بصورة كافية</li><li>العملية نفسها غير مستقرة أو بلا مسؤول واضح</li><li>الطلب يعتمد على API أو صلاحية غير متاحة</li><li>لا يمكن تحديد معيار قبول أو نتيجة واضحة للنظام</li></ul></article>
 </div></div></section>
 
+<section class="platform-section platform-section--soft" id="faq"><div class="container service-category-faq">
+  <div class="service-category-faq__intro reveal"><span class="section-kicker">قبل البناء</span><h2>أسئلة تقلل مخاطر النظام</h2><p>القرار الصحيح قد يكون تكاملًا صغيرًا أو أداة جاهزة. لا نبدأ بناءً مخصصًا قبل تثبيت العملية والبيانات والملكية.</p></div>
+  <div class="service-category-faq__list">
+    <details class="service-category-faq__item reveal"><summary>كيف نعرف أن الجاهز لا يكفي؟</summary><div class="service-category-faq__answer"><p>نقارن العملية والقيود والتكلفة الكلية بالحلول المتاحة. ننتقل للبناء المخصص فقط عندما توجد فجوة مؤثرة ومعيار قبول واضح.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>كيف تُدار الصلاحيات وأمن البيانات؟</summary><div class="service-category-faq__answer"><p>نحدد الأدوار ومبدأ أقل صلاحية ومصدر البيانات والنسخ الاحتياطية والسجلات المطلوبة ضمن المعمارية والنطاق، حسب حساسية الحل وبيئته.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>ماذا لو تغيّر API خارجي؟</summary><div class="service-category-faq__answer"><p>نوثق التكامل وحدوده وحالات الفشل. تغييرات الطرف الثالث الخارجة عن النطاق تُقيّم كتطوير لاحق، مع فصل واضح بين العطل في نظامنا والعطل الخارجي.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>من يملك الكود والحسابات بعد التسليم؟</summary><div class="service-category-faq__answer"><p>يُحسم ذلك في العرض قبل التنفيذ: المستودع والبيئات والحسابات والأصول المصدرية والتوثيق والدعم، ثم يتم التسليم عبر قنوات آمنة.</p></div></details>
+  </div>
+</div></section>
+
 <section class="platform-section platform-section--soft" id="related"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>ابدأ من العملية، ثم اختر التقنية</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:websites' %}">المواقع</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a></nav></div></section>
 
 <section class="page-cta">
@@ -116,7 +127,7 @@
         <p>صف لنا الخطوات الحالية والأدوات ونقطة التأخير أو الخطأ، وسنحدد هل تحتاج ربطًا أو أتمتة أو نظامًا مخصصًا.</p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a>
+<a class="btn btn-white" href="{% url 'public_preview:contact' %}?goal=automation&source=systems-final#quote" data-analytics="quote_request" data-analytics-label="systems-final">ابدأ التشخيص</a>
         <a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a>
       </div>
     </div>

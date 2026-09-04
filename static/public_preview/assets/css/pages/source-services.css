@@ -69,3 +69,6 @@ body::before{content:"";position:fixed;inset:0;z-index:-4;background:radial-grad
   .footer-grid{grid-template-columns:1fr}.footer-brand{grid-column:auto}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}.hero-canvas,.lab-canvas{display:none}}
+
+/* Normalized service-goal icon contract: one SVG treatment instead of font glyphs. */
+.goal-icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}

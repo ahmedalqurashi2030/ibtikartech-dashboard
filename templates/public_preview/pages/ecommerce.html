@@ -4,8 +4,12 @@
 {% block category_meta_description %}حلول إطلاق وتخصيص وإعادة تصميم وتحسين وقياس ودعم المتاجر على سلة وزد وWooCommerce وShopify، بحسب حالة المتجر ونقطة البداية.{% endblock %}
 {% block category_body_attrs %} class="inner-page platform-page approved-source-page source-ecommerce category-hub service-category-page category-ecommerce" data-section="services" data-approved-source="ecommerce.html"{% endblock %}
 
+{% block page_refinements %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/ecommerce-refinement-v1.css">
+{% endblock %}
+
 {% block category_styles %}
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
+  <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/ecommerce-category.css">
@@ -14,6 +18,7 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
 {% endblock %}
 
 {% block category_content %}
@@ -24,13 +29,13 @@
       <span class="platform-kicker">حلول التجارة الإلكترونية</span>
       <h1>متجر يقود العميل بوضوح. <span>من الاكتشاف إلى الشراء.</span></h1>
       <p>نطلق المتجر أو نطوّر الجزء الذي يعيق رحلته: المنصة والواجهة وصفحة المنتج والقياس والربط والدعم. تبدأ الخدمة من حالة متجرك، لا من باقة جاهزة.</p>
-      <div class="platform-actions"><a class="btn btn-primary" href="#paths">اختر نقطة البداية</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=ecommerce&source=ecommerce-hero#quote">أرسل رابط متجرك</a></div>
+<div class="platform-actions"><a class="btn btn-primary" href="#paths">اختر نقطة البداية</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=ecommerce&source=ecommerce-hero#quote" data-analytics="quote_request" data-analytics-label="ecommerce-hero">أرسل رابط متجرك</a></div>
     </div>
     <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg" alt="رحلة تجارة إلكترونية من اكتشاف المنتج إلى الدفع والقياس والتسليم" width="1280" height="853" fetchpriority="high"><figcaption>تجربة تجارة متصلة: اكتشاف، منتج، دفع، قياس وتسليم.</figcaption></figure>
   </div>
 </section>
 
-<nav class="commerce-category-nav" aria-label="أقسام حلول المتاجر الإلكترونية"><div class="container commerce-category-nav__inner"><a href="#paths">نقطة البداية</a><a href="#subservices">الخدمات الفرعية</a><a href="#platforms">المنصات</a><a href="#tharaa-product">ثيم ثراء</a><a href="#product-page">صفحة المنتج</a><a href="#process">طريقة العمل</a><a href="#faq">الأسئلة</a></div></nav>
+<nav class="commerce-category-nav" aria-label="أقسام حلول المتاجر الإلكترونية"><div class="container commerce-category-nav__inner"><a href="#paths">نقطة البداية</a><a href="#subservices">الخدمات الفرعية</a><a href="#platforms">المنصات</a><a href="#tharaa-product">ثيم ثراء</a><a href="#product-page">صفحة المنتج</a><a href="#process">طريقة العمل</a><a href="#faq">الأسئلة</a><a href="#related">خدمات مرتبطة</a></div></nav>
 
 
 <section class="platform-section platform-section--soft service-paths-section" id="paths"><div class="container">
@@ -175,6 +180,8 @@
   <article class="faq reveal"><button type="button" aria-expanded="false">هل تضمنون زيادة المبيعات؟<i>+</i></button><div class="faq-answer"><div><p>لا نقدم ضمانًا غير واقعي. نحسن وضوح التجربة والقياس ونقاط الاحتكاك، بينما تتأثر النتائج أيضًا بالمنتج والسعر والتشغيل والتسويق.</p></div></div></article>
 </div></div></section>
 
+<section class="platform-section platform-section--soft" id="related"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>أكمل الرحلة بما يحتاجه المتجر فعلًا</h2><p>قد تكون المشكلة خارج واجهة المتجر؛ اختر المسار المجاور الذي يعالجها من جذورها.</p></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:websites' %}">المواقع وصفحات الهبوط</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
+
 <section class="page-cta">
   <div class="container">
     <div class="cta-card reveal">
@@ -184,7 +191,7 @@
         <p>رابط المتجر أو الفكرة والمنصة والهدف تكفي للتشخيص الأولي. لا تحتاج أن تختار اسم الخدمة بنفسك.</p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">اطلب تشخيص متجرك</a>
+<a class="btn btn-white" href="{% url 'public_preview:contact' %}?goal=ecommerce&source=ecommerce-final#quote" data-analytics="quote_request" data-analytics-label="ecommerce-final">اطلب تشخيص متجرك</a>
         <a class="btn btn-outline" href="{% url 'public_preview:ecommerce' %}#platforms">استكشف حلول سلة</a>
       </div>
     </div>
@@ -198,6 +205,7 @@
   <script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
   <script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
   <script src="/static/public_preview/assets/js/app.js" defer></script>
-  <script src="/static/public_preview/assets/js/approved-source.js" defer></script>
+<script src="/static/public_preview/assets/js/approved-source.js" defer></script>
 <script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
+<script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
 {% endblock %}

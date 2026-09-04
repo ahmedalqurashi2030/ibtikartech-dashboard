@@ -88,6 +88,7 @@ function initReveal() {
 
 function initFAQ() {
   qsa('.faq, [data-faq-item], .accordion-item').forEach((item) => {
+    if (item.closest('#faq')) return;
     const button = qs('button', item);
     const answer = qs('.faq-answer', item);
     if (!button) return;

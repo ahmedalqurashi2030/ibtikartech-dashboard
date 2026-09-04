@@ -4,10 +4,10 @@
 {% block service_meta_description %}تحسين صفحة المنتج وترتيب الصور والمعلومات والخيارات والثقة والإجراء الأساسي مع مراجعة الجوال وإمكانات منصة المتجر.{% endblock %}
 
 {% block service_styles %}
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/source-product-page.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/source-product-page.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/product-page-accessibility.css">
 {% endblock %}
 {% block service_breadcrumb_current %}تحسين صفحة المنتج{% endblock %}
 
@@ -41,8 +42,8 @@
           <p>نعيد تنظيم الصور والمعلومات والخيارات وعناصر الثقة والإجراء الأساسي، مع مراجعة تجربة الجوال والتوافق مع إمكانات منصة متجرك.</p>
           <div class="service-platform-chips"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div>
           <div class="service-purchase-box"><div><small>طريقة التسعير</small><strong>عرض مخصص بعد التقييم</strong></div><div><small>نقطة البداية</small><strong>مراجعة صفحة المنتج والمحتوى وإمكانات المنصة</strong></div></div>
-          <ul class="service-assurance"><li><i class="ph-duotone ph-check-circle"></i> نطاق مكتوب قبل التنفيذ</li><li><i class="ph-duotone ph-check-circle"></i> مراجعة Desktop وMobile</li><li><i class="ph-duotone ph-check-circle"></i> دعم وفق العرض المعتمد</li></ul>
-          <div class="service-commerce-actions"><a class="button btn btn-primary" href="{% url 'public_preview:contact' %}?service=product-page-optimization&source=service-hero#quote">ابدأ تقييم صفحة المنتج</a><a class="service-text-link" href="#decision-center" data-open-service-tab="problems">افهم تفاصيل الخدمة ←</a></div>
+          <ul class="service-assurance"><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i> نطاق مكتوب قبل التنفيذ</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i> مراجعة Desktop وMobile</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i> دعم وفق العرض المعتمد</li></ul>
+          <div class="service-commerce-actions"><a class="button btn btn-primary" href="{% url 'public_preview:contact' %}?service=product-page-optimization&source=service-hero#quote" data-analytics="quote_request" data-analytics-label="product-page-optimization-hero">ابدأ تقييم صفحة المنتج</a><a class="service-text-link" href="#decision-center" data-open-service-tab="problems">افهم تفاصيل الخدمة ←</a></div>
         </div>
       </div>
 
@@ -55,7 +56,7 @@
 <section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>علامات تشير إلى حاجة الصفحة للتحسين</span><h2>هل تواجه هذه المشكلات؟</h2></div>
-      <div class="service-problem-grid"><article><i class="ph-duotone ph-paint-brush-broad"></i><h3>معرض صور لا يشرح المنتج</h3><p>لا يحصل العميل على تفاصيل بصرية كافية قبل اتخاذ القرار.</p></article><article><i class="ph-duotone ph-file-text"></i><h3>المعلومات المهمة مشتتة</h3><p>السعر والمزايا والسياسات موزعة دون تسلسل واضح.</p></article><article><i class="ph-duotone ph-circles-four"></i><h3>الخيارات مربكة</h3><p>المقاسات أو الألوان لا تعرض بصورة سهلة الفهم.</p></article><article><i class="ph-duotone ph-shield-check"></i><h3>عناصر الثقة بعيدة</h3><p>الشحن والاستبدال والضمان لا تظهر قرب قرار الشراء.</p></article><article><i class="ph-duotone ph-device-mobile-camera"></i><h3>تجربة الجوال مزدحمة</h3><p>العناصر تتنافس على مساحة صغيرة وتزيد الجهد المطلوب.</p></article><article><i class="ph-duotone ph-shopping-cart-simple"></i><h3>الإجراء الأساسي غير واضح</h3><p>زر الإضافة للسلة لا يحصل على الأولوية البصرية المناسبة.</p></article></div>
+      <div class="service-problem-grid"><article><i class="ph-duotone ph-paint-brush-broad" aria-hidden="true"></i><h3>معرض صور لا يشرح المنتج</h3><p>لا يحصل العميل على تفاصيل بصرية كافية قبل اتخاذ القرار.</p></article><article><i class="ph-duotone ph-file-text" aria-hidden="true"></i><h3>المعلومات المهمة مشتتة</h3><p>السعر والمزايا والسياسات موزعة دون تسلسل واضح.</p></article><article><i class="ph-duotone ph-circles-four" aria-hidden="true"></i><h3>الخيارات مربكة</h3><p>المقاسات أو الألوان لا تعرض بصورة سهلة الفهم.</p></article><article><i class="ph-duotone ph-shield-check" aria-hidden="true"></i><h3>عناصر الثقة بعيدة</h3><p>الشحن والاستبدال والضمان لا تظهر قرب قرار الشراء.</p></article><article><i class="ph-duotone ph-device-mobile-camera" aria-hidden="true"></i><h3>تجربة الجوال مزدحمة</h3><p>العناصر تتنافس على مساحة صغيرة وتزيد الجهد المطلوب.</p></article><article><i class="ph-duotone ph-shopping-cart-simple" aria-hidden="true"></i><h3>الإجراء الأساسي غير واضح</h3><p>زر الإضافة للسلة لا يحصل على الأولوية البصرية المناسبة.</p></article></div>
     </div>
   </section>
 
@@ -77,28 +78,28 @@
   <section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables" hidden>
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>مخرجات يمكن التحقق منها</span><h2>ماذا ستستلم؟</h2></div>
-      <ul class="service-deliverable-grid"><li><i class="ph-duotone ph-package"></i>تقرير مراجعة وأولويات</li><li><i class="ph-duotone ph-package"></i>تصور أو تصميم معتمد</li><li><i class="ph-duotone ph-package"></i>تنفيذ الخدمة</li><li><i class="ph-duotone ph-package"></i>نسخة محسنة للجوال</li><li><i class="ph-duotone ph-package"></i>إعدادات الأدوات المتفق عليها</li><li><i class="ph-duotone ph-package"></i>اختبار نهائي</li><li><i class="ph-duotone ph-package"></i>تقرير تسليم</li><li><i class="ph-duotone ph-package"></i>دليل استخدام مختصر</li></ul>
+      <ul class="service-deliverable-grid"><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تقرير مراجعة وأولويات</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تصور أو تصميم معتمد</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تنفيذ الخدمة</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>نسخة محسنة للجوال</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>إعدادات الأدوات المتفق عليها</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>اختبار نهائي</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تقرير تسليم</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>دليل استخدام مختصر</li></ul>
     </div>
   </section>
 
   <section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions" hidden>
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>حدود تمنع توسع النطاق دون اتفاق</span><h2>ما الذي لا يدخل ضمن النطاق الأساسي؟</h2></div>
-      <ul class="service-exclusion-list"><li>التصوير الاحترافي</li><li>كتابة جميع المحتويات</li><li>إدخال منتجات غير محدود</li><li>شراء التطبيقات الخارجية</li><li>اشتراكات المنصات</li><li>إدارة الحملات الإعلانية</li><li>وظائف غير مدعومة من المنصة</li><li>دعم مفتوح دون مدة</li></ul><p class="svc-note">يمكن إضافة الخدمات غير المشمولة إلى عرض السعر عند الحاجة.</p>
+      <ul class="service-exclusion-list"><li>التصوير الاحترافي</li><li>كتابة جميع المحتويات</li><li>إدخال منتجات غير محدود</li><li>شراء التطبيقات الخارجية</li><li>اشتراكات المنصات</li><li>إدارة الحملات الإعلانية</li><li>وظائف غير مدعومة من المنصة</li><li>دعم مفتوح دون مدة</li></ul><p class="service-note">يمكن إضافة الخدمات غير المشمولة إلى عرض السعر عند الحاجة.</p>
     </div>
   </section>
 
   <section class="service-detail-section service-detail-section--soft product-anatomy-section">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>افهم سبب كل قرار في الواجهة</span><h2>شرح بصري لصفحة المنتج</h2></div>
-      <div class="hotspot-layout"><div class="hotspot-canvas"><img src="/static/public_preview/assets/generated/a5c00eeae18cfdad.svg" alt="مخطط توضيحي لنقاط تحسين صفحة المنتج" width="904" height="696"><button class="hotspot" data-id="gallery" aria-label="معرض الصور">1</button><button class="hotspot" data-id="options" aria-label="خيارات المنتج">2</button><button class="hotspot" data-id="trust" aria-label="عناصر الثقة">3</button><button class="hotspot" data-id="cta" aria-label="زر الإضافة للسلة">4</button></div><aside class="hotspot-info" aria-live="polite"><h3>معرض الصور</h3><p>المشكلة: الصور لا تشرح التفاصيل. التعديل: ترتيب الصور وتحديد الأولوية. سبب القرار: العميل يحتاج فهم المنتج بصريًا قبل متابعة الخيارات.</p></aside><div class="hotspot-cards"><article><h3>معرض الصور</h3><p>ترتيب اللقطات وإبراز التفاصيل.</p></article><article><h3>الخيارات</h3><p>تجميع المقاسات والألوان بصورة مفهومة.</p></article><article><h3>عناصر الثقة</h3><p>تقريب الشحن والاستبدال والضمان.</p></article><article><h3>الإضافة للسلة</h3><p>منح الإجراء الأساسي أولوية واضحة.</p></article></div></div>
+      <div class="hotspot-layout"><div class="hotspot-canvas"><img src="/static/public_preview/assets/generated/a5c00eeae18cfdad.svg" alt="مخطط توضيحي لنقاط تحسين صفحة المنتج" width="904" height="696" loading="lazy" decoding="async"><button type="button" class="hotspot" data-id="gallery" aria-label="معرض الصور">1</button><button type="button" class="hotspot" data-id="options" aria-label="خيارات المنتج">2</button><button type="button" class="hotspot" data-id="trust" aria-label="عناصر الثقة">3</button><button type="button" class="hotspot" data-id="cta" aria-label="زر الإضافة للسلة">4</button></div><aside class="hotspot-info" id="product-hotspot-info" role="region" aria-live="polite" aria-labelledby="product-hotspot-title"><h3 id="product-hotspot-title" data-product-hotspot-title>معرض الصور</h3><p data-product-hotspot-text>المشكلة: الصور لا تشرح التفاصيل. التعديل: ترتيب الصور وتحديد الأولوية. سبب القرار: العميل يحتاج فهم المنتج بصريًا قبل متابعة الخيارات.</p></aside><div class="hotspot-cards"><article><h3>معرض الصور</h3><p>ترتيب اللقطات وإبراز التفاصيل.</p></article><article><h3>الخيارات</h3><p>تجميع المقاسات والألوان بصورة مفهومة.</p></article><article><h3>عناصر الثقة</h3><p>تقريب الشحن والاستبدال والضمان.</p></article><article><h3>الإضافة للسلة</h3><p>منح الإجراء الأساسي أولوية واضحة.</p></article></div></div>
     </div>
   </section>
 
   <section class="service-detail-section service-detail-section--soft product-requirements-section">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>اكتمالها يحمي الجدول التنفيذي</span><h2>متطلبات بدء الخدمة</h2></div>
-      <ul class="req-grid"><li><i class="ph-duotone ph-check-circle"></i>رابط الموقع أو المتجر</li><li><i class="ph-duotone ph-check-circle"></i>صلاحية الوصول المناسبة</li><li><i class="ph-duotone ph-check-circle"></i>الهوية والشعار</li><li><i class="ph-duotone ph-check-circle"></i>الصور والمحتوى</li><li><i class="ph-duotone ph-check-circle"></i>السياسات المعتمدة</li><li><i class="ph-duotone ph-check-circle"></i>التطبيقات المستخدمة</li><li><i class="ph-duotone ph-check-circle"></i>أمثلة بصرية مفضلة</li><li><i class="ph-duotone ph-check-circle"></i>الشخص المخول بالاعتماد</li></ul><p class="svc-note">يبدأ الجدول التنفيذي بعد استلام المتطلبات واعتماد النطاق.</p>
+      <ul class="req-grid"><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>رابط الموقع أو المتجر</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>صلاحية الوصول المناسبة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>الهوية والشعار</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>الصور والمحتوى</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>السياسات المعتمدة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>التطبيقات المستخدمة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>أمثلة بصرية مفضلة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>الشخص المخول بالاعتماد</li></ul><p class="service-note">يبدأ الجدول التنفيذي بعد استلام المتطلبات واعتماد النطاق.</p>
     </div>
   </section>
 
@@ -119,15 +120,15 @@
   <section class="page-cta" id="service-contact">
     <div class="service-detail-shell">
       <div class="cta-card">
-        <div><section class="product-service-cta-copy"><h2>ابدأ بتحسين صفحة المنتج الأكثر أهمية في متجرك</h2><p>أرسل رابط الصفحة، وسنراجع حالتها ونحدد نطاق التحسين المناسب قبل إعداد العرض.</p></section></div>
-        <div class="cta-actions"><a class="button btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ تقييم صفحة المنتج</a><a class="service-text-link btn btn-outline" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a></div>
+        <div class="product-service-cta-copy"><h2>ابدأ بتحسين صفحة المنتج الأكثر أهمية في متجرك</h2><p>أرسل رابط الصفحة، وسنراجع حالتها ونحدد نطاق التحسين المناسب قبل إعداد العرض.</p></div>
+        <div class="cta-actions"><a class="button btn btn-white" href="{% url 'public_preview:contact' %}?service=product-page-optimization&source=service-final#quote" data-analytics="quote_request" data-analytics-label="product-page-optimization-final">ابدأ تقييم صفحة المنتج</a><a class="service-text-link btn btn-outline" href="{% url 'public_preview:ecommerce' %}#subservices">استعرض خدمات المتاجر</a></div>
       </div>
     </div>
   </section>
 {% endblock %}
 
 {% block service_after_main %}
-<div class="sticky-service-cta"><a class="button" href="#service-contact">ابدأ تقييم صفحة المنتج</a></div>
+<div class="sticky-service-cta" aria-hidden="true" inert><a class="button" href="{% url 'public_preview:contact' %}?service=product-page-optimization&source=service-sticky#quote" data-analytics="quote_request" data-analytics-label="product-page-optimization-sticky">ابدأ تقييم صفحة المنتج</a></div>
 {% endblock %}
 
 {% block service_scripts %}

@@ -9,7 +9,7 @@
 <nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">المواقع وصفحات الهبوط</span></nav>
 <span class="platform-kicker">WEB EXPERIENCE</span><h1>موقع يوضح قيمتك. <span>ويحوّل الزيارة إلى خطوة مفهومة.</span></h1>
 <p>نحدد نوع الموقع من القرار المطلوب من الزائر، ثم نرتب الرسالة والدليل والمحتوى والواجهة والأداء ضمن تجربة عربية وRTL من البداية.</p>
-<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">اختر نوع الموقع</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=website&source=websites-hero#quote">حدد احتياج موقعك</a></div>
+<div class="platform-actions"><a class="btn btn-primary" href="#capabilities">اختر نوع الموقع</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}?goal=website&source=websites-hero#quote" data-analytics="quote_request" data-analytics-label="websites-hero">حدد احتياج موقعك</a></div>
 </div>
 <figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع بصري لمنظومة خدمات ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>نحافظ على هوية واضحة ونستخدم الحركة عندما تخدم الفهم، لا لمجرد الإبهار.</figcaption></figure></div></section>
 
@@ -18,6 +18,7 @@
   <a href="#approach">طريقة العمل</a>
   <a href="#delivery">التسليم</a>
   <a href="#fit">الملاءمة</a>
+  <a href="#faq">الأسئلة</a>
 </div></nav>
 
 
@@ -105,6 +106,16 @@
 <article class="platform-card reveal"><h3>نحتاج مسارًا آخر عندما</h3><ul><li>تحتاج متجرًا كاملًا — استخدم مسار المتاجر</li><li>تحتاج نظام عمليات أو بوابة تشغيلية — استخدم الأنظمة المخصصة</li><li>الهوية والمحتوى غير جاهزين ولا تريد إدخالهما ضمن النطاق</li></ul></article>
 </div></div></section>
 
+<section class="platform-section platform-section--soft" id="faq"><div class="container service-category-faq">
+  <div class="service-category-faq__intro reveal"><span class="section-kicker">قبل التنفيذ</span><h2>أسئلة تحسم نطاق الموقع</h2><p>الإجابات التالية توضّح ما يدخل عادة في القرار، بينما يثبت العرض النهائي الصفحات والمحتوى والتكاملات.</p></div>
+  <div class="service-category-faq__list">
+    <details class="service-category-faq__item reveal"><summary>هل تشمل الخدمة كتابة المحتوى؟</summary><div class="service-category-faq__answer"><p>يمكن إدراج بنية المحتوى وكتابته أو تحريره ضمن النطاق. نحدد الصفحات واللغات ومسؤولية توفير المعلومات والصور قبل بدء التنفيذ.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>هل سيكون الموقع عربيًا وثنائي اللغة؟</summary><div class="service-category-faq__answer"><p>ندعم RTL وLTR من أساس الهيكل. النسخة الثنائية تُعتمد ضمن النطاق مع تحديد من يكتب أو يترجم كل لغة وآلية إدارتها.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>هل الدومين والاستضافة ضمن المشروع؟</summary><div class="service-category-faq__answer"><p>نراجع البيئة ونوضح مسؤولية الدومين والاستضافة والبريد والنسخ الاحتياطية. أي اشتراكات خارجية تُذكر منفصلة في العرض.</p></div></details>
+    <details class="service-category-faq__item reveal"><summary>كيف تتحدد المدة والتكلفة؟</summary><div class="service-category-faq__answer"><p>بحسب عدد القوالب والصفحات، جاهزية المحتوى، اللغات، مستوى التخصيص والتكاملات. بعد التشخيص نقدّم نطاقًا ومراحل ومعيار قبول واضحًا.</p></div></details>
+  </div>
+</div></section>
+
 <section class="platform-section platform-section--soft" id="related"><div class="container"><div class="platform-heading reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياجك</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
 <section class="page-cta">
@@ -116,7 +127,7 @@
         <p>أرسل نوع الموقع والهدف والمحتوى المتاح، وسنحدد نقطة البداية والنطاق المناسب.</p>
       </div>
       <div class="cta-actions">
-        <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ التشخيص</a>
+<a class="btn btn-white" href="{% url 'public_preview:contact' %}?goal=website&source=websites-final#quote" data-analytics="quote_request" data-analytics-label="websites-final">ابدأ التشخيص</a>
         <a class="btn btn-outline" href="{% url 'services:index' %}">جميع الخدمات</a>
       </div>
     </div>

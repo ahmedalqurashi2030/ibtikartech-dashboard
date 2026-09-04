@@ -6,13 +6,20 @@
   const bar = document.getElementById('progressBar');
 
   if (bar) {
+    let progressFrame = 0;
     addEventListener('scroll', () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+      if (progressFrame) return;
+      progressFrame = requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+        progressFrame = 0;
+      });
     }, { passive: true });
   }
 
-  if ('IntersectionObserver' in window) {
+  if (reduced) {
+    document.querySelectorAll('.reveal').forEach((element) => element.classList.add('in'));
+  } else if ('IntersectionObserver' in window) {
     const revealIO = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add('in');
@@ -22,13 +29,6 @@
   } else {
     document.querySelectorAll('.reveal').forEach((element) => element.classList.add('in'));
   }
-
-  document.querySelectorAll('.faq button').forEach((button) => button.addEventListener('click', () => {
-    const item = button.parentElement;
-    if (!item) return;
-    const open = item.classList.toggle('open');
-    button.setAttribute('aria-expanded', String(open));
-  }));
 
   function renderVisual(mode) {
     const body = document.getElementById('visualBody');
@@ -110,7 +110,9 @@
     let height;
     let dpr;
     let points = [];
-    let raf;
+    let raf = 0;
+    let running = false;
+    let inView = true;
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -127,6 +129,7 @@
     };
 
     const draw = () => {
+      if (!running) return;
       ctx.clearRect(0, 0, width, height);
       const colors = accentMode
         ? ['26,209,238', '93,131,255', '138,92,246', '242,85,166']
@@ -160,13 +163,25 @@
       raf = requestAnimationFrame(draw);
     };
 
+    const syncAnimation = () => {
+      const shouldRun = inView && !document.hidden;
+      if (shouldRun === running) return;
+      running = shouldRun;
+      if (running) draw();
+      else cancelAnimationFrame(raf);
+    };
+
     resize();
-    draw();
     addEventListener('resize', resize, { passive: true });
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) cancelAnimationFrame(raf);
-      else draw();
-    });
+    if ('IntersectionObserver' in window) {
+      const canvasObserver = new IntersectionObserver(([entry]) => {
+        inView = Boolean(entry?.isIntersecting);
+        syncAnimation();
+      }, { rootMargin: '160px 0px' });
+      canvasObserver.observe(canvas);
+    }
+    document.addEventListener('visibilitychange', syncAnimation);
+    syncAnimation();
   }
 
   canvasNetwork(document.getElementById('heroCanvas'), true);
@@ -201,4 +216,26 @@
       });
     }
   });
+
+  const faqRoot = document.getElementById('faq');
+  if (faqRoot) {
+    const items = [...faqRoot.querySelectorAll('.faq')];
+    items.forEach((item) => {
+      const button = item.querySelector(':scope > button');
+      const answer = item.querySelector('.faq-answer');
+      if (!button || !answer || button.dataset.svcFaqReady === 'true') return;
+      button.dataset.svcFaqReady = 'true';
+      button.addEventListener('click', () => {
+        const open = button.getAttribute('aria-expanded') === 'true';
+        items.forEach((candidate) => {
+          const candidateBtn = candidate.querySelector(':scope > button');
+          const candidateAnswer = candidate.querySelector('.faq-answer');
+          if (candidateBtn) candidateBtn.setAttribute('aria-expanded', 'false');
+          if (candidateAnswer) candidateAnswer.hidden = true;
+        });
+        button.setAttribute('aria-expanded', String(!open));
+        answer.hidden = !open;
+      });
+    });
+  }
 })();

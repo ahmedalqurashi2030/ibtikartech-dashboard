@@ -149,8 +149,8 @@ html body.source-home[data-page="index"] #services .home-services-slider__button
 }
 
 html body.source-home[data-page="index"] #services .home-services-slider__button {
-  width: 42px !important;
-  height: 42px !important;
+  width: 44px !important;
+  height: 44px !important;
   border-radius: 11px !important;
   font-size: 18px !important;
   box-shadow: none !important;
@@ -720,8 +720,8 @@ html body:is([data-page="websites"], [data-page="brand-content"], [data-page="gr
 @media (max-width: 520px) {
   html body.source-home[data-page="index"] #services .home-services-slider__button,
   html body.source-services .fast-discovery-slider .fast-discovery-controls__actions button {
-    width: 40px !important;
-    height: 40px !important;
+    width: 44px !important;
+    height: 44px !important;
   }
 
   html body.source-home[data-page="index"] #services.services-cinema.home-services-slider .services-mobile-card {

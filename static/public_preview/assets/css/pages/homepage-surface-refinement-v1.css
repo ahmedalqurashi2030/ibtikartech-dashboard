@@ -118,4 +118,21 @@ body.source-home .cta-section {
   body.source-home .cta-section {
     background: #050817 !important;
   }
+
+  body.source-home :is(
+    .home-goal-router__unknown,
+    .home-proof-band__copy > div
+  ) > a {
+    min-height: var(--ibt-target-min, 44px);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  body.source-home :is(
+    .ibtx-toolbar-device,
+    .quick-dock a,
+    .quick-dock button
+  ) {
+    min-height: var(--ibt-target-min, 44px);
+  }
 }

@@ -5,15 +5,6 @@
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
-  function ensureCss() {
-    if ($('link[data-strategy-enhancements]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/static/public_preview/assets/css/pages/strategy-enhancements.css';
-    link.dataset.strategyEnhancements = 'true';
-    document.head.appendChild(link);
-  }
-
   function html(markup) {
     const template = document.createElement('template');
     template.innerHTML = markup.trim();
@@ -176,7 +167,6 @@
   }
 
   function init() {
-    ensureCss();
     initServices();
     initProductPage();
     initTharaa();

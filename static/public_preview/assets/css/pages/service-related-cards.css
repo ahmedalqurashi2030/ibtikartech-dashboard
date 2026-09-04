@@ -49,8 +49,8 @@
 }
 
 .service-related-carousel__buttons button {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   padding: 0;
@@ -297,8 +297,8 @@ body:is([data-page="websites"], [data-page="brand-content"], [data-page="growth"
 
 @media (max-width: 520px) {
   .service-related-carousel__buttons button {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
   }
 
   .service-related-card {

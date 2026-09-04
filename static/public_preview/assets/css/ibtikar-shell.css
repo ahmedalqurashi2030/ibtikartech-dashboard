@@ -197,8 +197,10 @@ html[data-theme="dark"] .ibt-shell-nav {
 }
 
 .ibt-shell-mega-toggle {
-  width: 26px;
+  width: var(--ibt-target-min);
+  min-width: var(--ibt-target-min);
   height: 40px;
+  min-height: var(--ibt-target-min);
   margin-inline-start: -8px;
   border: 0;
   border-radius: 12px;
@@ -353,9 +355,9 @@ html[data-theme="dark"] .ibt-shell-mega {
 .ibt-shell-menu-toggle,
 .menu-toggle.ibt-shell-menu-toggle,
 .menu-btn.ibt-shell-menu-toggle {
-  width: 42px;
-  height: 42px;
-  min-height: 42px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
   padding: 0;
   border: 1px solid var(--ibt-border);
   border-radius: 13px;
@@ -460,9 +462,9 @@ html[data-theme="dark"] .ibt-shell-mega {
 }
 
 .ibt-mobile-menu-close {
-  inline-size: 40px;
-  block-size: 40px;
-  flex: 0 0 40px;
+  inline-size: var(--ibt-target-min);
+  block-size: var(--ibt-target-min);
+  flex: 0 0 var(--ibt-target-min);
   border: 1px solid var(--ibt-border);
   border-radius: 12px;
   color: var(--ibt-text);
@@ -563,7 +565,7 @@ html[data-theme="dark"] .ibt-shell-mega {
 }
 
 .ibt-shell-mobile-group a {
-  min-height: 40px;
+  min-height: var(--ibt-target-min);
   margin: 0 6px 6px;
   padding: 8px 12px !important;
   font-size: 13px;
@@ -723,6 +725,10 @@ body.source-home .cinematic-story__brand {
     height: 32px;
   }
 
+  .ibt-shell-brand {
+    min-height: var(--ibt-target-min);
+  }
+
   .ibt-shell-brand-copy strong {
     font-size: 16px;
   }
@@ -733,9 +739,9 @@ body.source-home .cinematic-story__brand {
 
   .ibt-shell-icon-btn,
   .ibt-shell-menu-toggle {
-    width: 38px;
-    height: 38px;
-    min-height: 38px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
   }
 
   .ibt-shell-mobile-menu {
@@ -763,6 +769,17 @@ body.source-home .cinematic-story__brand {
   .ibt-shell-footer-bottom div {
     justify-content: center;
     margin-top: 12px;
+  }
+
+  .ibt-shell-footer a {
+    min-height: var(--ibt-target-min);
+    margin-block: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .ibt-shell-footer-bottom a {
+    justify-content: center;
   }
 }
 

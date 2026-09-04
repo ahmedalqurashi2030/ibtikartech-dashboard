@@ -1,0 +1,29 @@
+/* Focused accessibility and mobile guards for product-page-optimization.html. */
+.hotspot {
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
+}
+
+.hotspot[aria-pressed="true"] {
+  outline: 3px solid color-mix(in srgb, currentColor 40%, transparent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 680px) {
+  body.product-sticky-cta-visible {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+
+  .sticky-service-cta {
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-service-cta,
+  .hotspot {
+    transition-duration: 0.01ms !important;
+  }
+}

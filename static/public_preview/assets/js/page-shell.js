@@ -226,15 +226,6 @@
     document.body.appendChild(guard);
   }
 
-  const ensureStylesheet = (href, id) => {
-    if (document.getElementById(id) || document.querySelector(`link[href="${href}"]`)) return;
-    const link = document.createElement('link');
-    link.id = id;
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
-  };
-
   const ensureScript = (src, datasetKey) => {
     if (document.querySelector(`script[data-${datasetKey}]`)) return;
     const script = document.createElement('script');
@@ -243,25 +234,6 @@
     script.dataset[datasetKey.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())] = 'true';
     document.body.appendChild(script);
   };
-
-  // Shared presentation layers. Dashboard-owned refinements are mirrored into
-  // the served assets tree so production Nginx can deliver them with normal static permissions.
-  ensureStylesheet('/static/public_preview/assets/css/pages/ux-system-v1.css', 'ibtikar-ux-system-v1');
-  ensureStylesheet('/static/public_preview/assets/css/pages/service-category-refinement-v1.css', 'ibtikar-service-category-refinement-v1');
-
-  // Scope each special refinement layer to the relevant approved-source page.
-  if (document.body.classList.contains('source-home')) {
-    ensureStylesheet('/static/public_preview/assets/css/pages/homepage-refinement-v1.css', 'ibtikar-homepage-refinement-v1');
-  }
-  if (document.body.classList.contains('source-services')) {
-    ensureStylesheet('/static/public_preview/assets/css/pages/services-refinement-v1.css', 'ibtikar-services-refinement-v1');
-  }
-  if (document.body.classList.contains('source-ecommerce')) {
-    ensureStylesheet('/static/public_preview/assets/css/pages/ecommerce-refinement-v1.css', 'ibtikar-ecommerce-refinement-v1');
-  }
-  if (document.body.classList.contains('source-tharaa')) {
-    ensureStylesheet('/static/public_preview/assets/css/pages/tharaa-refinement-v1.css', 'ibtikar-tharaa-refinement-v1');
-  }
 
   const loadEnhancements = () => {
     ensureScript('/static/public_preview/assets/js/continuous-flow.js', 'continuous-flow');
