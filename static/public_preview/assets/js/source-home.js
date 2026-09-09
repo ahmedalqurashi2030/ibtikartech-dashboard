@@ -213,14 +213,19 @@
 
   // Cinematic hero entrance and handoff.
   if (hasGSAP && !reduce) {
-    gsap.timeline({ defaults:{ ease:'power3.out' } })
-      .fromTo('.hero .eyebrow',{opacity:0,y:20},{opacity:1,y:0,duration:.75},.08)
-      .fromTo('.hero h1',{opacity:0,y:48,clipPath:'inset(0 0 100% 0)'},{opacity:1,y:0,clipPath:'inset(0 0 0% 0)',duration:1.15},.2)
-      .fromTo('.hero__content>p',{opacity:0,y:24},{opacity:1,y:0,duration:.85},.55)
-      .fromTo('.hero__actions,.hero__trust',{opacity:0,y:18},{opacity:1,y:0,duration:.8,stagger:.12},.72)
-      .fromTo('.hero-dashboard',{opacity:0,scale:.88,y:55,rotateY:-8},{opacity:1,scale:1,y:0,rotateY:0,duration:1.45},.25);
-    gsap.to(heroGrid,{scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true},y:-70,opacity:.12,scale:.96,ease:'none'});
-    gsap.to(heroAura,{scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true},scale:1.65,opacity:0,ease:'none'});
+    const entrance = gsap.timeline({ defaults:{ ease:'power3.out' } });
+    const heroEyebrow = hero?.querySelector('.eyebrow');
+    const heroTitle = hero?.querySelector('h1');
+    const heroLead = hero?.querySelector('.hero__content > p');
+    const heroActions = hero?.querySelectorAll('.hero__actions,.hero__trust');
+    const heroVisual = hero?.querySelector('.hero-ecosystem');
+    if (heroEyebrow) entrance.fromTo(heroEyebrow,{opacity:0,y:20},{opacity:1,y:0,duration:.75},.08);
+    if (heroTitle) entrance.fromTo(heroTitle,{opacity:0,y:48,clipPath:'inset(0 0 100% 0)'},{opacity:1,y:0,clipPath:'inset(0 0 0% 0)',duration:1.15},.2);
+    if (heroLead) entrance.fromTo(heroLead,{opacity:0,y:24},{opacity:1,y:0,duration:.85},.55);
+    if (heroActions?.length) entrance.fromTo(heroActions,{opacity:0,y:18},{opacity:1,y:0,duration:.8,stagger:.12},.72);
+    if (heroVisual) entrance.fromTo(heroVisual,{opacity:0,scale:.88,y:55,rotateY:-8},{opacity:1,scale:1,y:0,rotateY:0,duration:1.45},.25);
+    if (hero && heroGrid) gsap.to(heroGrid,{scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true},y:-70,opacity:.12,scale:.96,ease:'none'});
+    if (hero && heroAura) gsap.to(heroAura,{scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true},scale:1.65,opacity:0,ease:'none'});
   }
 
   // Subtle ambient color changes connect the main beats.
@@ -240,7 +245,9 @@
 
 
   // Gentle cinematic treatment for later hero objects.
-  if (hasGSAP) gsap.to('.cta-card',{scrollTrigger:{trigger:'#contact',start:'top bottom',end:'center center',scrub:true},rotateX:0,y:-12,ease:'none'});
+  const contactSection = document.querySelector('#contact');
+  const contactCard = contactSection?.querySelector('.cta-card');
+  if (hasGSAP && contactSection && contactCard) gsap.to(contactCard,{scrollTrigger:{trigger:contactSection,start:'top bottom',end:'center center',scrub:true},rotateX:0,y:-12,ease:'none'});
 
   if (hasGSAP) {
     addEventListener('load',()=>ScrollTrigger.refresh());
