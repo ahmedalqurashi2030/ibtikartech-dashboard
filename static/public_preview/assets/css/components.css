@@ -18,7 +18,7 @@
 
 .btn-primary,
 .btn--primary {
-  background: var(--ibt-gradient);
+  background: var(--ibt-action-gradient);
   color: #fff;
   box-shadow: 0 16px 40px rgba(93, 91, 230, .28);
 }
@@ -47,7 +47,7 @@
   position: relative;
   padding: 48px;
   border-radius: var(--ibt-radius-xl);
-  background: var(--ibt-gradient);
+  background: var(--ibt-action-gradient);
   color: #fff;
   display: flex;
   align-items: center;

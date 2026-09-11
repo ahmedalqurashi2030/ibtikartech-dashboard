@@ -10,9 +10,7 @@
   - ibtikar-shell.css
   Do not re-include these in child templates.
 -->
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
@@ -20,6 +18,7 @@
 {% endblock %}
 {% block page_refinements %}
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/services-reference.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/service-primitives.css?v=20260911">
 {% endblock %}
 {% endblock %}
 
@@ -32,7 +31,15 @@
 
 {% block category_scripts %}
 <script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
-<script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
+<script>
+(function () {
+  var cinema = document.createElement("script");
+  cinema.src = "/static/public_preview/assets/js/service-cinema.js";
+  cinema.async = false;
+  document.body.appendChild(cinema);
+}());
+</script>
 <script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
+<script src="/static/public_preview/assets/js/service-primitives.js?v=20260911" defer></script>
 {% endblock %}
 {% endblock %}

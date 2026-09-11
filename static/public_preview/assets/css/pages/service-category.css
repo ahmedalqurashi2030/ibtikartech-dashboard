@@ -371,15 +371,13 @@
    Mirrors the approved AFTER YOUR CHOICE language while keeping the
    service-specific content usable when JavaScript is unavailable. */
 .service-paths-section.is-cinematic-ready {
-  --service-cinema-top: 180px;
-  --service-cinema-height: calc(100svh - 196px);
-  height: calc(100svh + (var(--service-path-count, 6) * 48svh));
+  --service-cinema-top: 88px;
+  --service-cinema-height: min(720px, calc(100svh - 104px));
+  height: calc(var(--service-cinema-height) + (var(--service-path-count, 6) * 40svh));
   min-height: 0;
   padding: 0 !important;
   overflow: clip;
-  background:
-    radial-gradient(circle at 78% 25%, color-mix(in srgb, var(--service-accent-2) 10%, transparent), transparent 30%),
-    #030611;
+  background: transparent;
   color: #fff;
   isolation: isolate;
 }
@@ -392,7 +390,7 @@
   width: min(calc(100% - 32px), 1180px);
   max-width: 1180px !important;
   height: var(--service-cinema-height);
-  min-height: 620px;
+  min-height: 0;
   padding: 0 !important;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--service-accent) 16%, rgba(255, 255, 255, .08));
@@ -671,7 +669,7 @@
 
 .service-cinema__cue i:last-child { transform: rotate(180deg); }
 
-@media (max-width: 760px), (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .service-paths-section.is-cinematic-ready,
   .service-paths-section.is-cinematic-ready[data-count="4"] {
     height: auto;
@@ -827,4 +825,57 @@
 }
 @media(prefers-reduced-motion:reduce) {
   .service-path-card { animation: none !important; }
+}
+
+/* Native mobile composition: image above a complete, independently readable card. */
+.service-path-card__preview, .service-paths-controls { display: none; }
+.service-paths-section.is-cinematic-ready .service-path-card {
+  max-height: calc(100% - 112px); overflow-y: auto; scrollbar-width: thin;
+}
+.service-paths-section:not(.is-cinematic-ready) { color: var(--ibt-text); }
+.service-paths-section:not(.is-cinematic-ready) .service-paths-header { display: block; }
+.service-paths-section:not(.is-cinematic-ready) .service-paths-grid {
+  display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--ibt-grid-gap);
+}
+.service-paths-section:not(.is-cinematic-ready) .service-path-card {
+  grid-column: auto; min-height: 0; padding: var(--ibt-card-padding);
+  background: var(--ibt-surface); color: var(--ibt-text);
+}
+@media (max-width: 999px) {
+  .service-paths-section.is-swipe-ready .service-paths-grid {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 100%;
+    grid-template-columns: none; align-items: start;
+    gap: var(--ibt-grid-gap); overflow-x: auto;
+    scroll-snap-type: x mandatory; scroll-padding-inline: 0;
+    overscroll-behavior-x: contain; scrollbar-width: thin;
+    padding: 4px 0 16px;
+  }
+  .service-paths-section.is-swipe-ready .service-path-card {
+    scroll-snap-align: start; scroll-snap-stop: always;
+    width: 100%; max-width: none; margin: 0;
+    overflow: hidden; border: 1px solid var(--ibt-border);
+    border-radius: var(--ibt-radius-card);
+  }
+  .service-paths-section.is-swipe-ready .service-path-card h3 {
+    font-size: var(--ibt-type-card); line-height: 1.45; max-width: 25ch;
+  }
+  .service-paths-section.is-swipe-ready .service-path-card__preview {
+    display: block; width: calc(100% + 2 * var(--ibt-card-padding)); max-width: none;
+    margin: calc(-1 * var(--ibt-card-padding)) calc(-1 * var(--ibt-card-padding)) 20px;
+    height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+  }
+  .service-paths-section.is-swipe-ready .service-paths-controls {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px;
+  }
+  .service-paths-controls button {
+    min-height: var(--ibt-control-h); padding: 8px 20px; font: inherit;
+    border: 1px solid var(--ibt-border-strong); border-radius: var(--ibt-radius-sm);
+    color: var(--ibt-text); background: var(--ibt-surface); cursor: pointer;
+  }
+  .service-paths-controls button:disabled { opacity: .45; cursor: default; }
+  .service-paths-controls span { font-size: 14px; color: var(--ibt-muted); }
+  .service-paths-section:not(.is-swipe-ready) .service-paths-grid { grid-template-columns: 1fr; }
+}
+@media print {
+  .service-paths-section.is-cinematic-ready .service-path-card { max-height: none; overflow: visible; }
 }

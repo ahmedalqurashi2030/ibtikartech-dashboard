@@ -131,12 +131,14 @@ def test_service_detail_children_keep_explicit_asset_and_after_main_exceptions()
     assert product_source.count(block_tag("service_scripts")) == 1
     for asset in (
         "source-product-page.css",
-        "tokens.css",
         "approved-source.css",
         "source-product-page.js",
         "approved-source.js",
     ):
         assert product_source.count(asset) == 1, asset
+
+    assert product_source.count("tokens.css") == 0
+    assert BASE_TEMPLATE.read_text(encoding="utf-8").count("tokens.css") == 1
 
     sticky_cta_markers = {
         "storefront-customization.html": 'class="service-sticky-cta"',
@@ -170,7 +172,7 @@ def test_article_detail_children_keep_page_owned_seo_and_semantic_content():
         assert source.count('type="application/ld+json"') == 1, page_name
         assert source.count("<article>") == 1, page_name
         assert source.count('class="article-body"') == 1, page_name
-        assert source.count('class="related-articles"') == 1, page_name
+        assert len(re.findall(r'class="[^"\n]*\brelated-articles\b[^"\n]*"', source)) == 1, page_name
 
 
 def test_known_internal_page_links_use_django_named_urls_in_templates():

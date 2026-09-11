@@ -2,8 +2,7 @@
 
 {% block head %}
 <title>عن ابتكار تك | حلول رقمية للسوق السعودي والخليجي</title><meta name="description" content="ابتكار تك للحلول والخدمات الرقمية: شريك رقمي يبني المتاجر والمواقع والهوية والقياس والأنظمة ضمن نطاق واضح، مع تركيز على السوق السعودي ثم الخليج.">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 {% endblock %}
 
@@ -11,57 +10,57 @@
 
 {% block body %}
 <main id="main-content">
-<section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
+<section class="platform-hero ibt-section ibt-section--hero"><div class="container platform-hero__grid ibt-container"><div class="hero-copy reveal">
 <nav class="breadcrumbs" aria-label="مسار التنقل">
   <a href="{% url 'public_preview:home' %}">الرئيسية</a>
   <span aria-hidden="true">←</span>
   <span aria-current="page">عن ابتكار</span>
 </nav><span class="platform-kicker">IBTIKAR TECH</span>
-<h1>شريك رقمي يبدأ من الهدف. <span>لا من اسم التقنية.</span></h1><p>ابتكار تك للحلول والخدمات الرقمية تبني المتاجر والمواقع والهوية والقياس والأنظمة ضمن نطاق واضح، مع تركيز على احتياجات المشاريع في السعودية أولًا ثم الخليج.</p>
+<h1 class="ibt-page-title">شريك رقمي يبدأ من الهدف. <span>لا من اسم التقنية.</span></h1><p>ابتكار تك للحلول والخدمات الرقمية تبني المتاجر والمواقع والهوية والقياس والأنظمة ضمن نطاق واضح، مع تركيز على احتياجات المشاريع في السعودية أولًا ثم الخليج.</p>
 <div class="platform-actions"><a class="btn btn-primary" href="#focus">اعرف أين نركز</a><a class="btn btn-outline" href="{% url 'public_preview:contact' %}#quote">ناقش مشروعك</a></div></div>
-<div class="evidence-panel reveal"><span class="section-kicker">تمركزنا</span><h2>تنفيذ عملي بين التجارة والتقنية والعلامة</h2><ul class="check-list"><li>تخصص واضح في التجارة الإلكترونية وتجارب سلة</li><li>مواقع وهوية ومحتوى مرتبطة بهدف تجاري</li><li>ظهور وقياس وتحسين مبني على بيانات متاحة</li><li>ربط وأتمتة وحلول مخصصة عندما يحتاجها التشغيل</li><li>منتج أصلي من ابتكار تك: ثيم ثراء لمتاجر سلة</li></ul></div></div></section>
+<div class="evidence-panel reveal"><span class="section-kicker">تمركزنا</span><h2 class="ibt-section-title">تنفيذ عملي بين التجارة والتقنية والعلامة</h2><ul class="check-list"><li>تخصص واضح في التجارة الإلكترونية وتجارب سلة</li><li>مواقع وهوية ومحتوى مرتبطة بهدف تجاري</li><li>ظهور وقياس وتحسين مبني على بيانات متاحة</li><li>ربط وأتمتة وحلول مخصصة عندما يحتاجها التشغيل</li><li>منتج أصلي من ابتكار تك: ثيم ثراء لمتاجر سلة</li></ul></div></div></section>
 
-<section class="platform-section platform-section--soft" id="focus"><div class="container"><div class="platform-heading reveal">
+<section class="platform-section platform-section--soft ibt-section ibt-section--content" id="focus"><div class="container ibt-container"><div class="platform-heading reveal ibt-section-heading">
   <span class="section-kicker">أين نركز</span>
-  <h2>السعودية أولًا، والخليج كامتداد طبيعي</h2>
+  <h2 class="ibt-section-title">السعودية أولًا، والخليج كامتداد طبيعي</h2>
   <p>نبني التجربة حول اللغة العربية وسلوك العميل المحلي وواقع المنصات المستخدمة في المنطقة، مع دعم الحلول الأوسع عندما يتطلب المشروع ذلك.</p>
 </div><div class="route-grid">
-<article class="route-card reveal"><small>01 / COMMERCE</small><h3>التجارة الإلكترونية</h3><p>إطلاق وتخصيص وإعادة تصميم وقياس ودعم للمتاجر، مع خبرة مباشرة في سلة والمنصات الشائعة.</p><a href="{% url 'public_preview:ecommerce' %}">استكشف المتاجر ←</a></article>
-<article class="route-card reveal"><small>02 / WEB</small><h3>المواقع وتجارب الويب</h3><p>مواقع عربية وRTL-first وصفحات هبوط وتجارب محتوى تقود إلى إجراء واضح.</p><a href="{% url 'public_preview:websites' %}">استكشف المواقع ←</a></article>
-<article class="route-card reveal"><small>03 / BRAND</small><h3>الهوية والمحتوى</h3><p>نظام علامة ومحتوى عربي أصيل يترجم إلى تجربة رقمية متماسكة.</p><a href="{% url 'public_preview:brand-content' %}">استكشف الهوية ←</a></article>
-<article class="route-card reveal"><small>04 / GROWTH</small><h3>الظهور والقياس والنمو</h3><p>SEO وقياس وتحليلات وأولويات تحسين تساعد على اتخاذ قرارات أوضح دون وعود نتائج غير قابلة للإثبات.</p><a href="{% url 'public_preview:growth' %}">استكشف الظهور والقياس والنمو ←</a></article>
-<article class="route-card reveal"><small>05 / SYSTEMS</small><h3>الأنظمة والربط والأتمتة</h3><p>تكاملات وأتمتة وحلول مخصصة عندما يحتاج المشروع إلى تشغيل أذكى لا واجهة إضافية فقط.</p><a href="{% url 'public_preview:custom-systems' %}">استكشف الأنظمة ←</a></article>
+<article class="route-card reveal ibt-card"><small>01 / COMMERCE</small><h3>التجارة الإلكترونية</h3><p>إطلاق وتخصيص وإعادة تصميم وقياس ودعم للمتاجر، مع خبرة مباشرة في سلة والمنصات الشائعة.</p><a href="{% url 'public_preview:ecommerce' %}">استكشف المتاجر ←</a></article>
+<article class="route-card reveal ibt-card"><small>02 / WEB</small><h3>المواقع وتجارب الويب</h3><p>مواقع عربية وRTL-first وصفحات هبوط وتجارب محتوى تقود إلى إجراء واضح.</p><a href="{% url 'public_preview:websites' %}">استكشف المواقع ←</a></article>
+<article class="route-card reveal ibt-card"><small>03 / BRAND</small><h3>الهوية والمحتوى</h3><p>نظام علامة ومحتوى عربي أصيل يترجم إلى تجربة رقمية متماسكة.</p><a href="{% url 'public_preview:brand-content' %}">استكشف الهوية ←</a></article>
+<article class="route-card reveal ibt-card"><small>04 / GROWTH</small><h3>الظهور والقياس والنمو</h3><p>SEO وقياس وتحليلات وأولويات تحسين تساعد على اتخاذ قرارات أوضح دون وعود نتائج غير قابلة للإثبات.</p><a href="{% url 'public_preview:growth' %}">استكشف الظهور والقياس والنمو ←</a></article>
+<article class="route-card reveal ibt-card"><small>05 / SYSTEMS</small><h3>الأنظمة والربط والأتمتة</h3><p>تكاملات وأتمتة وحلول مخصصة عندما يحتاج المشروع إلى تشغيل أذكى لا واجهة إضافية فقط.</p><a href="{% url 'public_preview:custom-systems' %}">استكشف الأنظمة ←</a></article>
 </div></div></section>
 
-<section class="platform-section" id="approach"><div class="container"><div class="platform-heading reveal">
+<section class="platform-section ibt-section ibt-section--content" id="approach"><div class="container ibt-container"><div class="platform-heading reveal ibt-section-heading">
   <span class="section-kicker">مبادئ العمل</span>
-  <h2>كيف نتخذ القرار قبل التنفيذ؟</h2>
+  <h2 class="ibt-section-title">كيف نتخذ القرار قبل التنفيذ؟</h2>
   <p>المنهج ثابت، لكن الحل يتغير حسب الهدف والمنصة والمستخدم والمرحلة.</p>
 </div><div class="route-grid">
-<article class="route-card reveal"><small>01 / CLARITY</small><h3>نشخّص قبل أن نقترح</h3><p>نفهم الهدف والجمهور والوضع الحالي قبل اقتراح صفحة أو نظام أو خدمة.</p></article>
-<article class="route-card reveal"><small>02 / SCOPE</small><h3>نحدد أقل نطاق صحيح</h3><p>لا نوسع المشروع لمجرد زيادة العناصر؛ نحدد ما يجب تنفيذه الآن وما يمكن تأجيله.</p></article>
-<article class="route-card reveal"><small>03 / DELIVERY</small><h3>نربط التصميم بالتنفيذ</h3><p>المحتوى والواجهة والتقنية والقياس تُراجع كقرارات مترابطة عندما تدخل في المشروع.</p></article>
-<article class="route-card reveal"><small>04 / QA</small><h3>نختبر قبل التسليم</h3><p>الجوال والروابط والحالات والأداء والمتطلبات المتفق عليها تدخل في التحقق النهائي.</p></article>
+<article class="route-card reveal ibt-card"><small>01 / CLARITY</small><h3>نشخّص قبل أن نقترح</h3><p>نفهم الهدف والجمهور والوضع الحالي قبل اقتراح صفحة أو نظام أو خدمة.</p></article>
+<article class="route-card reveal ibt-card"><small>02 / SCOPE</small><h3>نحدد أقل نطاق صحيح</h3><p>لا نوسع المشروع لمجرد زيادة العناصر؛ نحدد ما يجب تنفيذه الآن وما يمكن تأجيله.</p></article>
+<article class="route-card reveal ibt-card"><small>03 / DELIVERY</small><h3>نربط التصميم بالتنفيذ</h3><p>المحتوى والواجهة والتقنية والقياس تُراجع كقرارات مترابطة عندما تدخل في المشروع.</p></article>
+<article class="route-card reveal ibt-card"><small>04 / QA</small><h3>نختبر قبل التسليم</h3><p>الجوال والروابط والحالات والأداء والمتطلبات المتفق عليها تدخل في التحقق النهائي.</p></article>
 </div></div></section>
 
-<section class="platform-section platform-section--soft"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">كيف نتعاون</span><h2>عملية تقلل المفاجآت وتوضح المسؤوليات</h2><p>لكل مرحلة سؤال ومخرج يمكن مراجعته قبل الانتقال للمرحلة التالية.</p><ul class="check-list"><li>تشخيص الهدف ونقطة الاختناق</li><li>ترتيب الأولويات واعتماد النطاق</li><li>تصميم وتنفيذ على مراحل قابلة للمراجعة</li><li>اختبار وتسليم وتحديد ما بعد المشروع</li></ul></div>
+<section class="platform-section platform-section--soft ibt-section ibt-section--content"><div class="container split-layout ibt-container"><div class="content-copy reveal"><span class="section-kicker">كيف نتعاون</span><h2 class="ibt-section-title">عملية تقلل المفاجآت وتوضح المسؤوليات</h2><p>لكل مرحلة سؤال ومخرج يمكن مراجعته قبل الانتقال للمرحلة التالية.</p><ul class="check-list"><li>تشخيص الهدف ونقطة الاختناق</li><li>ترتيب الأولويات واعتماد النطاق</li><li>تصميم وتنفيذ على مراحل قابلة للمراجعة</li><li>اختبار وتسليم وتحديد ما بعد المشروع</li></ul></div>
 <div class="timeline reveal"><article><h3>استكشاف</h3><p>المشروع والجمهور والمنصة والقيود.</p></article><article><h3>نطاق</h3><p>المخرجات والمسؤوليات وما هو خارج المشروع.</p></article><article><h3>بناء</h3><p>تنفيذ الأولويات المتفق عليها ومراجعتها.</p></article><article><h3>تحقق وتسليم</h3><p>QA ثم تسليم منظم وتحديد الخطوة التالية.</p></article></div></div></section>
 
-<section class="platform-section"><div class="container"><div class="platform-heading reveal">
+<section class="platform-section ibt-section ibt-section--content"><div class="container ibt-container"><div class="platform-heading reveal ibt-section-heading">
   <span class="section-kicker">منتج من داخل ابتكار تك</span>
-  <h2>ثراء يثبت أننا نبني منتجات، لا خدمات فقط</h2>
+  <h2 class="ibt-section-title">ثراء يثبت أننا نبني منتجات، لا خدمات فقط</h2>
   <p>ثيم ثراء منتج مخصص لمتاجر سلة يركز على الهوية وتجربة المنتج والجوال، ويمنح ابتكار تك خبرة مباشرة في بناء الثيمات داخل بيئة سلة نفسها.</p>
 </div><div class="platform-grid platform-grid--2">
-<article class="platform-card reveal"><small>THARAA</small><h3>ثيم ثراء</h3><p>منتج مستقل داخل ابتكار تك، بتمركز أقوى للمتاجر التي تعتمد على الصورة والهوية والعرض الراقي.</p><a href="{% url 'public_preview:tharaa' %}">استكشف ثيم ثراء ←</a></article>
-<article class="platform-card reveal"><small>SALLA EXPERIENCE</small><h3>خبرة مرتبطة بالمنتج الحقيقي</h3><p>تطوير ثراء يجعل قراراتنا في خدمات سلة مرتبطة بقيود الثيم والمنصة والجوال والمكونات، لا بمعلومات نظرية فقط.</p><a href="{% url 'public_preview:ecommerce' %}#platforms">حلول المتاجر والمنصات ←</a></article>
+<article class="platform-card reveal ibt-card"><small>THARAA</small><h3>ثيم ثراء</h3><p>منتج مستقل داخل ابتكار تك، بتمركز أقوى للمتاجر التي تعتمد على الصورة والهوية والعرض الراقي.</p><a href="{% url 'public_preview:tharaa' %}">استكشف ثيم ثراء ←</a></article>
+<article class="platform-card reveal ibt-card"><small>SALLA EXPERIENCE</small><h3>خبرة مرتبطة بالمنتج الحقيقي</h3><p>تطوير ثراء يجعل قراراتنا في خدمات سلة مرتبطة بقيود الثيم والمنصة والجوال والمكونات، لا بمعلومات نظرية فقط.</p><a href="{% url 'public_preview:ecommerce' %}#platforms">حلول المتاجر والمنصات ←</a></article>
 </div></div></section>
 
-<section class="page-cta">
-  <div class="container">
+<section class="page-cta ibt-section ibt-section--cta">
+  <div class="container ibt-container">
     <div class="cta-card reveal">
       <div>
         <span class="section-kicker">الخطوة الأولى</span>
-        <h2>عرّفنا على هدف المشروع</h2>
+        <h2 class="ibt-section-title">عرّفنا على هدف المشروع</h2>
         <p>ابدأ بالهدف والوضع الحالي، وسنحدد المسار الأقرب بدل فرض حزمة جاهزة.</p>
       </div>
       <div class="cta-actions">

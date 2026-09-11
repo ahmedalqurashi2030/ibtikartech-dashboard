@@ -1,0 +1,1207 @@
+{
+  "results": [
+    {
+      "route": "/ecommerce/",
+      "width": 375,
+      "height": 812,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/ecommerce/",
+      "width": 375,
+      "height": 812,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 375,
+      "height": 812,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 375,
+      "height": 812,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 375,
+      "height": 812,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 375,
+      "height": 812,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 375,
+      "height": 812,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 375,
+      "height": 812,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 375,
+      "height": 812,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 375,
+      "height": 812,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/ecommerce/",
+      "width": 768,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/ecommerce/",
+      "width": 768,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 768,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 768,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 768,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 768,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 768,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 768,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 768,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 768,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 660,
+          "top": 88,
+          "bottom": 748,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/ecommerce/",
+      "width": 1440,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/ecommerce/",
+      "width": 1440,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 1440,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 1440,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 1440,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 1440,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 1440,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 1440,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 1440,
+      "height": 960,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 1440,
+      "height": 960,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 720,
+          "top": 88,
+          "bottom": 808,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/ecommerce/",
+      "width": 720,
+      "height": 375,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/ecommerce/",
+      "width": 720,
+      "height": 375,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 0,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 2,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 720,
+      "height": 375,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/websites/",
+      "width": 720,
+      "height": 375,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 720,
+      "height": 375,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/brand-content/",
+      "width": 720,
+      "height": 375,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 720,
+      "height": 375,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/growth/",
+      "width": 720,
+      "height": 375,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 720,
+      "height": 375,
+      "theme": "light",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    },
+    {
+      "route": "/custom-systems/",
+      "width": 720,
+      "height": 375,
+      "theme": "dark",
+      "states": [
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 1,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        },
+        {
+          "ready": true,
+          "height": 271,
+          "top": 88,
+          "bottom": 359,
+          "active": 1,
+          "index": 4,
+          "overflow": false,
+          "nav": false,
+          "clipped": false
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "reduced": true,
+  "errors": []
+}

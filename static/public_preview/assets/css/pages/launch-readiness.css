@@ -515,9 +515,9 @@ body.source-ecommerce .commerce-journey__step p{
    One shared hierarchy for headings, FAQs, mobile navigation and related
    services. These rules intentionally sit at the end of the cascade. */
 :root{
-  --ibt-ux-hero:clamp(48px,4.8vw,66px);
-  --ibt-ux-hero-deep:clamp(40px,4vw,54px);
-  --ibt-ux-section:clamp(32px,3.7vw,52px);
+  --ibt-ux-hero:var(--ibt-type-hero);
+  --ibt-ux-hero-deep:var(--ibt-type-hero);
+  --ibt-ux-section:var(--ibt-type-section);
   --ibt-ux-card-radius:24px;
 }
 
@@ -530,8 +530,9 @@ body.source-services .hero h1,
 body.source-ecommerce main h1{
   max-width:14ch;
   font-size:var(--ibt-ux-hero)!important;
-  line-height:1.1!important;
-  letter-spacing:-.04em!important;
+  line-height:1.4!important;
+  letter-spacing:normal!important;
+  font-family:var(--ibt-font-display);
   text-wrap:balance;
 }
 body.source-tharaa .hero h1{
@@ -550,7 +551,7 @@ body.source-product-service .svc-hero h1,
 .inner-page:not(.approved-source-page) .platform-hero h1{
   max-width:17ch;
   font-size:clamp(44px,4.4vw,60px)!important;
-  line-height:1.16!important;
+  line-height:1.4!important;
 }
 :is(
   .section-heading h2,
@@ -578,7 +579,7 @@ body.source-product-service .svc-hero h1,
 body[class^="source-"] main h2,
 body[class*=" source-"] main h2{
   font-size:var(--ibt-ux-section)!important;
-  line-height:1.16!important;
+  line-height:1.4!important;
   letter-spacing:-.03em!important;
   text-wrap:balance;
 }
@@ -914,9 +915,9 @@ body.source-product-service .quick-info>span:nth-child(n+5){display:none!importa
 
 @media(max-width:760px){
   :root{
-    --ibt-ux-hero:clamp(38px,11vw,48px);
-    --ibt-ux-hero-deep:clamp(34px,9.5vw,43px);
-    --ibt-ux-section:clamp(29px,8.5vw,39px);
+    --ibt-ux-hero:var(--ibt-type-hero);
+    --ibt-ux-hero-deep:var(--ibt-type-hero);
+    --ibt-ux-section:var(--ibt-type-section);
   }
   body.source-home .hero__content h1,
   body.source-services .hero h1,
@@ -926,7 +927,7 @@ body.source-product-service .quick-info>span:nth-child(n+5){display:none!importa
   .inner-page:not(.approved-source-page) .platform-hero h1{
     max-width:18ch;
     font-size:var(--ibt-ux-hero-deep)!important;
-    line-height:1.16!important;
+    line-height:1.4!important;
   }
   body.source-tharaa .hero{padding:108px 0 44px!important}
   body.source-tharaa .hero h1{font-size:clamp(62px,18vw,78px)!important}

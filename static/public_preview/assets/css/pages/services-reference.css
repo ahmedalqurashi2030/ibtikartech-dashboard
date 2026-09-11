@@ -1,7 +1,7 @@
 @font-face{ font-family: ServicesReferenceIcons; src: url("/static/public_preview/assets/images/services/reference/662fefa8f2f8a95c.woff2") format("woff2"); font-display: block; ;font-display:swap;}
 @font-face{ font-family: ServicesReferenceBrand; src: url("/static/public_preview/assets/images/services/reference/87cc1520ed4909a1.woff") format("woff"); font-weight: 400; font-display: swap; ;font-display:swap;}
 @font-face{ font-family: ServicesReferenceBrand; src: url("/static/public_preview/assets/images/services/reference/34e82fa4218ac21c.woff") format("woff"); font-weight: 700; font-display: swap; ;font-display:swap;}
-html body #main-content.service-reference{ color-scheme: dark; --bg: #030a19; --surface: #071224; --surface-2: #0c192e; --text: #f3f5ff; --muted: #aab4ca; --line: #233048; --cyan: #49d9ee; --purple: #b58aff; --pink: #e36ac5; --radius: 12px; --max: 1180px; --space: 76px; --font: ServicesReferenceBrand,Tahoma,Arial,sans-serif; --glow: linear-gradient(110deg,#145186,#6644a1 56%,#a23588); }
+html body #main-content.service-reference{ color-scheme: inherit; --bg: #030a19; --surface: #071224; --surface-2: #0c192e; --text: #f3f5ff; --muted: #aab4ca; --line: #233048; --cyan: #49d9ee; --purple: #b58aff; --pink: #e36ac5; --radius: 12px; --max: 1180px; --space: 76px; --font: ServicesReferenceBrand,Tahoma,Arial,sans-serif; --glow: linear-gradient(110deg,#145186,#6644a1 56%,#a23588); }
 html body #main-content.service-reference *{ box-sizing: border-box; }
 html body #main-content.service-reference{ scroll-behavior: smooth; scroll-padding-top: 108px; }
 html body #main-content.service-reference{ margin: 0px; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 17px; line-height: 1.65; }
@@ -33,7 +33,7 @@ html body #main-content.service-reference .btn .icon{ font-size: 20px; }
 html body #main-content.service-reference .icon-btn{ display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 50%; background: rgb(11, 21, 39); }
 html body #main-content.service-reference .icon-btn:hover{ border-color: var(--cyan); background: rgb(18, 33, 57); }
 html body #main-content.service-reference .icon-btn:disabled{ opacity: 0.35; cursor: default; }
-html body #main-content.service-reference .eyebrow{ font-size: 14px; letter-spacing: 0.02em; color: var(--cyan); font-weight: 700; margin-bottom: 12px; }
+html body #main-content.service-reference .eyebrow{ font-size: 14px; letter-spacing: 0.02em; color: var(--ibt-link); font-weight: 700; margin-bottom: 12px; }
 html body #main-content.service-reference .gradient-text{ color: rgb(199, 146, 241); background-image: ; background-position-x: ; background-position-y: ; background-size: ; background-repeat: ; background-attachment: ; background-origin: ; background-color: ; background-clip: text; -webkit-text-fill-color: transparent; }
 html body #main-content.service-reference .section{ margin-top: var(--space); }
 html body #main-content.service-reference .section-head{ margin-bottom: 24px; text-align: center; }
@@ -52,35 +52,35 @@ html body #main-content.service-reference .main-nav a:hover,html body #main-cont
 html body #main-content.service-reference .main-nav a[aria-current="page"]::after{ content: ""; position: absolute; bottom: 13px; inset-inline: 0px; height: 2px; background: linear-gradient(90deg,var(--pink),var(--cyan)); }
 html body #main-content.service-reference .header-cta{ white-space: nowrap; }
 html body #main-content.service-reference .menu-btn{ display: none; }
-html body #main-content.service-reference .crumb{ display: flex; gap: 9px; font-size: 14px; color: rgb(178, 189, 209); padding-top: 25px; align-items: center; }
+html body #main-content.service-reference .crumb{ display: flex; gap: 9px; font-size: 14px; color: var(--muted); padding-top: 25px; align-items: center; }
 html body #main-content.service-reference .crumb .icon{ font-size: 15px; }
-html body #main-content.service-reference .crumb span:last-child{ color: var(--cyan); }
+html body #main-content.service-reference .crumb span:last-child{ color: var(--ibt-link); }
 html body #main-content.service-reference .hero{ display: grid; grid-template-columns: 0.95fr 1.15fr; align-items: center; min-height: 435px; gap: 18px; padding-block: 30px 18px; }
 html body #main-content.service-reference .hero-copy{ padding-block: 10px; position: relative; z-index: 1; }
-html body #main-content.service-reference .hero h1{ display: inline-block; font-size: clamp(34px, 3.45vw, 49px); font-weight: 700; line-height: 1.43; margin-bottom: 17px; }
+html body #main-content.service-reference .hero h1{ display: block; font-size: clamp(34px, 3.45vw, 49px); font-weight: 700; line-height: 1.43; margin-bottom: 17px; }
 html body #main-content.service-reference .hero p{ max-width: 470px; font-size: 18px; line-height: 1.9; }
 html body #main-content.service-reference .hero-actions{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 html body #main-content.service-reference .hero-art{ margin: 0px; position: relative; align-self: center; }
 html body #main-content.service-reference .hero-art img{ width: 100%; aspect-ratio: 1.73 / 1; object-fit: contain; mask-image: linear-gradient(rgb(0, 0, 0) 92%, transparent); }
-html body #main-content.service-reference .hero-art figcaption{ font-size: 12px; color: rgb(146, 159, 183); text-align: center; margin-top: 2px; }
+html body #main-content.service-reference .hero-art figcaption{ font-size: 12px; color: var(--muted); text-align: center; margin-top: 2px; }
 html body #main-content.service-reference .proof{ display: grid; grid-template-columns: repeat(4, 1fr); padding: 19px 0px; }
 html body #main-content.service-reference .proof-item{ display: flex; justify-content: center; align-items: center; gap: 12px; padding: 0px 12px; border-inline-end: 1px solid var(--line); font-size: 15px; }
 html body #main-content.service-reference .proof-item:last-child{ border: 0px; }
 html body #main-content.service-reference .proof .icon{ color: var(--cyan); font-size: 26px; }
 html body #main-content.service-reference .proof-item small{ display: block; color: var(--muted); font-size: 13px; }
 html body #main-content.service-reference .situation-tabs{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
-html body #main-content.service-reference .situation-tab{ display: flex; align-items: center; gap: 15px; text-align: start; padding: 19px 18px; background: rgb(6, 16, 33); border: 1px solid var(--line); border-radius: 9px; min-height: 105px; position: relative; }
+html body #main-content.service-reference .situation-tab{ display: flex; align-items: center; gap: 15px; text-align: start; padding: 19px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; min-height: 105px; position: relative; }
 html body #main-content.service-reference .situation-tab .icon{ font-size: 34px; color: var(--purple); }
 html body #main-content.service-reference .situation-tab strong{ font-size: 18px; display: block; }
 html body #main-content.service-reference .situation-tab small{ display: block; color: var(--muted); font-size: 14px; margin-top: 3px; line-height: 1.5; }
-html body #main-content.service-reference .situation-tab:hover{ background: rgb(11, 25, 48); }
-html body #main-content.service-reference .situation-tab[aria-selected="true"]{ border-color: var(--purple); background: linear-gradient(110deg, rgb(11, 38, 64), rgb(38, 18, 54)); box-shadow: rgba(108, 79, 195, 0.133) 0px 0px 17px, rgba(176, 134, 237, 0.2) 0px 0px 0px 1px inset; }
+html body #main-content.service-reference .situation-tab:hover{ background: var(--surface); }
+html body #main-content.service-reference .situation-tab[aria-selected="true"]{ border-color: var(--purple); background: var(--surface); box-shadow: rgba(108, 79, 195, 0.133) 0px 0px 17px, rgba(176, 134, 237, 0.2) 0px 0px 0px 1px inset; }
 html body #main-content.service-reference .situation-tab[aria-selected="true"]::after{ content: ""; position: absolute; inset-inline-start: 0px; top: 22%; bottom: 22%; width: 3px; background: var(--cyan); border-radius: 3px; }
 html body #main-content.service-reference .scenario{ display: grid; grid-template-columns: 0.8fr 1.25fr; min-height: 280px; overflow: hidden; align-items: center; }
 html body #main-content.service-reference .scenario-copy{ padding: 29px 32px; }
 html body #main-content.service-reference .scenario-copy p{ margin-top: 8px; }
 html body #main-content.service-reference .check-list{ padding: 0px; list-style: none; margin: 17px 0px 21px; display: grid; gap: 7px; }
-html body #main-content.service-reference .check-list li{ display: flex; align-items: flex-start; gap: 8px; color: rgb(199, 208, 225); font-size: 15px; }
+html body #main-content.service-reference .check-list li{ display: flex; align-items: flex-start; gap: 8px; color: var(--muted); font-size: 15px; }
 html body #main-content.service-reference .check-list .icon{ color: var(--cyan); font-size: 18px; margin-top: 3px; }
 html body #main-content.service-reference .scenario img{ width: 100%; height: 265px; object-fit: contain; padding: 13px; mask-image: linear-gradient(90deg, transparent, rgb(0, 0, 0) 8%, rgb(0, 0, 0) 92%, transparent); }
 html body #main-content.service-reference .carousel-tools{ display: flex; gap: 8px; }
@@ -200,7 +200,7 @@ html body #main-content.service-reference .dialog-top{ display: flex; align-item
 html body #main-content.service-reference .dialog-top h2{ font-size: 26px; }
 html body #main-content.service-reference .dialog-top .icon-btn{ flex-shrink: 0; }
 html body #main-content.service-reference .dialog-inner label{ display: block; margin: 18px 0px 7px; font-size: 15px; font-weight: 700; }
-html body #main-content.service-reference .dialog-inner input,html body #main-content.service-reference .dialog-inner select,html body #main-content.service-reference .dialog-inner textarea{ width: 100%; background: rgb(4, 13, 28); border: 1px solid rgb(53, 66, 90); border-radius: 8px; padding: 11px 14px; color: var(--text); font-size: 16px; }
+html body #main-content.service-reference .dialog-inner input,html body #main-content.service-reference .dialog-inner select,html body #main-content.service-reference .dialog-inner textarea{ width: 100%; background: var(--surface); border: 1px solid rgb(53, 66, 90); border-radius: 8px; padding: 11px 14px; color: var(--text); font-size: 16px; }
 html body #main-content.service-reference .dialog-inner textarea{ resize: vertical; min-height: 110px; }
 html body #main-content.service-reference .dialog-inner .actions{ display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
 html body #main-content.service-reference .dialog-note{ font-size: 14px; margin-top: 14px; }
@@ -215,7 +215,7 @@ html body #main-content.service-reference .main-nav a{ font-size: 13px; }
 html body #main-content.service-reference .header-inner{ gap: 15px; }
 html body #main-content.service-reference .brand img{ width: 131px; }
 html body #main-content.service-reference .header-cta{ font-size: 13px; padding: 8px 13px; }
-html body #main-content.service-reference .hero h1{ display: inline-block; font-size: 38px; }
+html body #main-content.service-reference .hero h1{ display: block; font-size: 38px; }
 html body #main-content.service-reference .service-card{ flex-basis: calc(25% - 10.5px); }
 html body #main-content.service-reference .situation-tab{ padding: 15px 12px; gap: 10px; }
 html body #main-content.service-reference .situation-tab strong{ font-size: 16px; }
@@ -229,7 +229,7 @@ html body #main-content.service-reference .main-nav.open{ display: flex; positio
 html body #main-content.service-reference .main-nav a{ padding: 12px 0px; font-size: 16px; }
 html body #main-content.service-reference .main-nav a[aria-current="page"]::after{ bottom: 4px; }
 html body #main-content.service-reference .hero{ min-height: 370px; grid-template-columns: 1fr 1fr; }
-html body #main-content.service-reference .hero h1{ display: inline-block; font-size: 33px; }
+html body #main-content.service-reference .hero h1{ display: block; font-size: 33px; }
 html body #main-content.service-reference .hero p{ font-size: 16px; }
 html body #main-content.service-reference .hero-actions .btn{ padding: 10px 14px; font-size: 14px; }
 html body #main-content.service-reference .proof-item{ font-size: 13px; gap: 7px; }
@@ -258,7 +258,7 @@ html body #main-content.service-reference .crumb{ font-size: 12px; padding-top: 
 html body #main-content.service-reference .hero{ grid-template-columns: 1fr; gap: 8px; padding-top: 23px; padding-bottom: 16px; }
 html body #main-content.service-reference .hero-copy{ text-align: center; padding: 0px; }
 html body #main-content.service-reference .hero .eyebrow{ margin-bottom: 9px; }
-html body #main-content.service-reference .hero h1{ display: inline-block; font-size: clamp(31px, 8.2vw, 39px); line-height: 1.45; margin-bottom: 12px; }
+html body #main-content.service-reference .hero h1{ display: block; font-size: clamp(31px, 8.2vw, 39px); line-height: 1.45; margin-bottom: 12px; }
 html body #main-content.service-reference .hero p{ font-size: 16px; line-height: 1.8; margin: auto; max-width: 390px; }
 html body #main-content.service-reference .hero-actions{ justify-content: center; margin-top: 19px; gap: 10px; }
 html body #main-content.service-reference .hero-actions .btn{ font-size: 14px; min-height: 44px; padding: 10px 15px; }
@@ -386,7 +386,7 @@ html body #main-content.service-reference .cinema-kicker .icon{ font-size: 22px;
 html body #main-content.service-reference .cinema-copy h3{ font-size: clamp(26px, 2.9vw, 38px); line-height: 1.45; max-width: 430px; text-wrap: balance; margin: 0px 0px 13px; }
 html body #main-content.service-reference .cinema-copy > p{ font-size: 17px; line-height: 1.85; color: rgb(194, 204, 224); margin: 0px; max-width: 420px; }
 html body #main-content.service-reference .cinema-copy .check-list{ gap: 8px; margin: 20px 0px 24px; }
-html body #main-content.service-reference .cinema-copy .check-list li{ font-size: 15px; color: rgb(203, 214, 231); }
+html body #main-content.service-reference .cinema-copy .check-list li{ font-size: 15px; color: var(--muted); }
 html body #main-content.service-reference .cinema-copy .check-list .icon{ color: var(--scene-accent); }
 html body #main-content.service-reference .cinema-copy .btn{ border-color: rgb(142, 117, 198); padding-inline: 26px; min-height: 47px; }
 html body #main-content.service-reference .cinema-visual{ position: relative; min-width: 0px; perspective: 1000px; align-self: stretch; display: flex; align-items: center; justify-content: center; padding: 30px 0px 54px; }
@@ -577,13 +577,13 @@ html body #main-content.service-reference .commerce-expertise-heading p{ margin:
 html body #main-content.service-reference .commerce-health-layout{ display: grid; grid-template-columns: 290px minmax(0px, 1fr); gap: 18px; }
 html body #main-content.service-reference .commerce-health-tabs{ display: grid; align-content: start; gap: 7px; padding: 10px; border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 23px; background: rgba(255, 255, 255, 0.024); backdrop-filter: blur(14px); }
 html body #main-content.service-reference .commerce-health-tab{ position: relative; width: 100%; min-height: 58px; padding: 9px 12px; border: 1px solid transparent; border-radius: 15px; background: transparent; color: rgb(137, 150, 177); display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 10px; text-align: right; transition: 0.25s; }
-html body #main-content.service-reference .commerce-health-tab:hover{ background: rgba(255, 255, 255, 0.04); color: rgb(220, 229, 248); transform: none; }
-html body #main-content.service-reference .commerce-health-tab.is-active{ color: rgb(255, 255, 255); border-color: rgba(141, 238, 255, 0.18); background: linear-gradient(135deg, rgba(34, 211, 238, 0.09), rgba(91, 140, 255, 0.08), rgba(139, 92, 246, 0.07)); }
+html body #main-content.service-reference .commerce-health-tab:hover{ background: var(--surface); color: var(--text); transform: none; }
+html body #main-content.service-reference .commerce-health-tab.is-active{ color: var(--text); border-color: rgba(141, 238, 255, 0.18); background: var(--surface); }
 html body #main-content.service-reference .commerce-health-tab b{ width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.043); font: 900 9px ui-monospace, monospace; color: rgb(141, 238, 255); }
 html body #main-content.service-reference .commerce-health-tab span{ font-size: 12px; font-weight: 900; }
-html body #main-content.service-reference .commerce-health-tab small{ font: 800 8px ui-monospace, monospace; color: rgb(104, 116, 141); }
-html body #main-content.service-reference .commerce-health-stage{ position: relative; min-height: 590px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; overflow: hidden; background: radial-gradient(circle at 80% 10%, rgba(91, 140, 255, 0.12), transparent 28rem), linear-gradient(155deg, rgb(17, 26, 54), rgb(8, 13, 29)); box-shadow: rgba(0, 0, 0, 0.28) 0px 36px 100px; }
-html body #main-content.service-reference .commerce-health-stage__bar{ height: 48px; padding: 0px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); display: flex; align-items: center; justify-content: space-between; color: rgb(135, 147, 173); font-size: 9px; }
+html body #main-content.service-reference .commerce-health-tab small{ font: 800 8px ui-monospace, monospace; color: var(--muted); }
+html body #main-content.service-reference .commerce-health-stage{ position: relative; min-height: 590px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; overflow: hidden; background: var(--surface); box-shadow: rgba(0, 0, 0, 0.28) 0px 36px 100px; }
+html body #main-content.service-reference .commerce-health-stage__bar{ height: 48px; padding: 0px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); display: flex; align-items: center; justify-content: space-between; color: var(--text); font-size: 9px; }
 html body #main-content.service-reference .commerce-health-stage__dots{ display: flex; gap: 6px; }
 html body #main-content.service-reference .commerce-health-stage__dots i{ width: 7px; height: 7px; border-radius: 50%; background: rgb(255, 102, 132); }
 html body #main-content.service-reference .commerce-health-stage__dots i:nth-child(2){ background: rgb(255, 200, 95); }
@@ -594,7 +594,7 @@ html body #main-content.service-reference .commerce-health-copy small{ font: 900
 html body #main-content.service-reference .commerce-health-copy h3{ margin: 13px 0px 10px; font-size: clamp(30px, 3.5vw, 48px); line-height: 1.13; color: rgb(248, 251, 255); }
 html body #main-content.service-reference .commerce-health-copy p{ margin: 0px; color: rgb(164, 176, 200); font-size: 13px; line-height: 1.9; }
 html body #main-content.service-reference .commerce-health-copy ul{ display: grid; gap: 9px; margin: 20px 0px 0px; padding: 0px; list-style: none; }
-html body #main-content.service-reference .commerce-health-copy li{ position: relative; padding-right: 18px; color: rgb(197, 205, 224); font-size: 11px; }
+html body #main-content.service-reference .commerce-health-copy li{ position: relative; padding-right: 18px; color: var(--muted); font-size: 11px; }
 html body #main-content.service-reference .commerce-health-copy li::before{ content: ""; position: absolute; right: 0px; top: 0.72em; width: 6px; height: 6px; border-radius: 50%; background: rgb(85, 221, 178); box-shadow: rgba(85, 221, 178, 0.07) 0px 0px 0px 5px; }
 html body #main-content.service-reference .commerce-health-copy a{ display: inline-flex; margin-top: 24px; color: rgb(141, 238, 255); font-size: 11px; font-weight: 900; }
 html body #main-content.service-reference .commerce-health-copy a::after{ content: "←"; margin-inline-start: 7px; }
@@ -705,27 +705,27 @@ html body #main-content.service-reference .commerce-health-lab .commerce-experti
 html body #main-content.service-reference .commerce-health-layout{ display: grid; grid-template-columns: 250px minmax(0px, 1fr); gap: 16px; align-items: stretch; }
 html body #main-content.service-reference .commerce-health-tabs{ display: grid; align-content: start; gap: 7px; padding: 8px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(125deg, rgba(11, 23, 44, 0.533), rgb(6, 13, 29)); box-shadow: none; backdrop-filter: none; }
 html body #main-content.service-reference .commerce-health-tab{ position: relative; width: 100%; min-height: 54px; padding: 8px 10px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--muted); display: grid; grid-template-columns: 30px minmax(0px, 1fr) auto; align-items: center; gap: 9px; text-align: right; transition: background 0.2s, border-color 0.2s, color 0.2s; }
-html body #main-content.service-reference .commerce-health-tab:hover{ background: rgb(11, 25, 48); border-color: rgb(46, 61, 86); color: var(--text); transform: none; }
-html body #main-content.service-reference .commerce-health-tab.is-active{ color: var(--text); border-color: var(--purple); background: linear-gradient(110deg, rgb(11, 38, 64), rgb(38, 18, 54)); box-shadow: rgba(108, 79, 195, 0.133) 0px 0px 17px, rgba(176, 134, 237, 0.133) 0px 0px 0px 1px inset; }
+html body #main-content.service-reference .commerce-health-tab:hover{ background: var(--surface); border-color: var(--text); color: var(--text); transform: none; }
+html body #main-content.service-reference .commerce-health-tab.is-active{ color: var(--text); border-color: var(--purple); background: var(--surface); box-shadow: rgba(108, 79, 195, 0.133) 0px 0px 17px, rgba(176, 134, 237, 0.133) 0px 0px 0px 1px inset; }
 html body #main-content.service-reference .commerce-health-tab.is-active::after{ content: ""; position: absolute; inset-inline-start: 0px; top: 22%; bottom: 22%; width: 3px; border-radius: 3px; background: var(--cyan); }
 html body #main-content.service-reference .commerce-health-tab b{ width: 29px; height: 29px; border: 1px solid rgb(45, 83, 104); border-radius: 7px; display: grid; place-items: center; background: rgb(8, 22, 40); color: var(--cyan); font: 700 11px/1 var(--font); }
 html body #main-content.service-reference .commerce-health-tab span{ min-width: 0px; font-size: 14px; font-weight: 700; line-height: 1.45; }
-html body #main-content.service-reference .commerce-health-tab small{ color: rgb(127, 140, 165); font: 700 9px/1.2 var(--font); letter-spacing: 0.02em; direction: ltr; }
-html body #main-content.service-reference .commerce-health-stage{ position: relative; min-height: 490px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(circle at 85% 0%, rgba(73, 217, 238, 0.055), transparent 22rem), radial-gradient(circle at 10% 100%, rgba(181, 138, 255, 0.055), transparent 20rem), linear-gradient(125deg, rgba(11, 23, 44, 0.533), rgb(6, 13, 29)); box-shadow: none; }
-html body #main-content.service-reference .commerce-health-stage__bar{ height: 43px; padding: 0px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; background: rgba(6, 16, 32, 0.6); color: rgb(143, 156, 179); font-size: 10px; font-weight: 600; }
+html body #main-content.service-reference .commerce-health-tab small{ color: var(--muted); font: 700 9px/1.2 var(--font); letter-spacing: 0.02em; direction: ltr; }
+html body #main-content.service-reference .commerce-health-stage{ position: relative; min-height: 490px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: none; }
+html body #main-content.service-reference .commerce-health-stage__bar{ height: 43px; padding: 0px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; background: var(--surface); color: var(--text); font-size: 10px; font-weight: 600; }
 html body #main-content.service-reference .commerce-health-stage__dots{ display: flex; gap: 6px; }
 html body #main-content.service-reference .commerce-health-stage__dots i{ width: 6px; height: 6px; border-radius: 50%; background: var(--pink); }
 html body #main-content.service-reference .commerce-health-stage__dots i:nth-child(2){ background: var(--purple); }
 html body #main-content.service-reference .commerce-health-stage__dots i:nth-child(3){ background: var(--cyan); }
 html body #main-content.service-reference .commerce-health-panel{ display: none; grid-template-columns: minmax(0px, 0.95fr) minmax(300px, 1.05fr); gap: 28px; align-items: center; min-height: 445px; padding: 28px; }
 html body #main-content.service-reference .commerce-health-panel.is-active{ display: grid; }
-html body #main-content.service-reference .commerce-health-copy small{ color: var(--cyan); font: 700 12px/1.4 var(--font); letter-spacing: 0.02em; direction: ltr; }
+html body #main-content.service-reference .commerce-health-copy small{ color: var(--ibt-link); font: 700 12px/1.4 var(--font); letter-spacing: 0.02em; direction: ltr; }
 html body #main-content.service-reference .commerce-health-copy h3{ margin: 10px 0px 9px; color: var(--text); font-size: clamp(23px, 2.25vw, 30px); font-weight: 700; line-height: 1.45; }
 html body #main-content.service-reference .commerce-health-copy p{ margin: 0px; color: var(--muted); font-size: 15px; line-height: 1.85; }
 html body #main-content.service-reference .commerce-health-copy ul{ display: grid; gap: 8px; margin: 17px 0px 0px; padding: 0px; list-style: none; }
-html body #main-content.service-reference .commerce-health-copy li{ position: relative; padding-right: 18px; color: rgb(199, 208, 225); font-size: 14px; line-height: 1.65; }
+html body #main-content.service-reference .commerce-health-copy li{ position: relative; padding-right: 18px; color: var(--muted); font-size: 14px; line-height: 1.65; }
 html body #main-content.service-reference .commerce-health-copy li::before{ content: ""; position: absolute; right: 0px; top: 0.75em; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: rgba(73, 217, 238, 0.07) 0px 0px 0px 4px; }
-html body #main-content.service-reference .commerce-health-copy a{ display: inline-flex; align-items: center; gap: 5px; margin-top: 20px; color: var(--cyan); font-size: 14px; font-weight: 700; }
+html body #main-content.service-reference .commerce-health-copy a{ display: inline-flex; align-items: center; gap: 5px; margin-top: 20px; color: var(--ibt-link); font-size: 14px; font-weight: 700; }
 html body #main-content.service-reference .commerce-health-copy a::after{ content: "←"; margin: 0px; }
 html body #main-content.service-reference .commerce-health-copy a:hover{ color: rgb(139, 233, 246); }
 html body #main-content.service-reference .commerce-health-visual{ position: relative; min-height: 315px; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: radial-gradient(circle at 50% 20%, rgba(181, 138, 255, 0.06), transparent 18rem), rgb(6, 16, 32); box-shadow: rgba(255, 255, 255, 0.03) 0px 1px 0px inset; }
@@ -825,8 +825,8 @@ html body #main-content.service-reference .header-cta{ font-size: 11px; }}
 @media (max-width: 760px){html body #main-content.service-reference .cinema-help-after{ position: relative !important; inset: auto !important; width: auto !important; opacity: 1 !important; transform: none !important; pointer-events: auto !important; margin: 24px 0px 0px !important; padding: 18px 0px !important; background: none !important; border: 0px !important; box-shadow: none !important; }}
 @media print{html body #main-content.service-reference .cinema-help-after{ display: block !important; }}
 /* Project colors, reference composition. */
-html body #main-content.service-reference {--bg:var(--ibt-bg);--surface:var(--ibt-surface);--surface-2:var(--ibt-bg-soft);--text:var(--ibt-text);--muted:var(--ibt-muted);--line:var(--ibt-border);--cyan:var(--ibt-cyan);--purple:var(--ibt-purple);--pink:var(--ibt-pink);--glow:var(--ibt-gradient);--font:ServicesReferenceBrand,var(--ibt-font);width:min(1180px,calc(100% - 64px));margin-inline:auto;padding:110px 0 76px;overflow:visible;}
-html body #main-content.service-reference .section {padding:0!important;margin-top:76px!important;}
+html body #main-content.service-reference {--bg:var(--ibt-bg);--surface:var(--ibt-surface);--surface-2:var(--ibt-bg-soft);--text:var(--ibt-text);--muted:var(--ibt-muted);--line:var(--ibt-border);--cyan:var(--ibt-cyan);--purple:var(--ibt-purple);--pink:var(--ibt-pink);--glow:var(--ibt-gradient);--font:var(--ibt-font);width:min(var(--ibt-container),calc(100% - (var(--ibt-page-gutter) * 2)));margin-inline:auto;padding:110px 0 76px;overflow:visible;}
+html body #main-content.service-reference .section {padding:0!important;margin-top:var(--ibt-section-space)!important;}
 html body #main-content.service-reference .hero {padding:30px 0 18px!important;min-height:435px!important;display:grid!important;grid-template-columns:.95fr 1.15fr!important;background:none!important;border:0!important;box-shadow:none!important;}
 html body #main-content.service-reference .hero h1 {font-size:clamp(34px,3.45vw,49px)!important;line-height:1.43!important;font-weight:700!important;letter-spacing:normal!important;}
 html body #main-content.service-reference .hero p {font-size:18px!important;line-height:1.9!important;}
@@ -835,9 +835,7 @@ html body #main-content.service-reference h2 {font-size:clamp(25px,2.55vw,34px)!
 html body #main-content.service-reference h3 {letter-spacing:normal!important;}
 html body #main-content.service-reference .service-paths-section {width:100%;margin-inline:0;overflow:visible;}
 html body #main-content.service-reference .service-paths-section > .container {width:100%;max-width:none;}
-html body #main-content.service-reference .service-paths-section.is-cinematic-ready {padding:0!important;margin-top:76px!important;}
-html body #main-content.service-reference .service-paths-section.is-cinematic-ready > .container {top:100px;}
-html body #main-content.service-reference .service-paths-section {--service-cinema-top:100px;--service-cinema-height:calc(100svh - 120px);}
+html body #main-content.service-reference .service-paths-section.is-cinematic-ready {padding:0!important;margin-top:var(--ibt-section-space)!important;}
 html body #main-content.service-reference .service-paths-header {text-align:start;}
 html body #main-content.service-reference .service-path-card > p {font-size:16px;}
 html body #main-content.service-reference .reference-nav {display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
@@ -853,10 +851,7 @@ html body #main-content.service-reference .reference-dialog {max-width:min(1000p
 html body #main-content.service-reference .reference-dialog::backdrop {background:#000b;}
 html body #main-content.service-reference .reference-dialog img {max-height:75svh;object-fit:contain;}
 html body #main-content.service-reference .metric-result[hidden] {display:none!important;}
-html body #main-content.service-reference .service-paths-section:not(.is-cinematic-ready) .service-paths-header {display:none;}
-html body #main-content.service-reference .service-paths-section:not(.is-cinematic-ready) .service-paths-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
-html body #main-content.service-reference .service-paths-section:not(.is-cinematic-ready) .service-path-card {grid-column:auto;padding:24px;min-height:0;}
 html body #main-content.service-reference .service-path-card::after {display:none;}
-html body #main-content.service-reference .service-paths-section:not(.is-cinematic-ready) .service-path-card h3 {font-size:28px!important;}
 html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card h3 {font-size:clamp(32px,3.6vw,52px)!important;}
-@media(max-width:760px){html body #main-content.service-reference {width:calc(100% - 32px);padding-top:92px;}html body #main-content.service-reference .hero {grid-template-columns:1fr!important;min-height:0!important;}html body #main-content.service-reference .hero-copy {order:0;}html body #main-content.service-reference .hero-art {order:1;}html body #main-content.service-reference .section {margin-top:54px!important;}html body #main-content.service-reference .service-paths-section:not(.is-cinematic-ready) .service-paths-grid {grid-template-columns:1fr;}html body #main-content.service-reference .commerce-health-lab {padding:20px 14px!important;}html body #main-content.service-reference .hero h1 {font-size:34px!important;}}
+@media(max-width:760px){html body #main-content.service-reference {width:calc(100% - 32px);padding-top:92px;}html body #main-content.service-reference .hero {grid-template-columns:1fr!important;min-height:0!important;}html body #main-content.service-reference .hero-copy {order:0;}html body #main-content.service-reference .hero-art {order:1;}html body #main-content.service-reference .section {margin-top:54px!important;}html body #main-content.service-reference .commerce-health-lab {padding:20px 14px!important;}html body #main-content.service-reference .hero h1 {font-size:34px!important;}}
+

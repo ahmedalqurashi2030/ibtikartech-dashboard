@@ -4,11 +4,9 @@
 {% block service_meta_description %}تحسين صفحة المنتج وترتيب الصور والمعلومات والخيارات والثقة والإجراء الأساسي مع مراجعة الجوال وإمكانات منصة المتجر.{% endblock %}
 
 {% block service_styles %}
-<link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/source-product-page.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
@@ -18,8 +16,8 @@
 {% block service_breadcrumb_current %}تحسين صفحة المنتج{% endblock %}
 
 {% block service_hero %}
-<section class="service-commerce-hero" aria-labelledby="service-title">
-    <div class="service-detail-shell">
+<section class="service-commerce-hero ibt-section ibt-section--hero" aria-labelledby="service-title">
+    <div class="service-detail-shell ibt-container">
       <div class="service-commerce-hero__card" data-service-commerce-hero>
         <div class="service-gallery">
           <div class="service-gallery__stage">
@@ -36,7 +34,7 @@
 
         <div class="service-commerce-copy">
           <span class="service-detail-badge">خدمات المتاجر الإلكترونية</span>
-          <h1 id="service-title">تحسين صفحة المنتج <span>ليصبح قرار الشراء أوضح وأسهل</span></h1>
+          <h1 id="service-title" class="ibt-page-title">تحسين صفحة المنتج <span>ليصبح قرار الشراء أوضح وأسهل</span></h1>
           <p>نعيد تنظيم الصور والمعلومات والخيارات وعناصر الثقة والإجراء الأساسي، مع مراجعة تجربة الجوال والتوافق مع إمكانات منصة متجرك.</p>
           <div class="service-platform-chips"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div>
           <div class="service-purchase-box"><div><small>طريقة التسعير</small><strong>عرض مخصص بعد التقييم</strong></div><div><small>نقطة البداية</small><strong>مراجعة صفحة المنتج والمحتوى وإمكانات المنصة</strong></div></div>
@@ -51,75 +49,75 @@
 {% endblock %}
 
 {% block service_content %}
-<section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>علامات تشير إلى حاجة الصفحة للتحسين</span><h2>هل تواجه هذه المشكلات؟</h2></div>
+<section class="service-detail-section service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="problems">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>علامات تشير إلى حاجة الصفحة للتحسين</span><h2 class="ibt-section-title">هل تواجه هذه المشكلات؟</h2></div>
       <div class="service-problem-grid"><article><i class="ph-duotone ph-paint-brush-broad" aria-hidden="true"></i><h3>معرض صور لا يشرح المنتج</h3><p>لا يحصل العميل على تفاصيل بصرية كافية قبل اتخاذ القرار.</p></article><article><i class="ph-duotone ph-file-text" aria-hidden="true"></i><h3>المعلومات المهمة مشتتة</h3><p>السعر والمزايا والسياسات موزعة دون تسلسل واضح.</p></article><article><i class="ph-duotone ph-circles-four" aria-hidden="true"></i><h3>الخيارات مربكة</h3><p>المقاسات أو الألوان لا تعرض بصورة سهلة الفهم.</p></article><article><i class="ph-duotone ph-shield-check" aria-hidden="true"></i><h3>عناصر الثقة بعيدة</h3><p>الشحن والاستبدال والضمان لا تظهر قرب قرار الشراء.</p></article><article><i class="ph-duotone ph-device-mobile-camera" aria-hidden="true"></i><h3>تجربة الجوال مزدحمة</h3><p>العناصر تتنافس على مساحة صغيرة وتزيد الجهد المطلوب.</p></article><article><i class="ph-duotone ph-shopping-cart-simple" aria-hidden="true"></i><h3>الإجراء الأساسي غير واضح</h3><p>زر الإضافة للسلة لا يحصل على الأولوية البصرية المناسبة.</p></article></div>
     </div>
   </section>
 
-  <section class="service-detail-section service-decision-panel" data-service-decision-panel="fit">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>حدد المسار المناسب قبل الطلب</span><h2>لمن تناسب الخدمة؟</h2></div>
+  <section class="service-detail-section service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="fit">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>حدد المسار المناسب قبل الطلب</span><h2 class="ibt-section-title">لمن تناسب الخدمة؟</h2></div>
       <div class="service-fit-grid"><article class="service-fit-card service-fit-card--good"><h3>تناسبك الخدمة عندما</h3><ul><li>لديك متجر قائم وصفحة منتج تعمل.</li><li>المعلومات موجودة لكنها غير مرتبة.</li><li>تجربة الجوال تحتاج تنظيمًا.</li><li>تريد تحسين الإقناع دون إعادة بناء المتجر.</li><li>يمكنك توفير الصور والمحتوى والصلاحيات.</li></ul></article><article class="service-fit-card"><h3>قد تحتاج إلى مسار آخر عندما</h3><ul><li>المتجر غير موجود بعد — <a href="{% url 'public_preview:ecommerce' %}">تصميم متجر جديد</a>.</li><li>الهوية غير مكتملة — <a href="{% url 'services:index' %}#services">الهوية البصرية</a>.</li><li>المشكلة تشمل المتجر كاملًا — <a href="{% url 'public_preview:ecommerce' %}">تطوير المتجر القائم</a>.</li><li>تحتاج وظيفة غير مدعومة — <a href="{% url 'services:index' %}#services">تطوير مخصص</a>.</li></ul></article></div>
     </div>
   </section>
 
-  <section class="service-detail-section service-detail-section--soft service-decision-panel" id="scope" data-service-decision-panel="scope">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>نطاق واضح قابل للاعتماد</span><h2>ماذا ننفذ داخل هذه الخدمة؟</h2></div>
+  <section class="service-detail-section service-detail-section--soft service-decision-panel ibt-section ibt-section--content" id="scope" data-service-decision-panel="scope">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>نطاق واضح قابل للاعتماد</span><h2 class="ibt-section-title">ماذا ننفذ داخل هذه الخدمة؟</h2></div>
       <div class="service-scope-grid"><article class="scope-panel"><h3>التحليل والتشخيص</h3><ul><li>مراجعة الوضع الحالي.</li><li>تحليل الهيكل والمحتوى.</li><li>مراجعة تجربة الجوال.</li><li>تحديد المشكلات والأولويات.</li></ul></article><article class="scope-panel"><h3>التصميم والتنظيم</h3><ul><li>إعادة ترتيب العناصر.</li><li>تحسين التسلسل البصري.</li><li>تنظيم المحتوى والصور.</li><li>تحسين الإجراءات المهمة.</li></ul></article><article class="scope-panel" data-service-scope-extra hidden><h3>التطوير أو الإعداد</h3><ul><li>تنفيذ التعديلات المعتمدة.</li><li>إعداد الأقسام والوظائف.</li><li>CSS أو JavaScript عند الحاجة.</li><li>ربط الأدوات المتفق عليها.</li></ul></article><article class="scope-panel" data-service-scope-extra hidden><h3>الاختبار</h3><ul><li>Desktop وTablet وMobile.</li><li>الروابط والتفاعلات.</li><li>الخيارات والحالات المختلفة.</li><li>مراجعة نهائية قبل التسليم.</li></ul></article></div>
       <button class="button btn btn-outline" type="button" data-service-scope-toggle aria-expanded="false">عرض النطاق الكامل</button>
     </div>
   </section>
 
-  <section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>مخرجات يمكن التحقق منها</span><h2>ماذا ستستلم؟</h2></div>
+  <section class="service-detail-section service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="deliverables">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>مخرجات يمكن التحقق منها</span><h2 class="ibt-section-title">ماذا ستستلم؟</h2></div>
       <ul class="service-deliverable-grid"><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تقرير مراجعة وأولويات</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تصور أو تصميم معتمد</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تنفيذ الخدمة</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>نسخة محسنة للجوال</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>إعدادات الأدوات المتفق عليها</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>اختبار نهائي</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تقرير تسليم</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>دليل استخدام مختصر</li></ul>
     </div>
   </section>
 
-  <section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>حدود تمنع توسع النطاق دون اتفاق</span><h2>ما الذي لا يدخل ضمن النطاق الأساسي؟</h2></div>
+  <section class="service-detail-section service-detail-section--soft service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="exclusions">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>حدود تمنع توسع النطاق دون اتفاق</span><h2 class="ibt-section-title">ما الذي لا يدخل ضمن النطاق الأساسي؟</h2></div>
       <ul class="service-exclusion-list"><li>التصوير الاحترافي</li><li>كتابة جميع المحتويات</li><li>إدخال منتجات غير محدود</li><li>شراء التطبيقات الخارجية</li><li>اشتراكات المنصات</li><li>إدارة الحملات الإعلانية</li><li>وظائف غير مدعومة من المنصة</li><li>دعم مفتوح دون مدة</li></ul><p class="service-note">يمكن إضافة الخدمات غير المشمولة إلى عرض السعر عند الحاجة.</p>
     </div>
   </section>
 
-  <section class="service-detail-section service-detail-section--soft product-anatomy-section">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>افهم سبب كل قرار في الواجهة</span><h2>شرح بصري لصفحة المنتج</h2></div>
+  <section class="service-detail-section service-detail-section--soft product-anatomy-section ibt-section ibt-section--content">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>افهم سبب كل قرار في الواجهة</span><h2 class="ibt-section-title">شرح بصري لصفحة المنتج</h2></div>
       <div class="hotspot-layout"><div class="hotspot-canvas"><img src="/static/public_preview/assets/generated/a5c00eeae18cfdad.svg" alt="مخطط توضيحي لنقاط تحسين صفحة المنتج" width="904" height="696" loading="lazy" decoding="async"><button type="button" class="hotspot" data-id="gallery" aria-label="معرض الصور">1</button><button type="button" class="hotspot" data-id="options" aria-label="خيارات المنتج">2</button><button type="button" class="hotspot" data-id="trust" aria-label="عناصر الثقة">3</button><button type="button" class="hotspot" data-id="cta" aria-label="زر الإضافة للسلة">4</button></div><aside class="hotspot-info" id="product-hotspot-info" role="region" aria-live="polite" aria-labelledby="product-hotspot-title"><h3 id="product-hotspot-title" data-product-hotspot-title>معرض الصور</h3><p data-product-hotspot-text>المشكلة: الصور لا تشرح التفاصيل. التعديل: ترتيب الصور وتحديد الأولوية. سبب القرار: العميل يحتاج فهم المنتج بصريًا قبل متابعة الخيارات.</p></aside><div class="hotspot-cards"><article><h3>معرض الصور</h3><p>ترتيب اللقطات وإبراز التفاصيل.</p></article><article><h3>الخيارات</h3><p>تجميع المقاسات والألوان بصورة مفهومة.</p></article><article><h3>عناصر الثقة</h3><p>تقريب الشحن والاستبدال والضمان.</p></article><article><h3>الإضافة للسلة</h3><p>منح الإجراء الأساسي أولوية واضحة.</p></article></div></div>
     </div>
   </section>
 
-  <section class="service-detail-section service-detail-section--soft product-requirements-section">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>اكتمالها يحمي الجدول التنفيذي</span><h2>متطلبات بدء الخدمة</h2></div>
+  <section class="service-detail-section service-detail-section--soft product-requirements-section ibt-section ibt-section--content">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>اكتمالها يحمي الجدول التنفيذي</span><h2 class="ibt-section-title">متطلبات بدء الخدمة</h2></div>
       <ul class="req-grid"><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>رابط الموقع أو المتجر</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>صلاحية الوصول المناسبة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>الهوية والشعار</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>الصور والمحتوى</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>السياسات المعتمدة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>التطبيقات المستخدمة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>أمثلة بصرية مفضلة</li><li><i class="ph-duotone ph-check-circle" aria-hidden="true"></i>الشخص المخول بالاعتماد</li></ul><p class="service-note">يبدأ الجدول التنفيذي بعد استلام المتطلبات واعتماد النطاق.</p>
     </div>
   </section>
 
-  <section class="service-detail-section service-detail-section--soft product-related-section">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>خطوات تسبق أو تكمل هذه الخدمة</span><h2>خدمات مرتبطة بهذا المسار</h2></div>
+  <section class="service-detail-section service-detail-section--soft product-related-section ibt-section ibt-section--content">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>خطوات تسبق أو تكمل هذه الخدمة</span><h2 class="ibt-section-title">خدمات مرتبطة بهذا المسار</h2></div>
       <div class="related-grid"><article><img src="/static/public_preview/assets/generated/f5ff00aa07cd7f52.svg" alt="تحسين تجربة الجوال" width="452" height="348" loading="lazy"><span>خدمة مكملة</span><h3>تحسين تجربة الجوال</h3><p>مراجعة صفحة المنتج والبطاقات والسلة لتعمل بوضوح على الهاتف.</p><a href="{% url 'public_preview:ecommerce' %}">استعرض خدمة تحسين تجربة الجوال ←</a></article><article><img src="/static/public_preview/assets/generated/994cad82edfbbdc7.svg" alt="تصميم البنرات والمحتوى" width="452" height="348" loading="lazy"><span>خدمة مكملة</span><h3>تصميم البنرات والمحتوى</h3><p>أصول ورسائل بصرية توضح المنتج وتدعم قرار العميل.</p><a href="{% url 'public_preview:ecommerce' %}">استعرض خدمة تصميم البنرات والمحتوى ←</a></article><article><img src="/static/public_preview/assets/generated/2ab113fa2745c9f6.svg" alt="التحليلات والتتبع" width="452" height="348" loading="lazy"><span>خطوة تالية</span><h3>التحليلات والتتبع</h3><p>قياس التفاعلات الأساسية بعد تنفيذ الصفحة.</p><a href="{% url 'public_preview:ecommerce' %}">استعرض خدمة التحليلات والتتبع ←</a></article><article><img src="/static/public_preview/assets/generated/40071ae06c114a82.svg" alt="تطوير المتجر القائم" width="452" height="348" loading="lazy"><span>تحسين متقدم</span><h3>تطوير المتجر القائم</h3><p>توسيع التحسين ليشمل بقية رحلة المتجر.</p><a href="{% url 'public_preview:ecommerce' %}">استعرض خدمة تطوير المتجر القائم ←</a></article></div>
     </div>
   </section>
 
-  <section class="service-detail-section product-faq-section" id="faq">
-    <div class="service-detail-shell">
-      <div class="service-detail-heading"><span>تفاصيل تساعدك قبل طلب النطاق</span><h2>الأسئلة الشائعة</h2></div>
+  <section class="service-detail-section product-faq-section ibt-section ibt-section--content" id="faq">
+    <div class="service-detail-shell ibt-container">
+      <div class="service-detail-heading ibt-section-heading"><span>تفاصيل تساعدك قبل طلب النطاق</span><h2 class="ibt-section-title">الأسئلة الشائعة</h2></div>
       <div class="faq-grid"><details><summary>هل تشمل الخدمة جميع الصفحات أو المنتجات؟</summary><p>النطاق الأساسي يركز على الصفحة أو القالب المحدد، ويضاف أي توسع إلى العرض.</p></details><details><summary>هل يمكن العمل على التصميم الحالي؟</summary><p>نعم، بعد تشخيص ما يمكن تحسينه دون إعادة بناء غير ضرورية.</p></details><details><summary>هل يتوقف المتجر أثناء التنفيذ؟</summary><p>تحدد طريقة التنفيذ حسب المنصة، ونرتب النشر لتقليل أثره على التشغيل.</p></details><details><summary>هل تشمل الخدمة المحتوى والصور؟</summary><p>يمكن إضافتها، لكنها لا تدخل تلقائيًا ضمن النطاق الأساسي.</p></details><details><summary>هل تشمل تطبيقات مدفوعة؟</summary><p>رسوم التطبيقات والاشتراكات الخارجية لا تدخل ما لم ينص العرض على ذلك.</p></details><details><summary>كيف يتم تحديد التعديلات؟</summary><p>يحدد عدد جولات المراجعة داخل عرض السعر قبل البدء.</p></details><details><summary>كيف يتم تحديد السعر والمدة؟</summary><p>بعد مراجعة الصفحة والمنصة والمتطلبات واعتماد النطاق.</p></details><details><summary>ماذا يحدث بعد التسليم؟</summary><p>تستلم تقريرًا ودليلًا مختصرًا ويبدأ الدعم المحدد في العرض.</p></details><details><summary>هل يمكن إضافة تطوير مخصص؟</summary><p>نعم، بعد تقييم دعم المنصة والجهد والمخاطر التقنية.</p></details><details><summary>هل توجد ضمانات للمبيعات؟</summary><p>لا نقدم ضمانات رقمية؛ نركز على تحسين الوضوح والتجربة والقياس.</p></details></div>
     </div>
   </section>
 
-  <section class="page-cta" id="service-contact">
-    <div class="service-detail-shell">
+  <section class="page-cta ibt-section ibt-section--cta" id="service-contact">
+    <div class="service-detail-shell ibt-container">
       <div class="cta-card">
-        <div class="product-service-cta-copy"><h2>ابدأ بتحسين صفحة المنتج الأكثر أهمية في متجرك</h2><p>أرسل رابط الصفحة، وسنراجع حالتها ونحدد نطاق التحسين المناسب قبل إعداد العرض.</p></div>
-        <div class="cta-actions"><a class="button btn btn-white" href="{% url 'public_preview:contact' %}?service=product-page-optimization&source=service-final#quote" data-analytics="quote_request" data-analytics-label="product-page-optimization-final">ابدأ تقييم صفحة المنتج</a><a class="service-text-link btn btn-outline" href="{% url 'public_preview:ecommerce' %}#subservices">استعرض خدمات المتاجر</a></div>
+        <div class="product-service-cta-copy"><h2 class="ibt-section-title">ابدأ بتحسين صفحة المنتج الأكثر أهمية في متجرك</h2><p>أرسل رابط الصفحة، وسنراجع حالتها ونحدد نطاق التحسين المناسب قبل إعداد العرض.</p></div>
+        <div class="cta-actions"><a class="button btn btn-white" href="{% url 'public_preview:contact' %}?service=product-page-optimization&source=service-final#quote" data-analytics="quote_request" data-analytics-label="product-page-optimization-final">ابدأ تقييم صفحة المنتج</a><a class="service-text-link btn btn-outline" href="{% url 'public_preview:ecommerce' %}#solutions">استعرض خدمات المتاجر</a></div>
       </div>
     </div>
   </section>

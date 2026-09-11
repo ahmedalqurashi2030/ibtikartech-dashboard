@@ -13,6 +13,13 @@ from apps.public_preview.template_contract import (
 )
 
 SERVICE_DETAIL_PAGE_NAMES = tuple(SERVICE_PAGE_ROUTES)
+SERVICE_CATEGORY_PAGE_NAMES = (
+    "ecommerce.html",
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+)
 ARTICLE_DETAIL_PAGE_NAMES = (
     "article-product-page.html",
     "article-store-launch.html",
@@ -62,10 +69,14 @@ RELATED_CARDS_CONSUMERS = (
     *SERVICE_DETAIL_PAGE_NAMES,
 )
 
-SERVICE_PRIMITIVE_CONSUMERS = tuple(
+SERVICE_PRIMITIVE_DETAIL_CONSUMERS = tuple(
     page_name
     for page_name in SERVICE_DETAIL_PAGE_NAMES
     if page_name != "product-page-optimization.html"
+)
+SERVICE_PRIMITIVE_CONSUMERS = (
+    *SERVICE_CATEGORY_PAGE_NAMES,
+    *SERVICE_PRIMITIVE_DETAIL_CONSUMERS,
 )
 
 ROUTE_SCOPED_ASSET_CONSUMERS = {

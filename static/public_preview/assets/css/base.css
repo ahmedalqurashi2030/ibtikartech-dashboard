@@ -67,12 +67,12 @@ svg {
 }
 
 .container {
-  width: min(calc(100% - 40px), var(--ibt-container));
+  width: min(calc(100% - (var(--ibt-page-gutter) * 2)), var(--ibt-container));
   margin-inline: auto;
 }
 
 .container-wide {
-  width: min(calc(100% - 40px), var(--ibt-container-wide));
+  width: min(calc(100% - (var(--ibt-page-gutter) * 2)), var(--ibt-container-wide));
   margin-inline: auto;
 }
 

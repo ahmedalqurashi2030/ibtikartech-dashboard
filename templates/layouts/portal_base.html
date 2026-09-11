@@ -16,6 +16,7 @@
       <span>ابتكار تك</span>
     </a>
     <div class="portal-account">
+      <button class="portal-button portal-button--ghost" type="button" data-theme-toggle aria-label="الوضع الداكن" aria-pressed="true">الوضع الداكن</button>
       <span class="portal-account__email">{{ request.user.email }}</span>
       <a href="{% url 'account_logout' %}">تسجيل الخروج</a>
     </div>
