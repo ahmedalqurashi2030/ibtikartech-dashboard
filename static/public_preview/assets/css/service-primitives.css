@@ -30,6 +30,100 @@
   --svc-accent-2: var(--service-accent-2, var(--ibt-purple, #7c3aed));
 }
 
+/* The cinematic reference stylesheet is intentionally kept as a legacy visual
+ * source during migration. Remap its public knobs here so it follows the real
+ * Ibtikar type, spacing and component language without duplicating the file. */
+.service-category-page #main-content.service-reference {
+  --cyan: var(--svc-accent);
+  --purple: var(--svc-accent-2);
+  --pink: var(--ibt-pink, #ec4899);
+  --radius: var(--ibt-radius, 18px);
+  --max: var(--svc-container);
+  --space: var(--svc-section-space);
+  --font: var(--ibt-font);
+  --glow: linear-gradient(110deg, color-mix(in srgb, var(--svc-accent) 76%, #145186), color-mix(in srgb, var(--svc-accent-2) 82%, #6644a1) 56%, var(--ibt-pink, #ec4899));
+}
+
+.service-category-page #main-content.service-reference .wrap {
+  width: min(var(--svc-container), calc(100% - (2 * var(--svc-page-gutter))));
+}
+
+.service-category-page #main-content.service-reference .section {
+  margin-top: var(--svc-section-space);
+}
+
+.service-category-page #main-content.service-reference .hero {
+  gap: var(--svc-grid-gap);
+}
+
+.service-category-page #main-content.service-reference .hero p {
+  max-inline-size: min(100%, var(--svc-content-measure));
+}
+
+.service-category-page #main-content.service-reference .gradient-text {
+  color: transparent;
+  background: var(--glow);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.service-category-page #main-content.service-reference .btn {
+  min-height: var(--svc-control-h);
+  border-radius: var(--ibt-radius-sm, 12px);
+}
+
+.service-category-page #main-content.service-reference .btn.small {
+  min-height: var(--svc-control-h);
+}
+
+.service-category-page #main-content.service-reference .icon-btn {
+  width: var(--svc-control-h);
+  height: var(--svc-control-h);
+}
+
+.service-category-page #main-content.service-reference .section-head p,
+.service-category-page #main-content.service-reference .hero p {
+  line-height: 1.8;
+}
+
+/* Shared detail-family dimensions. Keep the commerce implementation intact,
+ * while replacing repeated one-off widths/gaps with the common service scale. */
+.service-detail-page .service-detail-shell {
+  width: min(calc(100% - (2 * var(--svc-page-gutter))), var(--svc-container));
+}
+
+.service-detail-page .service-detail-section {
+  padding-block: var(--svc-section-space);
+}
+
+.service-detail-page .service-detail-heading {
+  max-inline-size: var(--svc-reading);
+  margin-bottom: var(--ibt-space-8, 48px);
+}
+
+.service-detail-page .service-commerce-hero__card {
+  gap: var(--svc-grid-gap);
+  padding: var(--svc-card-padding);
+  border-radius: var(--svc-panel-radius);
+}
+
+.service-detail-page :is(.service-problem-grid, .service-result-grid, .service-scope-grid, .service-related-grid) {
+  gap: var(--ibt-space-5, 16px);
+}
+
+.service-detail-page :is(.service-problem-grid, .service-result-grid, .service-scope-grid) > article,
+.service-detail-page .service-fit-card {
+  padding: var(--svc-card-padding);
+  border-radius: var(--svc-card-radius);
+}
+
+.service-detail-page .service-commerce-copy > p,
+.service-detail-page .service-detail-heading > p {
+  max-inline-size: var(--svc-content-measure);
+  line-height: 1.8;
+}
+
 .service-category-page [id],
 .service-detail-page [id] {
   scroll-margin-top: calc(var(--ibt-header-h, 72px) + var(--ibt-space-6, 24px));
@@ -72,7 +166,9 @@
 .service-detail-page .service-decision-tabs button {
   min-height: var(--svc-control-h);
   flex: 0 0 auto;
+  padding-inline: var(--ibt-space-5, 16px);
   scroll-snap-align: start;
+  font-size: var(--ibt-text-sm, .9rem);
 }
 
 /* Final conversion card used by migrated service pages. */
@@ -235,6 +331,10 @@
 
   .service-category-page .service-page-nav {
     scroll-padding-inline: var(--svc-page-gutter);
+  }
+
+  .service-detail-page .service-commerce-hero__card {
+    padding: var(--ibt-space-6, 24px);
   }
 
   .service-detail-page .page-cta {
