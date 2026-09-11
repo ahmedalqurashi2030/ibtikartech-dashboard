@@ -1,5 +1,5 @@
-import re
 from pathlib import Path
+import re
 
 
 CATEGORY_TEMPLATES = (
