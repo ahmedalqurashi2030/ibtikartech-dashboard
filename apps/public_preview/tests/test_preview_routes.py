@@ -170,17 +170,31 @@ def test_global_shell_is_composed_from_shared_template_includes():
 
 
 def test_platform_family_pages_share_one_section_structure_contract():
-    """Same-function sections in platform-family pages use one DOM vocabulary."""
+    """Platform pages and category pages share core shell and semantic section roles."""
     for page_name in PLATFORM_FAMILY_PAGES:
         source = _effective_page_source(page_name)
-        assert '<main id="main-content">' in source
-        assert '<section class="platform-hero">' in source
-        assert 'class="container platform-hero__grid"' in source
-        assert 'class="platform-heading reveal"' in source
-        assert 'class="section-kicker"' in source
-        assert '<section class="page-cta">' in source
-        assert 'class="cta-card reveal"' in source
-        assert 'class="cta-actions"' in source
+        assert '<main id="main-content"' in source
+        assert "service-reference" in source or "platform-hero" in source
+
+    category_pages = SERVICE_CATEGORY_PAGES
+    for page_name in category_pages:
+        source = _effective_page_source(page_name)
+        assert '<main id="main-content" class="service-reference">' in source
+        assert 'class="hero"' in source
+        assert 'section-kicker' in source
+        assert 'service-paths-section' in source
+        assert 'service-path-card reveal' in source
+        assert 'service-path-card__fit' in source
+        assert 'service-path-card__scope' in source
+        assert 'service-path-card__action' in source
+        assert "مناسب عندما" in source
+        assert 'route-grid' not in source
+
+    about_source = _effective_page_source("about.html")
+    assert '<section class="platform-hero">' in about_source
+    assert '<section class="page-cta">' in about_source
+    assert 'class="cta-card reveal"' in about_source
+    assert 'class="cta-actions"' in about_source
 
 
 def test_service_detail_pages_share_one_structural_contract():
@@ -347,9 +361,12 @@ def test_non_commerce_service_categories_offer_local_section_navigation():
     for page_name in NON_COMMERCE_CATEGORY_PAGES:
         source = _page_source(page_name)
         assert 'class="service-page-nav"' in source
-        assert 'href="#capabilities"' in source
+        assert 'href="#start"' in source
+        assert 'href="#solutions"' in source
         assert 'href="#approach"' in source
-        assert 'href="#fit"' in source
+        assert 'href="#deliverables"' in source
+        assert 'href="#faq"' in source
+        assert 'href="#related"' in source
 
 
 def test_service_category_pages_load_shared_cinematic_runtime():

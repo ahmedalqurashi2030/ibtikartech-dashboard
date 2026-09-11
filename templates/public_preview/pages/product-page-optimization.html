@@ -5,8 +5,6 @@
 
 {% block service_styles %}
 <link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/source-product-page.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
@@ -60,14 +58,14 @@
     </div>
   </section>
 
-  <section class="service-detail-section service-decision-panel" data-service-decision-panel="fit" hidden>
+  <section class="service-detail-section service-decision-panel" data-service-decision-panel="fit">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>حدد المسار المناسب قبل الطلب</span><h2>لمن تناسب الخدمة؟</h2></div>
       <div class="service-fit-grid"><article class="service-fit-card service-fit-card--good"><h3>تناسبك الخدمة عندما</h3><ul><li>لديك متجر قائم وصفحة منتج تعمل.</li><li>المعلومات موجودة لكنها غير مرتبة.</li><li>تجربة الجوال تحتاج تنظيمًا.</li><li>تريد تحسين الإقناع دون إعادة بناء المتجر.</li><li>يمكنك توفير الصور والمحتوى والصلاحيات.</li></ul></article><article class="service-fit-card"><h3>قد تحتاج إلى مسار آخر عندما</h3><ul><li>المتجر غير موجود بعد — <a href="{% url 'public_preview:ecommerce' %}">تصميم متجر جديد</a>.</li><li>الهوية غير مكتملة — <a href="{% url 'services:index' %}#services">الهوية البصرية</a>.</li><li>المشكلة تشمل المتجر كاملًا — <a href="{% url 'public_preview:ecommerce' %}">تطوير المتجر القائم</a>.</li><li>تحتاج وظيفة غير مدعومة — <a href="{% url 'services:index' %}#services">تطوير مخصص</a>.</li></ul></article></div>
     </div>
   </section>
 
-  <section class="service-detail-section service-detail-section--soft service-decision-panel" id="scope" data-service-decision-panel="scope" hidden>
+  <section class="service-detail-section service-detail-section--soft service-decision-panel" id="scope" data-service-decision-panel="scope">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>نطاق واضح قابل للاعتماد</span><h2>ماذا ننفذ داخل هذه الخدمة؟</h2></div>
       <div class="service-scope-grid"><article class="scope-panel"><h3>التحليل والتشخيص</h3><ul><li>مراجعة الوضع الحالي.</li><li>تحليل الهيكل والمحتوى.</li><li>مراجعة تجربة الجوال.</li><li>تحديد المشكلات والأولويات.</li></ul></article><article class="scope-panel"><h3>التصميم والتنظيم</h3><ul><li>إعادة ترتيب العناصر.</li><li>تحسين التسلسل البصري.</li><li>تنظيم المحتوى والصور.</li><li>تحسين الإجراءات المهمة.</li></ul></article><article class="scope-panel" data-service-scope-extra hidden><h3>التطوير أو الإعداد</h3><ul><li>تنفيذ التعديلات المعتمدة.</li><li>إعداد الأقسام والوظائف.</li><li>CSS أو JavaScript عند الحاجة.</li><li>ربط الأدوات المتفق عليها.</li></ul></article><article class="scope-panel" data-service-scope-extra hidden><h3>الاختبار</h3><ul><li>Desktop وTablet وMobile.</li><li>الروابط والتفاعلات.</li><li>الخيارات والحالات المختلفة.</li><li>مراجعة نهائية قبل التسليم.</li></ul></article></div>
@@ -75,14 +73,14 @@
     </div>
   </section>
 
-  <section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables" hidden>
+  <section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>مخرجات يمكن التحقق منها</span><h2>ماذا ستستلم؟</h2></div>
       <ul class="service-deliverable-grid"><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تقرير مراجعة وأولويات</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تصور أو تصميم معتمد</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تنفيذ الخدمة</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>نسخة محسنة للجوال</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>إعدادات الأدوات المتفق عليها</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>اختبار نهائي</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>تقرير تسليم</li><li><i class="ph-duotone ph-package" aria-hidden="true"></i>دليل استخدام مختصر</li></ul>
     </div>
   </section>
 
-  <section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions" hidden>
+  <section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions">
     <div class="service-detail-shell">
       <div class="service-detail-heading"><span>حدود تمنع توسع النطاق دون اتفاق</span><h2>ما الذي لا يدخل ضمن النطاق الأساسي؟</h2></div>
       <ul class="service-exclusion-list"><li>التصوير الاحترافي</li><li>كتابة جميع المحتويات</li><li>إدخال منتجات غير محدود</li><li>شراء التطبيقات الخارجية</li><li>اشتراكات المنصات</li><li>إدارة الحملات الإعلانية</li><li>وظائف غير مدعومة من المنصة</li><li>دعم مفتوح دون مدة</li></ul><p class="service-note">يمكن إضافة الخدمات غير المشمولة إلى عرض السعر عند الحاجة.</p>
