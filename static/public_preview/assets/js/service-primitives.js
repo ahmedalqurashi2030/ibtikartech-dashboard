@@ -8,7 +8,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const initInlineNavigation = (root) => {
-    const links = [...root.querySelectorAll('.service-page-nav a, .service-page-nav a, .commerce-category-nav a')]
+    const links = [...root.querySelectorAll('.service-page-nav a, .commerce-category-nav a')]
       .filter((link) => link.hash && link.origin === window.location.origin && link.pathname === window.location.pathname);
     if (!links.length || !('IntersectionObserver' in window)) return;
 
@@ -46,8 +46,8 @@
 
   const initStickyCta = (root) => {
     const stickyCta = root.querySelector('.service-sticky-cta');
-    const pageCta = root.querySelector('.page-cta, .page-cta');
-    const heroActions = root.querySelector('.service-commerce-actions, .platform-actions, .service-commerce-actions');
+    const pageCta = root.querySelector('.page-cta');
+    const heroActions = root.querySelector('.service-commerce-actions, .platform-actions');
     if (!stickyCta || !pageCta || !heroActions || stickyCta.dataset.svcReady === 'true') return;
 
     stickyCta.dataset.svcReady = 'true';
