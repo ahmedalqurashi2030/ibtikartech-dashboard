@@ -1,4 +1,4 @@
-from pathlib import Path
+import pathlib
 import re
 
 
@@ -24,7 +24,7 @@ STATIC_URL_RE = re.compile(r'["\'](/static/[^"\'?#]+)')
 
 
 def _template_source(name):
-    return Path("templates/public_preview/pages", name).read_text(encoding="utf-8")
+    return pathlib.Path("templates/public_preview/pages", name).read_text(encoding="utf-8")
 
 
 def test_service_templates_do_not_use_document_relative_asset_urls():
@@ -41,7 +41,7 @@ def test_service_static_references_exist_in_repository():
         source = _template_source(template_name)
         for static_url in STATIC_URL_RE.findall(source):
             relative_path = static_url.removeprefix("/static/")
-            assert Path("static", relative_path).is_file(), (
+            assert pathlib.Path("static", relative_path).is_file(), (
                 template_name,
                 static_url,
             )
