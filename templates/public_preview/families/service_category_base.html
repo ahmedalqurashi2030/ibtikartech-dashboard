@@ -18,12 +18,15 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
 {% endblock %}
+{% block page_refinements %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/services-reference.css">
+{% endblock %}
 {% endblock %}
 
 {% block body_attrs %}{% block category_body_attrs %}{% endblock %}{% endblock %}
 
 {% block body %}
-<main id="main-content">
+<main id="main-content" class="service-reference">
 {% block category_content %}{% endblock %}
 </main>
 

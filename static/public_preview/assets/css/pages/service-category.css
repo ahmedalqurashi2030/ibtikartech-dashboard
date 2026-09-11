@@ -371,10 +371,10 @@
    Mirrors the approved AFTER YOUR CHOICE language while keeping the
    service-specific content usable when JavaScript is unavailable. */
 .service-paths-section.is-cinematic-ready {
-  --service-cinema-top: 116px;
-  --service-cinema-height: calc(100svh - 132px);
-  height: calc(112vh + (var(--service-path-count, 6) * 62vh));
-  min-height: 2860px;
+  --service-cinema-top: 180px;
+  --service-cinema-height: calc(100svh - 196px);
+  height: calc(100svh + (var(--service-path-count, 6) * 48svh));
+  min-height: 0;
   padding: 0 !important;
   overflow: clip;
   background:
@@ -384,7 +384,7 @@
   isolation: isolate;
 }
 
-.service-paths-section.is-cinematic-ready[data-count="4"] { min-height: 2220px; }
+.service-paths-section.is-cinematic-ready[data-count="4"] { min-height: 0; }
 
 .service-paths-section.is-cinematic-ready > .container {
   position: sticky;
@@ -760,4 +760,71 @@
   .service-cinema__cue { display: none; }
   .service-cinema__top { inset: 24px 20px auto; }
   .service-cinema__vignette { box-shadow: inset 0 0 110px 34px rgba(2, 4, 13, .72); }
+}
+
+/* Reference cinema: readable holds, contained art, and a complete static story. */
+.service-cinema__reading {
+  position: absolute;
+  inset-inline-start: 24px;
+  top: 16px;
+  z-index: 9;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--ibt-border);
+  border-radius: 999px;
+  background: var(--ibt-surface);
+  color: var(--ibt-text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.service-paths-section:not(.is-cinematic-ready) :is(.service-cinema__canvas-layer,.service-cinema__top,.service-cinema__rail,.service-cinema__cue,.service-cinema__reading) { display: none; }
+.service-paths-section.is-cinematic-ready .service-paths-header {
+  inset: 0 0 0 auto;
+  width: 55%;
+  padding: 64px 42px;
+  text-align: start;
+}
+.service-paths-section.is-cinematic-ready .service-paths-header h2 {
+  margin-inline: 0;
+  font-size: clamp(36px, 4.2vw, 60px) !important;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+.service-paths-section.is-cinematic-ready .service-path-card h3 {
+  font-size: clamp(32px, 3.6vw, 52px);
+  line-height: 1.28;
+  letter-spacing: normal;
+}
+.service-paths-section.is-cinematic-ready .service-path-card__action { min-height: 44px; }
+.service-paths-section.is-cinematic-ready .service-path-card > p,
+.service-paths-section.is-cinematic-ready .service-paths-header p { color: rgba(255,255,255,.82); }
+.service-paths-section.is-cinematic-ready .service-path-card__scope li { color: rgba(255,255,255,.8); font-size: 12px; }
+.service-paths-section.is-cinematic-ready .service-paths-help { color: white; }
+.service-paths-section.is-cinematic-ready .service-paths-help strong { color: white; }
+.service-paths-section.is-cinematic-ready .service-paths-help span { color: rgba(255,255,255,.8); }
+.service-paths-section:not(.is-cinematic-ready) .service-paths-help { margin-top: 24px; }
+.service-path-card { scroll-margin-top: 160px; }
+.service-path-card__meta { flex-wrap: wrap; }
+.service-path-card > p { font-size: 16px; }
+.service-path-card__fit strong { font-size: 14px; }
+.service-path-card__scope li { font-size: 12px; line-height: 1.5; }
+@media print {
+  .service-paths-section.is-cinematic-ready { height: auto; min-height: 0; }
+  .service-paths-section.is-cinematic-ready > .container { position: static; height: auto; overflow: visible; }
+  .service-paths-section.is-cinematic-ready :is(.service-paths-header,.service-path-card,.service-paths-help,.service-paths-grid) {
+    position: static; width: auto; opacity: 1 !important; transform: none !important;
+  }
+  .service-cinema__canvas-layer,.service-cinema__reading,.service-cinema__rail { display: none; }
+}
+
+.service-paths-section.is-cinematic-ready .service-path-card.is-active {
+  animation: service-path-arrive 280ms var(--ibt-ease) both;
+}
+@keyframes service-path-arrive {
+  from { transform: translateY(12px); }
+  to { transform: translateY(0); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .service-path-card { animation: none !important; }
 }

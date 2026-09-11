@@ -614,8 +614,8 @@ def test_service_category_mobile_and_reduced_motion_keep_all_paths_sequential():
 
     assert "min-height: 44px" in category_styles
     assert "font-size: var(--ibt-text-xs, 12px)" in category_styles
-    assert 'matchMedia("(max-width: 760px), (prefers-reduced-motion: reduce)")' in cinema_runtime
-    assert "if (media.matches) return;" in cinema_runtime
+    assert 'matchMedia("(prefers-reduced-motion: reduce)")' in cinema_runtime
+    assert "reducedMotion.matches" in cinema_runtime
     assert "scroll-snap-type: x mandatory" not in category_styles
     assert "scroll-snap-type:x mandatory" not in ecommerce_styles
     assert ".commerce-category-nav a{flex:none;min-height:44px" in ecommerce_styles
@@ -633,21 +633,19 @@ def test_category_decision_faqs_and_related_routes_are_complete():
         source = _read_source(template)
         assert 'href="#faq"' in source, template
         assert 'id="faq"' in source, template
-        assert source.count("<details class=\"service-category-faq__item reveal\">") >= 4
+        assert source.count('<details class="faq-item">') >= 4
         assert 'id="related"' in source, template
 
     ecommerce = _read_source("templates/public_preview/pages/ecommerce.html")
     assert 'href="#related"' in ecommerce
     assert 'id="related"' in ecommerce
-    assert "service-related-cards.css" in ecommerce
-    assert "service-related-cards.js" in ecommerce
 
 
 def test_services_page_uses_semantic_icons_and_connected_faq_controls():
     template = _read_source(SERVICES_TEMPLATE)
     runtime = _read_source(SERVICES_RUNTIME)
 
-    assert template.count('<div class="goal-icon" aria-hidden="true"><svg') == 4
+    assert template.count('<div class="goal-icon" aria-hidden="true"><svg') == 5
     for glyph in (">↗<", ">◎<", ">⌁<", ">⚙<"):
         assert glyph not in template
     assert template.count('type="button" aria-expanded="false" aria-controls="services-faq-') == 5
@@ -659,13 +657,22 @@ def test_services_page_uses_semantic_icons_and_connected_faq_controls():
 
 
 def test_service_style_overrides_preserve_the_shared_shell_and_hero_roles():
+    from apps.public_preview.template_contract import page_parent
+
     ecommerce = _read_source("templates/public_preview/pages/ecommerce.html")
     product = _read_source(PRODUCT_PAGE_TEMPLATE)
     typography = _read_source(TYPOGRAPHY_SYSTEM)
 
-    for source in (ecommerce, product):
-        assert source.count("pages/inner.css") == 1
-        assert source.count("css/ibtikar-shell.css") == 1
+    ecommerce_family = _read_source(
+        "templates/" + page_parent("ecommerce.html")
+    )
+    product_family = _read_source(
+        "templates/" + page_parent("product-page-optimization.html")
+    )
+
+    for effective_source in (ecommerce_family + "\n" + ecommerce, product_family + "\n" + product):
+        assert effective_source.count("pages/inner.css") == 1
+        assert effective_source.count("css/ibtikar-shell.css") == 1
 
     assert typography.count(".svc-hero-copy,") >= 2
 

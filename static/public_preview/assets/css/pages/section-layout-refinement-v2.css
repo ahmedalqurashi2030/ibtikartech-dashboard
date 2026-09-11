@@ -743,3 +743,133 @@ html body:is([data-page="websites"], [data-page="brand-content"], [data-page="gr
     transform: none !important;
   }
 }
+
+/* Services reference integration. Shared section composition, existing brand tokens.
+   Scoped to the service families: the homepage keeps its own composition. */
+html body:is(.service-category-page,.service-detail-page,.source-services) {
+  --service-section-space: clamp(64px, 7vw, 104px);
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-section:not(.is-cinematic-ready),.service-detail-section,.section) {
+  padding-block: var(--service-section-space) !important;
+  scroll-margin-top: 150px;
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-heading,.service-detail-heading,.heading,.commerce-subservices__intro) {
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) minmax(240px,.72fr) !important;
+  align-items: end !important;
+  column-gap: clamp(24px,5vw,64px) !important;
+  row-gap: 12px !important;
+  max-width: none !important;
+  margin: 0 0 36px !important;
+  text-align: start !important;
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-heading,.service-detail-heading,.heading) > :is(span,small) {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 6px 13px !important;
+  border: 1px solid color-mix(in srgb,var(--ibt-purple) 24%,var(--ibt-border)) !important;
+  border-radius: 999px !important;
+  background: color-mix(in srgb,var(--ibt-purple) 6%,var(--ibt-surface)) !important;
+  color: var(--ibt-text) !important;
+  font-size: 12px !important;
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-heading,.service-detail-heading,.heading,.commerce-subservices__intro) h2 {
+  max-width: 20ch !important;
+  margin: 0 !important;
+  font-size: clamp(30px,3.7vw,50px) !important;
+  line-height: 1.3 !important;
+  letter-spacing: normal !important;
+  text-wrap: balance;
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-heading,.service-detail-heading,.heading,.commerce-subservices__intro) > p {
+  margin: 0 !important;
+  max-width: 54ch !important;
+  font-size: 16px !important;
+  line-height: 1.9 !important;
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-card,.service-path-card,.service-problem-card,.service-result-card,.service-scope-card,.service-deliverable,.goal,.stack) {
+  border: 1px solid var(--ibt-border) !important;
+  border-radius: 24px !important;
+  background: linear-gradient(145deg,color-mix(in srgb,var(--ibt-blue) 5%,var(--ibt-surface)),var(--ibt-surface)) !important;
+  box-shadow: none !important;
+  padding: clamp(22px,2.5vw,34px) !important;
+  min-width: 0;
+}
+html body.service-category-page .is-cinematic-ready .service-path-card {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-card,.service-problem-card,.service-result-card,.service-scope-card,.service-deliverable,.goal,.stack) h3 {
+  font-size: clamp(20px,2vw,27px) !important;
+  line-height: 1.4 !important;
+  margin-block: 0 12px;
+}
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-card,.service-problem-card,.service-result-card,.service-scope-card,.service-deliverable,.goal,.stack) p {
+  font-size: 16px !important;
+  line-height: 1.85 !important;
+}
+html body.service-category-page .timeline {
+  counter-reset: service-step;
+  gap: 16px !important;
+}
+html body.service-category-page .timeline > article {
+  position: relative;
+  padding: 28px !important;
+  border: 1px solid var(--ibt-border);
+  border-radius: 22px;
+  background: var(--ibt-surface);
+  counter-increment: service-step;
+}
+html body.service-category-page .timeline > article::before {
+  content: counter(service-step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 24px;
+  color: var(--service-accent,var(--ibt-blue));
+  font-size: 32px;
+  font-weight: 700;
+}
+html body.service-detail-page .service-commerce-hero__card {
+  border-radius: 32px !important;
+  padding: clamp(22px,3vw,42px) !important;
+  gap: clamp(28px,4vw,56px) !important;
+  background: radial-gradient(ellipse at 75% 10%,color-mix(in srgb,var(--ibt-purple) 9%,transparent),transparent 60%),var(--ibt-surface) !important;
+}
+html body.service-detail-page .service-commerce-copy > p { font-size: 16px !important; line-height: 1.9 !important; }
+html body.service-detail-page :is(.service-problem-grid,.service-result-grid,.service-scope-grid,.service-deliverable-grid) {
+  gap: 18px !important;
+}
+html body.service-detail-page :is(.service-requirements li,.service-faq details p,.service-fit-grid li,.service-exclusion-list li) {
+  font-size: 16px !important;
+  line-height: 1.85 !important;
+}
+html body.service-detail-page .service-faq summary { min-height: 56px; font-size: 17px !important; }
+html body:is(.service-category-page,.service-detail-page,.source-services) :is(.cta-card,.service-final-cta__card) {
+  border: 1px solid color-mix(in srgb,var(--ibt-blue) 30%,var(--ibt-border)) !important;
+  border-radius: 30px !important;
+  padding: clamp(28px,4vw,56px) !important;
+}
+html body.source-services .goal-grid { grid-template-columns: repeat(3,minmax(0,1fr)) !important; gap: 18px !important; }
+html body:is(.service-category-page,.service-detail-page,.source-services) main :is(a,button,summary):focus-visible {
+  outline: 3px solid var(--ibt-cyan);
+  outline-offset: 4px;
+}
+@media(max-width: 900px) {
+  html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-heading,.service-detail-heading,.heading,.commerce-subservices__intro) {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  html body.source-services .goal-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+@media(max-width: 760px) {
+  html body.source-services .goal-grid { grid-template-columns: 1fr !important; }
+  html body:is(.service-category-page,.service-detail-page,.source-services) :is(.platform-heading,.service-detail-heading,.heading) h2 { max-width: none !important; }
+  html body.service-category-page .service-paths-grid { grid-template-columns: 1fr !important; }
+  html body.service-category-page .service-path-card { grid-column: 1 / -1 !important; }
+  html body.service-category-page .service-path-card h3 { font-size: 28px !important; line-height: 1.4 !important; }
+  html body.service-category-page .service-path-card > p { font-size: 16px !important; }
+}
+
+html body.service-category-page .timeline > article::before { position: static !important; width: auto !important; height: auto !important; border: 0 !important; border-radius: 0 !important; background: none !important; }
+html body.service-category-page .timeline > article p { font-size: 16px !important; line-height: 1.85 !important; }
