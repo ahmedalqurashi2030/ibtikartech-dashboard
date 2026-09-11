@@ -6,12 +6,12 @@
  */
 
 :root {
-  --ibt-ux-gutter: clamp(18px, 3vw, 28px);
-  --ibt-ux-reading: 68ch;
-  --ibt-ux-radius-sm: 10px;
-  --ibt-ux-radius-md: 16px;
-  --ibt-ux-radius-lg: 22px;
-  --ibt-ux-control-h: 46px;
+  --ibt-ux-gutter: var(--ibt-page-gutter);
+  --ibt-ux-reading: var(--ibt-content-measure);
+  --ibt-ux-radius-sm: var(--ibt-radius-sm);
+  --ibt-ux-radius-md: var(--ibt-radius);
+  --ibt-ux-radius-lg: var(--ibt-radius-panel);
+  --ibt-ux-control-h: var(--ibt-control-h);
   --ibt-ux-border: color-mix(in srgb, var(--ibt-border) 82%, transparent);
   --ibt-ux-hover: color-mix(in srgb, var(--ibt-blue) 7%, var(--ibt-bg-soft));
 }
@@ -43,7 +43,7 @@ main :where(p) {
 }
 
 :where(button, [role="button"], input, textarea, select, summary, a[href]):focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--ibt-cyan) 58%, transparent);
+  outline: 3px solid var(--ibt-focus-color);
   outline-offset: 3px;
   box-shadow: none !important;
 }

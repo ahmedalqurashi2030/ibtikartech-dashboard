@@ -20,8 +20,9 @@
   ];
   var variant = variants.filter(function (item) { return bodyClass.indexOf(item.match) !== -1; })[0] || variants[0];
   var count = cards.length;
+  var compactViewport = window.matchMedia("(max-width: 999px)");
+  var grid = section.querySelector(".service-paths-grid");
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (reducedMotion.matches) return;
 
   section.dataset.cinemaInitialized = "true";
   section.dataset.count = String(count);
@@ -425,7 +426,7 @@
  }
 
   function draw() {
-    if (!context || !width || !height || reducedMotion.matches) return;
+    if (!context || !width || !height ) return;
     context.clearRect(0, 0, width, height);
     var background = context.createLinearGradient(0, 0, width, height);
     background.addColorStop(0, "#030611");
@@ -460,8 +461,8 @@
 
   function update() {
     frameRequested = false;
-    var isMobile = window.innerWidth < 1000;
-    if (reducedMotion.matches || section.classList.contains("is-reading")) {
+    section.classList.toggle("is-swipe-ready", compactViewport.matches && !section.classList.contains("is-reading"));
+    if (compactViewport.matches || reducedMotion.matches || section.classList.contains("is-reading")) {
       section.classList.remove("is-cinematic-ready");
       setVisible(header, true);
       if (help) setVisible(help, true);
@@ -487,34 +488,6 @@
     var scrollable = Math.max(1, section.offsetHeight - stageHeight);
     var topOffset = parseFloat(getComputedStyle(section).getPropertyValue("--service-cinema-top")) || 0;
     progress = clamp((topOffset - rect.top) / scrollable, 0, 1);
-
-    if (isMobile) {
-      var mobileStep = Math.floor(progress * count);
-      var mobileIndex = Math.min(count - 1, mobileStep);
-      header.style.opacity = progress < .05 ? "1" : "0";
-      header.style.transform = progress < .05 ? "translateY(0)" : "translateY(-18px)";
-      setVisible(header, progress < .05);
-      cards.forEach(function (card, index) {
-        var isActive = index === mobileIndex;
-        card.classList.toggle("is-active", isActive);
-        card.style.opacity = isActive ? "1" : "0";
-        card.style.transform = isActive ? "translateY(0)" : "translateY(24px)";
-        card.style.pointerEvents = isActive ? "auto" : "none";
-        setVisible(card, isActive);
-      });
-      if (help) {
-        var helpOpacity = ease(clamp((progress - .85) / .10, 0, 1));
-        help.style.opacity = String(helpOpacity);
-        help.style.transform = "translateY(" + ((1 - helpOpacity) * 18) + "px)";
-        help.style.pointerEvents = helpOpacity >= .5 ? "auto" : "none";
-        setVisible(help, helpOpacity >= .5);
-      }
-      railFill.style.height = (progress * 100) + "%";
-      steps.forEach(function (item, index) { item.classList.toggle("is-active", index === mobileIndex); });
-      cue.style.opacity = "0";
-      draw();
-      return;
-    }
 
     // Hold one readable caption at a time; never overlap Arabic text at a stopped scroll position.
     var scaled = clamp((progress - .08) / .82, 0, 1) * count;
@@ -567,7 +540,7 @@
   });
   stage.insertBefore(reading, stage.firstChild);
   section.addEventListener("focusin", function (event) {
-    if (event.target === reading || section.classList.contains("is-reading")) return;
+    if (compactViewport.matches || event.target === reading || section.classList.contains("is-reading")) return;
     section.classList.add("is-reading");
     update();
   });
@@ -590,6 +563,76 @@
   window.addEventListener("pageshow", requestUpdate);
   if (reducedMotion.addEventListener) reducedMotion.addEventListener("change", function () { update(); resizeCanvas(); });
   if (window.ResizeObserver) new ResizeObserver(resizeCanvas).observe(stage);
+  // Reuse the scene renderer once per card. Mobile uses native scrolling,
+  // independent captions and static decorative previews, never a gesture loop.
+  var controls = document.createElement("div");
+  controls.className = "service-paths-controls";
+  var previous = document.createElement("button");
+  var next = document.createElement("button");
+  var status = document.createElement("span");
+  previous.type = next.type = "button";
+  previous.textContent = "السابق";
+  next.textContent = "التالي";
+  status.setAttribute("aria-live", "polite");
+  controls.append(previous, status, next);
+  grid.after(controls);
+  var currentCard = 0;
+  function updateCardPosition() {
+    var bounds = grid.getBoundingClientRect();
+    var nearest = 0, distance = Infinity;
+    cards.forEach(function (card, index) {
+      var delta = Math.abs(bounds.right - card.getBoundingClientRect().right);
+      if (delta < distance) { nearest = index; distance = delta; }
+    });
+    currentCard = nearest;
+    previous.disabled = nearest === 0;
+    next.disabled = nearest === count - 1;
+    var label = "المسار " + (nearest + 1) + " من " + count;
+    if (status.textContent !== label) status.textContent = label;
+  }
+  function moveCard(step) {
+    var card = cards[clamp(currentCard + step, 0, count - 1)];
+    var bounds = grid.getBoundingClientRect();
+    grid.scrollBy({left: card.getBoundingClientRect().right - bounds.right,
+      behavior: reducedMotion.matches ? "instant" : "smooth"});
+  }
+  previous.addEventListener("click", function () { moveCard(-1); });
+  next.addEventListener("click", function () { moveCard(1); });
+  var scrollTimer;
+  grid.addEventListener("scroll", function () {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(updateCardPosition, 100);
+  }, {passive:true});
+  function createPreviews() {
+    if (!context || section.dataset.previewsReady) return;
+    section.dataset.previewsReady = "true";
+    canvas.width = width = 640;
+    canvas.height = height = 360;
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    progress = .5;
+    cards.forEach(function (card, index) {
+      activeIndex = index;
+      draw();
+      var preview = document.createElement("img");
+      preview.className = "service-path-card__preview";
+      preview.alt = "";
+      preview.width = 640;
+      preview.height = 360;
+      preview.src = canvas.toDataURL("image/webp");
+      preview.decoding = "async";
+      card.prepend(preview);
+    });
+    activeIndex = 0;
+    progress = 0;
+  }
+  function syncComposition() {
+    if (compactViewport.matches) createPreviews();
+    update();
+    resizeCanvas();
+    updateCardPosition();
+  }
+  compactViewport.addEventListener("change", syncComposition);
+  syncComposition();
   resizeCanvas();
   requestUpdate();
   revealHash();

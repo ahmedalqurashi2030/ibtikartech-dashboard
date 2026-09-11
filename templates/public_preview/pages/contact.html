@@ -1,8 +1,7 @@
 {% extends "public_preview/base.html" %}
 
 {% block head %}
-<title>ابدأ مشروعك مع ابتكار تك | إرسال طلب المشروع</title><meta name="description" content="أرسل معلومات مشروعك وهدفه ومنصته في نموذج مختصر يصل إلى فريق ابتكار تك لتحديد الخدمة والنطاق والخطوة التالية."><meta name="robots" content="noindex,follow"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<title>ابدأ مشروعك مع ابتكار تك | إرسال طلب المشروع</title><meta name="description" content="أرسل معلومات مشروعك وهدفه ومنصته في نموذج مختصر يصل إلى فريق ابتكار تك لتحديد الخدمة والنطاق والخطوة التالية."><meta name="robots" content="noindex,follow"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 {% endblock %}
 
@@ -10,13 +9,13 @@
 
 {% block body %}
 <main id="main-content">
-<section class="platform-hero"><div class="container platform-hero__grid"><div class="hero-copy reveal"><nav class="breadcrumbs" aria-label="مسار التنقل">
+<section class="platform-hero ibt-section ibt-section--hero"><div class="container platform-hero__grid ibt-container"><div class="hero-copy reveal"><nav class="breadcrumbs" aria-label="مسار التنقل">
   <a href="{% url 'public_preview:home' %}">الرئيسية</a>
   <span aria-hidden="true">←</span>
   <span aria-current="page">ابدأ مشروعك</span>
-</nav><span class="platform-kicker">ابدأ من الهدف</span><h1>أرسل معلومات مشروعك. <span>وحوّل الاحتياج إلى نطاق أوضح.</span></h1><p>ثلاث خطوات قصيرة ترتب الهدف والوضع الحالي والمنصة، ثم يصل الطلب إلى الفريق لمراجعة نقطة البداية المناسبة.</p><div class="platform-proof"><span><b>3 خطوات</b>معلومات مركزة</span><span><b>Scope-first</b>النطاق قبل السعر</span><span><b>إرسال آمن</b>مرجع فوري للطلب</span></div></div><figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع منظومة ابتكار تك الرقمية" width="1200" height="800" fetchpriority="high"><figcaption>كلما كان الهدف والوضع الحالي أوضح، كان تحديد نقطة البداية أدق.</figcaption></figure></div></section>
-<section class="platform-section platform-section--soft" id="quote"><div class="container contact-layout"><aside class="contact-panel content-copy reveal"><span class="section-kicker">معلومات المشروع</span><h2>ابدأ من النتيجة التي تريدها، لا من اسم الخدمة</h2><p>أرسل المعلومات الأساسية مرة واحدة. سنراجعها قبل اقتراح الخدمة أو النطاق أو التكلفة.</p><ul class="check-list"><li>لا تضع كلمات مرور أو مفاتيح أو بيانات حساسة</li><li>أضف رابط الموقع أو المتجر داخل التفاصيل إن وجد</li><li>السعر والمدة يحددان بعد مراجعة النطاق الفعلي</li></ul></aside>
-<form class="quote-form platform-card reveal" id="quote-form" method="post" action="{% url 'public_preview:contact' %}" data-submit-endpoint="{% url 'public_preview:contact' %}" data-form-steps data-ibt-form data-success-event="inquiry_submitted" aria-describedby="quote-form-privacy quote-form-state" novalidate>
+</nav><span class="platform-kicker">ابدأ من الهدف</span><h1 class="ibt-page-title">أرسل معلومات مشروعك. <span>وحوّل الاحتياج إلى نطاق أوضح.</span></h1><p>ثلاث خطوات قصيرة ترتب الهدف والوضع الحالي والمنصة، ثم يصل الطلب إلى الفريق لمراجعة نقطة البداية المناسبة.</p><div class="platform-proof"><span><b>3 خطوات</b>معلومات مركزة</span><span><b>Scope-first</b>النطاق قبل السعر</span><span><b>إرسال آمن</b>مرجع فوري للطلب</span></div></div><figure class="source-visual reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع منظومة ابتكار تك الرقمية" width="1200" height="800" fetchpriority="high"><figcaption>كلما كان الهدف والوضع الحالي أوضح، كان تحديد نقطة البداية أدق.</figcaption></figure></div></section>
+<section class="platform-section platform-section--soft ibt-section ibt-section--content" id="quote"><div class="container contact-layout ibt-container"><aside class="contact-panel content-copy reveal"><span class="section-kicker">معلومات المشروع</span><h2 class="ibt-section-title">ابدأ من النتيجة التي تريدها، لا من اسم الخدمة</h2><p>أرسل المعلومات الأساسية مرة واحدة. سنراجعها قبل اقتراح الخدمة أو النطاق أو التكلفة.</p><ul class="check-list"><li>لا تضع كلمات مرور أو مفاتيح أو بيانات حساسة</li><li>أضف رابط الموقع أو المتجر داخل التفاصيل إن وجد</li><li>السعر والمدة يحددان بعد مراجعة النطاق الفعلي</li></ul></aside>
+<form class="quote-form platform-card reveal ibt-card" id="quote-form" method="post" action="{% url 'public_preview:contact' %}" data-submit-endpoint="{% url 'public_preview:contact' %}" data-form-steps data-ibt-form data-success-event="inquiry_submitted" aria-describedby="quote-form-privacy quote-form-state" novalidate>
   {% csrf_token %}
   <input type="hidden" name="service" value="{{ inquiry_initial.service|default:'' }}">
   <input type="hidden" name="source" value="{{ inquiry_initial.source|default:'website' }}">

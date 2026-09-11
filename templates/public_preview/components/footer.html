@@ -43,15 +43,11 @@
 
     <div>
       <h3>المتاجر والمنصات</h3>
+      <a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a>
       <a href="{% url 'public_preview:ecommerce' %}#platforms">المنصات التي نعمل عليها</a>
       <div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div>
       <a href="{% url 'services:storefront-customization' %}">تخصيص واجهة المتجر</a>
       <a href="{% url 'services:product-page-optimization' %}">تحسين صفحة المنتج</a>
-    </div>
-
-    <div>
-      <h3>منتجاتنا</h3>
-      <a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a>
     </div>
 
     <div>
@@ -65,12 +61,6 @@
 
   <div class="ibt-shell-footer-bottom">
     <span>© <span id="year"></span> {{ site_config.brand.name }}. {{ site_config.copyright_text }}</span>
-    <div>
-      <a href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
-      <a href="{% url 'public_preview:knowledge' %}">المعرفة</a>
-      <a href="{% url 'services:index' %}">الحلول والخدمات</a>
-      <a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a>
-      <a href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
-    </div>
+
   </div>
 </footer>

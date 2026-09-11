@@ -5,8 +5,8 @@
 {% block service_breadcrumb_current %}تخصيص واجهة المتجر{% endblock %}
 
 {% block service_hero %}
-<section class="service-commerce-hero">
-  <div class="service-detail-shell">
+<section class="service-commerce-hero ibt-section ibt-section--hero">
+  <div class="service-detail-shell ibt-container">
     <div class="service-commerce-hero__card" data-service-commerce-hero>
       <div class="service-gallery" aria-label="معرض توضيحي للخدمة">
         <div class="service-gallery__stage">
@@ -23,7 +23,7 @@
 
       <div class="service-commerce-copy">
         <span class="service-detail-badge">STOREFRONT</span>
-        <h1>واجهة متجر تعكس علامتك <span>بدل أن تبدو قالبًا عامًا.</span></h1>
+        <h1 class="ibt-page-title">واجهة متجر تعكس علامتك <span>بدل أن تبدو قالبًا عامًا.</span></h1>
         <p>نخصص الثيم والصفحة الرئيسية والأقسام والبطاقات والبنرات والإيقاع البصري بما يناسب هوية المتجر ورحلة العميل، مع مراجعة الجوال وحدود المنصة قبل اعتماد أي تعديل.</p>
         <div class="service-platform-chips"><span>Salla</span><span>Zid</span><span>Shopify</span><span>WooCommerce</span><span>RTL + Mobile</span></div>
 
@@ -49,11 +49,11 @@
 {% endblock %}
 
 {% block service_content %}
-<section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="problems">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>قبل أن نغيّر الشكل</span>
-      <h2>هل واجهة متجرك تعاني من هذه العلامات؟</h2>
+      <h2 class="ibt-section-title">هل واجهة متجرك تعاني من هذه العلامات؟</h2>
       <p>التخصيص الجيد يبدأ بتشخيص ما يجعل الواجهة تبدو عامة أو مشتتة، لا بمجرد تغيير الألوان.</p>
     </div>
     <div class="service-problem-grid">
@@ -97,11 +97,11 @@
   </div>
 </section>
 
-<section class="service-detail-section service-decision-panel" data-service-decision-panel="fit">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="fit">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>اختيار المسار الصحيح</span>
-      <h2>هل تخصيص الواجهة هو الخدمة المناسبة لك؟</h2>
+      <h2 class="ibt-section-title">هل تخصيص الواجهة هو الخدمة المناسبة لك؟</h2>
     </div>
     <div class="service-fit-grid">
       <article class="service-fit-card service-fit-card--good">
@@ -116,8 +116,8 @@
       <article class="service-fit-card">
         <h3>قد تحتاج مسارًا آخر عندما</h3>
         <ul>
-          <li>لا يوجد متجر بعد — <a href="{% url 'public_preview:ecommerce' %}#service-launch">بدء الإطلاق</a>.</li>
-          <li>البنية مشتتة بالكامل — <a href="{% url 'public_preview:ecommerce' %}#service-redesign">إعادة التصميم</a>.</li>
+          <li>لا يوجد متجر بعد — <a href="{% url 'services:store-launch' %}">بدء الإطلاق</a>.</li>
+          <li>البنية مشتتة بالكامل — <a href="{% url 'services:store-redesign' %}">إعادة التصميم</a>.</li>
           <li>الهوية غير جاهزة — <a href="{% url 'public_preview:brand-content' %}">تجهيز الهوية</a>.</li>
         </ul>
       </article>
@@ -125,11 +125,11 @@
   </div>
 </section>
 
-<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="scope">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section service-detail-section--soft service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="scope">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>نطاق قابل للاعتماد</span>
-      <h2>ماذا يمكن أن ننفذ داخل هذه الخدمة؟</h2>
+      <h2 class="ibt-section-title">ماذا يمكن أن ننفذ داخل هذه الخدمة؟</h2>
     </div>
     <div class="service-scope-grid">
       <article><b>01</b><h3>فحص الواجهة الحالية</h3><p>الثيم والهرمية وسلوك الجوال.</p></article>
@@ -142,11 +142,11 @@
   </div>
 </section>
 
-<section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="deliverables">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>مخرجات</span>
-      <h2>ماذا تستلم في نهاية المسار؟</h2>
+      <h2 class="ibt-section-title">ماذا تستلم في نهاية المسار؟</h2>
     </div>
     <ul class="service-deliverable-grid">
       <li>تقرير فحص للواجهة</li>
@@ -159,11 +159,11 @@
   </div>
 </section>
 
-<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section service-detail-section--soft service-decision-panel ibt-section ibt-section--content" data-service-decision-panel="exclusions">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>حدود الخدمة</span>
-      <h2>ما لا يدخل تلقائيًا ضمن النطاق.</h2>
+      <h2 class="ibt-section-title">ما لا يدخل تلقائيًا ضمن النطاق.</h2>
     </div>
     <ul class="service-exclusion-list">
       <li>بناء هوية كاملة من الصفر</li>
@@ -174,11 +174,11 @@
   </div>
 </section>
 
-<section class="service-detail-section" id="visual-explanation">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section ibt-section ibt-section--content" id="visual-explanation">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>STOREFRONT ANATOMY</span>
-      <h2 id="storefront-anatomy-title">نخصص الواجهة كمنظومة تفاعلية.</h2>
+      <h2 id="storefront-anatomy-title" class="ibt-section-title">نخصص الواجهة كمنظومة تفاعلية.</h2>
       <p>اكتشف النقاط التي نعالجها لتحسين تجربة المستخدم البصرية.</p>
     </div>
     <div class="service-anatomy-layout" role="group" aria-labelledby="storefront-anatomy-title">
@@ -192,11 +192,11 @@
   </div>
 </section>
 
-<section class="service-detail-section service-detail-section--soft" id="process">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section service-detail-section--soft ibt-section ibt-section--content" id="process">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>رحلة التنفيذ</span>
-      <h2>من فحص الثيم إلى واجهة قابلة للاعتماد.</h2>
+      <h2 class="ibt-section-title">من فحص الثيم إلى واجهة قابلة للاعتماد.</h2>
     </div>
     <div class="timeline">
       <article><h3>فحص وتحديد أولويات</h3><p>نراجع الثيم والجوال والأقسام ونحدد ما يحتاج تدخلًا فعليًا.</p></article>
@@ -207,11 +207,11 @@
   </div>
 </section>
 
-<section class="service-detail-section" id="requirements">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section ibt-section ibt-section--content" id="requirements">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>قبل بدء التخصيص</span>
-      <h2>ما الذي نحتاجه لتقييم الواجهة بدقة؟</h2>
+      <h2 class="ibt-section-title">ما الذي نحتاجه لتقييم الواجهة بدقة؟</h2>
       <p>اكتمال هذه العناصر يقلل الرجوع ويجعل النطاق والمدة أكثر واقعية.</p>
     </div>
     <ul class="service-requirements">
@@ -227,11 +227,11 @@
   </div>
 </section>
 
-<section class="service-detail-section service-detail-section--soft" id="faq">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section service-detail-section--soft ibt-section ibt-section--content" id="faq">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>الأسئلة الشائعة</span>
-      <h2>نوضّح كل مسار قبل التنفيذ.</h2>
+      <h2 class="ibt-section-title">نوضّح كل مسار قبل التنفيذ.</h2>
     </div>
     <div class="service-faq">
       <details class="service-faq-item" id="faq-storefront-theme">
@@ -250,11 +250,11 @@
   </div>
 </section>
 
-<section class="service-detail-section">
-  <div class="service-detail-shell">
-    <div class="service-detail-heading">
+<section class="service-detail-section ibt-section ibt-section--content">
+  <div class="service-detail-shell ibt-container">
+    <div class="service-detail-heading ibt-section-heading">
       <span>خدمات بديلة ومكملة</span>
-      <h2>استكشف المسارات المتعلقة بتحديث المتجر.</h2>
+      <h2 class="ibt-section-title">استكشف المسارات المتعلقة بتحديث المتجر.</h2>
     </div>
     <nav class="related-nav">
       <a href="{% url 'services:store-redesign' %}">إعادة التصميم الشامل</a>
@@ -264,12 +264,12 @@
   </div>
 </section>
 
-<section class="service-detail-section service-detail-section--soft">
-  <div class="service-detail-shell">
+<section class="service-detail-section service-detail-section--soft ibt-section ibt-section--cta">
+  <div class="service-detail-shell ibt-container">
     <div class="page-cta">
       <div>
         <span class="service-detail-badge">CUSTOMIZATION</span>
-        <h2>واجهة أوضح تساعد العميل على فهم منتجاتك.</h2>
+        <h2 class="ibt-section-title">واجهة أوضح تساعد العميل على فهم منتجاتك.</h2>
         <p>شارِكنا رابط المتجر والاحتياج لتحديد أولويات التخصيص الفعالة مع الخبراء.</p>
       </div>
       <div class="cta-actions">

@@ -236,7 +236,6 @@
   };
 
   const loadEnhancements = () => {
-    ensureScript('/static/public_preview/assets/js/continuous-flow.js', 'continuous-flow');
     ensureScript('/static/public_preview/assets/js/frontend-final.js', 'frontend-final');
     if (pathname === 'index.html' || pathname === '') {
       ensureScript('/static/public_preview/assets/js/home-enhancements.js', 'strategy-enhancements');

@@ -99,7 +99,7 @@ python manage.py makemigrations --check --dry-run
 ## تشغيل خادم التطوير
 
 ```powershell
-python manage.py runserver
+python manage.py runserver 8080
 ```
 
 المسارات المحلية:

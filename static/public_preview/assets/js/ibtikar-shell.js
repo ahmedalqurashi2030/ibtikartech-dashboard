@@ -1,4 +1,23 @@
 (() => {
+  // Capture failures from both initial and later-inserted brand images.
+  const recoverLogo = (logo) => {
+    const images = [...logo.querySelectorAll('img')];
+    images.filter(img => img.complete && !img.naturalWidth).forEach(img => img.remove());
+    const remaining = [...logo.querySelectorAll('img')];
+    if (remaining.length === images.length) return;
+    logo.classList.remove('ibt-shell-logo--has-inverse');
+    remaining.forEach(img => img.classList.remove('ibt-shell-logo-default', 'ibt-shell-logo-inverse'));
+    if (!remaining.length) {
+      logo.classList.remove('ibt-shell-logo--asset');
+      logo.replaceChildren(...Array.from({ length: 3 }, () => document.createElement('i')));
+    }
+  };
+  document.querySelectorAll('.ibt-shell-logo--asset').forEach(recoverLogo);
+  document.addEventListener('error', event => {
+    if (!(event.target instanceof HTMLImageElement)) return;
+    const logo = event.target.closest('.ibt-shell-logo--asset');
+    if (logo) recoverLogo(logo);
+  }, true);
   document.querySelectorAll('#year').forEach((item) => { item.textContent = new Date().getFullYear(); });
   const megaToggles = [...document.querySelectorAll('[data-ibt-mega-toggle]')];
   const megaRoots = [...document.querySelectorAll('[data-ibt-mega-root]')];
