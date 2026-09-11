@@ -1,6 +1,3 @@
-from pathlib import Path
-
-
 CATEGORY_TEMPLATES = (
     "ecommerce.html",
     "websites.html",
@@ -23,7 +20,17 @@ ECOMMERCE_FRAGMENT_MARKER = "{% url 'public_preview:ecommerce' %}#"
 
 
 def _template_source(name):
-    return Path("templates/public_preview/pages", name).read_text(encoding="utf-8")
+    path = f"templates/public_preview/pages/{name}"
+    with open(path, encoding="utf-8") as template_file:
+        return template_file.read()
+
+
+def _file_exists(path):
+    try:
+        with open(path, "rb"):
+            return True
+    except FileNotFoundError:
+        return False
 
 
 def _quoted_values(source, prefix):
@@ -91,7 +98,7 @@ def test_service_static_references_exist_in_repository():
         source = _template_source(template_name)
         for static_url in _static_urls(source):
             relative_path = static_url.removeprefix("/static/")
-            assert Path("static", relative_path).is_file(), (
+            assert _file_exists(f"static/{relative_path}"), (
                 template_name,
                 static_url,
             )
