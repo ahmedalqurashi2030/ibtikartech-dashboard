@@ -19,11 +19,25 @@
   --ibt-info: #4f7df3;
   --ibt-gradient: linear-gradient(135deg, var(--ibt-cyan) 0%, var(--ibt-blue) 34%, var(--ibt-purple) 67%, var(--ibt-pink) 100%);
   --ibt-gradient-dark: linear-gradient(145deg, #07102b 0%, #101848 45%, #28103e 100%);
+
+  /* Layout and spacing primitives. Keep page families aligned to one rhythm. */
   --ibt-container: 1180px;
   --ibt-container-wide: 1240px;
+  --ibt-container-reading: 760px;
+  --ibt-content-measure: 68ch;
+  --ibt-page-gutter: clamp(14px, 2.4vw, 20px);
+  --ibt-section-space: clamp(74px, 7vw, 96px);
+  --ibt-section-space-compact: clamp(48px, 5vw, 64px);
+  --ibt-grid-gap: clamp(16px, 2vw, 24px);
+  --ibt-card-padding: clamp(20px, 2.4vw, 28px);
+
   --ibt-header-h: 72px;
   --ibt-announcement-h: 34px;
   --ibt-target-min: 44px;
+  --ibt-control-h: var(--ibt-target-min);
+  --ibt-icon-sm: 18px;
+  --ibt-icon-md: 24px;
+
   --ibt-space-1: 2px;
   --ibt-space-2: 4px;
   --ibt-space-3: 8px;
@@ -36,15 +50,20 @@
   --ibt-space-10: 80px;
   --ibt-space-11: 96px;
   --ibt-space-12: 128px;
+
   --ibt-radius-sm: 12px;
   --ibt-radius: 18px;
   --ibt-radius-lg: 26px;
   --ibt-radius-xl: 34px;
+  --ibt-radius-card: var(--ibt-radius-lg);
+  --ibt-radius-panel: var(--ibt-radius-xl);
   --ibt-radius-pill: 999px;
+
   --ibt-shadow-sm: 0 8px 30px rgba(20, 31, 67, .08);
   --ibt-shadow-md: 0 18px 55px rgba(20, 31, 67, .14);
   --ibt-shadow-lg: 0 30px 90px rgba(5, 13, 45, .24);
   --ibt-shadow-glow: 0 0 40px rgba(79, 125, 243, .18);
+
   --ibt-font: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
   --ibt-font-display: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
   --ibt-text-xs: clamp(.72rem, .69rem + .12vw, .78rem);
@@ -54,10 +73,12 @@
   --ibt-text-xl: clamp(1.45rem, 1.18rem + 1vw, 2rem);
   --ibt-text-2xl: clamp(2rem, 1.52rem + 1.9vw, 3.25rem);
   --ibt-text-3xl: clamp(2.7rem, 1.8rem + 3.6vw, 5.5rem);
+
   --ibt-ease: cubic-bezier(.22, 1, .36, 1);
   --ibt-duration-fast: .2s;
   --ibt-duration: .35s;
   --ibt-duration-slow: .65s;
+
   --ibt-z-base: 1;
   --ibt-z-dropdown: 100;
   --ibt-z-sticky: 500;
@@ -66,6 +87,7 @@
   --ibt-z-modal: 2400;
   --ibt-z-toast: 2500;
   --ibt-focus: 0 0 0 3px rgba(16, 200, 232, .28);
+
   --color-bg: var(--ibt-bg);
   --color-bg-soft: var(--ibt-bg-soft);
   --color-surface: var(--ibt-surface);
