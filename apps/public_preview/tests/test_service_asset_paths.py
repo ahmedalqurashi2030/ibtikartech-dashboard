@@ -1,5 +1,4 @@
-import pathlib
-import re
+from pathlib import Path
 
 
 CATEGORY_TEMPLATES = (
@@ -20,15 +19,62 @@ DETAIL_TEMPLATES = (
 )
 
 SERVICE_TEMPLATES = (*CATEGORY_TEMPLATES, *DETAIL_TEMPLATES)
-STATIC_URL_RE = re.compile(r'["\'](/static/[^"\'?#]+)')
-HTML_ID_RE = re.compile(r'\bid=["\']([^"\']+)["\']')
-ECOMMERCE_FRAGMENT_RE = re.compile(
-    r"\{% url 'public_preview:ecommerce' %\}#([A-Za-z0-9_-]+)"
-)
+ECOMMERCE_FRAGMENT_MARKER = "{% url 'public_preview:ecommerce' %}#"
 
 
 def _template_source(name):
-    return pathlib.Path("templates/public_preview/pages", name).read_text(encoding="utf-8")
+    return Path("templates/public_preview/pages", name).read_text(encoding="utf-8")
+
+
+def _quoted_values(source, prefix):
+    values = set()
+    for quote in ('"', "'"):
+        marker = f"{prefix}{quote}"
+        start = 0
+        while True:
+            marker_index = source.find(marker, start)
+            if marker_index == -1:
+                break
+            value_start = marker_index + len(marker)
+            value_end = source.find(quote, value_start)
+            if value_end == -1:
+                break
+            values.add(source[value_start:value_end])
+            start = value_end + 1
+    return values
+
+
+def _static_urls(source):
+    urls = set()
+    for quote in ('"', "'"):
+        marker = f"{quote}/static/"
+        start = 0
+        while True:
+            marker_index = source.find(marker, start)
+            if marker_index == -1:
+                break
+            value_start = marker_index + 1
+            value_end = source.find(quote, value_start)
+            if value_end == -1:
+                break
+            url = source[value_start:value_end].split("?", 1)[0].split("#", 1)[0]
+            urls.add(url)
+            start = value_end + 1
+    return urls
+
+
+def _ecommerce_fragments(source):
+    fragments = []
+    for remainder in source.split(ECOMMERCE_FRAGMENT_MARKER)[1:]:
+        fragment = ""
+        for character in remainder:
+            if character.isalnum() or character in "-_":
+                fragment += character
+            else:
+                break
+        if fragment:
+            fragments.append(fragment)
+    return fragments
 
 
 def test_service_templates_do_not_use_document_relative_asset_urls():
@@ -43,9 +89,9 @@ def test_service_static_references_exist_in_repository():
     """Catch stale visual/runtime references before they become broken assets."""
     for template_name in SERVICE_TEMPLATES:
         source = _template_source(template_name)
-        for static_url in STATIC_URL_RE.findall(source):
+        for static_url in _static_urls(source):
             relative_path = static_url.removeprefix("/static/")
-            assert pathlib.Path("static", relative_path).is_file(), (
+            assert Path("static", relative_path).is_file(), (
                 template_name,
                 static_url,
             )
@@ -54,9 +100,9 @@ def test_service_static_references_exist_in_repository():
 def test_service_links_to_ecommerce_fragments_target_existing_sections():
     """Cross-page ecommerce links must land on a real section, not a stale fragment."""
     ecommerce_source = _template_source("ecommerce.html")
-    ecommerce_ids = set(HTML_ID_RE.findall(ecommerce_source))
+    ecommerce_ids = _quoted_values(ecommerce_source, "id=")
 
     for template_name in DETAIL_TEMPLATES:
         source = _template_source(template_name)
-        for fragment in ECOMMERCE_FRAGMENT_RE.findall(source):
+        for fragment in _ecommerce_fragments(source):
             assert fragment in ecommerce_ids, (template_name, fragment)
