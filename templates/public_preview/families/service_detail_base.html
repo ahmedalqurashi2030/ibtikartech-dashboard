@@ -18,8 +18,7 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
-<!-- Phase 1: Shared Primitives (Added alongside legacy CSS during transition) -->
-<link rel="stylesheet" href="/static/public_preview/assets/css/service-primitives.css?v=20260902">
+<link rel="stylesheet" href="/static/public_preview/assets/css/service-primitives.css?v=20260911">
 {% endblock %}
 {% endblock %}
 
@@ -33,7 +32,7 @@
       <span aria-hidden="true">←</span>
       <a href="{% url 'services:index' %}">الحلول والخدمات</a>
       <span aria-hidden="true">←</span>
-      <a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
+      {% block service_breadcrumb_parent %}<a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>{% endblock %}
       <span aria-hidden="true">←</span>
       <b aria-current="page">{% block service_breadcrumb_current %}{% endblock %}</b>
     </nav>
@@ -64,7 +63,6 @@
 <script src="/static/public_preview/assets/js/app.js" defer></script>
 <script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
 <script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
-<!-- Phase 1: Shared Primitives -->
 <script src="/static/public_preview/assets/js/service-primitives.js?v=20260902" defer></script>
 {% endblock %}
 {% endblock %}
