@@ -62,7 +62,7 @@
 
 .service-category-page #main-content.service-reference .gradient-text {
   color: transparent;
-  background: var(--glow);
+  background: var(--ibt-heading-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -71,6 +71,11 @@
 .service-category-page #main-content.service-reference .btn {
   min-height: var(--svc-control-h);
   border-radius: var(--ibt-radius-sm, 12px);
+}
+
+.service-category-page #main-content.service-reference .btn.primary {
+  background: var(--ibt-action-gradient);
+  color: #fff;
 }
 
 .service-category-page #main-content.service-reference .btn.small {

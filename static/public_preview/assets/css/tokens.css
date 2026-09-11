@@ -1,4 +1,9 @@
 :root {
+  color-scheme: light;
+  --ibt-focus-color: #2856c5;
+  --ibt-link: #2856c5;
+  --ibt-action-gradient: linear-gradient(135deg, #2856c5, #5146b8);
+  --ibt-heading-gradient: linear-gradient(110deg, #2856c5, #5146b8);
   --ibt-navy: #0b1026;
   --ibt-navy-2: #111a3d;
   --ibt-bg: #ffffff;
@@ -25,16 +30,37 @@
   --ibt-container-wide: 1240px;
   --ibt-container-reading: 760px;
   --ibt-content-measure: 68ch;
-  --ibt-page-gutter: clamp(14px, 2.4vw, 20px);
-  --ibt-section-space: clamp(74px, 7vw, 96px);
+  --ibt-page-gutter: clamp(16px, 3vw, 24px);
+  --ibt-section-space: clamp(56px, 6vw, 88px);
   --ibt-section-space-compact: clamp(48px, 5vw, 64px);
   --ibt-grid-gap: clamp(16px, 2vw, 24px);
   --ibt-card-padding: clamp(20px, 2.4vw, 28px);
 
+  --ibt-container-sm: 960px;
+  --ibt-section-space-xs: 24px;
+  --ibt-section-space-lg: clamp(72px, 8vw, 112px);
+  --ibt-grid-gap-sm: 12px;
+  --ibt-grid-gap-lg: clamp(24px, 4vw, 48px);
+  --ibt-card-padding-sm: 16px;
+  --ibt-card-padding-lg: clamp(24px, 4vw, 40px);
+  --ibt-control-h-sm: 44px;
+  --ibt-control-h-lg: 52px;
+  --ibt-surface-1: var(--ibt-surface);
+  --ibt-surface-2: var(--ibt-bg-soft);
+  --ibt-surface-3: color-mix(in srgb, var(--ibt-text) 5%, var(--ibt-bg-soft));
+  --ibt-border-strong: color-mix(in srgb, var(--ibt-text) 25%, var(--ibt-border));
+  --ibt-type-hero: clamp(32px, 1.5rem + 2.2vw, 56px);
+  --ibt-type-section: clamp(26px, 1.25rem + 1.25vw, 38px);
+  --ibt-type-section-compact: clamp(24px, 1.15rem + 1vw, 32px);
+  --ibt-type-section-small: clamp(22px, 1.1rem + .7vw, 28px);
+  --ibt-type-card: clamp(20px, 1.1rem + .45vw, 24px);
+  --ibt-type-lead: clamp(16px, .95rem + .2vw, 18px);
+  --ibt-type-copy: 1rem;
+
   --ibt-header-h: 72px;
   --ibt-announcement-h: 34px;
   --ibt-target-min: 44px;
-  --ibt-control-h: var(--ibt-target-min);
+  --ibt-control-h: 48px;
   --ibt-icon-sm: 18px;
   --ibt-icon-md: 24px;
 
@@ -55,8 +81,8 @@
   --ibt-radius: 18px;
   --ibt-radius-lg: 26px;
   --ibt-radius-xl: 34px;
-  --ibt-radius-card: var(--ibt-radius-lg);
-  --ibt-radius-panel: var(--ibt-radius-xl);
+  --ibt-radius-card: var(--ibt-radius);
+  --ibt-radius-panel: var(--ibt-radius-lg);
   --ibt-radius-pill: 999px;
 
   --ibt-shadow-sm: 0 8px 30px rgba(20, 31, 67, .08);
@@ -76,8 +102,8 @@
 
   --ibt-ease: cubic-bezier(.22, 1, .36, 1);
   --ibt-duration-fast: .2s;
-  --ibt-duration: .35s;
-  --ibt-duration-slow: .65s;
+  --ibt-duration: .24s;
+  --ibt-duration-slow: .4s;
 
   --ibt-z-base: 1;
   --ibt-z-dropdown: 100;
@@ -120,6 +146,10 @@
 }
 
 html[data-theme="dark"] {
+  color-scheme: dark;
+  --ibt-focus-color: #75d9ef;
+  --ibt-link: #91b3ff;
+  --ibt-heading-gradient: linear-gradient(110deg, #91b3ff, #c4a3ff 55%, #f5a2d4);
   --ibt-bg: #090e20;
   --ibt-bg-soft: #0f162d;
   --ibt-surface: #121a33;

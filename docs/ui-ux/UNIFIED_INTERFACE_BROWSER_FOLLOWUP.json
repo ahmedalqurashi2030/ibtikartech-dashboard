@@ -1,0 +1,186 @@
+{
+  "findings": [
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    }
+  ],
+  "errors": [],
+  "nojs": true
+}

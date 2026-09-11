@@ -1,0 +1,1338 @@
+{
+  "findings": [
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/knowledge/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/knowledge/product-page/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/knowledge/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/404/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": [
+        "/media/images/inA0x6HlS2sMC65JOKfUhyJfP8S66TSFwCRx.2e16d0ba.fill-76x76.png"
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/about/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/contact/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/portfolio/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/knowledge/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/websites/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 10,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/brand-content/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/custom-systems/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/storefront-customization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/product-page-optimization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/ecommerce-growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "route": "/services/ecommerce-support/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/knowledge/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/knowledge/product-page/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/knowledge/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/404/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": [
+        "/media/images/inA0x6HlS2sMC65JOKfUhyJfP8S66TSFwCRx.2e16d0ba.fill-76x76.png"
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/about/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/contact/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/portfolio/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/knowledge/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/websites/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 10,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/brand-content/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/custom-systems/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/storefront-customization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/product-page-optimization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/ecommerce-growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "route": "/services/ecommerce-support/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/knowledge/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/knowledge/product-page/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/knowledge/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/404/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": [
+        "/media/images/inA0x6HlS2sMC65JOKfUhyJfP8S66TSFwCRx.2e16d0ba.fill-76x76.png"
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/about/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/contact/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/portfolio/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/knowledge/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/websites/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 10,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/brand-content/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/custom-systems/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/storefront-customization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/product-page-optimization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/ecommerce-growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "light",
+      "width": 1440,
+      "route": "/services/ecommerce-support/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/knowledge/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/knowledge/product-page/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/knowledge/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/404/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": [
+        "/media/images/inA0x6HlS2sMC65JOKfUhyJfP8S66TSFwCRx.2e16d0ba.fill-76x76.png"
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/about/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/contact/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/portfolio/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/knowledge/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/websites/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 10,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/brand-content/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/custom-systems/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/storefront-customization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/product-page-optimization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/ecommerce-growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "route": "/services/ecommerce-support/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/knowledge/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/knowledge/product-page/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/knowledge/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/404/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": [
+        "/media/images/inA0x6HlS2sMC65JOKfUhyJfP8S66TSFwCRx.2e16d0ba.fill-76x76.png"
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/about/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/contact/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/portfolio/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/knowledge/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/websites/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 10,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/brand-content/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/custom-systems/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/storefront-customization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/product-page-optimization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/ecommerce-growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "route": "/services/ecommerce-support/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/knowledge/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/knowledge/product-page/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/knowledge/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/404/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/tharaa/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": [
+        "/media/images/inA0x6HlS2sMC65JOKfUhyJfP8S66TSFwCRx.2e16d0ba.fill-76x76.png"
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/about/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/contact/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/portfolio/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/knowledge/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/ecommerce/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 4,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/websites/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 10,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/brand-content/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/custom-systems/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 6,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/store-launch/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/storefront-customization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/store-redesign/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/product-page-optimization/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/ecommerce-growth/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "route": "/services/ecommerce-support/",
+      "overflow": false,
+      "h1": 1,
+      "paths": 0,
+      "scenes": true,
+      "broken": []
+    }
+  ],
+  "errors": [],
+  "nojs": true
+}

@@ -33,10 +33,7 @@
 
 
 <!-- Unified brand system; page composition remains owned by the approved source. -->
-<link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/conversion-funnel.css">
@@ -59,7 +56,7 @@
 <div aria-hidden="true" class="site-ambient"><i></i><i></i><i></i></div>
 
 <div class="ibtx-announcement">
-  <div class="ibtx-container ibtx-announcement__inner">
+  <div class="ibtx-container ibtx-announcement__inner ibt-container">
     <span>نبني حضورك الرقمي من الفكرة إلى النمو.</span>
     <a href="#services">استكشف حلول ابتكار تك ←</a>
   </div>
@@ -67,7 +64,7 @@
 
 
 <main id="main-content">
-<section class="hero hero--system" id="home">
+<section class="hero hero--system ibt-section ibt-section--hero" id="home">
 <div aria-hidden="true" class="hero-cinema-aura"></div>
 <div aria-hidden="true" class="hero-cinema-motes">
 <i style="--x:8%;--y:76%;--s:6px;--d:11s;--delay:-1s;--drift:32px"></i>
@@ -79,10 +76,10 @@
 </div>
 <div class="hero__glow hero__glow--one"></div>
 <div class="hero__glow hero__glow--two"></div>
-<div class="container hero__grid">
+<div class="container hero__grid ibt-container">
 <div class="hero__content reveal">
 <span class="eyebrow"><i></i>للمتاجر والشركات في السعودية والخليج</span>
-<h1>نحوّل فكرتك الرقمية <span>إلى تجربة واضحة تعمل وتنمو</span></h1>
+<h1 class="ibt-page-title">نحوّل فكرتك الرقمية <span>إلى تجربة واضحة تعمل وتنمو</span></h1>
 <p>نبدأ من هدف مشروعك، نحدد أقل نطاق صحيح، ثم نبني المتجر أو الموقع وما يحتاجه من هوية ومحتوى وقياس وربط ضمن رحلة واحدة قابلة للإدارة والتطوير.</p>
 <div class="hero__actions">
 <a class="btn btn--gradient magnetic" href="#goals">اختر نقطة البداية
@@ -98,7 +95,7 @@
 <figcaption>التجارة والويب والهوية والقياس والأتمتة ضمن نظام واحد.</figcaption>
 </figure>
 </div>
-<div class="container platforms">
+<div class="container platforms ibt-container">
 <span>نعمل باحتراف على:</span>
 <div aria-label="المنصات المدعومة" class="platform-list"><div class="platform-track">
 <b>سلة</b><b>زد</b><b>WooCommerce</b><b>WordPress</b><b>Shopify</b><b>حلول مخصصة</b>
@@ -106,10 +103,10 @@
 </div></div>
 </div>
 </section>
-<section class="home-goal-router" id="goals" aria-labelledby="homeGoalsTitle">
-<div class="container">
+<section class="home-goal-router ibt-section ibt-section--content" id="goals" aria-labelledby="homeGoalsTitle">
+<div class="container ibt-container">
 <div class="home-goal-router__heading reveal">
-<div><span class="section-kicker">ابدأ من وضع مشروعك</span><h2 id="homeGoalsTitle">ما النتيجة التي تحتاجها الآن؟</h2></div>
+<div><span class="section-kicker">ابدأ من وضع مشروعك</span><h2 id="homeGoalsTitle" class="ibt-section-title">ما النتيجة التي تحتاجها الآن؟</h2></div>
 <p>لا تحتاج إلى معرفة اسم الخدمة. اختر الحالة الأقرب وسنقودك إلى الفئة والنطاق المناسبين.</p>
 </div>
 <div class="home-goal-router__grid">
@@ -121,18 +118,18 @@
 <div class="home-goal-router__unknown"><span>لست متأكدًا من نقطة البداية؟</span><a href="{% url 'public_preview:contact' %}?goal=unknown&source=home-goals#quote" data-analytics="quote_request" data-analytics-label="home-goals-diagnostic">ابدأ تشخيصًا مختصرًا</a></div>
 </div>
 </section>
-<section class="home-proof-band" aria-labelledby="homeProofTitle">
-<div class="container home-proof-band__grid">
-<div class="home-proof-band__copy reveal"><span class="section-kicker">دليل منتج مملوك</span><h2 id="homeProofTitle">ثراء: ثيم منشور لمتاجر سلة</h2><p>منتج فعلي بنيناه داخل قيود منصة سلة، ويعرض قدرتنا على تنظيم تجربة الجوال وصفحة المنتج ومكونات الواجهة ضمن نظام قابل للتخصيص.</p><div><a href="{% url 'public_preview:tharaa' %}">شاهد دراسة المنتج</a><a href="https://salla.com/themes/1609470678" target="_blank" rel="noopener">افتح صفحة سلة</a></div></div>
+<section class="home-proof-band ibt-section ibt-section--content" aria-labelledby="homeProofTitle">
+<div class="container home-proof-band__grid ibt-container">
+<div class="home-proof-band__copy reveal"><span class="section-kicker">دليل منتج مملوك</span><h2 id="homeProofTitle" class="ibt-section-title">ثراء: ثيم منشور لمتاجر سلة</h2><p>منتج فعلي بنيناه داخل قيود منصة سلة، ويعرض قدرتنا على تنظيم تجربة الجوال وصفحة المنتج ومكونات الواجهة ضمن نظام قابل للتخصيص.</p><div><a href="{% url 'public_preview:tharaa' %}">شاهد دراسة المنتج</a><a href="https://salla.com/themes/1609470678" target="_blank" rel="noopener">افتح صفحة سلة</a></div></div>
 <dl class="home-proof-band__facts reveal"><div><dt>المنصة</dt><dd>سلة</dd></div><div><dt>الفئة</dt><dd>العناية والتجميل</dd></div><div><dt>السعر الحالي</dt><dd>299 ر.س</dd></div><div><dt>نموذج الشراء</dt><dd>دفعة واحدة</dd></div></dl>
 </div>
 </section>
-<section aria-label="الحلول والخدمات الرقمية في ابتكار تك" class="services-cinema" id="services">
+<section aria-label="الحلول والخدمات الرقمية في ابتكار تك" class="services-cinema ibt-section ibt-section--story" id="services">
 <div class="services-cinema__stage">
 <canvas aria-hidden="true" id="servicesCanvas"></canvas>
 <div class="services-cinema__wash"></div><div class="services-cinema__grain"></div>
 <div class="services-cinema__top"><div class="cinema-kicker"><i></i><span>الحلول والخدمات الرقمية</span></div><span class="cinema-index">SOLUTIONS &amp; SERVICES / 01—05</span></div>
-<div class="services-cinema__heading" id="servicesHeading"><small>خمس فئات واضحة</small><h2>اختر المجال.<span>ونحن نضبط النطاق.</span></h2><p>كل فئة تجيب سؤالًا مختلفًا، وتقود إلى صفحة تشرح الملاءمة والمخرجات والحدود قبل طلب التواصل.</p></div>
+<div class="services-cinema__heading" id="servicesHeading"><small>خمس فئات واضحة</small><h2 class="ibt-section-title">اختر المجال.<span>ونحن نضبط النطاق.</span></h2><p>كل فئة تجيب سؤالًا مختلفًا، وتقود إلى صفحة تشرح الملاءمة والمخرجات والحدود قبل طلب التواصل.</p></div>
 <div class="services-cinema__copy" id="servicesCopy">
 <article class="service-scene-copy" data-a=".04" data-b=".24"><div class="scene-meta">01 / COMMERCE</div><span class="scene-fit">لإطلاق متجر أو إصلاح رحلة متجر قائم</span><h3>تجارة إلكترونية أوضح من الاكتشاف إلى الشراء</h3><p>نحدد المنصة والنطاق، ثم ننظم الجوال والتصنيفات وصفحة المنتج والثقة والقياس وفق مرحلة متجرك.</p><div class="chips"><span>سلة</span><span>زد</span><span>WooCommerce</span><span>Shopify</span></div><a class="scene-link" href="{% url 'public_preview:ecommerce' %}">اكتشف حلول المتاجر</a></article>
 <article class="service-scene-copy" data-a=".22" data-b=".43"><div class="scene-meta">02 / WEB EXPERIENCE</div><span class="scene-fit">لشركة تحتاج موقعًا أو صفحة هبوط</span><h3>مواقع تشرح القيمة وتقود إلى الإجراء</h3><p>نرتب الرسالة والخدمات والدليل ومسار التواصل ضمن تجربة عربية سريعة وسهلة الإدارة.</p><div class="chips"><span>WordPress</span><span>Landing Pages</span><span>Corporate</span></div><a class="scene-link" href="{% url 'public_preview:websites' %}">اكتشف حلول المواقع</a></article>
@@ -144,7 +141,7 @@
 <div class="services-cinema__signature">STRATEGY × DESIGN × TECHNOLOGY × GROWTH</div>
 </div>
 <div class="services-mobile-deck">
-<div class="section-heading"><span class="section-kicker">الحلول والخدمات</span><h2>ابدأ من هدفك، ثم نبني المنظومة المناسبة</h2></div>
+<div class="section-heading ibt-section-heading"><span class="section-kicker">الحلول والخدمات</span><h2 class="ibt-section-title">ابدأ من هدفك، ثم نبني المنظومة المناسبة</h2></div>
 <div class="services-mobile-track">
 <a class="services-mobile-card" href="{% url 'public_preview:ecommerce' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(34,211,238,.32)"><div class="mobile-scene-window"><i></i><i></i><i></i><i></i></div></div><small>01 / COMMERCE</small><h3>المتاجر الإلكترونية</h3><p>سلة، زد وWooCommerce وتجارب شراء محسنة.</p><div class="chips"><span>Mobile-first</span><span>CRO</span></div></a>
 <a class="services-mobile-card" href="{% url 'public_preview:websites' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(91,140,255,.34)"><div class="mobile-scene-window"><i></i><i></i><i></i><i></i><i></i></div></div><small>02 / WEB</small><h3>المواقع وصفحات الهبوط</h3><p>مواقع حديثة سريعة وواضحة وسهلة الإدارة.</p><div class="chips"><span>WordPress</span><span>Landing</span></div></a>
@@ -155,7 +152,7 @@
 </div>
 </section>
 
-<section aria-label="ما يحدث بعد اختيار نقطة البداية" class="cinematic-story cinematic-story--decision" id="journey">
+<section aria-label="ما يحدث بعد اختيار نقطة البداية" class="cinematic-story cinematic-story--decision ibt-section ibt-section--story" id="journey">
 <div class="cinematic-story__stage">
 <canvas aria-hidden="true" id="cinematicCanvas"></canvas>
 <div class="cinematic-story__wash"></div><div class="cinematic-story__vignette"></div><div class="cinematic-story__grain"></div>
@@ -163,7 +160,7 @@
 <div class="cinematic-story__intro" id="cinematicIntro">
 <div class="cinematic-story__intro-inner">
 <small>بعد اختيار نقطة البداية</small>
-<h2>نحوّل الهدف إلى نطاق واضح<span>ثم إلى أصل رقمي يعمل ويتحسن</span></h2>
+<h2 class="ibt-section-title">نحوّل الهدف إلى نطاق واضح<span>ثم إلى أصل رقمي يعمل ويتحسن</span></h2>
 <p>لا نبدأ بالشاشات أو الأدوات. نثبت القرار المطلوب، وما يدخل في المرحلة الأولى، ثم نبني ونختبر ونسلّم مع أساس قياس يناسب المشروع.</p>
 <div aria-hidden="true" class="cinematic-story__principles"><span>فهم</span><span>نطاق</span><span>تجربة</span><span>تنفيذ</span><span>تحسين</span></div>
 </div>
@@ -182,14 +179,14 @@
 </div>
 </section>
 
-<section class="ibtx-tharaa-preview ibtx-tharaa-preview--split" id="tharaa" aria-label="معاينة ثيم ثراء">
+<section class="ibtx-tharaa-preview ibtx-tharaa-preview--split ibt-section ibt-section--content" id="tharaa" aria-label="معاينة ثيم ثراء">
   <div class="ibtx-tharaa-preview__bg" aria-hidden="true"></div>
 
-  <div class="ibtx-container ibtx-tharaa-split">
+  <div class="ibtx-container ibtx-tharaa-split ibt-container">
     <div class="ibtx-tharaa-split__content">
       <span class="ibtx-tharaa-preview__badge">ثراء × ابتكار تك</span>
       <p class="ibtx-tharaa-split__overline">ثيم احترافي لمتاجر سلة</p>
-      <h2>شاهد تجربة ثراء<br><span>على الكمبيوتر والهاتف.</span></h2>
+      <h2 class="ibt-section-title">شاهد تجربة ثراء<br><span>على الكمبيوتر والهاتف.</span></h2>
       <p class="ibtx-tharaa-split__lead">بدّل بين الجهازين وشاهد كيف يحافظ ثراء على هوية المتجر ووضوح المحتوى وسهولة التصفح في كل شاشة.</p>
 
       
@@ -303,9 +300,9 @@
 
 
 
-<section class="section section--soft faq-section" id="faq">
-<div class="container faq-grid">
-<div class="faq-intro reveal"><span class="section-kicker">الأسئلة الشائعة</span><h2>إجابات قبل أن تبدأ</h2><p>أهم الأسئلة المتعلقة بالخدمات، المدة، المنصات، الأسعار، والدعم.</p><a class="btn btn--outline" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-question">لدي سؤال عن مشروعي</a></div>
+<section class="section section--soft faq-section ibt-section ibt-section--content" id="faq">
+<div class="container faq-grid ibt-container">
+<div class="faq-intro reveal"><span class="section-kicker">الأسئلة الشائعة</span><h2 class="ibt-section-title">إجابات قبل أن تبدأ</h2><p>أهم الأسئلة المتعلقة بالخدمات، المدة، المنصات، الأسعار، والدعم.</p><a class="btn btn--outline" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-question">لدي سؤال عن مشروعي</a></div>
 <div class="accordion reveal">
 <article class="accordion-item open"><button aria-expanded="true" type="button"><span>هل تعملون على سلة فقط؟</span><i></i></button><div class="accordion-content"><p>لا. نقدم خدمات على سلة وزد وWooCommerce وWordPress، إضافة إلى مواقع وحلول مخصصة حسب المشروع.</p></div></article>
 <article class="accordion-item"><button aria-expanded="false" type="button"><span>هل تشمل الخدمة رسوم المنصة والدومين؟</span><i></i></button><div class="accordion-content"><p>رسوم المنصات والدومين والتطبيقات الخارجية لا تدخل ضمن سعر التنفيذ إلا إذا ذُكرت صراحة في عرض السعر.</p></div></article>
@@ -315,10 +312,10 @@
 <article class="accordion-item"><button aria-expanded="false" type="button"><span>كيف أبدأ الطلب؟</span><i></i></button><div class="accordion-content"><p>افتح صفحة «ابدأ مشروعك» وجهّز معلومات المشروع واحفظها كمسودة على جهازك.</p></div></article>
 </div>
 </div>
-</section><section class="cta-section" id="contact">
-<div class="container cta-card reveal">
+</section><section class="cta-section ibt-section ibt-section--cta" id="contact">
+<div class="container cta-card reveal ibt-container">
 <div class="cta-shape cta-shape--one"></div><div class="cta-shape cta-shape--two"></div>
-<div><span>خطوتك القادمة تبدأ هنا</span><h2>جاهز تبني مشروعك الرقمي؟</h2><p>شاركنا فكرتك أو رابط متجرك، وسنقترح عليك المسار الأقرب لهدفك.</p></div>
+<div><span>خطوتك القادمة تبدأ هنا</span><h2 class="ibt-section-title">جاهز تبني مشروعك الرقمي؟</h2><p>شاركنا فكرتك أو رابط متجرك، وسنقترح عليك المسار الأقرب لهدفك.</p></div>
 <div class="cta-actions"><a class="btn btn--light magnetic" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-final-project">ابدأ مشروعك</a><a class="btn btn--ghost-light" href="{% url 'services:index' %}">استكشف الحلول والخدمات</a></div>
 </div>
 </section></main>

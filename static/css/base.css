@@ -2,7 +2,7 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html { color-scheme: dark; }
+html { scroll-padding-top: 6rem; }
 
 body {
   margin: 0;
@@ -44,3 +44,7 @@ a { color: inherit; }
     animation-duration: .01ms !important;
   }
 }
+
+h1, h2, h3 { line-height: 1.4; text-wrap: balance; }
+p, li, dd { overflow-wrap: anywhere; }
+button, input, select, textarea { font: inherit; }

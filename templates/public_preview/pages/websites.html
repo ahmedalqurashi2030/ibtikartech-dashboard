@@ -5,27 +5,20 @@
 {% block category_body_attrs %} class="inner-page platform-page category-hub service-category-page category-websites" data-section="services"{% endblock %}
 
 {% block category_content %}
-<section class="hero"><div class="container platform-hero__grid"><div class="hero-copy reveal">
+<section class="hero ibt-section ibt-section--hero"><div class="container platform-hero__grid ibt-container"><div class="hero-copy reveal">
 <nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'services:index' %}">الحلول والخدمات</a><span>←</span><span aria-current="page">المواقع وصفحات الهبوط</span></nav>
-<span class="platform-kicker">WEB EXPERIENCE</span><h1>موقع يوضح قيمتك. <span>ويحوّل الزيارة إلى خطوة مفهومة.</span></h1>
+<span class="platform-kicker">WEB EXPERIENCE</span><h1 class="ibt-page-title">موقع يوضح قيمتك. <span>ويحوّل الزيارة إلى خطوة مفهومة.</span></h1>
 <p>نحدد نوع الموقع من القرار المطلوب من الزائر، ثم نرتب الرسالة والدليل والمحتوى والواجهة والأداء ضمن تجربة عربية وRTL من البداية.</p>
 <div class="hero-actions"><a class="btn btn-primary" href="#start">اختر نوع الموقع</a><a class="btn" href="{% url 'public_preview:contact' %}?goal=website&source=websites-hero#quote" data-analytics="quote_request" data-analytics-label="websites-hero">حدد احتياج موقعك</a></div>
 </div>
 <figure class="hero-art reveal"><img src="/static/public_preview/assets/images/showcase/services-experience-source.png" alt="مرجع بصري لمنظومة خدمات ابتكار تك" width="1200" height="800" fetchpriority="high"><figcaption>نحافظ على هوية واضحة ونستخدم الحركة عندما تخدم الفهم، لا لمجرد الإبهار.</figcaption></figure></div></section>
 
-<nav class="service-page-nav" aria-label="أقسام صفحة الخدمة"><div class="container service-page-nav__inner">
-  <a href="#start">نقطة البداية</a>
-  <a href="#solutions">الحلول</a>
-  <a href="#approach">طريقة العمل</a>
-  <a href="#deliverables">المخرجات</a>
-  <a href="#faq">الأسئلة</a>
-  <a href="#related">خدمات ذات صلة</a>
-</div></nav>
 
 
-<section class="section service-paths-section" id="start"><div class="container">
+
+<section class="section service-paths-section ibt-section ibt-section--story" id="start"><div class="container ibt-container">
   <div class="service-paths-header reveal">
-    <div class="service-paths-header__copy"><span class="section-kicker">اختر حسب الهدف</span><h2>ستة أنواع مواقع، لكل واحد قرار واضح</h2><p>لا نبدأ من قالب أو عدد صفحات؛ نبدأ بما يجب أن يفهمه الزائر وما الخطوة التي نريد منه اتخاذها.</p></div>
+    <div class="service-paths-header__copy"><span class="section-kicker">اختر حسب الهدف</span><h2 class="ibt-section-title">ستة أنواع مواقع، لكل واحد قرار واضح</h2><p>لا نبدأ من قالب أو عدد صفحات؛ نبدأ بما يجب أن يفهمه الزائر وما الخطوة التي نريد منه اتخاذها.</p></div>
     <aside class="service-paths-help" aria-label="مساعدة في اختيار المسار"><strong>لا تعرف النوع المناسب؟</strong><span>شاركنا نشاطك والجمهور والنتيجة المطلوبة، وسنقترح أقل بنية تحقق الهدف دون تضخيم النطاق.</span><a href="{% url 'public_preview:contact' %}?goal=website&source=website-paths#quote">صف هدف موقعك</a></aside>
   </div>
   <div class="service-paths-grid" data-count="6">
@@ -87,29 +80,29 @@
 </div></section>
 
 <span id="solutions"></span>
-<section class="section" id="approach"><div class="container split-layout"><div class="content-copy reveal"><span class="section-kicker">منهج التنفيذ</span><h2>الهيكل والمحتوى يسبقان الزخرفة</h2><p>نبدأ بالسؤال الذي يجب أن تجيب عنه كل صفحة، ثم نبني الواجهة حوله.</p><ul class="check-list"><li>خريطة صفحات وأولوية معلومات</li><li>H1 وCTA واضحان لكل صفحة رئيسية</li><li>حالات جوال ووصول من البداية</li><li>أداء وقياس ضمن قرار التصميم</li></ul></div><div class="timeline reveal">
+<section class="section ibt-section ibt-section--content" id="approach"><div class="container split-layout ibt-container"><div class="content-copy reveal"><span class="section-kicker">منهج التنفيذ</span><h2 class="ibt-section-title">الهيكل والمحتوى يسبقان الزخرفة</h2><p>نبدأ بالسؤال الذي يجب أن تجيب عنه كل صفحة، ثم نبني الواجهة حوله.</p><ul class="check-list"><li>خريطة صفحات وأولوية معلومات</li><li>H1 وCTA واضحان لكل صفحة رئيسية</li><li>حالات جوال ووصول من البداية</li><li>أداء وقياس ضمن قرار التصميم</li></ul></div><div class="timeline reveal">
 <article><h3>تشخيص</h3><p>مراجعة الهدف والجمهور والمحتوى والوضع الحالي.</p></article>
 <article><h3>هيكلة المحتوى</h3><p>خريطة الصفحات والرسائل والتدفقات قبل التصميم.</p></article>
 <article><h3>تصميم وتنفيذ</h3><p>مكونات متجاوبة قابلة للإدارة والتوسع.</p></article>
 <article><h3>تحقق وتسليم</h3><p>فحص الجوال والروابط والنماذج والأداء ضمن النطاق.</p></article>
 </div></div></section>
 
-<section class="section platform-section--soft" id="deliverables"><div class="container"><div class="section-head reveal">
+<section class="section platform-section--soft ibt-section ibt-section--content" id="deliverables"><div class="container ibt-container"><div class="section-head reveal ibt-section-heading">
   <span class="section-kicker">النطاق والتسليم</span>
-  <h2>ماذا تستلم، وماذا نحتاج منك؟</h2>
+  <h2 class="ibt-section-title">ماذا تستلم، وماذا نحتاج منك؟</h2>
   <p>تثبت التفاصيل النهائية في عرض المشروع، لكن هذه هي العناصر التي تحدد نطاق الموقع عادة.</p>
 </div><div class="section platform-grid--2">
 <article class="service-path-card reveal"><h3>مخرجات محتملة حسب النطاق</h3><ul><li>خريطة صفحات وهيكل محتوى</li><li>تصميم واجهات Responsive وRTL</li><li>تطوير الصفحات والمكونات المتفق عليها</li><li>إعداد CMS أو طريقة إدارة المحتوى عند الحاجة</li><li>SEO تقني أساسي وقياس عندما يكون ضمن النطاق</li><li>تسليم منظم للحسابات والأصول المتفق عليها</li></ul></article>
 <article class="service-path-card reveal"><h3>ما نحتاجه قبل التنفيذ</h3><ul><li>هدف الموقع والجمهور والإجراء الأساسي</li><li>الهوية أو قرار إدراجها ضمن المشروع</li><li>المحتوى والصور المتاحة وحقوق استخدامها</li><li>الدومين والاستضافة أو متطلبات البيئة</li><li>اللغات والتكاملات والنماذج المطلوبة</li><li>جهة واضحة لاعتماد المحتوى والتصميم</li></ul></article>
 </div></div></section>
 
-<section class="section" id="fit"><div class="container"><div class="section-head reveal"><span class="section-kicker">الملاءمة</span><h2>متى يكون هذا المسار مناسبًا؟</h2></div><div class="section platform-grid--2">
+<section class="section ibt-section ibt-section--content" id="fit"><div class="container ibt-container"><div class="section-head reveal ibt-section-heading"><span class="section-kicker">الملاءمة</span><h2 class="ibt-section-title">متى يكون هذا المسار مناسبًا؟</h2></div><div class="section platform-grid--2">
 <article class="service-path-card reveal"><h3>مناسب عندما</h3><ul><li>تحتاج موقعًا يشرح عرضك ويولد تواصلًا</li><li>لديك محتوى يحتاج إعادة تنظيم</li><li>تريد صفحة حملة أو خدمة قابلة للقياس</li></ul></article>
 <article class="service-path-card reveal"><h3>نحتاج مسارًا آخر عندما</h3><ul><li>تحتاج متجرًا كاملًا — استخدم مسار المتاجر</li><li>تحتاج نظام عمليات أو بوابة تشغيلية — استخدم الأنظمة المخصصة</li><li>الهوية والمحتوى غير جاهزين ولا تريد إدخالهما ضمن النطاق</li></ul></article>
 </div></div></section>
 
-<section class="section platform-section--soft" id="faq"><div class="container service-category-faq">
-  <div class="service-category-faq__intro reveal"><span class="section-kicker">قبل التنفيذ</span><h2>أسئلة تحسم نطاق الموقع</h2><p>الإجابات التالية توضّح ما يدخل عادة في القرار، بينما يثبت العرض النهائي الصفحات والمحتوى والتكاملات.</p></div>
+<section class="section platform-section--soft ibt-section ibt-section--content" id="faq"><div class="container service-category-faq ibt-container">
+  <div class="service-category-faq__intro reveal"><span class="section-kicker">قبل التنفيذ</span><h2 class="ibt-section-title">أسئلة تحسم نطاق الموقع</h2><p>الإجابات التالية توضّح ما يدخل عادة في القرار، بينما يثبت العرض النهائي الصفحات والمحتوى والتكاملات.</p></div>
   <div class="service-category-faq__list">
     <details class="faq-item"><summary>هل تشمل الخدمة كتابة المحتوى؟</summary><div class="service-category-faq__answer"><p>يمكن إدراج بنية المحتوى وكتابته أو تحريره ضمن النطاق. نحدد الصفحات واللغات ومسؤولية توفير المعلومات والصور قبل بدء التنفيذ.</p></div></details>
     <details class="faq-item"><summary>هل سيكون الموقع عربيًا وثنائي اللغة؟</summary><div class="service-category-faq__answer"><p>ندعم RTL وLTR من أساس الهيكل. النسخة الثنائية تُعتمد ضمن النطاق مع تحديد من يكتب أو يترجم كل لغة وآلية إدارتها.</p></div></details>
@@ -118,14 +111,14 @@
   </div>
 </div></section>
 
-<section class="section platform-section--soft" id="related"><div class="container"><div class="section-head reveal"><span class="section-kicker">خدمات مرتبطة</span><h2>المسار التالي حسب احتياجك</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
+<section class="section platform-section--soft ibt-section ibt-section--content" id="related"><div class="container ibt-container"><div class="section-head reveal ibt-section-heading"><span class="section-kicker">خدمات مرتبطة</span><h2 class="ibt-section-title">المسار التالي حسب احتياجك</h2></div><nav class="related-nav" aria-label="الخدمات المرتبطة"><a href="{% url 'services:index' %}">الحلول والخدمات</a><a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a><a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a><a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a><a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a></nav></div></section>
 
-<section class="final-cta surface">
-  <div class="container">
+<section class="final-cta surface ibt-section ibt-section--cta">
+  <div class="container ibt-container">
     <div class="hero-actions reveal">
       <div>
         <span class="section-kicker">المواقع وصفحات الهبوط</span>
-        <h2>حوّل محتوى شركتك إلى تجربة مفهومة ومقنعة</h2>
+        <h2 class="ibt-section-title">حوّل محتوى شركتك إلى تجربة مفهومة ومقنعة</h2>
         <p>أرسل نوع الموقع والهدف والمحتوى المتاح، وسنحدد نقطة البداية والنطاق المناسب.</p>
       </div>
       <div class="cta-actions">

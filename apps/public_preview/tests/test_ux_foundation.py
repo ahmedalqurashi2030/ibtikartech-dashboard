@@ -103,8 +103,11 @@ def test_public_shell_has_one_canonical_approved_cascade():
     assert "\n  top: 12px;" not in source
     assert "@media (max-width: 1180px)" in source
     assert 'html[data-theme="dark"] .ibt-shell-mega' in source
-    assert ".ibt-shell-menu-toggle::before" in source
-    assert "radial-gradient(circle at 5px 5px" in source
+    assert ".ibt-shell-menu-toggle svg" in source
+    assert ".ibt-shell-menu-toggle::before" not in source
+    header = _read_source("templates/public_preview/components/header.html")
+    assert 'data-ibt-menu-toggle><svg viewBox="0 0 24 24" aria-hidden="true">' in header
+    assert "stroke: currentColor;" in source
     assert "body.source-home #home.hero" in source
     assert "body.source-home .cinematic-story__brand" in source
     assert "@media (prefers-reduced-motion: reduce)" in source
@@ -281,7 +284,8 @@ def test_product_page_interactions_preserve_accessible_state():
     runtime = _read_source(PRODUCT_PAGE_RUNTIME)
     styles = _read_source(PRODUCT_PAGE_A11Y)
 
-    assert source.count("tokens.css") == 1
+    assert source.count("tokens.css") == 0
+    assert _read_source(BASE_TEMPLATE).count("tokens.css") == 1
     assert source.count('id="product-hotspot-info"') == 1
     assert source.count('class="hotspot"') == 4
     assert source.count('type="button" class="hotspot"') == 4
@@ -631,13 +635,12 @@ def test_category_decision_faqs_and_related_routes_are_complete():
 
     for template in category_templates:
         source = _read_source(template)
-        assert 'href="#faq"' in source, template
         assert 'id="faq"' in source, template
         assert source.count('<details class="faq-item">') >= 4
         assert 'id="related"' in source, template
 
     ecommerce = _read_source("templates/public_preview/pages/ecommerce.html")
-    assert 'href="#related"' in ecommerce
+    assert 'id="related"' in ecommerce
     assert 'id="related"' in ecommerce
 
 
@@ -672,7 +675,8 @@ def test_service_style_overrides_preserve_the_shared_shell_and_hero_roles():
 
     for effective_source in (ecommerce_family + "\n" + ecommerce, product_family + "\n" + product):
         assert effective_source.count("pages/inner.css") == 1
-        assert effective_source.count("css/ibtikar-shell.css") == 1
+        assert effective_source.count("css/ibtikar-shell.css") == 0
+        assert _read_source(BASE_TEMPLATE).count("css/ibtikar-shell.css") == 1
 
     assert typography.count(".svc-hero-copy,") >= 2
 

@@ -69,7 +69,7 @@ body.approved-source-page :where(a, button, input, select, textarea, summary) {
 }
 
 body.approved-source-page :where(a, button, input, select, textarea, summary):focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--ibt-blue, #5d83ff) 58%, transparent);
+  outline: 3px solid var(--ibt-focus-color);
   outline-offset: 4px;
 }
 

@@ -180,7 +180,7 @@ def test_platform_family_pages_share_one_section_structure_contract():
     for page_name in category_pages:
         source = _effective_page_source(page_name)
         assert '<main id="main-content" class="service-reference">' in source
-        assert 'class="hero"' in source
+        assert re.search(r'class="[^"\n]*\bhero\b[^"\n]*"', source)
         assert 'section-kicker' in source
         assert 'service-paths-section' in source
         assert 'service-path-card reveal' in source
@@ -191,8 +191,8 @@ def test_platform_family_pages_share_one_section_structure_contract():
         assert 'route-grid' not in source
 
     about_source = _effective_page_source("about.html")
-    assert '<section class="platform-hero">' in about_source
-    assert '<section class="page-cta">' in about_source
+    assert 'platform-hero ibt-section ibt-section--hero' in about_source
+    assert 'page-cta ibt-section ibt-section--cta' in about_source
     assert 'class="cta-card reveal"' in about_source
     assert 'class="cta-actions"' in about_source
 
@@ -218,7 +218,7 @@ def test_service_detail_pages_share_one_structural_contract():
         assert '<main id="main-content" class="service-detail-main">' in contract_source
         assert 'class="service-detail-shell"' in contract_source
         assert 'class="service-detail-breadcrumb"' in contract_source
-        assert 'class="service-commerce-hero"' in contract_source
+        assert re.search(r'class="[^"\n]*\bservice-commerce-hero\b[^"\n]*"', contract_source)
         assert 'class="service-commerce-hero__card" data-service-commerce-hero' in contract_source
         assert 'class="service-gallery"' in contract_source
         assert 'class="service-gallery__main" data-service-gallery-main' in contract_source
@@ -236,9 +236,9 @@ def test_service_detail_pages_share_one_structural_contract():
             'data-service-decision-tabs'
         )
         assert decision_tabs_marker in contract_source
-        assert 'class="service-detail-heading"' in contract_source
+        assert re.search(r'class="[^"\n]*\bservice-detail-heading\b[^"\n]*"', contract_source)
         assert (
-            'class="page-cta"' in contract_source
+            re.search(r'class="[^"\n]*\bpage-cta\b[^"\n]*"', contract_source)
             or 'class="service-final-cta"' in contract_source
         )
         assert 'commerce-service-detail.js' in contract_source
@@ -276,7 +276,7 @@ def test_article_detail_pages_share_one_semantic_reading_contract():
         assert 'class="article-hero"' in source
         assert 'class="article-aside"' in source
         assert 'class="article-body"' in source
-        assert 'class="related-articles"' in source
+        assert re.search(r'class="[^"\n]*\brelated-articles\b[^"\n]*"', source)
         assert "articles.css" in source
         assert "articles.js" in source
 
@@ -357,16 +357,11 @@ def test_service_category_pages_use_decision_path_contract():
         assert 'class="route-grid"' not in source
 
 
-def test_non_commerce_service_categories_offer_local_section_navigation():
-    for page_name in NON_COMMERCE_CATEGORY_PAGES:
+def test_service_categories_do_not_duplicate_global_navigation():
+    for page_name in SERVICE_CATEGORY_PAGES:
         source = _page_source(page_name)
-        assert 'class="service-page-nav"' in source
-        assert 'href="#start"' in source
-        assert 'href="#solutions"' in source
-        assert 'href="#approach"' in source
-        assert 'href="#deliverables"' in source
-        assert 'href="#faq"' in source
-        assert 'href="#related"' in source
+        assert 'service-page-nav' not in source
+        assert 'cinema-heading' not in source
 
 
 def test_service_category_pages_load_shared_cinematic_runtime():
