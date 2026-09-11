@@ -87,6 +87,33 @@
   line-height: 1.8;
 }
 
+/* Category pages keep their service-specific composition while sharing one
+ * spacing, card and cinematic-frame language. */
+.service-category-page .service-paths-header {
+  gap: var(--svc-grid-gap);
+  margin-bottom: var(--ibt-space-7, 32px);
+}
+
+.service-category-page .service-paths-grid {
+  gap: var(--ibt-space-5, 16px);
+}
+
+.service-category-page .service-path-card {
+  padding: var(--svc-card-padding);
+  border-radius: var(--svc-card-radius);
+}
+
+.service-category-page .service-paths-help {
+  padding: var(--ibt-space-5, 16px) var(--ibt-space-5, 16px);
+  border-radius: var(--ibt-radius, 18px);
+}
+
+.service-category-page .service-paths-section.is-cinematic-ready > .container {
+  width: min(calc(100% - (2 * var(--svc-page-gutter))), var(--svc-container));
+  max-width: var(--svc-container) !important;
+  border-radius: var(--svc-panel-radius);
+}
+
 /* Shared detail-family dimensions. Keep the commerce implementation intact,
  * while replacing repeated one-off widths/gaps with the common service scale. */
 .service-detail-page .service-detail-shell {
