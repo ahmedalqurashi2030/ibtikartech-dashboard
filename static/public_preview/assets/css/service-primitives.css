@@ -124,13 +124,19 @@
   line-height: 1.8;
 }
 
+.service-detail-page .ibt-shell-mega-toggle {
+  min-width: var(--svc-control-h);
+  min-height: var(--svc-control-h);
+}
+
 .service-category-page [id],
 .service-detail-page [id] {
   scroll-margin-top: calc(var(--ibt-header-h, 72px) + var(--ibt-space-6, 24px));
 }
 
-/* Shared local-navigation contract. Category pages currently render anchors
- * directly inside the nav; keep that markup horizontally usable on mobile. */
+/* Shared local-navigation contract. Category pages may render anchors directly
+ * or through the existing inner container; both variants share one touch and
+ * scrolling contract. */
 .service-category-page .service-page-nav {
   display: flex;
   align-items: center;
@@ -143,13 +149,24 @@
   padding-inline: max(var(--svc-page-gutter), calc((100vw - var(--svc-container)) / 2));
 }
 
+.service-category-page .service-page-nav__inner {
+  width: max-content;
+  min-width: min(100%, var(--svc-container));
+  display: flex;
+  align-items: center;
+  gap: var(--ibt-space-3, 8px);
+  padding-inline: 0;
+}
+
 .service-category-page .service-page-nav::-webkit-scrollbar,
 .service-detail-page .service-decision-tabs::-webkit-scrollbar {
   display: none;
 }
 
-.service-category-page .service-page-nav > a {
+.service-category-page .service-page-nav a {
   min-height: var(--svc-control-h);
+  display: inline-flex;
+  align-items: center;
   flex: 0 0 auto;
   scroll-snap-align: start;
   scroll-snap-stop: normal;
@@ -318,7 +335,7 @@
 .service-hotspot:focus-visible,
 .service-faq summary:focus-visible,
 .related-nav a:focus-visible,
-.service-category-page .service-page-nav > a:focus-visible,
+.service-category-page .service-page-nav a:focus-visible,
 .service-detail-page .service-decision-tabs button:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--svc-accent) 82%, #fff);
   outline-offset: 3px;
