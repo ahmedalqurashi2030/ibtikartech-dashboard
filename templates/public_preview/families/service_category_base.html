@@ -33,7 +33,16 @@
 
 {% block category_scripts %}
 <script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
-<script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
+<script>
+(function () {
+  var cinematicViewport = window.matchMedia("(min-width: 761px) and (prefers-reduced-motion: no-preference)");
+  if (!cinematicViewport.matches) return;
+  var cinema = document.createElement("script");
+  cinema.src = "/static/public_preview/assets/js/service-cinema.js";
+  cinema.async = false;
+  document.body.appendChild(cinema);
+}());
+</script>
 <script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
 {% endblock %}
 {% endblock %}
