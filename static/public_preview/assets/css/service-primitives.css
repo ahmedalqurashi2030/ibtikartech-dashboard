@@ -333,6 +333,48 @@
     scroll-padding-inline: var(--svc-page-gutter);
   }
 
+  /* Phone service paths use native horizontal snap instead of the desktop
+   * scroll-driven canvas. One gesture advances naturally card by card and the
+   * page keeps normal vertical scrolling outside the rail. */
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-paths-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: var(--ibt-space-4, 12px);
+    margin-inline: calc(var(--svc-page-gutter) * -1);
+    padding-inline: var(--svc-page-gutter);
+    padding-bottom: var(--ibt-space-4, 12px);
+    overflow-x: auto;
+    overflow-y: visible;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: var(--svc-page-gutter);
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x pan-y;
+  }
+
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-paths-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-path-card,
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-path-card:first-child,
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-path-card:nth-child(2),
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-path-card:nth-child(3),
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-paths-grid[data-count="4"] .service-path-card {
+    flex: 0 0 min(88%, 360px);
+    width: min(88%, 360px);
+    min-height: 100%;
+    grid-column: auto;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: var(--ibt-space-6, 24px);
+    border-radius: var(--svc-card-radius);
+  }
+
+  .service-category-page .service-paths-section:not(.is-cinematic-ready) .service-path-card:first-child h3 {
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
   .service-detail-page .service-commerce-hero__card {
     padding: var(--ibt-space-6, 24px);
   }
