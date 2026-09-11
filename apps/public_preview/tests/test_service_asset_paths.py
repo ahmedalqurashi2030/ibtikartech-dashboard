@@ -21,6 +21,10 @@ DETAIL_TEMPLATES = (
 
 SERVICE_TEMPLATES = (*CATEGORY_TEMPLATES, *DETAIL_TEMPLATES)
 STATIC_URL_RE = re.compile(r'["\'](/static/[^"\'?#]+)')
+HTML_ID_RE = re.compile(r'\bid=["\']([^"\']+)["\']')
+ECOMMERCE_FRAGMENT_RE = re.compile(
+    r"\{% url 'public_preview:ecommerce' %\}#([A-Za-z0-9_-]+)"
+)
 
 
 def _template_source(name):
@@ -45,3 +49,14 @@ def test_service_static_references_exist_in_repository():
                 template_name,
                 static_url,
             )
+
+
+def test_service_links_to_ecommerce_fragments_target_existing_sections():
+    """Cross-page ecommerce links must land on a real section, not a stale fragment."""
+    ecommerce_source = _template_source("ecommerce.html")
+    ecommerce_ids = set(HTML_ID_RE.findall(ecommerce_source))
+
+    for template_name in DETAIL_TEMPLATES:
+        source = _template_source(template_name)
+        for fragment in ECOMMERCE_FRAGMENT_RE.findall(source):
+            assert fragment in ecommerce_ids, (template_name, fragment)
