@@ -9,10 +9,28 @@ body.source-home[data-page="index"] {
   --home-section-y: clamp(78px, 8vw, 112px);
   --home-line: color-mix(in srgb, var(--ibt-border) 74%, transparent);
   --home-panel: color-mix(in srgb, var(--ibt-surface) 92%, transparent);
+  --home-canvas: #050817;
+  --home-canvas-soft: #080d20;
 }
 
 body.source-home[data-page="index"] main {
   overflow: clip;
+  background:
+    radial-gradient(circle at 84% 10%, rgba(79, 125, 243, .055), transparent 31rem),
+    radial-gradient(circle at 14% 52%, rgba(124, 58, 237, .045), transparent 34rem),
+    var(--home-canvas) !important;
+}
+
+/* One continuous canvas. Individual sections may add local glow/depth, but
+   they should not switch the visitor onto a different page-level surface. */
+body.source-home[data-page="index"] :is(
+  .home-goal-router,
+  .home-proof-band,
+  #services.home-services-slider,
+  #faq.faq-section,
+  #contact.cta-section
+) {
+  background-color: transparent !important;
 }
 
 body.source-home[data-page="index"] main p {
@@ -192,12 +210,14 @@ body.source-home[data-page="index"] #home .platform-logo-card__icon {
 }
 
 /* --------------------------------------------------------------------------
-   JOURNEY — keep the signature scene, shorten passive scrolling
+   JOURNEY — preserve the signature scene without forcing a long dead-scroll.
+   The native story runtime derives its progress from the section's real height,
+   so a shorter responsive stage keeps all five beats while reducing passivity.
    -------------------------------------------------------------------------- */
 body.source-home[data-page="index"] #journey.cinematic-story {
-  height: 228vh !important;
-  min-height: 1540px !important;
-  background: #050817 !important;
+  height: clamp(1120px, 188svh, 1380px) !important;
+  min-height: 0 !important;
+  background: var(--home-canvas) !important;
 }
 
 body.source-home[data-page="index"] #journey .cinematic-story__stage {
@@ -343,6 +363,12 @@ body.source-home[data-page="index"] .home-services-slider__button:hover {
   transform: none !important;
 }
 
+@media (min-width: 1101px) {
+  body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card {
+    flex-basis: calc((100% - 28px) / 3) !important;
+  }
+}
+
 /* --------------------------------------------------------------------------
    THARAA — position it as a product showcase rather than another dense section
    -------------------------------------------------------------------------- */
@@ -353,7 +379,7 @@ body.source-home[data-page="index"] #tharaa.ibtx-tharaa-preview {
   background:
     radial-gradient(circle at 78% 22%, rgba(236, 72, 153, .09), transparent 30%),
     radial-gradient(circle at 16% 78%, rgba(16, 200, 232, .08), transparent 34%),
-    #080d20 !important;
+    var(--home-canvas-soft) !important;
 }
 
 body.source-home[data-page="index"] #tharaa .ibtx-tharaa-preview__bg {
@@ -463,7 +489,7 @@ body.source-home[data-page="index"] #tharaa .ibtx-preview-toolbar {
 }
 
 body.source-home[data-page="index"] #tharaa .ibtx-toolbar-device {
-  min-height: 42px !important;
+  min-height: 44px !important;
   border-radius: 10px !important;
 }
 
@@ -583,16 +609,12 @@ body.source-home[data-page="index"] #contact .cta-shape {
   filter: blur(4px);
 }
 
-/* Quick actions should not compete with the desktop header + CTA. */
 @media (min-width: 821px) {
   body.source-home[data-page="index"] .quick-dock {
     display: none !important;
   }
 }
 
-/* --------------------------------------------------------------------------
-   TABLET / MOBILE
-   -------------------------------------------------------------------------- */
 @media (max-width: 1100px) {
   body.source-home[data-page="index"] #home .hero__grid {
     grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr) !important;
@@ -672,7 +694,7 @@ body.source-home[data-page="index"] #contact .cta-shape {
     inset: auto !important;
     min-height: 0 !important;
     padding: 0 20px 58px !important;
-    background: #050817 !important;
+    background: var(--home-canvas) !important;
   }
 
   body.source-home[data-page="index"] #services.home-services-slider {
