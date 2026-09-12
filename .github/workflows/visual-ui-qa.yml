@@ -8,6 +8,7 @@ on:
       - "static/public_preview/**"
       - "apps/public_preview/**"
       - "scripts/visual_qa_capture.cjs"
+      - "scripts/mobile_cinematic_qa.cjs"
       - ".github/workflows/visual-ui-qa.yml"
 
 permissions:
@@ -70,6 +71,12 @@ jobs:
           BASE_URL: http://127.0.0.1:8000
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: node scripts/visual_qa_capture.cjs
+
+      - name: Verify the mobile cinematic journey scene by scene
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: node scripts/mobile_cinematic_qa.cjs
 
       - name: Upload visual QA artifacts
         if: always()
