@@ -17,8 +17,8 @@
   --ibt-type-section-compact: clamp(26px, 2vw, 34px);
   --ibt-type-section-small: clamp(23px, 1.65vw, 30px);
   --ibt-type-card: clamp(20px, 1.75vw, 26px);
-  --ibt-type-lead: clamp(14px, 1.15vw, 17px);
-  --ibt-type-copy: clamp(13px, .95vw, 15px);
+  --ibt-type-lead: clamp(1rem, .96rem + .16vw, 1.125rem);
+  --ibt-type-copy: clamp(.9375rem, .90rem + .14vw, 1.0625rem);
 }
 
 /* --------------------------------------------------------------------------
@@ -272,8 +272,8 @@ body.article-page .article-related h2 {
     --ibt-type-section-compact: clamp(24px, 5.7vw, 29px);
     --ibt-type-section-small: clamp(21px, 5vw, 26px);
     --ibt-type-card: clamp(19px, 5.25vw, 23px);
-    --ibt-type-lead: clamp(14px, 3.7vw, 16px);
-    --ibt-type-copy: clamp(13px, 3.45vw, 15px);
+    --ibt-type-lead: clamp(1rem, 3.8vw, 1.0625rem);
+    --ibt-type-copy: clamp(.9375rem, 3.55vw, 1rem);
   }
 
   body.inner-page:not(.article-page) main :is(
