@@ -683,7 +683,7 @@ def test_shared_mobile_controls_keep_minimum_touch_targets():
         "static/public_preview/assets/css/pages/service-related-cards.css"
     )
 
-    assert shell.count("min-height: 44px;") >= 2
+    assert shell.count("min-height: var(--ibt-target-min);") >= 2
     assert "width: 38px;\n    height: 38px;\n    min-height: 38px;" not in shell
     assert related.count("width: 44px;") >= 2
     assert "width: 40px;\n    height: 40px;" not in related
