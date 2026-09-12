@@ -9,12 +9,21 @@
   justify-content: center;
   gap: 9px;
   font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
   touch-action: manipulation;
   transition: transform var(--ibt-duration) var(--ibt-ease), box-shadow var(--ibt-duration) var(--ibt-ease);
 }
 
 .btn:hover {
   transform: translateY(-2px);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: .58;
+  transform: none;
 }
 
 .btn-primary,
@@ -41,7 +50,7 @@
 .btn--sm {
   min-height: var(--ibt-target-min);
   padding-inline: 17px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .cta-card {
@@ -65,7 +74,9 @@
 }
 
 .cta-card p {
+  max-width: 54ch;
   color: rgba(255, 255, 255, .85);
+  line-height: 1.8;
   margin: 0;
 }
 
@@ -98,18 +109,21 @@
 
 .info-card h3 {
   font-size: 18px;
+  line-height: 1.4;
   margin: 0 0 8px;
 }
 
 .info-card p {
   color: var(--ibt-muted);
-  font-size: 14px;
+  font-size: var(--ibt-type-copy, 15px);
+  line-height: 1.75;
   margin: 0;
 }
 
 .form-message {
   margin-top: 12px;
   font-size: 14px;
+  line-height: 1.6;
   color: var(--ibt-muted);
 }
 
