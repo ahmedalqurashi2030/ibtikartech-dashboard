@@ -1,15 +1,13 @@
-from pathlib import Path
+TOKENS = "static/public_preview/assets/css/tokens.css"
+BASE = "static/public_preview/assets/css/base.css"
+COMPONENTS = "static/public_preview/assets/css/components.css"
+HEADER = "templates/public_preview/components/header.html"
+MOBILE_MENU = "templates/public_preview/components/mobile_menu.html"
 
 
-TOKENS = Path("static/public_preview/assets/css/tokens.css")
-BASE = Path("static/public_preview/assets/css/base.css")
-COMPONENTS = Path("static/public_preview/assets/css/components.css")
-HEADER = Path("templates/public_preview/components/header.html")
-MOBILE_MENU = Path("templates/public_preview/components/mobile_menu.html")
-
-
-def _read(path: Path) -> str:
-    return path.read_text(encoding="utf-8-sig")
+def _read(path: str) -> str:
+    with open(path, encoding="utf-8-sig") as source_file:
+        return source_file.read()
 
 
 def test_foundation_owns_interaction_and_layout_tokens():
@@ -73,6 +71,6 @@ def test_primary_navigation_has_one_justified_mega_menu():
     assert header.count('aria-hidden="true" inert data-ibt-mega-menu') == 1
     assert header.count("data-ibt-mega-toggle") == 1
     assert 'data-nav-key="products"' in header
-    assert '>منتجاتنا</a>' in header
+    assert ">منتجاتنا</a>" in header
     assert 'data-nav-key="products"' in mobile
     assert "منتجاتنا — ثيم ثراء" in mobile
