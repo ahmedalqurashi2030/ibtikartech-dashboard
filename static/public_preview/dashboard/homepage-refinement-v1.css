@@ -1,830 +1,361 @@
-/*
- * Ibtikar Tech — Homepage Refinement V1
- * Frontend-only presentation layer. Scoped to the approved homepage.
- * Goal: stronger hierarchy, faster scan, calmer motion, better mobile rhythm.
- */
-
-body.source-home[data-page="index"] {
-  --home-max-reading: 62ch;
-  --home-section-y: clamp(78px, 8vw, 112px);
-  --home-line: color-mix(in srgb, var(--ibt-border) 74%, transparent);
-  --home-panel: color-mix(in srgb, var(--ibt-surface) 92%, transparent);
-}
-
-body.source-home[data-page="index"] main {
-  overflow: clip;
-}
-
-body.source-home[data-page="index"] main p {
-  max-width: var(--home-max-reading);
-}
-
-/* --------------------------------------------------------------------------
-   HERO — simplify the decision layer and reduce decorative competition
-   -------------------------------------------------------------------------- */
-body.source-home[data-page="index"] #home.hero {
-  min-height: clamp(700px, 82svh, 860px) !important;
-  padding-top: clamp(118px, 11vw, 148px) !important;
-  background:
-    radial-gradient(circle at 75% 28%, rgba(79, 125, 243, .16), transparent 34%),
-    radial-gradient(circle at 20% 76%, rgba(124, 58, 237, .12), transparent 38%),
-    linear-gradient(145deg, #071025 0%, #0b1026 54%, #10132d 100%) !important;
-}
-
-body.source-home[data-page="index"] #home.hero::before {
-  opacity: .14 !important;
-  background-size: 64px 64px !important;
-}
-
-body.source-home[data-page="index"] #home .hero__grid {
-  grid-template-columns: minmax(0, .95fr) minmax(420px, 1.05fr) !important;
-  gap: clamp(38px, 5vw, 72px) !important;
-  align-items: center !important;
-}
-
-body.source-home[data-page="index"] #home .hero__content {
-  max-width: 680px;
-}
-
-body.source-home[data-page="index"] #home .eyebrow {
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  color: #a9b8d5 !important;
-  font-size: 12px !important;
-  letter-spacing: .01em;
-}
-
-body.source-home[data-page="index"] #home .eyebrow i {
-  width: 7px;
-  height: 7px;
-  box-shadow: 0 0 0 5px rgba(16, 200, 232, .08) !important;
-}
-
-body.source-home[data-page="index"] #home .hero__content h1 {
-  max-width: 650px;
-  margin: 20px 0 18px !important;
-  font-size: clamp(43px, 5.25vw, 72px) !important;
-  line-height: 1.08 !important;
-  letter-spacing: -.038em !important;
-}
-
-body.source-home[data-page="index"] #home .hero__content > p {
-  max-width: 58ch !important;
-  margin-bottom: 26px !important;
-  color: #bec8dc !important;
-  font-size: clamp(16px, 1.25vw, 18px) !important;
-  line-height: 1.9 !important;
-}
-
-body.source-home[data-page="index"] #home .hero-capabilities {
-  margin: 0 0 24px !important;
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0 !important;
-  border-block: 1px solid rgba(255, 255, 255, .08);
-}
-
-body.source-home[data-page="index"] #home .hero-capabilities > span {
-  min-height: 58px;
-  padding: 12px 14px !important;
-  display: flex !important;
-  align-items: center;
-  gap: 8px;
-  border: 0 !important;
-  border-inline-end: 1px solid rgba(255, 255, 255, .07) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  color: #c6d0e2 !important;
-  font-size: 12px !important;
-}
-
-body.source-home[data-page="index"] #home .hero-capabilities > span:last-child {
-  border-inline-end: 0 !important;
-}
-
-body.source-home[data-page="index"] #home .hero-capabilities b {
-  color: #78e7f8 !important;
-  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-body.source-home[data-page="index"] #home .hero__actions {
-  gap: 10px !important;
-}
-
-body.source-home[data-page="index"] #home .hero__actions .btn {
-  min-height: 48px !important;
-  border-radius: 12px !important;
-  padding-inline: 20px !important;
-}
-
-body.source-home[data-page="index"] #home .hero__actions .btn:hover {
-  transform: translateY(-1px) !important;
-}
-
-body.source-home[data-page="index"] #home .hero__trust {
-  margin-top: 20px !important;
-  gap: 8px 18px !important;
-  color: #8f9bb4 !important;
-  font-size: 12px !important;
-}
-
-body.source-home[data-page="index"] #home .hero-dashboard {
-  max-width: 650px;
-  margin-inline-start: auto;
-  transform: none !important;
-}
-
-body.source-home[data-page="index"] #home .hero-system-rings {
-  opacity: .48 !important;
-}
-
-body.source-home[data-page="index"] #home .hero-console {
-  border-radius: 20px !important;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, .32) !important;
-}
-
-body.source-home[data-page="index"] #home .hero-node {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, .18) !important;
-}
-
-body.source-home[data-page="index"] #home .hero-signal {
-  border-radius: 12px !important;
-  box-shadow: 0 16px 42px rgba(0, 0, 0, .2) !important;
-}
-
-/* Platforms become an expertise rail, not another card. */
-body.source-home[data-page="index"] #home .platforms {
-  min-height: 78px !important;
-  margin-top: clamp(48px, 6vw, 72px) !important;
-  padding: 12px 0 !important;
-  border: 0 !important;
-  border-block: 1px solid rgba(255, 255, 255, .075) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-}
-
-body.source-home[data-page="index"] #home .platforms::before {
-  display: none !important;
-}
-
-body.source-home[data-page="index"] #home .platforms > span {
-  color: #8792aa !important;
-  font-size: 11px !important;
-}
-
-body.source-home[data-page="index"] #home .platform-track > b {
-  min-width: 132px !important;
-  min-height: 50px !important;
-  padding: 7px 10px !important;
-  border: 0 !important;
-  border-radius: 10px !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #d9e0ed !important;
-}
-
-body.source-home[data-page="index"] #home .platform-logo-card__icon {
-  background: rgba(255, 255, 255, .045) !important;
-}
-
-/* --------------------------------------------------------------------------
-   JOURNEY — keep the signature scene, shorten passive scrolling
-   -------------------------------------------------------------------------- */
-body.source-home[data-page="index"] #journey.cinematic-story {
-  height: 228vh !important;
-  min-height: 1540px !important;
-  background: #050817 !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__stage {
-  min-height: 620px !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__grain {
-  opacity: .026 !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__vignette {
-  box-shadow: inset 0 0 150px 28px rgba(0, 0, 0, .52) !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__intro-inner {
-  max-width: 900px !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__intro h2 {
-  max-width: 900px;
-  margin-inline: auto !important;
-  font-size: clamp(42px, 6.2vw, 80px) !important;
-  line-height: 1.05 !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__intro p {
-  max-width: 62ch !important;
-  margin-top: 18px !important;
-  color: #a6b1c8 !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__principles {
-  gap: 0 !important;
-  margin-top: 22px !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__principles span {
-  padding: 4px 12px !important;
-  border: 0 !important;
-  border-inline-end: 1px solid rgba(255, 255, 255, .1) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  color: #8f9bb6 !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__principles span:last-child {
-  border-inline-end: 0 !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__captions {
-  width: min(78vw, 500px) !important;
-  min-height: 178px !important;
-  bottom: clamp(84px, 13vh, 132px) !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-cap h3 {
-  font-size: clamp(30px, 3.5vw, 50px) !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-cap p {
-  max-width: 46ch !important;
-  color: #a6b1c8 !important;
-  line-height: 1.85 !important;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__cue {
-  opacity: .72;
-}
-
-body.source-home[data-page="index"] #journey .cinematic-story__final-action {
-  border-radius: 12px !important;
-  background: rgba(10, 16, 38, .78) !important;
-}
-
-/* --------------------------------------------------------------------------
-   SERVICES — faster scanning, less card weight
-   -------------------------------------------------------------------------- */
-body.source-home[data-page="index"] #services.home-services-slider {
-  padding: clamp(76px, 7vw, 104px) 0 clamp(82px, 7vw, 110px) !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider::before {
-  opacity: .72;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-deck {
-  width: min(calc(100% - 40px), 1180px) !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-deck .section-heading {
-  margin-bottom: 28px !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-deck .section-heading h2 {
-  max-width: 700px !important;
-  font-size: clamp(34px, 4vw, 54px) !important;
-  line-height: 1.12 !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-track {
-  gap: 14px !important;
-  padding-bottom: 22px !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card {
-  flex-basis: clamp(320px, 34vw, 420px) !important;
-  padding: 17px !important;
-  border-radius: 20px !important;
-  background: linear-gradient(155deg, rgba(18, 27, 63, .67), rgba(7, 13, 35, .64)) !important;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, .15) !important;
-  opacity: .82 !important;
-  transform: none !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card.is-active {
-  opacity: 1 !important;
-  transform: none !important;
-  box-shadow: 0 20px 54px rgba(0, 0, 0, .22) !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card__scene {
-  height: clamp(188px, 20vw, 240px) !important;
-  margin-bottom: 18px !important;
-  border-radius: 16px !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card h3 {
-  margin: 8px 0 6px !important;
-  font-size: clamp(23px, 2vw, 30px) !important;
-}
-
-body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card p {
-  margin-block: 0 10px !important;
-  line-height: 1.78 !important;
-}
-
-body.source-home[data-page="index"] .home-services-slider__button {
-  border-radius: 10px !important;
-  box-shadow: none !important;
-}
-
-body.source-home[data-page="index"] .home-services-slider__button:hover {
-  transform: none !important;
-}
-
-/* --------------------------------------------------------------------------
-   THARAA — position it as a product showcase rather than another dense section
-   -------------------------------------------------------------------------- */
-body.source-home[data-page="index"] #tharaa.ibtx-tharaa-preview {
-  position: relative;
-  padding: clamp(86px, 8vw, 112px) 0 !important;
-  border-block: 1px solid rgba(255, 255, 255, .065);
-  background:
-    radial-gradient(circle at 78% 22%, rgba(236, 72, 153, .09), transparent 30%),
-    radial-gradient(circle at 16% 78%, rgba(16, 200, 232, .08), transparent 34%),
-    #080d20 !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-preview__bg {
-  opacity: .42 !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split {
-  display: grid !important;
-  grid-template-columns: minmax(0, .78fr) minmax(520px, 1.22fr) !important;
-  align-items: center !important;
-  gap: clamp(46px, 6vw, 82px) !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__content {
-  max-width: 520px;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-preview__badge {
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  color: #8deeff !important;
-  font-size: 11px !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__overline {
-  margin: 12px 0 0 !important;
-  color: #8f9bb3 !important;
-  font-size: 12px !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__content h2 {
-  margin: 12px 0 16px !important;
-  font-size: clamp(38px, 4.4vw, 62px) !important;
-  line-height: 1.08 !important;
-  letter-spacing: -.035em !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__lead {
-  max-width: 52ch !important;
-  color: #aab4c9 !important;
-  line-height: 1.9 !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features {
-  margin-top: 28px !important;
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: 0 !important;
-  border-block: 1px solid rgba(255, 255, 255, .08);
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features article {
-  min-height: 112px;
-  padding: 16px 14px !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features article:nth-child(odd) {
-  border-inline-end: 1px solid rgba(255, 255, 255, .07) !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features article:nth-child(-n+2) {
-  border-block-end: 1px solid rgba(255, 255, 255, .07) !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features article > span {
-  color: #7de7f8 !important;
-  font: 800 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__actions {
-  margin-top: 26px !important;
-  gap: 10px !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-summary__primary,
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-summary__secondary {
-  min-height: 46px !important;
-  border-radius: 12px !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__meta {
-  margin-top: 18px !important;
-  gap: 14px !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__meta span {
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  color: #78849e !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-preview-stage {
-  border-radius: 22px !important;
-  box-shadow: 0 30px 100px rgba(0, 0, 0, .26) !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-preview-toolbar {
-  min-height: 58px !important;
-  padding-inline: 14px !important;
-}
-
-body.source-home[data-page="index"] #tharaa .ibtx-toolbar-device {
-  min-height: 42px !important;
-  border-radius: 10px !important;
-}
-
-/* --------------------------------------------------------------------------
-   FAQ — editorial, easier to scan than stacked cards
-   -------------------------------------------------------------------------- */
-body.source-home[data-page="index"] #faq.faq-section {
-  padding: var(--home-section-y) 0 !important;
-}
-
-body.source-home[data-page="index"] #faq .faq-grid {
-  grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr) !important;
-  gap: clamp(44px, 6vw, 82px) !important;
-  align-items: start !important;
-}
-
-body.source-home[data-page="index"] #faq .faq-intro {
-  position: sticky;
-  top: 112px;
-  max-width: 420px;
-}
-
-body.source-home[data-page="index"] #faq .faq-intro h2 {
-  margin: 12px 0 14px !important;
-  font-size: clamp(34px, 3.7vw, 50px) !important;
-  line-height: 1.12 !important;
-}
-
-body.source-home[data-page="index"] #faq .faq-intro p {
-  max-width: 42ch !important;
-  line-height: 1.85 !important;
-}
-
-body.source-home[data-page="index"] #faq .accordion {
-  border-top: 1px solid var(--home-line);
-}
-
-body.source-home[data-page="index"] #faq .accordion-item {
-  margin: 0 !important;
-  border: 0 !important;
-  border-bottom: 1px solid var(--home-line) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-body.source-home[data-page="index"] #faq .accordion-item button {
-  min-height: 70px !important;
-  padding: 18px 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  font-size: clamp(15px, 1.3vw, 17px) !important;
-}
-
-body.source-home[data-page="index"] #faq .accordion-content {
-  padding-inline: 0 !important;
-}
-
-body.source-home[data-page="index"] #faq .accordion-content p {
-  max-width: 58ch !important;
-  padding-bottom: 20px !important;
-  color: var(--ibt-muted) !important;
-  line-height: 1.85 !important;
-}
-
-/* --------------------------------------------------------------------------
-   FINAL CTA — one obvious primary action
-   -------------------------------------------------------------------------- */
-body.source-home[data-page="index"] #contact.cta-section {
-  padding: clamp(66px, 7vw, 92px) 0 !important;
-}
-
-body.source-home[data-page="index"] #contact .cta-card {
-  min-height: 250px;
-  padding: clamp(30px, 4.5vw, 54px) !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto !important;
-  align-items: center !important;
-  gap: 30px 48px !important;
-  border: 1px solid rgba(255, 255, 255, .1) !important;
-  border-radius: 24px !important;
-  background:
-    radial-gradient(circle at 85% 18%, rgba(16, 200, 232, .11), transparent 30%),
-    linear-gradient(145deg, #0c1733 0%, #11152f 68%, #16132e 100%) !important;
-  box-shadow: 0 26px 76px rgba(3, 8, 24, .22) !important;
-}
-
-body.source-home[data-page="index"] #contact .cta-card > div:not(.cta-shape) {
-  max-width: 700px;
-}
-
-body.source-home[data-page="index"] #contact .cta-card h2 {
-  margin: 10px 0 12px !important;
-  font-size: clamp(34px, 4vw, 54px) !important;
-  line-height: 1.1 !important;
-}
-
-body.source-home[data-page="index"] #contact .cta-card p {
-  max-width: 52ch !important;
-  color: #b2bdd2 !important;
-}
-
-body.source-home[data-page="index"] #contact .cta-actions {
-  display: grid !important;
-  gap: 9px !important;
-  min-width: 210px;
-}
-
-body.source-home[data-page="index"] #contact .cta-actions .btn {
-  width: 100%;
-  min-height: 48px !important;
-  border-radius: 12px !important;
-}
-
-body.source-home[data-page="index"] #contact .cta-shape {
-  opacity: .28 !important;
-  filter: blur(4px);
-}
-
-/* Quick actions should not compete with the desktop header + CTA. */
-@media (min-width: 821px) {
-  body.source-home[data-page="index"] .quick-dock {
-    display: none !important;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   TABLET / MOBILE
-   -------------------------------------------------------------------------- */
-@media (max-width: 1100px) {
-  body.source-home[data-page="index"] #home .hero__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr) !important;
-    gap: 34px !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero-signal--two {
-    display: none !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split {
-    grid-template-columns: minmax(0, .9fr) minmax(460px, 1.1fr) !important;
-    gap: 40px !important;
-  }
-}
-
-@media (max-width: 820px) {
-  body.source-home[data-page="index"] {
-    --home-section-y: clamp(58px, 12vw, 76px);
-  }
-
-  body.source-home[data-page="index"] #home.hero {
-    min-height: auto !important;
-    padding: 108px 0 0 !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero__grid {
-    grid-template-columns: 1fr !important;
-    gap: 34px !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero__content {
-    max-width: 100%;
-  }
-
-  body.source-home[data-page="index"] #home .hero__content h1 {
-    max-width: 620px;
-    font-size: clamp(40px, 11vw, 56px) !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero-dashboard {
-    width: min(100%, 620px);
-    margin-inline: auto;
-  }
-
-  body.source-home[data-page="index"] #home .platforms {
-    margin-top: 42px !important;
-    padding-block: 10px !important;
-  }
-
-  body.source-home[data-page="index"] #journey.cinematic-story {
-    height: auto !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-  }
-
-  body.source-home[data-page="index"] #journey .cinematic-story__stage {
-    position: relative !important;
-    height: auto !important;
-    min-height: 640px !important;
-  }
-
-  body.source-home[data-page="index"] #journey .cinematic-story__intro h2 {
-    font-size: clamp(38px, 10vw, 52px) !important;
-  }
-
-  body.source-home[data-page="index"] #journey .cinematic-story__captions,
-  body.source-home[data-page="index"] #journey .cinematic-story__rail,
-  body.source-home[data-page="index"] #journey .cinematic-story__cue,
-  body.source-home[data-page="index"] #journey .cinematic-story__final-action {
-    display: none !important;
-  }
-
-  body.source-home[data-page="index"] #journey .cinematic-story__fallback {
-    display: flex !important;
-    position: relative !important;
-    inset: auto !important;
-    min-height: 0 !important;
-    padding: 0 20px 58px !important;
-    background: #050817 !important;
-  }
-
-  body.source-home[data-page="index"] #services.home-services-slider {
-    padding: 66px 0 74px !important;
-  }
-
-  body.source-home[data-page="index"] #services.home-services-slider .services-mobile-deck .section-heading h2 {
-    font-size: clamp(32px, 9vw, 43px) !important;
-  }
-
-  body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card {
-    flex-basis: min(82vw, 360px) !important;
-    border-radius: 18px !important;
-  }
-
-  body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card__scene {
-    height: 190px !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa.ibtx-tharaa-preview {
-    padding: 72px 0 !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split {
-    grid-template-columns: 1fr !important;
-    gap: 42px !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__content {
-    max-width: 620px;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-preview-stage {
-    width: 100%;
-  }
-
-  body.source-home[data-page="index"] #faq .faq-grid {
-    grid-template-columns: 1fr !important;
-    gap: 34px !important;
-  }
-
-  body.source-home[data-page="index"] #faq .faq-intro {
-    position: static !important;
-    max-width: 620px;
-  }
-
-  body.source-home[data-page="index"] #contact .cta-card {
-    grid-template-columns: 1fr !important;
-    min-height: 0;
-  }
-
-  body.source-home[data-page="index"] #contact .cta-actions {
-    width: min(100%, 420px);
-    min-width: 0;
-  }
-
-  body.source-home[data-page="index"] .quick-dock {
-    right: 12px !important;
-    left: 12px !important;
-    bottom: max(10px, env(safe-area-inset-bottom)) !important;
-    display: grid !important;
-    grid-template-columns: 48px minmax(0, 1fr) !important;
-    gap: 8px !important;
-    padding: 8px !important;
-    border-radius: 16px !important;
-  }
-
-  body.source-home[data-page="index"] .quick-dock .dock-search {
-    display: none !important;
-  }
-
-  body.source-home[data-page="index"] .quick-dock > a:not(.dock-primary) span {
-    display: none !important;
-  }
-
-  body.source-home[data-page="index"] .quick-dock .dock-primary {
-    justify-content: center !important;
-  }
-}
-
-@media (max-width: 520px) {
-  body.source-home[data-page="index"] #home .hero__content h1 {
-    font-size: clamp(38px, 12.2vw, 50px) !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero-capabilities {
-    grid-template-columns: 1fr !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero-capabilities > span {
-    min-height: 46px;
-    border-inline-end: 0 !important;
-    border-block-end: 1px solid rgba(255, 255, 255, .07) !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero-capabilities > span:last-child {
-    border-block-end: 0 !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero__trust {
-    display: grid !important;
-    gap: 6px !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features {
-    grid-template-columns: 1fr !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features article {
-    min-height: 86px;
-    border-inline-end: 0 !important;
-    border-block-end: 1px solid rgba(255, 255, 255, .07) !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__features article:last-child {
-    border-block-end: 0 !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-split__actions {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-  }
-
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-summary__primary,
-  body.source-home[data-page="index"] #tharaa .ibtx-tharaa-summary__secondary {
-    width: 100%;
-    justify-content: center;
-  }
-
-  body.source-home[data-page="index"] #contact .cta-card {
-    padding: 26px 20px !important;
-    border-radius: 20px !important;
-  }
-
-  body.source-home[data-page="index"] #contact .cta-actions {
-    width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body.source-home[data-page="index"] #home .hero-dashboard,
-  body.source-home[data-page="index"] #journey,
-  body.source-home[data-page="index"] #services,
-  body.source-home[data-page="index"] #tharaa {
-    scroll-behavior: auto !important;
-  }
-
-  body.source-home[data-page="index"] #home .hero-node,
-  body.source-home[data-page="index"] #home .hero-signal,
-  body.source-home[data-page="index"] #services .services-mobile-card,
-  body.source-home[data-page="index"] #tharaa .ibtx-preview-stage {
-    animation: none !important;
-    transition: none !important;
-  }
-}
+{% extends "public_preview/base.html" %}
+
+{% block head %}
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="ابتكار تك تبني وتطوّر المتاجر والمواقع والهوية والقياس والأنظمة للمشاريع في السعودية والخليج، من تشخيص الهدف إلى التنفيذ والتحسين." name="description"/>
+<meta content="#0b1026" name="theme-color"/>
+<title>ابتكار تك | حلول رقمية للتجارة والأعمال في السعودية</title>
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/source-home.css">
+<!-- Built as Ibtikar Tech Cinematic Homepage V7 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Unified brand system; page composition remains owned by the approved source. -->
+<link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/conversion-funnel.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/home-experience-v2.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/homepage-surface-refinement-v1.css">
+{% endblock %}
+
+{% block page_refinements %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/homepage-refinement-v1.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/home-services-fix.css">
+{% endblock %}
+
+{% block body_attrs %} class="approved-source-page source-home" data-section="home" data-approved-source="Ibtikar_Tech_Homepage_Cinematic_Native_Fixed.html"{% endblock %}
+
+{% block body %}
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
+<div aria-hidden="true" class="cinematic-ambient-bg"></div>
+<div aria-hidden="true" class="scroll-progress"><span></span></div>
+<div aria-hidden="true" class="site-ambient"><i></i><i></i><i></i></div>
+
+<div class="ibtx-announcement">
+  <div class="ibtx-container ibtx-announcement__inner">
+    <span>نبني حضورك الرقمي من الفكرة إلى النمو.</span>
+    <a href="#services">استكشف حلول ابتكار تك ←</a>
+  </div>
+</div>
+
+
+<main id="main-content">
+<section class="hero hero--system" id="home">
+<div aria-hidden="true" class="hero-cinema-aura"></div>
+<div aria-hidden="true" class="hero-cinema-motes">
+<i style="--x:8%;--y:76%;--s:6px;--d:11s;--delay:-1s;--drift:32px"></i>
+<i style="--x:19%;--y:42%;--s:4px;--d:13s;--delay:-6s;--drift:-22px"></i>
+<i style="--x:34%;--y:83%;--s:7px;--d:10s;--delay:-3s;--drift:18px"></i>
+<i style="--x:54%;--y:18%;--s:5px;--d:14s;--delay:-8s;--drift:-28px"></i>
+<i style="--x:72%;--y:67%;--s:8px;--d:12s;--delay:-4s;--drift:24px"></i>
+<i style="--x:88%;--y:30%;--s:4px;--d:9s;--delay:-7s;--drift:-16px"></i>
+</div>
+<div class="hero__glow hero__glow--one"></div>
+<div class="hero__glow hero__glow--two"></div>
+<div class="container hero__grid">
+<div class="hero__content reveal">
+<span class="eyebrow"><i></i>للمتاجر والشركات في السعودية والخليج</span>
+<h1>نحوّل فكرتك الرقمية <span>إلى تجربة واضحة تعمل وتنمو</span></h1>
+<p>نبدأ من هدف مشروعك، نحدد أقل نطاق صحيح، ثم نبني المتجر أو الموقع وما يحتاجه من هوية ومحتوى وقياس وربط ضمن رحلة واحدة قابلة للإدارة والتطوير.</p>
+<div class="hero__actions">
+<a class="btn btn--gradient magnetic" href="#goals">اختر نقطة البداية
+          <svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></svg>
+</a>
+<a class="btn btn--ghost-light" href="{% url 'public_preview:portfolio' %}">شاهد ما نفذناه
+          <svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+</a>
+</div>
+</div>
+<figure class="hero-ecosystem reveal">
+<img src="/static/public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp" alt="منظومة رقمية مترابطة تجمع المتجر والموقع والهوية والتحليلات والأتمتة" width="1280" height="853" fetchpriority="high">
+<figcaption>التجارة والويب والهوية والقياس والأتمتة ضمن نظام واحد.</figcaption>
+</figure>
+</div>
+<div class="container platforms">
+<span>نعمل باحتراف على:</span>
+<div aria-label="المنصات المدعومة" class="platform-list"><div class="platform-track">
+<b>سلة</b><b>زد</b><b>WooCommerce</b><b>WordPress</b><b>Shopify</b><b>حلول مخصصة</b>
+<b aria-hidden="true">سلة</b><b aria-hidden="true">زد</b><b aria-hidden="true">WooCommerce</b><b aria-hidden="true">WordPress</b><b aria-hidden="true">Shopify</b><b aria-hidden="true">حلول مخصصة</b>
+</div></div>
+</div>
+</section>
+<section class="home-goal-router" id="goals" aria-labelledby="homeGoalsTitle">
+<div class="container">
+<div class="home-goal-router__heading reveal">
+<div><span class="section-kicker">ابدأ من وضع مشروعك</span><h2 id="homeGoalsTitle">ما النتيجة التي تحتاجها الآن؟</h2></div>
+<p>لا تحتاج إلى معرفة اسم الخدمة. اختر الحالة الأقرب وسنقودك إلى الفئة والنطاق المناسبين.</p>
+</div>
+<div class="home-goal-router__grid">
+<a href="{% url 'public_preview:ecommerce' %}#paths"><small>01</small><h3>أطلق متجرًا جديدًا</h3><p>من اختيار المنصة إلى واجهة جاهزة للاختبار والإطلاق.</p><span>ابدأ من المتاجر ←</span></a>
+<a href="{% url 'public_preview:websites' %}#capabilities"><small>02</small><h3>ابنِ موقعًا يوضح قيمتك</h3><p>موقع شركة أو صفحة هبوط تقود الزائر إلى خطوة مفهومة.</p><span>ابدأ من المواقع ←</span></a>
+<a href="{% url 'public_preview:growth' %}"><small>03</small><h3>حسّن الظهور والقياس</h3><p>ثبّت أساس البيانات ثم رتّب فرص التحسين حسب الأولوية.</p><span>ابدأ من النمو ←</span></a>
+<a href="{% url 'public_preview:custom-systems' %}"><small>04</small><h3>اربط عملية متكررة</h3><p>تكامل أو أتمتة أو نظام مخصص عندما لا يكفي الحل الجاهز.</p><span>ابدأ من الأنظمة ←</span></a>
+</div>
+<div class="home-goal-router__unknown"><span>لست متأكدًا من نقطة البداية؟</span><a href="{% url 'public_preview:contact' %}?goal=unknown&source=home-goals#quote" data-analytics="quote_request" data-analytics-label="home-goals-diagnostic">ابدأ تشخيصًا مختصرًا</a></div>
+</div>
+</section>
+<section class="home-proof-band" aria-labelledby="homeProofTitle">
+<div class="container home-proof-band__grid">
+<div class="home-proof-band__copy reveal"><span class="section-kicker">دليل منتج مملوك</span><h2 id="homeProofTitle">ثراء: ثيم منشور لمتاجر سلة</h2><p>منتج فعلي بنيناه داخل قيود منصة سلة، ويعرض قدرتنا على تنظيم تجربة الجوال وصفحة المنتج ومكونات الواجهة ضمن نظام قابل للتخصيص.</p><div><a href="{% url 'public_preview:tharaa' %}">شاهد دراسة المنتج</a><a href="https://salla.com/themes/1609470678" target="_blank" rel="noopener">افتح صفحة سلة</a></div></div>
+<dl class="home-proof-band__facts reveal"><div><dt>المنصة</dt><dd>سلة</dd></div><div><dt>الفئة</dt><dd>العناية والتجميل</dd></div><div><dt>السعر الحالي</dt><dd>299 ر.س</dd></div><div><dt>نموذج الشراء</dt><dd>دفعة واحدة</dd></div></dl>
+</div>
+</section>
+<section aria-label="الحلول والخدمات الرقمية في ابتكار تك" class="services-cinema" id="services">
+<div class="services-cinema__stage">
+<canvas aria-hidden="true" id="servicesCanvas"></canvas>
+<div class="services-cinema__wash"></div><div class="services-cinema__grain"></div>
+<div class="services-cinema__top"><div class="cinema-kicker"><i></i><span>الحلول والخدمات الرقمية</span></div><span class="cinema-index">SOLUTIONS &amp; SERVICES / 01—05</span></div>
+<div class="services-cinema__heading" id="servicesHeading"><small>خمس فئات واضحة</small><h2>اختر المجال.<span>ونحن نضبط النطاق.</span></h2><p>كل فئة تجيب سؤالًا مختلفًا، وتقود إلى صفحة تشرح الملاءمة والمخرجات والحدود قبل طلب التواصل.</p></div>
+<div class="services-cinema__copy" id="servicesCopy">
+<article class="service-scene-copy" data-a=".04" data-b=".24"><div class="scene-meta">01 / COMMERCE</div><span class="scene-fit">لإطلاق متجر أو إصلاح رحلة متجر قائم</span><h3>تجارة إلكترونية أوضح من الاكتشاف إلى الشراء</h3><p>نحدد المنصة والنطاق، ثم ننظم الجوال والتصنيفات وصفحة المنتج والثقة والقياس وفق مرحلة متجرك.</p><div class="chips"><span>سلة</span><span>زد</span><span>WooCommerce</span><span>Shopify</span></div><a class="scene-link" href="{% url 'public_preview:ecommerce' %}">اكتشف حلول المتاجر</a></article>
+<article class="service-scene-copy" data-a=".22" data-b=".43"><div class="scene-meta">02 / WEB EXPERIENCE</div><span class="scene-fit">لشركة تحتاج موقعًا أو صفحة هبوط</span><h3>مواقع تشرح القيمة وتقود إلى الإجراء</h3><p>نرتب الرسالة والخدمات والدليل ومسار التواصل ضمن تجربة عربية سريعة وسهلة الإدارة.</p><div class="chips"><span>WordPress</span><span>Landing Pages</span><span>Corporate</span></div><a class="scene-link" href="{% url 'public_preview:websites' %}">اكتشف حلول المواقع</a></article>
+<article class="service-scene-copy" data-a=".41" data-b=".62"><div class="scene-meta">03 / BRAND &amp; CONTENT</div><span class="scene-fit">لعلامة تحتاج لغة ورسالة متسقتين</span><h3>هوية ومحتوى يوضحان من أنت ولماذا تُختار</h3><p>نحوّل التموضع إلى نظام بصري ولفظي يمكن تطبيقه على الموقع والمتجر والحملات دون تناقض.</p><div class="chips"><span>Branding</span><span>UI System</span><span>Content</span></div><a class="scene-link" href="{% url 'public_preview:brand-content' %}">اكتشف حلول الهوية</a></article>
+<article class="service-scene-copy" data-a=".60" data-b=".81"><div class="scene-meta">04 / GROWTH</div><span class="scene-fit">لمشروع يحتاج ظهورًا وبيانات موثوقة</span><h3>قياس يجيب سؤالًا، وتحسين يتبع دليلًا</h3><p>نراجع SEO والتتبع والأحداث وصفحات الهبوط، ثم نحول الأرقام إلى قائمة أولويات قابلة للتنفيذ.</p><div class="chips"><span>SEO</span><span>GA4</span><span>Tracking</span><span>CRO</span></div><a class="scene-link" href="{% url 'public_preview:growth' %}">اكتشف حلول النمو</a></article>
+<article class="service-scene-copy" data-a=".79" data-b=".999"><div class="scene-meta">05 / SYSTEMS &amp; AUTOMATION</div><span class="scene-fit">لفريق تستهلكه عملية يدوية متكررة</span><h3>ربط وأتمتة ونظم عندما لا يكفي الجاهز</h3><p>نحلل العملية أولًا، ثم نختار تكاملًا أو أتمتة أو نظامًا مخصصًا بحدود وملكية واضحة.</p><div class="chips"><span>Automation</span><span>Dashboards</span><span>APIs</span></div><a class="scene-link" href="{% url 'public_preview:custom-systems' %}">اكتشف الأنظمة والأتمتة</a></article>
+</div>
+<div aria-hidden="true" class="services-cinema__rail"><div class="services-cinema__line"><span id="servicesProgress"></span></div><div class="services-cinema__steps"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span></div></div>
+<div class="services-cinema__signature">STRATEGY × DESIGN × TECHNOLOGY × GROWTH</div>
+</div>
+<div class="services-mobile-deck">
+<div class="section-heading">
+<span class="section-kicker">الحلول والخدمات</span>
+<h2>ابدأ من هدفك، ثم نبني المنظومة المناسبة</h2>
+<div class="home-services-slider__toolbar" aria-label="التنقل بين شرائح الخدمات">
+<div class="home-services-slider__counter" aria-live="polite" aria-atomic="true"><strong data-home-services-current>01</strong><span>/</span><span data-home-services-total>05</span></div>
+<div class="home-services-slider__buttons">
+<button class="home-services-slider__button" type="button" data-home-services-prev aria-label="الخدمة السابقة" disabled>→</button>
+<button class="home-services-slider__button" type="button" data-home-services-next aria-label="الخدمة التالية">←</button>
+</div>
+</div>
+</div>
+<div class="services-mobile-track">
+<a class="services-mobile-card" href="{% url 'public_preview:ecommerce' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(34,211,238,.32)"><div class="mobile-scene-window"><i></i><i></i><i></i><i></i></div></div><small>01 / COMMERCE</small><h3>المتاجر الإلكترونية</h3><p>سلة، زد وWooCommerce وتجارب شراء محسنة.</p><div class="chips"><span>Mobile-first</span><span>CRO</span></div></a>
+<a class="services-mobile-card" href="{% url 'public_preview:websites' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(91,140,255,.34)"><div class="mobile-scene-window"><i></i><i></i><i></i><i></i><i></i></div></div><small>02 / WEB</small><h3>المواقع وصفحات الهبوط</h3><p>مواقع حديثة سريعة وواضحة وسهلة الإدارة.</p><div class="chips"><span>WordPress</span><span>Landing</span></div></a>
+<a class="services-mobile-card" href="{% url 'public_preview:brand-content' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(241,91,181,.32)"><div class="mobile-scene-window"><i></i><i></i><i></i></div></div><small>03 / BRAND</small><h3>التصميم والهوية والمحتوى</h3><p>نظام بصري ولفظي متناسق عبر جميع نقاط الاتصال.</p><div class="chips"><span>Branding</span><span>Creative</span></div></a>
+<a class="services-mobile-card" href="{% url 'public_preview:growth' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(53,211,154,.30)"><div class="mobile-scene-window"><i></i><i></i><i></i><i></i></div></div><small>04 / GROWTH</small><h3>الظهور والقياس والنمو</h3><p>SEO وقياس وتتبع وتحسينات مبنية على البيانات المتاحة.</p><div class="chips"><span>GA4</span><span>SEO</span></div></a>
+<a class="services-mobile-card" href="{% url 'public_preview:custom-systems' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(139,92,246,.34)"><div class="mobile-scene-window mobile-scene-window--nodes"><i></i><i></i><i></i></div></div><small>05 / SYSTEMS</small><h3>الأنظمة والربط والأتمتة</h3><p>لوحات وأدوات وقنوات تعمل كمنظومة واحدة.</p><div class="chips"><span>Automation</span><span>Apps</span></div></a>
+</div>
+</div>
+</section>
+
+<section aria-label="ما يحدث بعد اختيار نقطة البداية" class="cinematic-story cinematic-story--decision" id="journey">
+<div class="cinematic-story__stage">
+<canvas aria-hidden="true" id="cinematicCanvas"></canvas>
+<div class="cinematic-story__wash"></div><div class="cinematic-story__vignette"></div><div class="cinematic-story__grain"></div>
+<div class="cinematic-story__top"><span class="cinematic-story__index">AFTER YOUR CHOICE / 01—05</span></div>
+<div class="cinematic-story__intro" id="cinematicIntro">
+<div class="cinematic-story__intro-inner">
+<small>بعد اختيار نقطة البداية</small>
+<h2>نحوّل الهدف إلى نطاق واضح<span>ثم إلى أصل رقمي يعمل ويتحسن</span></h2>
+<p>لا نبدأ بالشاشات أو الأدوات. نثبت القرار المطلوب، وما يدخل في المرحلة الأولى، ثم نبني ونختبر ونسلّم مع أساس قياس يناسب المشروع.</p>
+<div aria-hidden="true" class="cinematic-story__principles"><span>فهم</span><span>نطاق</span><span>تجربة</span><span>تنفيذ</span><span>تحسين</span></div>
+</div>
+</div>
+<div class="cinematic-story__captions" id="cinematicCaptions">
+<article class="cinematic-cap" data-a="0.11" data-b="0.30"><span class="cap-no">01 / DISCOVER</span><h3>نفهم الهدف والسياق</h3><p>نراجع الجمهور والوضع الحالي والقرار المطلوب قبل اقتراح منصة أو مخرجات.</p></article>
+<article class="cinematic-cap" data-a="0.29" data-b="0.48"><span class="cap-no">02 / SCOPE</span><h3>نختار أقل نطاق صحيح</h3><p>نحدد ما يدخل في المرحلة الأولى، وما يحتاج اعتمادك، وما يؤجل حتى لا يتضخم المشروع.</p></article>
+<article class="cinematic-cap" data-a="0.47" data-b="0.67"><span class="cap-no">03 / EXPERIENCE</span><h3>نرتب الرسالة والرحلة</h3><p>نبني هيكل المحتوى والتفاعل حول أسئلة المستخدم والخطوة التي نريده أن يتخذها.</p></article>
+<article class="cinematic-cap" data-a="0.66" data-b="0.85"><span class="cap-no">04 / DELIVER</span><h3>نبني ونختبر ونسلّم</h3><p>تنفيذ مرحلي، مراجعات محددة، واختبار للجوال والأداء والحالات الأساسية قبل الإطلاق.</p></article>
+<article class="cinematic-cap" data-a="0.84" data-b="0.997"><span class="cap-no">05 / IMPROVE</span><h3>نقيس ثم نحسّن</h3><p>بعد الاستقرار نراجع البيانات والملاحظات ونرتب التحسينات حسب الأثر والجهد.</p></article>
+</div>
+<div aria-hidden="true" class="cinematic-story__rail"><div class="cinematic-story__line"><span id="cinematicRailProgress"></span></div><div class="cinematic-story__steps"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span></div></div>
+<div aria-hidden="true" class="cinematic-story__cue"><i></i><span>تابع المسار بالتمرير</span><i></i></div>
+<a class="cinematic-story__final-action" href="{% url 'public_preview:contact' %}?source=home-film#quote" id="cinematicFinalAction" data-analytics="quote_request" data-analytics-label="home-film-final">ابدأ بتحديد نطاق مشروعك</a>
+<div class="cinematic-story__fallback"><div><strong>بعد اختيار نقطة البداية</strong><span>نثبت الهدف والنطاق، ثم نبني ونسلّم ونحسّن ضمن مسار واضح.</span><a class="btn btn--gradient" href="{% url 'public_preview:contact' %}?source=home-film#quote" data-analytics="quote_request" data-analytics-label="home-film-brief">ابدأ تشخيص مشروعك</a></div></div>
+</div>
+</section>
+
+<section class="ibtx-tharaa-preview ibtx-tharaa-preview--split" id="tharaa" aria-label="معاينة ثيم ثراء">
+  <div class="ibtx-tharaa-preview__bg" aria-hidden="true"></div>
+
+  <div class="ibtx-container ibtx-tharaa-split">
+    <div class="ibtx-tharaa-split__content">
+      <span class="ibtx-tharaa-preview__badge">ثراء × ابتكار تك</span>
+      <p class="ibtx-tharaa-split__overline">ثيم احترافي لمتاجر سلة</p>
+      <h2>شاهد تجربة ثراء<br><span>على الكمبيوتر والهاتف.</span></h2>
+      <p class="ibtx-tharaa-split__lead">بدّل بين الجهازين وشاهد كيف يحافظ ثراء على هوية المتجر ووضوح المحتوى وسهولة التصفح في كل شاشة.</p>
+
+      
+
+      <div class="ibtx-tharaa-split__features">
+        <article><span>01</span><div><strong>تجربة Mobile-first</strong><small>واجهة مريحة وسريعة للمتسوق عبر الهاتف.</small></div></article>
+        <article><span>02</span><div><strong>واجهة متجر مرنة</strong><small>تنظيم الأقسام بما يناسب نشاط وهوية المتجر.</small></div></article>
+        <article><span>03</span><div><strong>صفحات بيع واضحة</strong><small>عرض أقوى للمنتجات والعروض والرسائل.</small></div></article>
+        <article><span>04</span><div><strong>مصمم لمنصة سلة</strong><small>تجربة متوافقة مع طبيعة ومتطلبات المنصة.</small></div></article>
+      </div>
+
+      <div class="ibtx-tharaa-split__actions">
+        <a class="ibtx-tharaa-summary__primary" href="{% url 'public_preview:tharaa' %}">استكشف صفحة ثراء</a>
+        <a class="ibtx-tharaa-summary__secondary" href="#contact">اطلب التركيب والتخصيص</a>
+      </div>
+
+      <div class="ibtx-tharaa-split__meta">
+        <span>RTL عربي</span>
+        <span>Responsive</span>
+        <span>Salla Theme</span>
+      </div>
+    </div>
+
+    <div class="ibtx-tharaa-split__preview">
+      <div class="ibtx-preview-stage" data-active-device="desktop">
+        <div class="ibtx-preview-toolbar">
+          
+<div class="ibtx-preview-toolbar__devices" role="tablist" aria-label="اختيار جهاز المعاينة">
+  <button class="ibtx-toolbar-device is-active" type="button" role="tab" aria-selected="true" data-device="desktop" aria-label="عرض الكمبيوتر" title="الكمبيوتر">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    <span>الكمبيوتر</span>
+  </button>
+  <button class="ibtx-toolbar-device" type="button" role="tab" aria-selected="false" data-device="mobile" aria-label="عرض الهاتف" title="الهاتف">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+    <span>الهاتف</span>
+  </button>
+</div>
+
+          <div class="ibtx-preview-toolbar__actions">
+            <span>تجربة حية للواجهة</span>
+            <a href="{% url 'public_preview:tharaa' %}#v4-preview" aria-label="فتح معاينات ثيم ثراء">↗</a>
+          </div>
+        </div>
+
+        <div class="ibtx-preview-viewport">
+          <div class="ibtx-desktop-preview is-visible" data-preview="desktop">
+            <div class="ibtx-browser-frame">
+              <div class="ibtx-browser-top">
+                <div class="ibtx-browser-dots"><i></i><i></i><i></i></div>
+                <div class="ibtx-browser-address">tharaa.store</div>
+                <span>⌄</span>
+              </div>
+
+              <div class="ibtx-store-page">
+                <div class="ibtx-store-header">
+                  <strong>ثــراء</strong>
+                  <nav><span>الرئيسية</span><span>العطور</span><span>العناية</span><span>الهدايا</span></nav>
+                  <div><i></i><i></i><i></i></div>
+                </div>
+
+                <div class="ibtx-store-hero">
+                  <div class="ibtx-store-copy">
+                    <small>مجموعة مختارة بعناية</small>
+                    <h3>أناقة تبدأ<br>من التفاصيل</h3>
+                    <p>تجربة تسوق هادئة وواضحة تعكس هوية العلامة.</p>
+                    <span class="ibtx-store-demo-action" aria-hidden="true">تسوّق المجموعة</span>
+                  </div>
+                  <div class="ibtx-store-product-scene">
+                    <div class="ibtx-product-orbit"></div>
+                    <div class="ibtx-product-bottle"><i></i><span>THARAA</span></div>
+                  </div>
+                </div>
+
+                <div class="ibtx-store-categories">
+                  <article><i></i><strong>العطور</strong><small>اختيارات مميزة</small></article>
+                  <article><i></i><strong>العناية</strong><small>روتينك اليومي</small></article>
+                  <article><i></i><strong>الهدايا</strong><small>لحظات تستحق</small></article>
+                  <article><i></i><strong>وصل حديثًا</strong><small>أحدث المنتجات</small></article>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ibtx-mobile-preview" data-preview="mobile">
+            <div class="ibtx-phone-frame">
+              <div class="ibtx-phone-frame__speaker"></div>
+              <div class="ibtx-phone-page">
+                <div class="ibtx-phone-header">
+                  <span>☰</span><strong>ثــراء</strong><span>◌</span>
+                </div>
+                <div class="ibtx-phone-hero">
+                  <small>مجموعة مختارة بعناية</small>
+                  <h3>أناقة تبدأ<br>من التفاصيل</h3>
+                  <div class="ibtx-phone-product"><i></i><span>THARAA</span></div>
+                  <button type="button">تسوّق الآن</button>
+                </div>
+                <div class="ibtx-phone-categories">
+                  <article><i></i><span>عطور</span></article>
+                  <article><i></i><span>عناية</span></article>
+                  <article><i></i><span>هدايا</span></article>
+                </div>
+                <div class="ibtx-phone-products"><i></i><i></i><i></i><i></i></div>
+                <div class="ibtx-phone-bottom-nav"><i></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--soft faq-section" id="faq">
+<div class="container faq-grid">
+<div class="faq-intro reveal"><span class="section-kicker">الأسئلة الشائعة</span><h2>إجابات قبل أن تبدأ</h2><p>أهم الأسئلة المتعلقة بالخدمات، المدة، المنصات، الأسعار، والدعم.</p><a class="btn btn--outline" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-question">لدي سؤال عن مشروعي</a></div>
+<div class="accordion reveal">
+<article class="accordion-item open"><button aria-expanded="true" type="button"><span>هل تعملون على سلة فقط؟</span><i></i></button><div class="accordion-content"><p>لا. نقدم خدمات على سلة وزد وWooCommerce وWordPress، إضافة إلى مواقع وحلول مخصصة حسب المشروع.</p></div></article>
+<article class="accordion-item"><button aria-expanded="false" type="button"><span>هل تشمل الخدمة رسوم المنصة والدومين؟</span><i></i></button><div class="accordion-content"><p>رسوم المنصات والدومين والتطبيقات الخارجية لا تدخل ضمن سعر التنفيذ إلا إذا ذُكرت صراحة في عرض السعر.</p></div></article>
+<article class="accordion-item"><button aria-expanded="false" type="button"><span>كم تستغرق مدة تنفيذ المشروع؟</span><i></i></button><div class="accordion-content"><p>تُحدد المدة بعد اعتماد النطاق والمحتوى والاعتمادات المطلوبة. نوضح الجدول قبل بدء التنفيذ بدل إعطاء مدة عامة لا تناسب كل مشروع.</p></div></article>
+<article class="accordion-item"><button aria-expanded="false" type="button"><span>هل يوجد دعم بعد التسليم؟</span><i></i></button><div class="accordion-content"><p>يمكن أن يدخل الدعم أو الصيانة ضمن العرض أو كخدمة مستقلة حسب المشروع. يوضح الاتفاق ما يشمله الدعم وقناته وأولوياته وما يعد تطويرًا جديدًا.</p></div></article>
+<article class="accordion-item"><button aria-expanded="false" type="button"><span>هل يمكن تخصيص ثيم ثراء حسب هوية المتجر؟</span><i></i></button><div class="accordion-content"><p>نعم، يمكن ضبط الألوان والخطوط والأقسام والبنرات بما يناسب هوية المتجر ضمن باقات التركيب والتخصيص.</p></div></article>
+<article class="accordion-item"><button aria-expanded="false" type="button"><span>كيف أبدأ الطلب؟</span><i></i></button><div class="accordion-content"><p>افتح صفحة «ابدأ مشروعك» وجهّز معلومات المشروع واحفظها كمسودة على جهازك.</p></div></article>
+</div>
+</div>
+</section><section class="cta-section" id="contact">
+<div class="container cta-card reveal">
+<div class="cta-shape cta-shape--one"></div><div class="cta-shape cta-shape--two"></div>
+<div><span>خطوتك القادمة تبدأ هنا</span><h2>جاهز تبني مشروعك الرقمي؟</h2><p>شاركنا فكرتك أو رابط متجرك، وسنقترح عليك المسار الأقرب لهدفك.</p></div>
+<div class="cta-actions"><a class="btn btn--light magnetic" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-final-project">ابدأ مشروعك</a><a class="btn btn--ghost-light" href="{% url 'services:index' %}">استكشف الحلول والخدمات</a></div>
+</div>
+</section></main>
+
+<nav aria-label="إجراءات سريعة" class="quick-dock">
+<a aria-label="العودة للأعلى" href="#home"><svg viewbox="0 0 24 24"><path d="m18 15-6-6-6 6"></path></svg><span>الأعلى</span></a>
+<button aria-label="البحث السريع" class="dock-search" type="button"><svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><span>بحث</span></button>
+<a class="dock-primary" data-open-brief="" href="{% url 'public_preview:contact' %}#quote" data-analytics="quote_request" data-analytics-label="home-mobile-dock"><svg viewbox="0 0 24 24"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg><span>ابدأ مشروعك</span></a>
+</nav>
+<div aria-hidden="true" aria-label="البحث السريع" aria-modal="true" class="command-palette" role="dialog">
+<div class="command-panel">
+<div class="command-search">
+<svg viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+<input aria-label="البحث" placeholder="ابحث عن خدمة أو انتقل إلى قسم..." type="search"/>
+<kbd>Esc</kbd>
+</div>
+<div class="command-list">
+
+
+<button class="command-item" data-target="#faq"><span>الأسئلة الشائعة</span><span>الدعم</span></button>
+<button class="command-item" data-open-brief=""><span>ابدأ مشروعًا جديدًا</span><span>إجراء</span></button>
+</div>
+</div>
+</div>
+<script src="/static/public_preview/assets/js/approved-source.js" defer></script>
+<script src="/static/public_preview/assets/vendor/gsap.min.js" defer></script>
+<script src="/static/public_preview/assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/static/public_preview/assets/js/source-home.js" defer></script>
+{% endblock %}
