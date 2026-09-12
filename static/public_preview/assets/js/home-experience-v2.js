@@ -2,15 +2,6 @@
   if (window.__ibtikarHomeExperienceV2) return;
   window.__ibtikarHomeExperienceV2 = true;
 
-  const ensureCss = () => {
-    if (document.querySelector('link[data-home-experience-v2]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/static/public_preview/assets/css/pages/home-experience-v2.css';
-    link.dataset.homeExperienceV2 = 'true';
-    document.head.appendChild(link);
-  };
-
   const platformAssets = new Map([
     ['سلة', { key: 'salla', src: '/static/public_preview/assets/images/platforms/salla.svg', label: 'سلة' }],
     ['زد', { key: 'zid', src: '/static/public_preview/assets/images/platforms/zid.svg', label: 'زد' }],
@@ -73,7 +64,8 @@
     const deck = section?.querySelector('.services-mobile-deck');
     const track = deck?.querySelector('.services-mobile-track');
     const cards = track ? [...track.querySelectorAll('.services-mobile-card')] : [];
-    if (!section || !deck || !track || cards.length < 2 || section.dataset.sliderV2 === 'true') return;
+    const toolbar = deck?.querySelector('.home-services-slider__toolbar');
+    if (!section || !deck || !track || !toolbar || cards.length < 2 || section.dataset.sliderV2 === 'true') return;
 
     section.dataset.sliderV2 = 'true';
     section.classList.add('home-services-slider');
@@ -84,22 +76,12 @@
 
     retireLegacyServicesMotion(section);
 
-    const heading = deck.querySelector('.section-heading');
-    const toolbar = document.createElement('div');
-    toolbar.className = 'home-services-slider__toolbar';
-    toolbar.innerHTML = `
-      <div class="home-services-slider__counter" aria-live="polite" aria-atomic="true">
-        <strong data-home-services-current>01</strong><span>/</span><span>${String(cards.length).padStart(2, '0')}</span>
-      </div>
-      <div class="home-services-slider__buttons">
-        <button class="home-services-slider__button" type="button" data-home-services-prev aria-label="الخدمة السابقة">→</button>
-        <button class="home-services-slider__button" type="button" data-home-services-next aria-label="الخدمة التالية">←</button>
-      </div>`;
-    (heading || deck).appendChild(toolbar);
-
     const current = toolbar.querySelector('[data-home-services-current]');
+    const total = toolbar.querySelector('[data-home-services-total]');
     const prev = toolbar.querySelector('[data-home-services-prev]');
     const next = toolbar.querySelector('[data-home-services-next]');
+    if (total) total.textContent = String(cards.length).padStart(2, '0');
+
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let activeIndex = 0;
     let frame = 0;
@@ -275,7 +257,6 @@
     const page = (document.body?.dataset.page || '').toLowerCase();
     const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (page !== 'index' && pathname !== 'index.html' && pathname !== '') return;
-    ensureCss();
     enhancePlatformLogos();
     enhanceServicesSlider();
     setTimeout(() => {
