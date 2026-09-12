@@ -3,6 +3,9 @@ BASE = "static/public_preview/assets/css/base.css"
 COMPONENTS = "static/public_preview/assets/css/components.css"
 HEADER = "templates/public_preview/components/header.html"
 MOBILE_MENU = "templates/public_preview/components/mobile_menu.html"
+HOMEPAGE_SURFACE = (
+    "static/public_preview/assets/css/pages/homepage-surface-refinement-v1.css"
+)
 
 
 def _read(path: str) -> str:
@@ -74,3 +77,19 @@ def test_primary_navigation_has_one_justified_mega_menu():
     assert ">منتجاتنا</a>" in header
     assert 'data-nav-key="products"' in mobile
     assert "منتجاتنا — ثيم ثراء" in mobile
+
+
+def test_mobile_home_keeps_real_cinematic_journey_with_safe_fallback():
+    styles = _read(HOMEPAGE_SURFACE)
+
+    assert "MOBILE CINEMATIC JOURNEY" in styles
+    assert "html.cinematic-ready:not(.no-story-motion)" in styles
+    assert "height: clamp(2100px, 310svh, 2800px) !important;" in styles
+    assert "position: sticky !important;" in styles
+    assert "height: 100svh !important;" in styles
+    assert "#journey #cinematicCanvas" in styles
+    assert ".cinematic-story__captions" in styles
+    assert "min-height: 48px !important;" in styles
+    assert "env(safe-area-inset-bottom, 0px)" in styles
+    assert "html.no-story-motion" in styles
+    assert ".cinematic-story__fallback" in styles
