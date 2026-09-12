@@ -363,6 +363,8 @@ body.source-home[data-page="index"] .home-services-slider__button:hover {
   transform: none !important;
 }
 
+/* On wide screens, show three complete cards instead of an accidental clipped
+   fourth card. Partial-card affordance is reserved for touch/mobile widths. */
 @media (min-width: 1101px) {
   body.source-home[data-page="index"] #services.home-services-slider .services-mobile-card {
     flex-basis: calc((100% - 28px) / 3) !important;
@@ -609,12 +611,16 @@ body.source-home[data-page="index"] #contact .cta-shape {
   filter: blur(4px);
 }
 
+/* Quick actions should not compete with the desktop header + CTA. */
 @media (min-width: 821px) {
   body.source-home[data-page="index"] .quick-dock {
     display: none !important;
   }
 }
 
+/* --------------------------------------------------------------------------
+   TABLET / MOBILE
+   -------------------------------------------------------------------------- */
 @media (max-width: 1100px) {
   body.source-home[data-page="index"] #home .hero__grid {
     grid-template-columns: minmax(0, 1fr) minmax(360px, .9fr) !important;
