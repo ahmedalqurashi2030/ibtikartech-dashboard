@@ -1,0 +1,315 @@
+# DESIGN AUTHORITY — CRITICAL
+
+You are not here to merely preserve, tidy, or lightly polish the current UI.
+
+The existing codebase is:
+
+IMPLEMENTATION CONTEXT
+
+not:
+
+DESIGN AUTHORITY.
+
+Use the existing files to understand:
+
+- architecture
+- component ownership
+- templates
+- routes
+- data flow
+- reusable primitives
+- existing behavior
+- technical constraints
+
+But DO NOT assume that the current visual decisions are correct.
+
+Do NOT derive design quality from:
+
+- existing CSS values
+- current spacing
+- current typography sizes
+- current card proportions
+- current section heights
+- current page composition
+- existing responsive behavior
+- legacy cinematic CSS
+- existing screenshots
+- old visual patterns
+
+unless they are clearly intentional, strong, and appropriate.
+
+You are expected to apply independent Principal-level product design judgment.
+
+Act as if the current product has been handed to a world-class Product Design team for professional refinement.
+
+Evaluate every important visual decision using expert UI/UX judgment.
+
+You have authority to improve weak visual decisions when doing so does not break:
+
+- business logic
+- routes
+- content meaning
+- application architecture
+- analytics contracts
+- functional behavior
+
+Do not preserve bad design merely because it exists.
+
+==================================================
+PRINCIPAL UI/UX THINKING
+==================================================
+
+For every important section or component, evaluate:
+
+1. What is the user's goal here?
+2. What should attract attention first?
+3. What should be secondary?
+4. Is the hierarchy immediately understandable?
+5. Is the content density appropriate?
+6. Is the Arabic comfortable to scan and read?
+7. Is there unnecessary cognitive load?
+8. Is the spacing communicating hierarchy correctly?
+9. Is the composition balanced?
+10. Does this section deserve its current visual weight?
+11. Does the interaction help the user understand or act?
+12. Is the CTA appearing at the correct moment?
+13. Does the mobile experience preserve the product's quality?
+14. Does the design feel intentional or template-like?
+15. Is visual decoration supporting meaning or competing with it?
+
+Do not mechanically apply existing patterns.
+
+Make expert decisions.
+
+==================================================
+APPLY PROFESSIONAL PRODUCT DESIGN PRINCIPLES
+==================================================
+
+Use strong professional judgment across:
+
+- Information Architecture
+- Visual Hierarchy
+- Gestalt principles
+- Typography systems
+- Arabic typography
+- RTL composition
+- Spacing and rhythm
+- Grid systems
+- Responsive composition
+- Mobile-first interaction
+- Progressive disclosure
+- Content hierarchy
+- Cognitive load reduction
+- Scannability
+- Readability
+- Affordance
+- Interaction feedback
+- Accessibility
+- Conversion UX
+- Motion design
+- Performance-aware UX
+- Design-system architecture
+- Consistency
+- Brand coherence
+
+Do not apply principles mechanically.
+
+Use them according to context.
+
+==================================================
+DESIGN QUALITY BAR
+==================================================
+
+The final product should feel like it was designed and reviewed by:
+
+A TOP-TIER ARABIC PRODUCT DESIGN TEAM.
+
+The target quality is:
+
+- premium
+- modern
+- calm
+- technically sophisticated
+- highly readable
+- deliberate
+- balanced
+- trustworthy
+- conversion-aware
+- responsive
+- accessible
+
+Avoid anything that feels:
+
+- generic
+- template-generated
+- over-designed
+- visually noisy
+- oversized
+- gimmicky
+- cyberpunk
+- gaming-like
+- unnecessarily animated
+
+==================================================
+COMPOSITION BEFORE DECORATION
+==================================================
+
+Always improve in this order:
+
+1. Information Architecture
+2. User Journey
+3. Visual Hierarchy
+4. Typography
+5. Layout
+6. Spacing
+7. Responsive Composition
+8. Interaction
+9. Accessibility
+10. Visual Effects
+
+Never try to solve a weak composition using:
+
+- gradients
+- glow
+- animation
+- glassmorphism
+- oversized typography
+- decorative shapes
+
+First fix the composition.
+
+Then add restrained visual character.
+
+==================================================
+EXPERT VISUAL JUDGMENT
+==================================================
+
+Do not treat numeric values as sacred.
+
+If the current implementation uses:
+
+72px heading
+
+that does NOT mean the correct answer is 68px.
+
+Determine the correct visual hierarchy from the actual composition.
+
+If the existing section has:
+
+160px vertical spacing
+
+do not preserve it merely because it already exists.
+
+Determine whether the section actually needs that visual breathing room.
+
+Likewise, evaluate:
+
+- container width
+- heading width
+- card size
+- image ratio
+- section height
+- padding
+- grid density
+- CTA prominence
+
+based on UX and composition.
+
+Use responsive fluid values where appropriate.
+
+==================================================
+ARABIC-FIRST DESIGN JUDGMENT
+==================================================
+
+Do not design an English interface and simply flip it RTL.
+
+This is an Arabic-first product.
+
+Arabic typography and composition must influence:
+
+- line length
+- heading width
+- line-height
+- text alignment
+- navigation spacing
+- card composition
+- icon placement
+- visual flow
+- mobile layout
+- CTA placement
+
+Optimize for real Arabic reading behavior.
+
+==================================================
+CINEMATIC DESIGN JUDGMENT
+==================================================
+
+The cinematic identity is part of the brand.
+
+Preserve it on:
+
+Desktop
+Tablet
+Mobile
+
+But use cinematic design as storytelling, not decoration.
+
+Desktop = Cinematic.
+
+Mobile = Cinematic.
+
+However:
+
+Mobile is NOT a compressed desktop implementation.
+
+Recompose the same cinematic story for touch and small screens.
+
+SAME FILM.
+DIFFERENT CAMERA FORMAT.
+
+Cinematic UX should create:
+
+- focus
+- pacing
+- progression
+- image/content relationships
+- continuity
+- controlled reveal
+
+It must NOT create:
+
+- huge empty areas
+- scroll fatigue
+- difficult navigation
+- excessive motion
+- oversized cards
+- poor performance
+
+==================================================
+DO NOT BLINDLY COPY
+==================================================
+
+Do not blindly copy:
+
+- the current website
+- legacy CSS
+- reference screenshots
+- another agency website
+- SaaS trends
+- popular Dribbble aesthetics
+
+Learn from the existing product and preserve its useful identity.
+
+Then make the best professional decision for Ibtikar Tech.
+
+The goal is not to imitate.
+
+The goal is to produce the strongest coherent Ibtikar Tech experience.
+
+ثم في البرومت التنفيذي نفسه اجعل قاعدة العمل:
+
+Inspect the existing implementation to understand HOW the product is built.
+
+Do not use the existing implementation to decide HOW GOOD DESIGN SHOULD LOOK.
+
+Use Principal-level UI/UX judgment for design decisions.

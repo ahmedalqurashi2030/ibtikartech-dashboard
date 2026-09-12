@@ -722,4 +722,6 @@ def test_platform_pilots_share_accessible_touch_and_preview_contracts():
     assert "['ArrowRight','ArrowLeft','Home','End']" in tharaa_runtime
     assert "ensureStylesheet" not in page_shell
     assert "function ensureCss()" not in home_runtime
+    assert "data-strategy-product-context" not in home_runtime
+    assert "ثيم ثراء — منتج من ابتكار تك لمتاجر سلة." not in home_runtime
     assert "function ensureCss()" not in strategy_runtime

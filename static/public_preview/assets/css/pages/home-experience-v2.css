@@ -1,5 +1,26 @@
 /* Homepage experience v2 — real platform marks + premium service carousel. */
 
+/* The document already owns the fixed-header offset through scroll-padding.
+   Avoid adding the section scroll-margin a second time on homepage anchors. */
+body[data-page="index"] #main-content > .ibt-section{
+  scroll-margin-top:0!important;
+}
+
+/* Arabic hero type needs a calm line rhythm rather than the generic page scale. */
+html body.source-home[data-page="index"] #main-content #home .ibt-page-title{
+  max-width:13.5ch!important;
+  line-height:1.3!important;
+  letter-spacing:normal!important;
+}
+body[data-page="index"] #home .hero__content > p{
+  max-width:52ch!important;
+  line-height:1.85!important;
+}
+body[data-page="index"] #home .hero-ecosystem figcaption{
+  font-size:11px;
+  line-height:1.65;
+}
+
 /* Platform expertise strip */
 body[data-page="index"] .platforms{
   position:relative;
@@ -176,7 +197,7 @@ body[data-page="index"] .services-cinema.home-services-slider .services-mobile-t
   display:flex!important;
   gap:18px;
   width:100%;
-  padding:8px max(2px,calc((100vw - min(calc(100vw - 40px),1240px))/2)) 30px 2px;
+  padding:8px 2px 30px;
   margin:0;
   overflow-x:auto;
   overflow-y:visible;
@@ -184,7 +205,7 @@ body[data-page="index"] .services-cinema.home-services-slider .services-mobile-t
   scroll-padding-inline:2px;
   scrollbar-width:none;
   overscroll-behavior-inline:contain;
-  direction:ltr!important;
+  direction:rtl!important;
   cursor:grab;
   touch-action:pan-x pan-y;
   -webkit-overflow-scrolling:touch;
@@ -196,6 +217,7 @@ body[data-page="index"] .services-cinema.home-services-slider .services-mobile-c
   flex:0 0 clamp(330px,37vw,470px);
   min-width:0!important;
   scroll-snap-align:start;
+  scroll-snap-stop:always;
   position:relative;
   padding:20px;
   border:1px solid rgba(255,255,255,.095);
@@ -227,6 +249,27 @@ body[data-page="index"] .services-cinema.home-services-slider .services-mobile-c
 body[data-page="index"] .services-cinema.home-services-slider .home-service-mobile-action{display:block;margin-top:18px;color:#8deeff;font-size:12px;font-weight:900}
 
 @media(max-width:820px){
+  html body.source-home[data-page="index"] #main-content #home .ibt-page-title{
+    max-width:100%!important;
+    margin-block:14px 18px!important;
+    font-size:clamp(31px,8.2vw,36px)!important;
+    line-height:1.32!important;
+  }
+  body[data-page="index"] #home .hero__content > p{
+    font-size:15px!important;
+    line-height:1.85!important;
+  }
+  body[data-page="index"] #home .hero__actions{
+    gap:8px!important;
+  }
+  body[data-page="index"] #home .hero__actions .btn{
+    min-height:48px!important;
+  }
+  body[data-page="index"] #home .hero-ecosystem{
+    min-width:0;
+    margin-inline:auto;
+  }
+
   body[data-page="index"] .platforms{margin-top:54px;display:block;padding:12px 0;border-inline:0;border-radius:0;background:transparent;box-shadow:none}
   body[data-page="index"] .platforms > span{display:block;padding-inline:18px;margin-bottom:10px}
   body[data-page="index"] .platform-list{width:100%;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
@@ -238,6 +281,156 @@ body[data-page="index"] .services-cinema.home-services-slider .home-service-mobi
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-track{gap:14px;padding:6px 20px 24px}
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-card{flex-basis:min(82vw,390px);padding:18px;border-radius:25px}
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-card__scene{height:220px}
+
+  /* Same cinematic story, recomposed for touch: a readable sequence replaces
+     the desktop pinned scene and keeps the decision CTA at the end. */
+  body[data-page="index"] #journey.cinematic-story{
+    height:auto!important;
+    min-height:0!important;
+    padding:0!important;
+  }
+  html body.source-home[data-page="index"] #journey .cinematic-story__stage{
+    position:relative!important;
+    top:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:clamp(48px,12vw,64px) 20px 56px!important;
+    overflow:hidden!important;
+    background:
+      radial-gradient(circle at 86% 14%,rgba(34,211,238,.12),transparent 34%),
+      radial-gradient(circle at 12% 82%,rgba(139,92,246,.14),transparent 38%),
+      linear-gradient(155deg,#030611,#09112b 56%,#14091d)!important;
+  }
+  html body.source-home[data-page="index"] #journey :is(
+    #cinematicCanvas,
+    .cinematic-story__wash,
+    .cinematic-story__vignette,
+    .cinematic-story__grain,
+    .cinematic-story__top,
+    .cinematic-story__rail,
+    .cinematic-story__cue,
+    .cinematic-story__fallback
+  ){
+    display:none!important;
+  }
+  body[data-page="index"] #journey .cinematic-story__intro{
+    position:relative!important;
+    inset:auto!important;
+    display:block!important;
+    padding:0!important;
+    text-align:start!important;
+    opacity:1!important;
+    transform:none!important;
+    pointer-events:auto!important;
+  }
+  body[data-page="index"] #journey .cinematic-story__intro-inner{
+    max-width:34rem!important;
+    transform:none!important;
+  }
+  body[data-page="index"] #journey .cinematic-story__intro small{
+    margin-bottom:10px!important;
+    color:#8deeff!important;
+    font-size:11px!important;
+    letter-spacing:.02em!important;
+  }
+  html body.source-home[data-page="index"] #main-content #journey .cinematic-story__intro h2{
+    max-width:14ch!important;
+    margin:0!important;
+    font-size:clamp(30px,8.4vw,38px)!important;
+    line-height:1.32!important;
+    letter-spacing:normal!important;
+  }
+  body[data-page="index"] #journey .cinematic-story__intro p{
+    max-width:38ch!important;
+    margin:14px 0 0!important;
+    color:#b2bdd2!important;
+    font-size:14px!important;
+    line-height:1.85!important;
+  }
+  body[data-page="index"] #journey .cinematic-story__principles{
+    justify-content:flex-start!important;
+    gap:6px!important;
+    margin-top:18px!important;
+  }
+  html body.source-home[data-page="index"] #journey .cinematic-story__captions{
+    position:relative!important;
+    inset:auto!important;
+    display:grid!important;
+    width:100%!important;
+    min-height:0!important;
+    margin:30px 0 0!important;
+    text-align:start!important;
+    pointer-events:auto!important;
+  }
+  body[data-page="index"] #journey .cinematic-cap{
+    position:relative!important;
+    inset:auto!important;
+    width:100%!important;
+    padding:19px 0!important;
+    border-top:1px solid rgba(255,255,255,.09);
+    opacity:1!important;
+    transform:none!important;
+    pointer-events:auto!important;
+  }
+  body[data-page="index"] #journey .cinematic-cap .cap-no{
+    margin-bottom:8px!important;
+    color:#77def5!important;
+    font-size:9px!important;
+    text-align:start!important;
+  }
+  body[data-page="index"] #journey .cinematic-cap h3{
+    margin:0 0 7px!important;
+    font-size:21px!important;
+    line-height:1.45!important;
+    letter-spacing:normal!important;
+  }
+  body[data-page="index"] #journey .cinematic-cap p{
+    max-width:40ch!important;
+    margin:0!important;
+    color:#aeb8d2!important;
+    font-size:14px!important;
+    line-height:1.8!important;
+  }
+  html body.source-home[data-page="index"] #journey .cinematic-story__final-action{
+    position:relative!important;
+    inset:auto!important;
+    display:inline-flex!important;
+    width:100%;
+    min-height:48px;
+    margin-top:22px;
+    justify-content:center;
+    border-radius:13px;
+    background:linear-gradient(100deg,#20b9ea,#7657f3 58%,#df31a7)!important;
+    opacity:1!important;
+    transform:none!important;
+    pointer-events:auto!important;
+  }
+
+  body[data-page="index"] .home-goal-router__grid > a{
+    padding:21px!important;
+  }
+  body[data-page="index"] .home-goal-router__grid h3{
+    margin:20px 0 9px!important;
+  }
+
+  body[data-page="index"] .quick-dock{
+    right:12px!important;
+    left:12px!important;
+    bottom:max(10px,env(safe-area-inset-bottom))!important;
+    max-width:366px;
+    margin-inline:auto;
+    grid-template-columns:44px minmax(0,1fr)!important;
+    padding:6px!important;
+    border:1px solid rgba(255,255,255,.12)!important;
+    border-radius:15px!important;
+    background:rgba(7,12,30,.9)!important;
+    box-shadow:0 18px 52px rgba(0,0,0,.38)!important;
+    backdrop-filter:blur(18px) saturate(1.15)!important;
+  }
+  body[data-page="index"] .quick-dock > :is(a,button){
+    min-height:44px!important;
+    border-radius:11px!important;
+  }
 }
 
 @media(max-width:520px){

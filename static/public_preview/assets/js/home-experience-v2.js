@@ -110,6 +110,7 @@
     let suppressClickUntil = 0;
     let commandedIndex = null;
     let commandTimer = 0;
+    let positioning = false;
 
     cards.forEach((card, index) => {
       card.setAttribute('aria-setsize', String(cards.length));
@@ -131,20 +132,19 @@
       else if (current) current.removeAttribute('aria-live');
     };
 
-    const targetLeft = (index) => {
+    const alignmentDelta = (index) => {
       const card = cards[index];
       if (!card) return 0;
-      const max = Math.max(0, track.scrollWidth - track.clientWidth);
-      const left = card.offsetLeft - cards[0].offsetLeft;
-      return Math.max(0, Math.min(max, left));
+      const cardRect = card.getBoundingClientRect();
+      const trackRect = track.getBoundingClientRect();
+      return cardRect.right - trackRect.right;
     };
 
     const nearestIndex = () => {
-      const left = track.scrollLeft;
       let nearest = 0;
       let distance = Infinity;
       cards.forEach((_, index) => {
-        const value = Math.abs(targetLeft(index) - left);
+        const value = Math.abs(alignmentDelta(index));
         if (value < distance) {
           distance = value;
           nearest = index;
@@ -161,16 +161,15 @@
 
     const goTo = (index, { focus = false } = {}) => {
       const target = Math.max(0, Math.min(cards.length - 1, index));
-      const left = targetLeft(target);
       commandedIndex = target;
       clearTimeout(commandTimer);
       syncState(target);
-      track.scrollTo({ left, behavior: reducedMotion ? 'auto' : 'smooth' });
+      track.scrollBy({ left: alignmentDelta(target), behavior: reducedMotion ? 'auto' : 'smooth' });
       if (focus) cards[target].focus({ preventScroll: true });
 
       commandTimer = window.setTimeout(() => {
         if (commandedIndex !== target) return;
-        track.scrollTo({ left, behavior: 'auto' });
+        track.scrollBy({ left: alignmentDelta(target), behavior: 'auto' });
         syncState(target, { announce: false });
         clearCommand();
       }, reducedMotion ? 80 : 820);
@@ -178,11 +177,10 @@
 
     const syncFromScroll = () => {
       frame = 0;
-      if (pointerId !== null) return;
+      if (pointerId !== null || positioning) return;
 
       if (commandedIndex !== null) {
-        const target = targetLeft(commandedIndex);
-        if (Math.abs(track.scrollLeft - target) <= 4) {
+        if (Math.abs(alignmentDelta(commandedIndex)) <= 4) {
           const settled = commandedIndex;
           clearCommand();
           syncState(settled, { announce: false });
@@ -262,13 +260,29 @@
       clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(() => {
         clearCommand();
-        track.scrollTo({ left: targetLeft(activeIndex), behavior: 'auto' });
+        track.scrollBy({ left: alignmentDelta(activeIndex), behavior: 'auto' });
         syncState(activeIndex, { announce: false });
       }, 100);
     }, { passive: true });
 
-    track.scrollLeft = 0;
-    syncState(0, { announce: false });
+    const settleInitialPosition = () => {
+      positioning = true;
+      clearCommand();
+      track.style.scrollSnapType = 'none';
+      track.scrollLeft = 0;
+      track.scrollBy({ left: alignmentDelta(0), behavior: 'auto' });
+      syncState(0, { announce: false });
+      requestAnimationFrame(() => {
+        track.style.removeProperty('scroll-snap-type');
+        positioning = false;
+        syncState(0, { announce: false });
+      });
+    };
+
+    settleInitialPosition();
+    requestAnimationFrame(() => requestAnimationFrame(settleInitialPosition));
+    document.querySelector('link[data-home-experience-v2]')
+      ?.addEventListener('load', settleInitialPosition, { once: true });
   }
 
   function init() {

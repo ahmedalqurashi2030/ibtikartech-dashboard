@@ -288,12 +288,14 @@ def test_page_sections_are_inline_not_component_includes():
     assert "{% include " not in combined
 
 
-def test_homepage_content_leads_with_goals_proof_and_scope():
+def test_homepage_content_leads_from_hero_to_services_and_scope():
     source = _page_source("index.html")
 
-    assert 'id="goals"' in source
-    assert "ما النتيجة التي تحتاجها الآن؟" in source
-    assert "ثراء: ثيم منشور لمتاجر سلة" in source
+    assert 'href="#services">استكشف الحلول والخدمات' in source
+    assert 'id="goals"' not in source
+    assert "ما النتيجة التي تحتاجها الآن؟" not in source
+    assert "ثراء: ثيم منشور لمتاجر سلة" not in source
+    assert source.index('id="home"') < source.index('id="services"') < source.index('id="journey"')
     assert "01 / DISCOVER" in source
     assert "نفهم الهدف والسياق" in source
 
