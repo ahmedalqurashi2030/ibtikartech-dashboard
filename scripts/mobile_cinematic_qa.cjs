@@ -125,7 +125,7 @@ async function moveToProgress(client, desiredProgress) {
     if(window.ibtikarLenis?.scrollTo) window.ibtikarLenis.scrollTo(y,{immediate:true,force:true});
     scrollTo(0,y);
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-    await new Promise(r=>setTimeout(r,240));
+    await new Promise(r=>setTimeout(r,300));
     return true;
   })()`);
 }
@@ -137,17 +137,36 @@ async function inspectScene(client) {
     const story=document.querySelector('#journey.cinematic-story');
     const stage=story?.querySelector('.cinematic-story__stage');
     const canvas=document.querySelector('#cinematicCanvas');
+    const quickDock=document.querySelector('.quick-dock');
     const captionMetrics=captions.map((el,index)=>{const s=getComputedStyle(el),r=el.getBoundingClientRect();return {index,opacity:Number(s.opacity||0),title:el.querySelector('h3')?.textContent?.trim()||'',rect:{top:r.top,bottom:r.bottom,height:r.height}}});
     const active=captionMetrics.reduce((best,item)=>item.opacity>best.opacity?item:best,{index:-1,opacity:-1});
     const rect=story?.getBoundingClientRect();
     const travel=Math.max(1,(story?.offsetHeight||0)-innerHeight);
     const raw=rect?Math.max(0,Math.min(1,(-rect.top)/travel)):0;
     const progress=Math.max(0,Math.min(1,${narrativeLead}+raw*(1-${narrativeLead})));
+    const dockStyle=quickDock?getComputedStyle(quickDock):null;
+    const dockRect=quickDock?.getBoundingClientRect();
+    const actionRect=finalAction?.getBoundingClientRect();
     return {
       active,captionMetrics,calculatedProgress:progress,
       stagePosition:stage?getComputedStyle(stage).position:'',
       canvasRect:canvas?{width:canvas.getBoundingClientRect().width,height:canvas.getBoundingClientRect().height}:null,
-      finalAction:finalAction?{opacity:Number(getComputedStyle(finalAction).opacity||0),pointerEvents:getComputedStyle(finalAction).pointerEvents,visibleWidth:finalAction.getBoundingClientRect().width}:null,
+      bodyCinemaActive:document.body.classList.contains('home-cinema-active'),
+      quickDock:quickDock?{
+        opacity:Number(dockStyle.opacity||0),
+        visibility:dockStyle.visibility,
+        pointerEvents:dockStyle.pointerEvents,
+        inert:quickDock.hasAttribute('inert'),
+        ariaHidden:quickDock.getAttribute('aria-hidden'),
+        rect:{top:dockRect.top,bottom:dockRect.bottom,height:dockRect.height},
+      }:null,
+      finalAction:finalAction?{
+        opacity:Number(getComputedStyle(finalAction).opacity||0),
+        pointerEvents:getComputedStyle(finalAction).pointerEvents,
+        visibleWidth:actionRect.width,
+        rect:{top:actionRect.top,bottom:actionRect.bottom,height:actionRect.height},
+      }:null,
+      viewportHeight:innerHeight,
       horizontalOverflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
     };
   })()`);
@@ -182,9 +201,6 @@ async function inspectScene(client) {
     failIf(report.failures,!report.base.fallbackVisible,'Static fallback is visible during normal-motion mobile experience.');
     failIf(report.failures,report.base.railVisible,'Cinematic progress rail is not visible on mobile.');
     failIf(report.failures,!report.base.horizontalOverflow,'Homepage has horizontal overflow at 390px.');
-    // Calibrated from the real 390x844 capture: 3.30 viewport heights gives all
-    // five beats full readable holds. Longer passive travel is not inherently
-    // better cinematic UX on touch devices.
     failIf(report.failures,report.base.storyScreens>=3.0&&report.base.storyScreens<=4.5,`Mobile cinematic travel is outside the verified UX range (${report.base.storyScreens.toFixed(2)} viewport heights).`);
     failIf(report.failures,report.base.stageHeight>=viewport.height*.92&&report.base.stageHeight<=viewport.height*1.08,`Sticky stage height is not viewport-sized (${Math.round(report.base.stageHeight)}px).`);
 
@@ -199,6 +215,9 @@ async function inspectScene(client) {
       failIf(report.failures,metrics.stagePosition==='sticky',`${scene.slug}: stage stopped being sticky.`);
       failIf(report.failures,metrics.canvasRect?.width>0&&metrics.canvasRect?.height>0,`${scene.slug}: canvas has no rendered area.`);
       failIf(report.failures,!metrics.horizontalOverflow,`${scene.slug}: horizontal overflow detected.`);
+      failIf(report.failures,metrics.bodyCinemaActive,`${scene.slug}: cinematic chrome state is not active.`);
+      failIf(report.failures,metrics.quickDock?.opacity<=.01&&metrics.quickDock?.visibility==='hidden'&&metrics.quickDock?.pointerEvents==='none',`${scene.slug}: persistent mobile dock is still visually competing with the cinematic scene.`);
+      failIf(report.failures,metrics.quickDock?.inert&&metrics.quickDock?.ariaHidden==='true',`${scene.slug}: hidden mobile dock remains exposed to assistive or keyboard navigation.`);
     }
 
     await moveToProgress(client,.995);
@@ -208,21 +227,36 @@ async function inspectScene(client) {
     report.finalAction={metrics:finalMetrics,screenshot:path.relative(outputRoot,finalFilename)};
     failIf(report.failures,finalMetrics.finalAction?.opacity>=.75,`Final cinematic CTA opacity is too low (${finalMetrics.finalAction?.opacity??'missing'}).`);
     failIf(report.failures,finalMetrics.finalAction?.pointerEvents==='auto','Final cinematic CTA is not interactive at story completion.');
+    failIf(report.failures,finalMetrics.finalAction?.rect?.top>=12&&finalMetrics.finalAction?.rect?.bottom<=finalMetrics.viewportHeight-12,'Final cinematic CTA is clipped by viewport chrome.');
+    failIf(report.failures,finalMetrics.quickDock?.visibility==='hidden'&&finalMetrics.quickDock?.inert,'Persistent dock returned before the cinematic final CTA completed.');
 
     await client.send('Emulation.setEmulatedMedia',{media:'screen',features:[{name:'prefers-reduced-motion',value:'reduce'}]});
     await client.send('Page.reload',{ignoreCache:true});
     await wait(1000);
     await waitForJourney(client);
-    report.reducedMotion=await evaluate(client,`(()=>{const story=document.querySelector('#journey.cinematic-story'),fallback=story?.querySelector('.cinematic-story__fallback'),stage=story?.querySelector('.cinematic-story__stage');const visible=(el)=>{if(!el)return false;const s=getComputedStyle(el),r=el.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity||1)>0&&r.width>0&&r.height>0};return {prefersReduce:matchMedia('(prefers-reduced-motion: reduce)').matches,noStoryMotion:document.documentElement.classList.contains('no-story-motion'),fallbackVisible:visible(fallback),stagePosition:stage?getComputedStyle(stage).position:''}})()`);
+    report.reducedMotion=await evaluate(client,`(()=>{
+      const story=document.querySelector('#journey.cinematic-story'),fallback=story?.querySelector('.cinematic-story__fallback'),stage=story?.querySelector('.cinematic-story__stage'),dock=document.querySelector('.quick-dock');
+      const visible=(el)=>{if(!el)return false;const s=getComputedStyle(el),r=el.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity||1)>0&&r.width>0&&r.height>0};
+      return {
+        prefersReduce:matchMedia('(prefers-reduced-motion: reduce)').matches,
+        noStoryMotion:document.documentElement.classList.contains('no-story-motion'),
+        fallbackVisible:visible(fallback),
+        stagePosition:stage?getComputedStyle(stage).position:'',
+        dockVisible:visible(dock),
+        dockInert:dock?.hasAttribute('inert')||false,
+        dockAriaHidden:dock?.getAttribute('aria-hidden')||null,
+      };
+    })()`);
     failIf(report.failures,report.reducedMotion.prefersReduce,'Reduced-motion emulation was not applied.');
     failIf(report.failures,report.reducedMotion.noStoryMotion,'Reduced-motion runtime did not disable immersive story motion.');
     failIf(report.failures,report.reducedMotion.fallbackVisible,'Reduced-motion user does not receive the static journey fallback.');
+    failIf(report.failures,report.reducedMotion.dockVisible&&!report.reducedMotion.dockInert&&report.reducedMotion.dockAriaHidden!=='true','Reduced-motion fallback incorrectly hides the persistent mobile navigation dock.');
 
     fs.writeFileSync(path.join(outputDir,'report.json'),`${JSON.stringify(report,null,2)}\n`);
-    const summary=['# Mobile Cinematic QA','',`Generated: ${report.generatedAt}`,`Viewport: ${viewport.width}×${viewport.height}`,`Story travel: ${report.base?.storyScreens?.toFixed(2)||'n/a'} viewport heights`,'','| Scene | Expected | Active | Opacity | Progress | Overflow |','| --- | ---: | ---: | ---: | ---: | --- |',...report.scenes.map((item)=>`| ${item.slug} | ${item.expectedIndex+1} | ${item.metrics.active.index+1} | ${item.metrics.active.opacity.toFixed(2)} | ${item.metrics.calculatedProgress.toFixed(3)} | ${item.metrics.horizontalOverflow?'YES':'No'} |`),'',`Reduced motion fallback: ${report.reducedMotion?.fallbackVisible?'PASS':'FAIL'}`,`Failures: ${report.failures.length}`,...report.failures.map((failure)=>`- ${failure}`),''].join('\n');
+    const summary=['# Mobile Cinematic QA','',`Generated: ${report.generatedAt}`,`Viewport: ${viewport.width}×${viewport.height}`,`Story travel: ${report.base?.storyScreens?.toFixed(2)||'n/a'} viewport heights`,'','| Scene | Expected | Active | Opacity | Dock hidden | Overflow |','| --- | ---: | ---: | ---: | --- | --- |',...report.scenes.map((item)=>`| ${item.slug} | ${item.expectedIndex+1} | ${item.metrics.active.index+1} | ${item.metrics.active.opacity.toFixed(2)} | ${item.metrics.quickDock?.visibility==='hidden'?'Yes':'NO'} | ${item.metrics.horizontalOverflow?'YES':'No'} |`),'',`Final CTA unobstructed: ${report.finalAction?.metrics?.finalAction?.rect?.bottom<=viewport.height-12?'PASS':'FAIL'}`,`Reduced motion fallback: ${report.reducedMotion?.fallbackVisible?'PASS':'FAIL'}`,`Reduced motion dock restored: ${report.reducedMotion?.dockVisible&&!report.reducedMotion?.dockInert?'PASS':'FAIL'}`,`Failures: ${report.failures.length}`,...report.failures.map((failure)=>`- ${failure}`),''].join('\n');
     fs.writeFileSync(path.join(outputDir,'SUMMARY.md'),summary);
     if(report.failures.length) throw new Error(`Mobile cinematic QA failed with ${report.failures.length} issue(s):\n${report.failures.join('\n')}`);
-    console.log('Mobile cinematic QA passed: five scenes, final CTA, geometry, overflow, and reduced-motion fallback verified.');
+    console.log('Mobile cinematic QA passed: five scenes, distraction-free chrome, final CTA, geometry, overflow, and reduced-motion fallback verified.');
   } finally {
     try{client?.close();}catch(_){}
     try{chrome.kill('SIGTERM');}catch(_){}
