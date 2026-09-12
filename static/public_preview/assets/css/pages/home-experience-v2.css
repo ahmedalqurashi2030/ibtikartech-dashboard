@@ -238,6 +238,17 @@ body[data-page="index"] .services-cinema.home-services-slider .home-service-mobi
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-track{gap:14px;padding:6px 20px 24px}
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-card{flex-basis:min(82vw,390px);padding:18px;border-radius:25px}
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-card__scene{height:220px}
+
+  /* The Journey owns the primary action while it is on-screen. Temporarily
+     retire the persistent mobile dock so the story remains immersive and the
+     final cinematic CTA is never visually or interactively duplicated. */
+  body.home-cinema-active .quick-dock{
+    opacity:0!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+    transform:translateY(calc(100% + max(20px,env(safe-area-inset-bottom))))!important;
+    transition:opacity .18s ease,transform .22s ease,visibility .22s step-end!important;
+  }
 }
 
 @media(max-width:520px){
@@ -250,4 +261,5 @@ body[data-page="index"] .services-cinema.home-services-slider .home-service-mobi
   body[data-page="index"] .platform-list{overflow:visible;white-space:normal;mask-image:none}
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-track{scroll-behavior:auto}
   body[data-page="index"] .services-cinema.home-services-slider .services-mobile-card,.home-services-slider__button{transition:none}
+  body.home-cinema-active .quick-dock{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
 }
