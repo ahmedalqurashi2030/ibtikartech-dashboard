@@ -170,7 +170,6 @@ def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
         assert actual_consumers == set(expected_consumers), asset
 
 
-
 def test_conversion_events_are_bound_to_actions_and_success():
     contact = _read_source("templates/public_preview/pages/contact.html")
     home = _read_source("templates/public_preview/pages/index.html")
@@ -472,7 +471,6 @@ def test_deep_interaction_qa_uses_live_contact_submission_contract():
     assert "Contact local draft failed" not in source
 
 
-
 def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
     import re
     from collections import Counter
@@ -529,6 +527,7 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
         }
         assert not missing, f"{page.name}: {sorted(missing)}"
 
+
 def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     header = _read_source("templates/public_preview/components/header.html")
     mobile_menu = _read_source("templates/public_preview/components/mobile_menu.html")
@@ -548,8 +547,10 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     assert "localStorage.setItem('ibtikar-theme',next)" in shell
     assert ":focus-visible" in styles
     assert "@media (prefers-reduced-motion: reduce)" in styles
-    assert header.count("data-ibt-mega-menu") == 2
-    assert header.count("aria-hidden=\"true\" inert data-ibt-mega-menu") == 2
+    assert header.count("data-ibt-mega-menu") == 1
+    assert header.count("aria-hidden=\"true\" inert data-ibt-mega-menu") == 1
+    assert header.count("data-ibt-mega-toggle") == 1
+    assert 'data-nav-key="products"' in header
     assert "link.setAttribute('aria-haspopup'" not in shell
     assert "'ArrowUp'" in shell
     assert "focusMegaItem(toggle,event.key === 'ArrowUp' ? 'last' : 'first')" in shell
@@ -586,7 +587,6 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
 
     assert "normalizeHomepageLegacyShell" not in page_shell
     assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" not in head
-
 
 
 def test_public_shell_reads_only_resolved_site_configuration():
