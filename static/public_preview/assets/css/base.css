@@ -75,6 +75,22 @@ svg {
   box-shadow: none;
 }
 
+/* Shared form-control geometry belongs to the foundation. Page/family styles
+ * may change visual treatment, but must not shrink the base interaction area. */
+:where(input, textarea, select) {
+  min-height: var(--ibt-control-h);
+  border-radius: var(--ibt-radius-control);
+}
+
+textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+::placeholder {
+  opacity: .72;
+}
+
 main :where(p, li) {
   text-wrap: pretty;
 }
@@ -114,6 +130,10 @@ main :where(p) {
 .skip-link:focus,
 .skip:focus {
   top: 16px;
+}
+
+:where(.section, .platform-section, .service-detail-section, .svc-section) {
+  scroll-margin-top: calc(var(--ibt-header-h) + 24px);
 }
 
 .section {
@@ -223,6 +243,10 @@ html.js-ready .reveal:not(.is-visible):not(.in) {
 }
 
 @media (max-width: 760px) {
+  :where(.section, .platform-section, .service-detail-section, .svc-section) {
+    scroll-margin-top: calc(var(--ibt-header-h) + 14px);
+  }
+
   .section {
     padding: 74px 0;
   }
