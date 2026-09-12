@@ -23,6 +23,7 @@ def test_foundation_owns_interaction_and_layout_tokens():
         "--ibt-radius-control: 10px;",
         "--ibt-focus-width: 3px;",
         "--ibt-focus-offset: 3px;",
+        "--ibt-gradient-action:",
     ):
         assert contract in tokens
 
@@ -52,6 +53,15 @@ def test_shared_components_do_not_shrink_compact_actions_below_target():
     assert "min-height: 42px" not in components
     assert "touch-action: manipulation;" in components
     assert "@media (prefers-reduced-motion: reduce)" in components
+
+
+def test_primary_actions_use_the_accessible_action_gradient():
+    components = _read(COMPONENTS)
+
+    assert "background: var(--ibt-gradient-action, var(--ibt-gradient));" in components
+    primary_block = components.split(".btn-primary,", 1)[1].split(".btn-outline,", 1)[0]
+    assert "color: #fff;" in primary_block
+    assert "background: var(--ibt-gradient)" not in primary_block
 
 
 def test_primary_navigation_has_one_justified_mega_menu():
