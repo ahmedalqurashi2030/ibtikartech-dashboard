@@ -253,15 +253,58 @@
     syncState(0, { announce: false });
   }
 
+  function enhanceCinematicChrome() {
+    const story = document.querySelector('#journey.cinematic-story');
+    const quickDock = document.querySelector('.quick-dock');
+    if (!story || !quickDock || quickDock.dataset.cinematicChrome === 'true') return;
+
+    quickDock.dataset.cinematicChrome = 'true';
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    let active = false;
+
+    const apply = (next) => {
+      if (active === next) return;
+      active = next;
+      document.body.classList.toggle('home-cinema-active', active);
+      quickDock.toggleAttribute('inert', active);
+      if (active) quickDock.setAttribute('aria-hidden', 'true');
+      else quickDock.removeAttribute('aria-hidden');
+    };
+
+    const sync = () => {
+      frame = 0;
+      if (reducedMotion.matches || innerWidth > 820) {
+        apply(false);
+        return;
+      }
+      const rect = story.getBoundingClientRect();
+      const next = rect.top < innerHeight * .78 && rect.bottom > innerHeight * .22;
+      apply(next);
+    };
+
+    const requestSync = () => {
+      if (!frame) frame = requestAnimationFrame(sync);
+    };
+
+    addEventListener('scroll', requestSync, { passive: true });
+    addEventListener('resize', requestSync, { passive: true });
+    addEventListener('orientationchange', requestSync, { passive: true });
+    reducedMotion.addEventListener?.('change', requestSync);
+    sync();
+  }
+
   function init() {
     const page = (document.body?.dataset.page || '').toLowerCase();
     const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (page !== 'index' && pathname !== 'index.html' && pathname !== '') return;
     enhancePlatformLogos();
     enhanceServicesSlider();
+    enhanceCinematicChrome();
     setTimeout(() => {
       enhancePlatformLogos();
       enhanceServicesSlider();
+      enhanceCinematicChrome();
     }, 100);
   }
 
