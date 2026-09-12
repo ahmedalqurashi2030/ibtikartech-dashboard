@@ -9,6 +9,7 @@
   justify-content: center;
   gap: 9px;
   font-weight: 800;
+  touch-action: manipulation;
   transition: transform var(--ibt-duration) var(--ibt-ease), box-shadow var(--ibt-duration) var(--ibt-ease);
 }
 
@@ -38,7 +39,7 @@
 
 .btn-small,
 .btn--sm {
-  min-height: 42px;
+  min-height: var(--ibt-target-min);
   padding-inline: 17px;
   font-size: 13px;
 }
@@ -158,5 +159,13 @@
     flex-direction: column;
     text-align: center;
     padding: 32px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover,
+  .whatsapp-float:hover,
+  .whatsapp:hover {
+    transform: none;
   }
 }
