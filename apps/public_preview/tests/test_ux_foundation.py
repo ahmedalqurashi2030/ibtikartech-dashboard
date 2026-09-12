@@ -691,6 +691,9 @@ def test_shared_mobile_controls_keep_minimum_touch_targets():
 
 def test_platform_pilots_share_accessible_touch_and_preview_contracts():
     base = _read_source(BASE_TEMPLATE)
+    category_family = _read_source(
+        "templates/public_preview/families/service_category_base.html"
+    )
     tokens = _read_source("static/public_preview/assets/css/tokens.css")
     shell = _read_source(SHELL_STYLES)
     layout = _read_source(
@@ -706,7 +709,8 @@ def test_platform_pilots_share_accessible_touch_and_preview_contracts():
 
     assert "page_refinements" in base
     assert "ux-system-v1.css" in base
-    assert "service-category-refinement-v1.css" in base
+    assert "service-category-refinement-v1.css" not in base
+    assert category_family.count("service-category-refinement-v1.css") == 1
     assert "strategy-enhancements.css" in base
     assert "--ibt-target-min: 44px" in tokens
     assert "min-height: var(--ibt-target-min);" in shell
