@@ -6,6 +6,7 @@
   <a data-nav-key="home" href="{% url 'public_preview:home' %}">الرئيسية</a>
   <details class="ibt-shell-mobile-group">
     <summary>الحلول والخدمات</summary>
+    <a data-nav-key="services" href="{% url 'services:index' %}">كل الحلول والخدمات</a>
     <a href="{% url 'services:index' %}#goals">ابدأ من هدفك</a>
     <a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
     <a href="{% url 'public_preview:websites' %}">المواقع وصفحات الهبوط</a>
@@ -13,10 +14,7 @@
     <a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a>
     <a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a>
   </details>
-  <details class="ibt-shell-mobile-group">
-    <summary>منتجاتنا</summary>
-    <a href="{% url 'public_preview:tharaa' %}">ثيم ثراء</a>
-  </details>
+  <a data-nav-key="products" href="{% url 'public_preview:tharaa' %}">منتجاتنا — ثيم ثراء</a>
   <a data-nav-key="portfolio" href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
   <a data-nav-key="knowledge" href="{% url 'public_preview:knowledge' %}">المعرفة</a>
   <a data-nav-key="about" href="{% url 'public_preview:about' %}">عن ابتكار</a>

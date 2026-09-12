@@ -18,12 +18,25 @@
   --ibt-error: #ef4444;
   --ibt-info: #4f7df3;
   --ibt-gradient: linear-gradient(135deg, var(--ibt-cyan) 0%, var(--ibt-blue) 34%, var(--ibt-purple) 67%, var(--ibt-pink) 100%);
+  /* Action gradient keeps the brand hue progression while using darker stops
+   * so white button copy does not cross the low-contrast cyan/pink values of
+   * the decorative brand gradient. */
+  --ibt-gradient-action: linear-gradient(135deg, #08728a 0%, #315bb2 34%, #5b21b6 67%, #a11d61 100%);
   --ibt-gradient-dark: linear-gradient(145deg, #07102b 0%, #101848 45%, #28103e 100%);
   --ibt-container: 1180px;
   --ibt-container-wide: 1240px;
   --ibt-header-h: 72px;
   --ibt-announcement-h: 34px;
   --ibt-target-min: 44px;
+
+  /* Canonical layout / readability primitives.
+   * These preserve the currently approved effective values while moving
+   * ownership into the token layer so page refinements do not invent a
+   * parallel foundation system. */
+  --ibt-gutter: clamp(18px, 3vw, 28px);
+  --ibt-reading: 68ch;
+  --ibt-control-h: 46px;
+
   --ibt-space-1: 2px;
   --ibt-space-2: 4px;
   --ibt-space-3: 8px;
@@ -41,6 +54,14 @@
   --ibt-radius-lg: 26px;
   --ibt-radius-xl: 34px;
   --ibt-radius-pill: 999px;
+
+  /* Semantic radii used by compact controls/panels. They intentionally keep
+   * the approved visual geometry instead of forcing every component onto one
+   * radius value. */
+  --ibt-radius-control: 10px;
+  --ibt-radius-compact: 16px;
+  --ibt-radius-panel: 22px;
+
   --ibt-shadow-sm: 0 8px 30px rgba(20, 31, 67, .08);
   --ibt-shadow-md: 0 18px 55px rgba(20, 31, 67, .14);
   --ibt-shadow-lg: 0 30px 90px rgba(5, 13, 45, .24);
@@ -65,6 +86,9 @@
   --ibt-z-overlay: 2300;
   --ibt-z-modal: 2400;
   --ibt-z-toast: 2500;
+  --ibt-focus-color: color-mix(in srgb, var(--ibt-cyan) 58%, transparent);
+  --ibt-focus-width: 3px;
+  --ibt-focus-offset: 3px;
   --ibt-focus: 0 0 0 3px rgba(16, 200, 232, .28);
   --color-bg: var(--ibt-bg);
   --color-bg-soft: var(--ibt-bg-soft);
@@ -106,4 +130,10 @@ html[data-theme="dark"] {
   --ibt-border: rgba(255, 255, 255, .1);
   --ibt-shadow-sm: 0 8px 30px rgba(0, 0, 0, .18);
   --ibt-shadow-md: 0 18px 55px rgba(0, 0, 0, .28);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --ibt-gutter: 16px;
+  }
 }

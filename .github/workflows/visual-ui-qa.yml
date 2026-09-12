@@ -1,0 +1,90 @@
+name: Visual UI QA Artifacts
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "templates/public_preview/**"
+      - "static/public_preview/**"
+      - "apps/public_preview/**"
+      - "scripts/visual_qa_capture.cjs"
+      - ".github/workflows/visual-ui-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  visual-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.test
+      DJANGO_SECRET_KEY: visual-qa-only-secret
+      DJANGO_TEST_DATABASE_NAME: /tmp/ibtikar-visual-qa.sqlite3
+      VISUAL_QA_OUTPUT: artifacts/ui-qa
+
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Setup Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+          install-dependencies: true
+
+      - name: Install dashboard
+        run: python -m pip install --upgrade pip && pip install -e ".[dev]"
+
+      - name: Prepare Django
+        run: |
+          rm -f "$DJANGO_TEST_DATABASE_NAME"
+          python manage.py migrate --noinput
+
+      - name: Start Django preview server
+        shell: bash
+        run: |
+          python manage.py runserver 127.0.0.1:8000 --noreload --insecure > /tmp/ibtikar-visual-django.log 2>&1 &
+          echo $! > /tmp/ibtikar-visual-django.pid
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then exit 0; fi
+            sleep 0.25
+          done
+          cat /tmp/ibtikar-visual-django.log
+          exit 1
+
+      - name: Capture representative desktop and mobile pages
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: node scripts/visual_qa_capture.cjs
+
+      - name: Upload visual QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ibtikar-visual-ui-qa
+          path: artifacts/ui-qa
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop Django preview server
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/ibtikar-visual-django.pid ]; then
+            kill "$(cat /tmp/ibtikar-visual-django.pid)" 2>/dev/null || true
+          fi
+          tail -n 100 /tmp/ibtikar-visual-django.log 2>/dev/null || true

@@ -379,20 +379,15 @@ textarea {
   border-color: color-mix(in srgb, var(--ibt-blue) 58%, var(--ibt-border));
 }
 
-/* ---------- Footer ---------- */
+/* ---------- Footer ----------
+   The shell stylesheet owns link display, hit targets and responsive alignment.
+   This global refinement layer only adjusts vertical rhythm and hover motion. */
 .ibt-shell-footer {
   padding-top: clamp(64px, 6vw, 84px) !important;
 }
 
 .ibt-shell-footer::after {
   opacity: .55;
-}
-
-.ibt-shell-footer a {
-  min-height: 32px;
-  display: inline-flex !important;
-  align-items: center;
-  margin-block: 4px !important;
 }
 
 .ibt-shell-footer a:hover {
@@ -507,14 +502,6 @@ body.source-services .goal-icon {
 
   .ibt-shell-footer .ibt-shell-footer-grid {
     grid-template-columns: 1fr !important;
-  }
-
-  .ibt-shell-footer-bottom {
-    text-align: start !important;
-  }
-
-  .ibt-shell-footer-bottom div {
-    justify-content: flex-start !important;
   }
 }
 

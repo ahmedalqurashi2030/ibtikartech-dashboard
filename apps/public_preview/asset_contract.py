@@ -13,6 +13,13 @@ from apps.public_preview.template_contract import (
 )
 
 SERVICE_DETAIL_PAGE_NAMES = tuple(SERVICE_PAGE_ROUTES)
+SERVICE_CATEGORY_PAGE_NAMES = (
+    "ecommerce.html",
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+)
 ARTICLE_DETAIL_PAGE_NAMES = (
     "article-product-page.html",
     "article-store-launch.html",
@@ -28,6 +35,10 @@ RELATED_CARDS_STYLES = (
 RELATED_CARDS_RUNTIME = "public_preview/assets/js/service-related-cards.js"
 SERVICE_PRIMITIVES_STYLES = "public_preview/assets/css/service-primitives.css"
 SERVICE_PRIMITIVES_RUNTIME = "public_preview/assets/js/service-primitives.js"
+SERVICE_CINEMA_STYLES = "public_preview/assets/css/service-cinema.css"
+SERVICE_CATEGORY_REFINEMENT_STYLES = (
+    "public_preview/assets/css/pages/service-category-refinement-v1.css"
+)
 HOMEPAGE_SURFACE_ASSET = (
     "public_preview/assets/css/pages/homepage-surface-refinement-v1.css"
 )
@@ -74,6 +85,8 @@ ROUTE_SCOPED_ASSET_CONSUMERS = {
     RELATED_CARDS_RUNTIME: RELATED_CARDS_CONSUMERS,
     SERVICE_PRIMITIVES_STYLES: SERVICE_PRIMITIVE_CONSUMERS,
     SERVICE_PRIMITIVES_RUNTIME: SERVICE_PRIMITIVE_CONSUMERS,
+    SERVICE_CINEMA_STYLES: SERVICE_CATEGORY_PAGE_NAMES,
+    SERVICE_CATEGORY_REFINEMENT_STYLES: SERVICE_CATEGORY_PAGE_NAMES,
     HOMEPAGE_SURFACE_ASSET: ("index.html",),
     ARTICLE_STYLES: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
     ARTICLE_RUNTIME: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),

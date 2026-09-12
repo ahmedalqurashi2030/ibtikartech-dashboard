@@ -9,6 +9,8 @@
 html {
   scroll-behavior: auto;
   scroll-padding-top: 100px;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 html.js-ready {
@@ -47,6 +49,10 @@ button {
   cursor: pointer;
 }
 
+:where(button, a, input, textarea, select, summary) {
+  -webkit-tap-highlight-color: transparent;
+}
+
 img,
 svg,
 canvas {
@@ -61,18 +67,49 @@ svg {
   stroke-linejoin: round;
 }
 
-:focus-visible {
-  outline: 0;
-  box-shadow: var(--ibt-focus);
+/* Canonical keyboard focus treatment. Keep this in the foundation so page
+ * styles cannot silently fall back to browser-inconsistent focus rendering. */
+:where(button, [role="button"], input, textarea, select, summary, a[href]):focus-visible {
+  outline: var(--ibt-focus-width) solid var(--ibt-focus-color);
+  outline-offset: var(--ibt-focus-offset);
+  box-shadow: none;
+}
+
+/* Shared form-control geometry belongs to the foundation. Page/family styles
+ * may change visual treatment, but must not shrink the base interaction area. */
+:where(input, textarea, select) {
+  min-height: var(--ibt-control-h);
+  border-radius: var(--ibt-radius-control);
+}
+
+textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+::placeholder {
+  opacity: .72;
+}
+
+main :where(p, li) {
+  text-wrap: pretty;
+}
+
+main :where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+main :where(p) {
+  max-width: var(--ibt-reading);
 }
 
 .container {
-  width: min(calc(100% - 40px), var(--ibt-container));
+  width: min(calc(100% - (var(--ibt-gutter) * 2)), var(--ibt-container));
   margin-inline: auto;
 }
 
 .container-wide {
-  width: min(calc(100% - 40px), var(--ibt-container-wide));
+  width: min(calc(100% - (var(--ibt-gutter) * 2)), var(--ibt-container-wide));
   margin-inline: auto;
 }
 
@@ -93,6 +130,10 @@ svg {
 .skip-link:focus,
 .skip:focus {
   top: 16px;
+}
+
+:where(.section, .platform-section, .service-detail-section, .svc-section) {
+  scroll-margin-top: calc(var(--ibt-header-h) + 24px);
 }
 
 .section {
@@ -202,9 +243,8 @@ html.js-ready .reveal:not(.is-visible):not(.in) {
 }
 
 @media (max-width: 760px) {
-  .container,
-  .container-wide {
-    width: min(calc(100% - 28px), var(--ibt-container));
+  :where(.section, .platform-section, .service-detail-section, .svc-section) {
+    scroll-margin-top: calc(var(--ibt-header-h) + 14px);
   }
 
   .section {
