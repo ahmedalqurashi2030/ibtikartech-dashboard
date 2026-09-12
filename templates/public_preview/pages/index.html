@@ -41,6 +41,7 @@
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/conversion-funnel.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/home-experience-v2.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/homepage-surface-refinement-v1.css">
 {% endblock %}
 
@@ -144,7 +145,17 @@
 <div class="services-cinema__signature">STRATEGY × DESIGN × TECHNOLOGY × GROWTH</div>
 </div>
 <div class="services-mobile-deck">
-<div class="section-heading"><span class="section-kicker">الحلول والخدمات</span><h2>ابدأ من هدفك، ثم نبني المنظومة المناسبة</h2></div>
+<div class="section-heading">
+<span class="section-kicker">الحلول والخدمات</span>
+<h2>ابدأ من هدفك، ثم نبني المنظومة المناسبة</h2>
+<div class="home-services-slider__toolbar" aria-label="التنقل بين شرائح الخدمات">
+<div class="home-services-slider__counter" aria-live="polite" aria-atomic="true"><strong data-home-services-current>01</strong><span>/</span><span data-home-services-total>05</span></div>
+<div class="home-services-slider__buttons">
+<button class="home-services-slider__button" type="button" data-home-services-prev aria-label="الخدمة السابقة" disabled>→</button>
+<button class="home-services-slider__button" type="button" data-home-services-next aria-label="الخدمة التالية">←</button>
+</div>
+</div>
+</div>
 <div class="services-mobile-track">
 <a class="services-mobile-card" href="{% url 'public_preview:ecommerce' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(34,211,238,.32)"><div class="mobile-scene-window"><i></i><i></i><i></i><i></i></div></div><small>01 / COMMERCE</small><h3>المتاجر الإلكترونية</h3><p>سلة، زد وWooCommerce وتجارب شراء محسنة.</p><div class="chips"><span>Mobile-first</span><span>CRO</span></div></a>
 <a class="services-mobile-card" href="{% url 'public_preview:websites' %}"><div class="services-mobile-card__scene" style="--scene-glow:rgba(91,140,255,.34)"><div class="mobile-scene-window"><i></i><i></i><i></i><i></i><i></i></div></div><small>02 / WEB</small><h3>المواقع وصفحات الهبوط</h3><p>مواقع حديثة سريعة وواضحة وسهلة الإدارة.</p><div class="chips"><span>WordPress</span><span>Landing</span></div></a>
