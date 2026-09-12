@@ -201,6 +201,8 @@ async function inspect(client) {
   ], { stdio: 'ignore' });
 
   const runtimeEvents = [];
+  const networkEvents = [];
+  const requestUrls = new Map();
   const report = [];
   let client;
 
@@ -217,15 +219,45 @@ async function inspect(client) {
       if (event.method === 'Log.entryAdded' && ['error', 'warning'].includes(event.params?.entry?.level)) {
         runtimeEvents.push({ type: 'console', level: event.params.entry.level, text: event.params.entry.text });
       }
+      if (event.method === 'Network.requestWillBeSent') {
+        const request = event.params?.request;
+        if (request?.url) requestUrls.set(event.params.requestId, request.url);
+      }
+      if (event.method === 'Network.responseReceived') {
+        const response = event.params?.response;
+        const url = response?.url || '';
+        if (response?.status >= 400 && url.startsWith(baseUrl)) {
+          networkEvents.push({
+            type: 'http',
+            status: response.status,
+            resourceType: event.params?.type || '',
+            url,
+          });
+        }
+      }
+      if (event.method === 'Network.loadingFailed') {
+        const url = requestUrls.get(event.params?.requestId) || '';
+        if (url.startsWith(baseUrl) && !event.params?.canceled) {
+          networkEvents.push({
+            type: 'loading-failed',
+            errorText: event.params?.errorText || 'network loading failed',
+            resourceType: event.params?.type || '',
+            url,
+          });
+        }
+      }
     });
 
     await client.send('Page.enable');
     await client.send('Runtime.enable');
     await client.send('Log.enable');
+    await client.send('Network.enable');
 
     for (const viewport of viewports) {
       for (const route of routes) {
         runtimeEvents.length = 0;
+        networkEvents.length = 0;
+        requestUrls.clear();
         await client.send('Emulation.setDeviceMetricsOverride', viewport);
         await client.send('Page.navigate', { url: `${baseUrl}${route.path}` });
         await wait(1500);
@@ -241,6 +273,7 @@ async function inspect(client) {
           screenshot,
           metrics,
           runtimeEvents: [...runtimeEvents].slice(0, 20),
+          networkEvents: [...networkEvents].slice(0, 20),
         });
         console.log(`captured ${route.path} [${viewport.name}] -> ${path.relative(process.cwd(), filename)}`);
       }
@@ -254,15 +287,30 @@ async function inspect(client) {
       `Routes: ${routes.length}`,
       `Viewports: ${viewports.map((item) => item.name).join(', ')}`,
       '',
-      '| Route | Viewport | Page size | Horizontal overflow | Runtime events |',
-      '| --- | --- | ---: | --- | ---: |',
+      '| Route | Viewport | Page size | Horizontal overflow | Runtime events | Network failures |',
+      '| --- | --- | ---: | --- | ---: | ---: |',
       ...report.map((item) => {
         const overflow = item.metrics.scrollWidth > item.metrics.clientWidth + 2 ? 'YES' : 'No';
-        return `| ${item.route} | ${item.viewport} | ${item.screenshot.width}×${item.screenshot.height} | ${overflow} | ${item.runtimeEvents.length} |`;
+        return `| ${item.route} | ${item.viewport} | ${item.screenshot.width}×${item.screenshot.height} | ${overflow} | ${item.runtimeEvents.length} | ${item.networkEvents.length} |`;
       }),
       '',
     ].join('\n');
     fs.writeFileSync(path.join(outputDir, 'SUMMARY.md'), summary);
+
+    const blocking = [];
+    report.forEach((item) => {
+      item.runtimeEvents.forEach((event) => {
+        if (event.type === 'exception' || event.level === 'error') {
+          blocking.push(`${item.route} [${item.viewport}] runtime: ${event.details || event.text}`);
+        }
+      });
+      item.networkEvents.forEach((event) => {
+        blocking.push(`${item.route} [${item.viewport}] network: ${event.status || event.errorText} ${event.url}`);
+      });
+    });
+    if (blocking.length) {
+      throw new Error(`Visual QA found ${blocking.length} blocking runtime/network issue(s):\n${blocking.join('\n')}`);
+    }
   } finally {
     try { client?.close(); } catch (_) {}
     try { chrome.kill('SIGTERM'); } catch (_) {}
