@@ -18,6 +18,10 @@
   --ibt-error: #ef4444;
   --ibt-info: #4f7df3;
   --ibt-gradient: linear-gradient(135deg, var(--ibt-cyan) 0%, var(--ibt-blue) 34%, var(--ibt-purple) 67%, var(--ibt-pink) 100%);
+  /* Action gradient keeps the brand hue progression while using darker stops
+   * so white button copy does not cross the low-contrast cyan/pink values of
+   * the decorative brand gradient. */
+  --ibt-gradient-action: linear-gradient(135deg, #08728a 0%, #315bb2 34%, #5b21b6 67%, #a11d61 100%);
   --ibt-gradient-dark: linear-gradient(145deg, #07102b 0%, #101848 45%, #28103e 100%);
   --ibt-container: 1180px;
   --ibt-container-wide: 1240px;
