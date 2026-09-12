@@ -28,9 +28,9 @@
 
 .btn-primary,
 .btn--primary {
-  background: var(--ibt-gradient);
+  background: var(--ibt-gradient-action, var(--ibt-gradient));
   color: #fff;
-  box-shadow: 0 16px 40px rgba(93, 91, 230, .28);
+  box-shadow: 0 16px 40px rgba(49, 91, 178, .26);
 }
 
 .btn-outline,
