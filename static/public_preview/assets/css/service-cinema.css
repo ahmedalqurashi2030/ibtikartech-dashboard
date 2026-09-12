@@ -1,0 +1,21 @@
+/*
+ * Ibtikar Tech — Service Category Cinematic Geometry
+ * Canonical owner for scroll-travel geometry of category-page cinematic paths.
+ * Visual skin remains owned by service-category.css / services-reference.css.
+ * Mobile and reduced-motion modes intentionally keep the static accessible flow.
+ */
+
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready {
+    /*
+     * The legacy 48svh-per-path travel produced a long passive gap in full-page
+     * desktop captures and made users scroll too far between meaningful beats.
+     * 30svh keeps every path readable while preserving progressive staging.
+     */
+    --service-cinema-step-travel: 30svh;
+    height: calc(
+      100svh +
+      (var(--service-path-count, 6) * var(--service-cinema-step-travel))
+    ) !important;
+  }
+}
