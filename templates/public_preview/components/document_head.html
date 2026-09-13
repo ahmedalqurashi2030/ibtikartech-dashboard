@@ -37,8 +37,7 @@
 <link rel="preload" href="{% static 'public_preview/assets/css/components.css' %}" as="style">
 <link rel="preload" href="{% static 'public_preview/assets/css/pages/ux-system-v1.css' %}" as="style">
 
-{# inner.css/articles.css discover the remaining foundations through @import.
-   Warming them here removes a serial discovery round while preserving cascade. #}
+{% comment %}inner.css/articles.css discover the remaining foundations through @import. Warming them here removes a serial discovery round while preserving cascade.{% endcomment %}
 {% if request.path == '/contact/' or request.path == '/knowledge/' or request.path == '/ecommerce/' %}
 <link rel="preload" href="{% static 'public_preview/assets/css/base.css' %}" as="style">
 <link rel="preload" href="{% static 'public_preview/assets/css/pages/platform.css' %}" as="style">
