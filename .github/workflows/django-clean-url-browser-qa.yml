@@ -137,34 +137,14 @@ jobs:
           BASE_URL: http://127.0.0.1:8000
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         shell: bash
-        run: |
-          set +e
-          last_status=1
-          for attempt in 1 2; do
-            timeout 300s node scripts/run_browser_qa.cjs
-            status=$?
-            if [ "$status" -eq 0 ]; then exit 0; fi
-            last_status="$status"
-            if [ "$attempt" -lt 2 ]; then sleep 2; fi
-          done
-          exit "$last_status"
+        run: timeout 420s node scripts/run_browser_qa.cjs
 
       - name: Canonical Django deep interaction QA
         env:
           BASE_URL: http://127.0.0.1:8000
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         shell: bash
-        run: |
-          set +e
-          last_status=1
-          for attempt in 1 2; do
-            timeout 210s node scripts/interaction_qa_clean_urls.cjs
-            status=$?
-            if [ "$status" -eq 0 ]; then exit 0; fi
-            last_status="$status"
-            if [ "$attempt" -lt 2 ]; then sleep 2; fi
-          done
-          exit "$last_status"
+        run: timeout 300s node scripts/interaction_qa_clean_urls.cjs
 
       - name: Stop Django server
         if: always()
