@@ -1,0 +1,64 @@
+{% load static %}
+<style data-ibt-critical>
+@font-face{font-family:"IBM Plex Sans Arabic";src:url("{% static 'public_preview/assets/generated/6010e7fd0dce5d52.woff2' %}") format("woff2");font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Sans Arabic";src:url("{% static 'public_preview/assets/generated/90aef64fea9794f2.woff2' %}") format("woff2");font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:"IBM Plex Sans Arabic";src:url("{% static 'public_preview/assets/generated/16734a5adb27b0f3.woff2' %}") format("woff2");font-style:normal;font-weight:600;font-display:swap}
+@font-face{font-family:"IBM Plex Sans Arabic";src:url("{% static 'public_preview/assets/generated/04c730b4292731cc.woff2' %}") format("woff2");font-style:normal;font-weight:700 900;font-display:swap}
+
+html{max-width:100%;overflow-x:clip}
+body{max-width:100%;overflow-x:clip;font-synthesis:none;font-kerning:normal;text-rendering:optimizeLegibility}
+main p{max-width:68ch}
+img{height:auto}
+
+/* Keep the homepage first paint on the approved dark canvas. The fuller
+   cinematic surface stylesheet can load after paint without exposing the
+   retired announcement bars or causing a top-of-page layout shift. */
+body.source-home .announcement,
+body.source-home .ibtx-announcement{display:none!important}
+body.source-home{--announcement-h:0px!important}
+body.source-home,
+body.source-home main,
+body.source-home .cinematic-ambient-bg{background-color:#050817!important}
+
+/* Above-fold geometry extracted from the legacy launch layer. Keeping only
+   these first-view rules critical lets the full refinement file load without
+   blocking rendering while preserving the approved composition. */
+.inner-page:not(.approved-source-page) .platform-hero{min-height:auto;padding:clamp(142px,14vw,190px) 0 clamp(72px,8vw,104px)}
+.inner-page:not(.approved-source-page) .platform-hero h1{font-size:clamp(42px,5.4vw,70px);line-height:1.14}
+.service-detail-page .service-commerce-hero{padding-top:clamp(122px,11vw,154px)}
+.service-detail-page .service-commerce-hero__card{min-height:0;padding:clamp(28px,4vw,48px)}
+.service-detail-page .service-commerce-copy h1{font-size:clamp(38px,4.5vw,64px);line-height:1.16;text-wrap:balance}
+body.source-home .hero__content h1{font-size:clamp(48px,6.6vw,86px);line-height:1.08;text-wrap:balance}
+body.source-home .hero__content>p{max-width:65ch;font-size:clamp(16px,1.35vw,19px);line-height:1.9}
+body.source-tharaa .hero{min-height:760px;padding-top:clamp(138px,12vw,176px)}
+body.source-tharaa .hero h1{font-size:clamp(76px,10vw,132px);line-height:.92}
+body.source-tharaa .hero-lead{max-width:62ch;font-size:clamp(16px,1.3vw,19px)}
+body.source-product-service .service-page{padding-top:98px}
+body.source-product-service .svc-hero{min-height:560px;padding:clamp(30px,4vw,48px)}
+body.source-product-service .svc-hero h1{font-size:clamp(38px,4.3vw,64px);line-height:1.16;text-wrap:balance}
+
+/* Shared phone action pairs are tiny and first-view critical. Inlining them
+   removes a dedicated render-blocking request while the canonical button skin
+   remains owned by components.css. */
+@media(max-width:760px){
+  .inner-page:not(.approved-source-page) .platform-hero{padding:118px 0 58px}
+  .inner-page:not(.approved-source-page) .platform-hero h1{font-size:clamp(36px,10.5vw,48px)}
+  .service-detail-page .service-commerce-hero{padding-top:104px}
+  .service-detail-page .service-commerce-hero__card{padding:22px 18px;border-radius:24px}
+  .service-detail-page .service-commerce-copy h1{font-size:clamp(34px,9.5vw,45px)}
+  body.source-home .hero__content h1{font-size:clamp(43px,13vw,58px)}
+  body.source-tharaa .hero{min-height:auto;padding-top:118px}
+  body.source-tharaa .hero h1{font-size:clamp(70px,23vw,94px)}
+  body.source-product-service .service-page{padding-top:88px}
+  body.source-product-service .svc-hero{min-height:auto;padding:22px 18px}
+  body.source-product-service .svc-hero h1{font-size:clamp(34px,9vw,46px)}
+
+  :is(.hero__actions,.cta-actions,.tharaa-actions,.ibtx-tharaa-split__actions,.platform-actions,.service-commerce-actions,.service-detail-actions,.service-hero-actions,.commerce-hero__actions,.contact-actions,.page-actions){display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:stretch!important;gap:8px!important;width:100%}
+  :is(.hero__actions,.cta-actions,.tharaa-actions,.ibtx-tharaa-split__actions,.platform-actions,.service-commerce-actions,.service-detail-actions,.service-hero-actions,.commerce-hero__actions,.contact-actions,.page-actions)>:is(a,button,.btn,.button){flex:1 1 0!important;width:auto!important;min-width:0!important;max-width:none!important;min-height:44px;padding-inline:clamp(10px,3.2vw,15px)!important;text-align:center;justify-content:center;white-space:normal!important;line-height:1.35;font-size:clamp(11px,3.25vw,13px)}
+  .service-commerce-actions>.service-text-link{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding-inline:10px!important;text-align:center}
+}
+@media(max-width:360px){
+  :is(.hero__actions,.cta-actions,.tharaa-actions,.ibtx-tharaa-split__actions,.platform-actions,.service-commerce-actions,.service-detail-actions,.service-hero-actions,.commerce-hero__actions,.contact-actions,.page-actions){gap:6px!important}
+  :is(.hero__actions,.cta-actions,.tharaa-actions,.ibtx-tharaa-split__actions,.platform-actions,.service-commerce-actions,.service-detail-actions,.service-hero-actions,.commerce-hero__actions,.contact-actions,.page-actions)>:is(a,button,.btn,.button){padding-inline:8px!important;font-size:11px!important}
+}
+</style>
