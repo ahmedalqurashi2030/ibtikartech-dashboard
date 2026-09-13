@@ -136,7 +136,6 @@ def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
     from apps.public_preview.template_contract import (
         BASE_TEMPLATE_PARENT,
         FAMILY_REQUIRED_BLOCKS,
-        extends_tag,
         page_parent,
     )
 
