@@ -36,35 +36,6 @@
 {% block category_scripts %}
 <script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
 <script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
-<script>
-  /*
-   * The category CSS deliberately switches to a complete static flow on small
-   * phones. Reuse the cinema runtime's existing reading mode so the DOM and
-   * accessibility tree follow that same breakpoint instead of leaving visible
-   * cards inert/aria-hidden.
-   */
-  document.addEventListener('DOMContentLoaded', function () {
-    var section = document.querySelector('.service-paths-section');
-    if (!section) return;
-
-    var staticPhone = window.matchMedia('(max-width: 760px)');
-    function syncStaticPhoneFlow() {
-      if (staticPhone.matches) {
-        if (!section.classList.contains('is-reading')) {
-          section.dataset.staticPhoneFlow = 'true';
-          section.classList.add('is-reading');
-        }
-      } else if (section.dataset.staticPhoneFlow === 'true') {
-        delete section.dataset.staticPhoneFlow;
-        section.classList.remove('is-reading');
-      }
-      window.dispatchEvent(new Event('resize'));
-    }
-
-    syncStaticPhoneFlow();
-    if (staticPhone.addEventListener) staticPhone.addEventListener('change', syncStaticPhoneFlow);
-  }, { once: true });
-</script>
 <script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
 {% endblock %}
 {% endblock %}
