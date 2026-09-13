@@ -15,7 +15,21 @@ const routes = [
   { name: 'brand-content', path: '/brand-content/' },
   { name: 'growth', path: '/growth/' },
   { name: 'custom-systems', path: '/custom-systems/' },
+  { name: 'tharaa', path: '/tharaa/' },
+  { name: 'portfolio', path: '/portfolio/' },
+  { name: 'knowledge', path: '/knowledge/' },
+  { name: 'article-store-launch', path: '/knowledge/store-launch/' },
+  { name: 'article-product-page', path: '/knowledge/product-page/' },
+  { name: 'article-store-redesign', path: '/knowledge/store-redesign/' },
+  { name: 'about', path: '/about/' },
+  { name: 'contact', path: '/contact/' },
   { name: 'store-launch', path: '/services/store-launch/' },
+  { name: 'storefront-customization', path: '/services/storefront-customization/' },
+  { name: 'store-redesign', path: '/services/store-redesign/' },
+  { name: 'product-page-optimization', path: '/services/product-page-optimization/' },
+  { name: 'ecommerce-growth', path: '/services/ecommerce-growth/' },
+  { name: 'ecommerce-support', path: '/services/ecommerce-support/' },
+  { name: 'not-found', path: '/404/' },
 ];
 
 const viewports = [
