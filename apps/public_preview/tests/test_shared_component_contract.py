@@ -1,14 +1,12 @@
-from pathlib import Path
+BASE_TEMPLATE = "templates/public_preview/base.html"
+COMPONENT_STYLES = "static/public_preview/assets/css/components.css"
+INNER_STYLES = "static/public_preview/assets/css/pages/inner.css"
+UX_SYSTEM = "static/public_preview/assets/css/pages/ux-system-v1.css"
 
 
-BASE_TEMPLATE = Path("templates/public_preview/base.html")
-COMPONENT_STYLES = Path("static/public_preview/assets/css/components.css")
-INNER_STYLES = Path("static/public_preview/assets/css/pages/inner.css")
-UX_SYSTEM = Path("static/public_preview/assets/css/pages/ux-system-v1.css")
-
-
-def _read(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
+def _read(path: str) -> str:
+    with open(path, encoding="utf-8") as source_file:
+        return source_file.read()
 
 
 def test_public_base_loads_one_canonical_component_system():
