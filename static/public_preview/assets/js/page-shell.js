@@ -35,15 +35,34 @@
   ]);
 
   const retiredRoutes = new Map([
-    ['salla.html', '/ecommerce/#platforms'],
-    ['zid.html', '/ecommerce/#platforms'],
-    ['shopify.html', '/ecommerce/#platforms'],
-    ['woocommerce.html', '/ecommerce/#platforms'],
-    ['wordpress.html', '/websites/#capabilities'],
+    ['salla.html', '/ecommerce/#solutions'],
+    ['zid.html', '/ecommerce/#solutions'],
+    ['shopify.html', '/ecommerce/#solutions'],
+    ['woocommerce.html', '/ecommerce/#solutions'],
+    ['wordpress.html', '/websites/#solutions'],
+  ]);
+
+  // Historic section names can still be emitted by preserved source bundles.
+  // Rewrite them to real, current sections rather than keeping empty alias nodes.
+  const retiredFragments = new Map([
+    ['/ecommerce/#paths', '/ecommerce/#start'],
+    ['/ecommerce/#platforms', '/ecommerce/#solutions'],
+    ['/ecommerce/#subservices', '/ecommerce/#solutions'],
+    ['/websites/#capabilities', '/websites/#solutions'],
+    ['/custom-systems/#apps', '/custom-systems/#solutions'],
   ]);
 
   const productionOrigin = 'https://ibtikartech.co';
   const previewOrigin = 'https://ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/';
+
+  const resolveRetiredFragment = (url) => {
+    const key = `${url.pathname}${url.hash}`;
+    const replacement = retiredFragments.get(key);
+    if (!replacement) return '';
+    const mapped = new URL(replacement, location.origin);
+    if (url.search) mapped.search = url.search;
+    return `${mapped.pathname}${mapped.search}${mapped.hash}`;
+  };
 
   const canonicalizePublicHref = (rawValue) => {
     const raw = String(rawValue || '').trim();
@@ -54,16 +73,20 @@
       const url = new URL(raw, location.href);
       if (url.origin !== location.origin) return raw;
 
+      const directFragmentAlias = resolveRetiredFragment(url);
+      if (directFragmentAlias) return directFragmentAlias;
+
       const basename = url.pathname.split('/').filter(Boolean).pop()?.toLowerCase() || '';
       const mappedPath = cleanPublicRoutes.get(basename) || retiredRoutes.get(basename);
       if (!mappedPath) return raw;
 
       const mapped = new URL(mappedPath, location.origin);
-      // A legacy target may already define a canonical fragment (for example
-      // retired platform pages -> #platforms). Preserve an explicit fragment
-      // from the original link when present; otherwise keep the mapped one.
+      // A legacy target may already define a canonical fragment. Preserve an
+      // explicit fragment from the source first, then resolve any retired name.
       if (url.search) mapped.search = url.search;
       if (url.hash) mapped.hash = url.hash;
+      const mappedAlias = resolveRetiredFragment(mapped);
+      if (mappedAlias) return mappedAlias;
       return `${mapped.pathname}${mapped.search}${mapped.hash}`;
     } catch (_) {
       return raw;
