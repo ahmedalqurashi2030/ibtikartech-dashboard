@@ -123,8 +123,6 @@ async function revealStaticPhoneSection(client) {
     const top=Math.max(0,scrollY+section.getBoundingClientRect().top-24);
     scrollTo(0,top);
     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-    // The section heading uses the normal reveal observer. Give that observer a
-    // deterministic frame after entering the viewport before asserting visibility.
     await new Promise(r=>setTimeout(r,260));
     return true;
   })()`);
@@ -135,15 +133,15 @@ async function inspectContract(client) {
     const section=document.querySelector('.service-paths-section');
     const stage=section?.querySelector(':scope > .container');
     const header=section?.querySelector('.service-paths-header');
+    const staticHeading=section?.querySelector(':scope > .cinema-heading');
     const help=section?.querySelector('.service-paths-help');
     const canvas=section?.querySelector('.service-cinema__canvas');
     const reading=section?.querySelector('.service-cinema__reading');
     const cards=[...(section?.querySelectorAll('.service-path-card')||[])];
     const visible=(el)=>{if(!el)return false;const s=getComputedStyle(el),r=el.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity||1)>.01&&r.width>0&&r.height>0};
+    const elementState=(el)=>{if(!el)return null;const s=getComputedStyle(el),r=el.getBoundingClientRect();return {display:s.display,visibility:s.visibility,opacity:Number(s.opacity||0),rect:{top:r.top,bottom:r.bottom,width:r.width,height:r.height}}};
     const rect=section?.getBoundingClientRect();
     const stageRect=stage?.getBoundingClientRect();
-    const headerStyle=header?getComputedStyle(header):null;
-    const headerRect=header?.getBoundingClientRect();
     const cardsState=cards.map((card,index)=>{const s=getComputedStyle(card),r=card.getBoundingClientRect();return {
       index,
       title:card.querySelector('h3')?.textContent?.trim()||'',
@@ -167,12 +165,9 @@ async function inspectContract(client) {
       sectionHeight:section?.offsetHeight||0,
       sectionScreens:section?section.offsetHeight/innerHeight:0,
       headerVisible:visible(header),
-      headerState:header?{
-        display:headerStyle.display,
-        visibility:headerStyle.visibility,
-        opacity:Number(headerStyle.opacity||0),
-        rect:{top:headerRect.top,bottom:headerRect.bottom,width:headerRect.width,height:headerRect.height},
-      }:null,
+      headerState:elementState(header),
+      staticHeadingVisible:visible(staticHeading),
+      staticHeadingState:elementState(staticHeading),
       helpVisible:visible(help),
       canvasVisible:visible(canvas),
       readingVisible:visible(reading),
@@ -265,9 +260,10 @@ function assertDesktopScene(failures, route, index, metrics) {
       }
       routeReport.desktop={base:desktopBase,scenes};
 
-      // Small phones intentionally use the static accessible flow. The CSS has
-      // always rendered all cards at <=760px; this assertion prevents JS from
-      // hiding those same visible cards from keyboard/assistive-technology users.
+      // Small phones intentionally use the complete static flow. The source
+      // templates have a dedicated .cinema-heading outside the immersive stage;
+      // the internal .service-paths-header is desktop-cinema scaffolding and may
+      // remain display:none in the static source skin.
       await navigate(client,route,mobile,false);
       await revealStaticPhoneSection(client);
       const mobileMetrics=await inspectContract(client);
@@ -275,7 +271,7 @@ function assertDesktopScene(failures, route, index, metrics) {
       failIf(report.failures,mobileMetrics.exists,`${route.path} mobile: service-path contract is incomplete.`);
       failIf(report.failures,!mobileMetrics.cinematicReady,`${route.path} mobile: immersive cinema should yield to the static phone flow.`);
       failIf(report.failures,mobileMetrics.stagePosition!=='sticky',`${route.path} mobile: phone flow must not trap content in a sticky stage.`);
-      failIf(report.failures,mobileMetrics.headerVisible,`${route.path} mobile: section heading is not visible after entering the section (${JSON.stringify(mobileMetrics.headerState)}).`);
+      failIf(report.failures,mobileMetrics.staticHeadingVisible,`${route.path} mobile: static section heading is not rendered (${JSON.stringify(mobileMetrics.staticHeadingState)}).`);
       failIf(report.failures,mobileMetrics.helpVisible,`${route.path} mobile: decision/help content is not visible.`);
       failIf(report.failures,accessibleCards.length===mobileMetrics.cardCount,`${route.path} mobile: ${accessibleCards.length}/${mobileMetrics.cardCount} visible cards are exposed to assistive technology.`);
       failIf(report.failures,mobileMetrics.cards.every((card)=>card.visible&&card.opacity>=.90&&card.pointerEvents!=='none'),`${route.path} mobile: one or more static cards are visually or interactively suppressed.`);
