@@ -266,9 +266,6 @@
   ctx.restore();
  }
 
-
-
-
  function drawPositioningOrbit(intensity){
   ctx.save();ctx.globalAlpha=intensity;
   const cx=width*.22,cy=height*.47;
@@ -460,7 +457,7 @@
 
   function update() {
     frameRequested = false;
-    var isMobile = window.innerWidth < 1000;
+    var isMobile = window.innerWidth <= 760;
     if (reducedMotion.matches || section.classList.contains("is-reading")) {
       section.classList.remove("is-cinematic-ready");
       setVisible(header, true);
@@ -491,6 +488,7 @@
     if (isMobile) {
       var mobileStep = Math.floor(progress * count);
       var mobileIndex = Math.min(count - 1, mobileStep);
+      activeIndex = mobileIndex;
       header.style.opacity = progress < .05 ? "1" : "0";
       header.style.transform = progress < .05 ? "translateY(0)" : "translateY(-18px)";
       setVisible(header, progress < .05);
