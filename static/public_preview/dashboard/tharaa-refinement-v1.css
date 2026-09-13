@@ -32,6 +32,11 @@ body.source-tharaa #top .tharaa-decision__actions .btn--ghost{color:#fff}
 body.source-tharaa #customize .swatches{flex-wrap:wrap}
 body.source-tharaa #customize .swatches button{width:44px!important;height:44px!important;min-height:44px!important;flex:0 0 44px!important}
 
+/* Product preview and technical badges must retain readable contrast on their
+   fixed light/dark mockup surfaces. */
+body.source-tharaa .rating small{color:#9a651a!important;font-size:13px!important}
+body.source-tharaa .tech-card:first-child>i{color:#7294ff!important}
+
 /* Trust becomes a compact evidence rail. */
 body.source-tharaa .trust-strip{border-block:1px solid var(--tharaa-line)!important;background:#080c1b!important}
 body.source-tharaa .trust-shell{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important}
@@ -109,6 +114,7 @@ body.source-tharaa .final-cta :is(.cta-card,.final-cta__card){border-radius:24px
   body.source-tharaa .component-preview-dialog__close{min-height:var(--ibt-target-min,44px)!important}
   body.source-tharaa #v4-transfer .journey-skip,
   body.source-tharaa .final-actions > a{display:inline-flex;align-items:center;justify-content:center}
+  body.source-tharaa .rating small{font-size:12px!important}
 }
 
 @media(max-width:520px){
@@ -123,5 +129,10 @@ body.source-tharaa .final-cta :is(.cta-card,.final-cta__card){border-radius:24px
   body.source-tharaa #customize .custom-list{grid-template-columns:1fr!important}
   body.source-tharaa #customize .custom-list div{border-inline-end:0!important}
 }
+
+/* Arabic headings keep the typeface's native shaping. The preserved source
+ * used Latin-style negative tracking which is not appropriate for joined RTL
+ * glyphs and was loaded after the global typography layer. */
+html[dir="rtl"] body.source-tharaa :is(#top h1,.section-head h2,#customize .custom-copy h2){letter-spacing:0!important}
 
 @media(prefers-reduced-motion:reduce){body.source-tharaa :is(.library-card,.store-window,.phone,.studio-shell){animation:none!important;transition:none!important}}
