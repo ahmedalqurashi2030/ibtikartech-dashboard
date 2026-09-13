@@ -75,6 +75,58 @@ html {
   gap: 12px;
 }
 
+/* Service-detail readability floor. The preserved page CSS still owns layout,
+ * while this shared layer prevents metadata and decision copy from dropping
+ * below comfortable reading sizes on real devices. */
+.service-detail-page .service-detail-breadcrumb {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.service-detail-page :is(.service-detail-badge, .service-detail-heading > span) {
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.service-detail-page .service-platform-chips span,
+.service-detail-page .service-purchase-box small,
+.service-detail-page .service-quick-info strong {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.service-detail-page .service-purchase-box strong,
+.service-detail-page .service-quick-info small,
+.service-detail-page .service-text-link,
+.service-detail-page .service-assurance li {
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+.service-detail-page .service-decision-tabs button {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.service-detail-page :is(
+  .service-problem-grid,
+  .service-result-grid,
+  .service-scope-grid
+) p,
+.service-detail-page .service-scope-grid li,
+.service-detail-page .service-fit-card li,
+.service-detail-page .service-check-list li {
+  font-size: clamp(13px, .8rem + .08vw, 14px);
+  line-height: 1.82;
+}
+
+.service-detail-page .service-deliverable-grid li,
+.service-detail-page .service-exclusion-list li,
+.service-detail-page .service-note {
+  font-size: 13px;
+  line-height: 1.72;
+}
+
 /* Optional visual explanation with keyboard-operable hotspots. */
 .service-anatomy-layout {
   position: relative;
@@ -176,6 +228,16 @@ html {
   .service-detail-page .page-cta .cta-actions,
   .service-detail-page .page-cta .cta-actions > * {
     width: 100%;
+  }
+
+  .service-detail-page .service-quick-info strong {
+    font-size: 11.5px;
+  }
+
+  .service-detail-page .service-quick-info small,
+  .service-detail-page .service-text-link,
+  .service-detail-page .service-assurance li {
+    font-size: 13px;
   }
 }
 
