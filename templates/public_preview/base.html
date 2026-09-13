@@ -4,7 +4,7 @@
 <head>
   {% include "public_preview/components/document_head.html" %}
   {% block head %}{% endblock %}
-  <link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/mobile-action-pairs-v1.css' %}">
+  {% include "public_preview/components/critical_styles.html" %}
   <link rel="stylesheet" href="{% static 'public_preview/foundation/typography-system.css' %}">
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/components.css' %}">
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/ux-system-v1.css' %}">
