@@ -46,6 +46,66 @@ body.source-services .goal-icon {
   border-radius: 12px !important;
 }
 
+/* ---------- Strategy/editorial readability floor ----------
+ * The legacy strategy layer intentionally uses compact metadata, but several
+ * labels fell below a comfortable Arabic reading size. Keep the visual density
+ * while preventing 8–11px copy from becoming the primary information carrier.
+ */
+.strategy-kicker,
+.strategy-outcome-rail b,
+.strategy-stage-card i,
+.strategy-knowledge-grid b,
+.strategy-service-card small {
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.strategy-outcome-rail small,
+.strategy-platform-stack small,
+.strategy-chip-row :is(a, span),
+.strategy-knowledge-grid span,
+.strategy-filterbar button,
+.strategy-service-card a {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.strategy-stage-card p,
+.strategy-cinema-context p,
+.strategy-product-context p,
+.strategy-evidence-bar p,
+.strategy-continuity p,
+.strategy-scope-note p,
+.strategy-service-card p {
+  font-size: 13px;
+  line-height: 1.82;
+}
+
+.strategy-platform-copy p,
+.strategy-salla-copy p,
+.strategy-decision__main p {
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.strategy-filterbar button {
+  min-height: var(--ibt-target-min, 44px);
+}
+
+.strategy-filterbar input {
+  min-height: 48px;
+}
+
+html[dir="rtl"] :is(
+  .strategy-compact-head h2,
+  .strategy-head h2,
+  .strategy-platform-copy h2,
+  .strategy-salla-copy h2,
+  .strategy-decision__main h2
+) {
+  letter-spacing: 0;
+}
+
 /* ---------- Inner pages ---------- */
 .inner-page:not(.approved-source-page) .platform-hero h1 {
   max-width: 800px;
@@ -70,5 +130,15 @@ body.source-services .goal-icon {
   body.source-services .hero-copy > p {
     font-size: 16px !important;
     line-height: 1.85 !important;
+  }
+
+  .strategy-stage-card p,
+  .strategy-cinema-context p,
+  .strategy-product-context p,
+  .strategy-evidence-bar p,
+  .strategy-continuity p,
+  .strategy-scope-note p,
+  .strategy-service-card p {
+    font-size: 13.5px;
   }
 }
