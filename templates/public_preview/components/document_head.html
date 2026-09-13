@@ -1,4 +1,4 @@
-{% load wagtailimages_tags %}
+{% load static wagtailimages_tags %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="canonical" href="{{ site_config.seo.canonical_url }}">
@@ -19,6 +19,8 @@
 {% if site_config.brand.favicon %}
   {% image site_config.brand.favicon width-64 as favicon_image %}
   <link rel="icon" href="{{ favicon_image.url }}" sizes="64x64">
+{% else %}
+  <link rel="icon" href="{% static 'public_preview/assets/images/ibtikar-favicon.svg' %}" type="image/svg+xml">
 {% endif %}
 <script>
   // Apply enhancement and the persisted theme before page CSS is evaluated.
