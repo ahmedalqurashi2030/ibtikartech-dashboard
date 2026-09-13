@@ -52,11 +52,25 @@
     });
   }
 
+  function normalizeDecorativeMockupHeadings(scope = document) {
+    const headings = [];
+    if (scope instanceof HTMLElement && scope.matches('body.source-tharaa #heroWindow .store-copy h3')) headings.push(scope);
+    scope.querySelectorAll?.('body.source-tharaa #heroWindow .store-copy h3').forEach((heading) => headings.push(heading));
+
+    headings.forEach((heading) => {
+      // This text belongs to the decorative store preview, not the document
+      // outline. Preserve its visual styling while removing false H1→H3 jumps
+      // from the accessibility tree.
+      heading.setAttribute('role', 'presentation');
+    });
+  }
+
   function normalize(scope = document) {
     normalizeFaq(scope);
     normalizeNativeServiceSlides(scope);
     normalizeNamedSelects(scope);
     normalizeScrollableRegions(scope);
+    normalizeDecorativeMockupHeadings(scope);
   }
 
   normalize(document);
