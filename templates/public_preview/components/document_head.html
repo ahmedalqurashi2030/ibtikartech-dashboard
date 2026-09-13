@@ -26,6 +26,10 @@
 {# The regular and display weights are responsible for almost all above-fold Arabic text. #}
 <link rel="preload" href="{% static 'public_preview/assets/generated/6010e7fd0dce5d52.woff2' %}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{% static 'public_preview/assets/generated/04c730b4292731cc.woff2' %}" as="font" type="font/woff2" crossorigin>
+{# Services uses semibold above the fold; preload that exact face to prevent its measured hero shift. #}
+{% if request.path == '/services/' %}
+<link rel="preload" href="{% static 'public_preview/assets/generated/16734a5adb27b0f3.woff2' %}" as="font" type="font/woff2" crossorigin>
+{% endif %}
 
 {# Preload the page-specific LCP candidate before the page stylesheet graph finishes. #}
 {% if request.path == '/' %}
