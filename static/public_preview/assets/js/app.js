@@ -295,7 +295,7 @@ function initContactSteps() {
     const target = panels.findIndex((panel) => panel.contains(field));
     if (target >= 0) showStep(target);
   });
-  wrap.addEventListener('reset', () => requestAnimationFrame(() => showStep(0)));
+  wrap.addEventListener('reset', () => showStep(0));
   showStep(0);
 }
 
