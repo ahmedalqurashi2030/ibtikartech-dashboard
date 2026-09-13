@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 UX_SYSTEM = Path("static/public_preview/assets/css/pages/ux-system-v1.css")
 SHELL = Path("static/public_preview/assets/css/ibtikar-shell.css")
 TYPOGRAPHY = Path("static/public_preview/foundation/typography-system.css")
