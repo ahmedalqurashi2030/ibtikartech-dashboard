@@ -1,5 +1,3 @@
-@import url("./frontend-final.css");
-
 /* Bridge layer for approved source pages. Page composition remains source-owned. */
 body.approved-source-page [data-approved-legacy-shell] {
   display: none !important;
