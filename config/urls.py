@@ -4,10 +4,11 @@ from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
-from apps.core.views import healthz
+from apps.core.views import healthz, robots_txt
 
 urlpatterns = [
     path("healthz/", healthz, name="healthz"),
+    path("robots.txt", robots_txt, name="robots_txt"),
     path("django-admin/", admin.site.urls),
     path("control/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
