@@ -13,12 +13,21 @@ def test_document_head_warms_shared_render_critical_dependencies():
     for asset in (
         "public_preview/assets/css/ibtikar-shell.css",
         "public_preview/foundation/typography-system.css",
+        "public_preview/assets/css/components.css",
         "public_preview/assets/css/pages/ux-system-v1.css",
     ):
         assert f"href=\"{{% static '{asset}' %}}\" as=\"style\"" in source
 
     assert "request.path == '/services/'" in source
     assert "16734a5adb27b0f3.woff2" in source
+
+
+def test_document_head_comments_cannot_leak_as_visible_page_text():
+    source = _read(DOCUMENT_HEAD)
+
+    assert "{% comment %}" in source
+    assert "{% endcomment %}" in source
+    assert "{# inner.css/articles.css" not in source
 
 
 def test_tharaa_parser_does_not_block_on_cinematic_runtimes():
