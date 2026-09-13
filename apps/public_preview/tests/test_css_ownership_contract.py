@@ -3,6 +3,7 @@ from pathlib import Path
 UX_SYSTEM = Path("static/public_preview/assets/css/pages/ux-system-v1.css")
 SHELL = Path("static/public_preview/assets/css/ibtikar-shell.css")
 TYPOGRAPHY = Path("static/public_preview/foundation/typography-system.css")
+SERVICE_DETAIL_FAMILY = Path("templates/public_preview/families/service_detail_base.html")
 
 
 def _read(path: Path) -> str:
@@ -53,6 +54,16 @@ def test_shared_shell_owns_effective_navigation_and_reduced_motion_rules():
     assert "height: 100dvh;" in source
     assert "min-height: var(--ibt-target-min) !important;" in source
     assert "@media (prefers-reduced-motion: reduce)" in source
+
+
+def test_service_detail_children_cannot_drop_the_canonical_shell():
+    source = _read(SERVICE_DETAIL_FAMILY)
+    styles_end = source.index("{% endblock %}", source.index("{% block service_styles %}"))
+    shell_link = '<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">'
+    shell_index = source.index(shell_link)
+
+    assert source.count(shell_link) == 1
+    assert shell_index > styles_end
 
 
 def test_arabic_heading_spacing_override_is_after_responsive_rules():
