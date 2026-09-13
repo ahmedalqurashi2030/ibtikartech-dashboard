@@ -1,6 +1,6 @@
 from django.db import connection
-from django.http import JsonResponse
-from django.views.decorators.cache import never_cache
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.cache import cache_control, never_cache
 from django.views.decorators.http import require_GET
 
 
@@ -14,3 +14,17 @@ def healthz(request):
     except Exception:
         return JsonResponse({"status": "unhealthy"}, status=503)
     return JsonResponse({"status": "ok"})
+
+
+@require_GET
+@cache_control(public=True, max_age=3600)
+def robots_txt(request):
+    lines = (
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /control/",
+        "Disallow: /django-admin/",
+        "Disallow: /portal/",
+        "Sitemap: https://ibtikartech.co/sitemap.xml",
+    )
+    return HttpResponse("\n".join(lines) + "\n", content_type="text/plain; charset=utf-8")
