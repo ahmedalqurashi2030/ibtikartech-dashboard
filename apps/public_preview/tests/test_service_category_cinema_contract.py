@@ -19,7 +19,8 @@ def test_phone_uses_cinematic_runtime_while_reduced_motion_remains_static():
 
     assert "staticPhoneFlow" not in family
     assert "window.matchMedia('(max-width: 760px)')" not in family
-    assert "var isMobile = window.innerWidth < 1000;" in runtime
+    assert "var isMobile = window.innerWidth <= 760;" in runtime
+    assert "activeIndex = mobileIndex;" in runtime
     assert "@media (max-width: 760px) and (prefers-reduced-motion: no-preference)" in geometry
     assert "--service-cinema-step-travel: 38svh" in geometry
     assert "position: sticky;" in geometry
