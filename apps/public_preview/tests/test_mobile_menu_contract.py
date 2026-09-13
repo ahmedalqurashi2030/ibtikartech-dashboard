@@ -1,11 +1,9 @@
-from pathlib import Path
-
-
-MOBILE_MENU = Path("templates/public_preview/components/mobile_menu.html")
+MOBILE_MENU = "templates/public_preview/components/mobile_menu.html"
 
 
 def _source() -> str:
-    return MOBILE_MENU.read_text(encoding="utf-8")
+    with open(MOBILE_MENU, encoding="utf-8") as source_file:
+        return source_file.read()
 
 
 def test_mobile_services_group_opens_for_solution_context():
