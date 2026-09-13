@@ -1,18 +1,19 @@
+{% with current=request.resolver_match.url_name ns=request.resolver_match.namespace %}
 <nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true" inert>
   <div class="ibt-mobile-menu-head">
     <span><strong>القائمة</strong><small>ابتكار تك للحلول والخدمات الرقمية</small></span>
     <button class="ibt-mobile-menu-close" type="button" aria-label="إغلاق القائمة" data-ibt-menu-close>×</button>
   </div>
   <a data-nav-key="home" href="{% url 'public_preview:home' %}">الرئيسية</a>
-  <details class="ibt-shell-mobile-group">
+  <details class="ibt-shell-mobile-group"{% if ns == 'services' or current == 'ecommerce' or current == 'websites' or current == 'brand-content' or current == 'growth' or current == 'custom-systems' %} open{% endif %}>
     <summary>الحلول والخدمات</summary>
     <a data-nav-key="services" href="{% url 'services:index' %}">كل الحلول والخدمات</a>
     <a href="{% url 'services:index' %}#goals">ابدأ من هدفك</a>
-    <a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
-    <a href="{% url 'public_preview:websites' %}">المواقع وصفحات الهبوط</a>
-    <a href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a>
-    <a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a>
-    <a href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a>
+    <a{% if current == 'ecommerce' or ns == 'services' and current != 'index' %} class="is-active" aria-current="page"{% endif %} href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
+    <a{% if current == 'websites' %} class="is-active" aria-current="page"{% endif %} href="{% url 'public_preview:websites' %}">المواقع وصفحات الهبوط</a>
+    <a{% if current == 'brand-content' %} class="is-active" aria-current="page"{% endif %} href="{% url 'public_preview:brand-content' %}">الهوية والمحتوى</a>
+    <a{% if current == 'growth' %} class="is-active" aria-current="page"{% endif %} href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a>
+    <a{% if current == 'custom-systems' %} class="is-active" aria-current="page"{% endif %} href="{% url 'public_preview:custom-systems' %}">الأنظمة والأتمتة</a>
   </details>
   <a data-nav-key="products" href="{% url 'public_preview:tharaa' %}">منتجاتنا — ثيم ثراء</a>
   <a data-nav-key="portfolio" href="{% url 'public_preview:portfolio' %}">أعمالنا</a>
@@ -20,3 +21,4 @@
   <a data-nav-key="about" href="{% url 'public_preview:about' %}">عن ابتكار</a>
   <a class="ibt-shell-mobile-cta ibt-shell-cta" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
 </nav>
+{% endwith %}
