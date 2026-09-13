@@ -1,89 +1,180 @@
-﻿/* Shared inner-page components */
-.btn {
+/*
+ * Ibtikar Tech — canonical public component system.
+ *
+ * This file owns shared component behavior and visual geometry across public
+ * routes. Page-family styles may still own composition and cinematic scenes,
+ * but they should not recreate button, card, CTA, form, FAQ or focus contracts.
+ */
+
+:root {
+  --ibt-component-border: color-mix(in srgb, var(--ibt-border, rgba(255,255,255,.1)) 88%, transparent);
+  --ibt-component-border-strong: color-mix(in srgb, var(--ibt-blue, #4f7df3) 34%, var(--ibt-border, rgba(255,255,255,.1)));
+  --ibt-component-surface: color-mix(in srgb, var(--ibt-surface, #121a33) 96%, transparent);
+  --ibt-component-surface-soft: color-mix(in srgb, var(--ibt-bg-soft, #0f162d) 82%, transparent);
+  --ibt-component-shadow: var(--ibt-shadow-sm, 0 8px 30px rgba(0,0,0,.16));
+  --ibt-component-shadow-hover: 0 20px 54px rgba(5, 13, 45, .16);
+}
+
+/* --------------------------------------------------------------------------
+   ACTIONS
+   -------------------------------------------------------------------------- */
+:where(.btn, .button, .platform-button, .service-cta) {
   min-height: 48px;
-  padding: 0 22px;
-  border-radius: 15px;
+  padding-inline: 22px;
   border: 1px solid transparent;
+  border-radius: 15px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 9px;
+  font: inherit;
   font-weight: 800;
   line-height: 1.35;
   text-align: center;
+  text-decoration: none;
   touch-action: manipulation;
-  transition: transform var(--ibt-duration) var(--ibt-ease), box-shadow var(--ibt-duration) var(--ibt-ease);
+  cursor: pointer;
+  transition:
+    transform var(--ibt-duration-fast, .2s) var(--ibt-ease, ease),
+    box-shadow var(--ibt-duration-fast, .2s) var(--ibt-ease, ease),
+    border-color var(--ibt-duration-fast, .2s) ease,
+    background-color var(--ibt-duration-fast, .2s) ease,
+    color var(--ibt-duration-fast, .2s) ease;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
+:where(.btn, .button, .platform-button, .service-cta) :where(svg, img) {
+  flex: 0 0 auto;
 }
 
-.btn:disabled,
-.btn[aria-disabled="true"] {
+:where(.btn, .button, .platform-button, .service-cta):focus-visible,
+:where(.article-filter, .legal-index a, .related-nav a):focus-visible {
+  outline: var(--ibt-focus-width, 3px) solid var(--ibt-focus-color, rgba(16,200,232,.58));
+  outline-offset: var(--ibt-focus-offset, 3px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(.btn, .button, .platform-button, .service-cta):not(:disabled):not([aria-disabled="true"]):hover {
+    transform: translateY(-2px);
+  }
+}
+
+:where(.btn, .button, .platform-button, .service-cta):active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(0) scale(.98);
+}
+
+:where(.btn, .button, .platform-button, .service-cta):disabled,
+:where(.btn, .button, .platform-button, .service-cta)[aria-disabled="true"] {
   cursor: not-allowed;
-  opacity: .58;
+  opacity: .56;
   transform: none;
+  box-shadow: none;
 }
 
-.btn-primary,
-.btn--primary {
+:where(.btn-primary, .btn--primary, .button-primary, .platform-button--primary) {
   background: var(--ibt-gradient-action, var(--ibt-gradient));
   color: #fff;
-  box-shadow: 0 16px 40px rgba(49, 91, 178, .26);
+  box-shadow: 0 16px 40px rgba(49, 91, 178, .24);
 }
 
-.btn-outline,
-.btn--outline {
-  border-color: color-mix(in srgb, var(--ibt-border) 80%, transparent);
-  background: color-mix(in srgb, var(--ibt-surface) 60%, transparent);
-  color: var(--ibt-text);
+:where(.btn--gradient) {
+  background: var(--ibt-gradient-action, var(--ibt-gradient));
+  color: #fff;
+  box-shadow: 0 16px 40px rgba(91, 33, 182, .24);
 }
 
-.btn-white,
-.btn--light {
+:where(.btn-outline, .btn--outline, .button-outline, .platform-button--outline) {
+  border-color: var(--ibt-component-border);
+  background: color-mix(in srgb, var(--ibt-surface, #121a33) 62%, transparent);
+  color: var(--ibt-text, #f8fafc);
+}
+
+:where(.btn-white, .btn--light) {
   background: #fff;
-  color: var(--ibt-navy);
+  color: var(--ibt-navy, #0b1026);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .12);
 }
 
-.btn-small,
-.btn--sm {
-  min-height: var(--ibt-target-min);
+:where(.btn-ghost, .btn--ghost, .btn--ghost-light) {
+  border-color: color-mix(in srgb, currentColor 20%, transparent);
+  background: color-mix(in srgb, currentColor 6%, transparent);
+}
+
+:where(.btn-small, .btn--sm) {
+  min-height: var(--ibt-target-min, 44px);
   padding-inline: 17px;
   font-size: 14px;
 }
 
-.cta-card {
-  position: relative;
-  padding: 48px;
-  border-radius: var(--ibt-radius-xl);
-  background: var(--ibt-gradient);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  overflow: hidden;
-  box-shadow: 0 38px 110px rgba(77, 68, 210, .28);
+/* --------------------------------------------------------------------------
+   CARD LANGUAGE
+   -------------------------------------------------------------------------- */
+:where(
+  .info-card,
+  .platform-card,
+  .route-card,
+  .service-related-card,
+  .commerce-service-card,
+  .library-card,
+  .goal,
+  .case-card
+) {
+  border-radius: var(--ibt-radius-panel, 22px);
+  transition:
+    transform var(--ibt-duration, .35s) var(--ibt-ease, ease),
+    border-color var(--ibt-duration-fast, .2s) ease,
+    box-shadow var(--ibt-duration, .35s) var(--ibt-ease, ease),
+    background-color var(--ibt-duration-fast, .2s) ease;
 }
 
-.cta-card h2 {
-  font-family: var(--ibt-font-display);
-  font-size: var(--ibt-text-2xl);
-  margin: 8px 0;
+:where(
+  .info-card,
+  .platform-card,
+  .route-card,
+  .service-related-card,
+  .commerce-service-card,
+  .library-card,
+  .goal,
+  .case-card
+):focus-within {
+  border-color: var(--ibt-component-border-strong);
+  box-shadow: var(--ibt-focus, 0 0 0 3px rgba(16,200,232,.28)), var(--ibt-component-shadow);
 }
 
-.cta-card p {
-  max-width: 54ch;
-  color: rgba(255, 255, 255, .85);
-  line-height: 1.8;
+@media (hover: hover) and (pointer: fine) {
+  :where(
+    .info-card,
+    .platform-card,
+    .route-card,
+    .service-related-card,
+    .commerce-service-card,
+    .library-card,
+    .goal,
+    .case-card
+  ):hover {
+    transform: translateY(-4px);
+    border-color: var(--ibt-component-border-strong);
+    box-shadow: var(--ibt-component-shadow-hover);
+  }
+}
+
+.info-card {
+  padding: 28px;
+  border: 1px solid var(--ibt-component-border);
+  background: var(--ibt-component-surface);
+  box-shadow: var(--ibt-component-shadow);
+}
+
+.info-card h3 {
+  margin: 0 0 8px;
+  font-size: clamp(1.125rem, 1.04rem + .28vw, 1.35rem);
+  line-height: 1.4;
+}
+
+.info-card p {
   margin: 0;
-}
-
-.cta-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  color: var(--ibt-muted, #a8b1c5);
+  font-size: var(--ibt-type-copy, 1rem);
+  line-height: 1.78;
 }
 
 .card-grid {
@@ -92,59 +183,174 @@
 }
 
 .card-grid--3 {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .card-grid--2 {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.info-card {
-  padding: 28px;
-  border-radius: var(--ibt-radius-lg);
-  border: 1px solid var(--ibt-border);
-  background: var(--ibt-surface);
-  box-shadow: var(--ibt-shadow-sm);
+:where(.proof-chip, .platform-proof span) {
+  border-radius: var(--ibt-radius-control, 10px);
 }
 
-.info-card h3 {
-  font-size: 18px;
-  line-height: 1.4;
-  margin: 0 0 8px;
+/* --------------------------------------------------------------------------
+   FAQ / DISCLOSURE LANGUAGE
+   -------------------------------------------------------------------------- */
+:where(.faq, .faq-item, .accordion-item, .service-faq) {
+  border-radius: var(--ibt-radius, 18px);
 }
 
-.info-card p {
-  color: var(--ibt-muted);
-  font-size: var(--ibt-type-copy, 15px);
-  line-height: 1.75;
-  margin: 0;
+:where(.faq, .faq-item, .accordion-item) > button,
+:where(.faq-item) > * > button,
+:where(.service-faq) > summary {
+  min-height: 56px;
+  touch-action: manipulation;
+}
+
+:where(.faq, .faq-item, .accordion-item) > button:focus-visible,
+:where(.faq-item) > * > button:focus-visible,
+:where(.service-faq) > summary:focus-visible {
+  outline: var(--ibt-focus-width, 3px) solid var(--ibt-focus-color, rgba(16,200,232,.58));
+  outline-offset: -3px;
+}
+
+:where(.faq-answer, .service-faq p) {
+  line-height: 1.82;
+}
+
+/* --------------------------------------------------------------------------
+   FORMS
+   -------------------------------------------------------------------------- */
+:where(form) :where(label) {
+  color: var(--ibt-text, inherit);
+  font-weight: 800;
+}
+
+:where(form) :where(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  select,
+  textarea
+) {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--ibt-component-border);
+  border-radius: 14px;
+  background: var(--ibt-bg, #fff);
+  color: var(--ibt-text, #11162b);
+  transition:
+    border-color var(--ibt-duration-fast, .2s) ease,
+    box-shadow var(--ibt-duration-fast, .2s) ease,
+    background-color var(--ibt-duration-fast, .2s) ease;
+}
+
+:where(form) textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+:where(form) :where(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  select,
+  textarea
+):focus-visible {
+  outline: 0;
+  border-color: color-mix(in srgb, var(--ibt-blue, #4f7df3) 54%, var(--ibt-border, #e4e9f2));
+  box-shadow: var(--ibt-focus, 0 0 0 3px rgba(16,200,232,.28));
+}
+
+:where(form) :where(input, select, textarea)[aria-invalid="true"],
+:where(form) input:invalid:not(:placeholder-shown),
+:where(form) textarea:invalid:not(:placeholder-shown) {
+  border-color: color-mix(in srgb, var(--ibt-error, #ef4444) 70%, var(--ibt-border, #e4e9f2));
 }
 
 .form-message {
+  min-height: 1.5em;
   margin-top: 12px;
+  color: var(--ibt-muted, #667085);
   font-size: 14px;
-  line-height: 1.6;
-  color: var(--ibt-muted);
+  line-height: 1.65;
 }
 
 .form-message.is-success {
-  color: var(--ibt-success);
+  color: var(--ibt-success, #20c98b);
 }
 
 .form-message.is-error {
-  color: var(--ibt-error);
+  color: var(--ibt-error, #ef4444);
 }
 
 .form-message.is-loading {
-  color: var(--ibt-info);
+  color: var(--ibt-info, #4f7df3);
 }
 
-.whatsapp-float,
-.whatsapp {
+/* --------------------------------------------------------------------------
+   CONVERSION / CTA
+   -------------------------------------------------------------------------- */
+.cta-card {
+  position: relative;
+  min-width: 0;
+  padding: clamp(34px, 4vw, 48px);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: var(--ibt-radius-xl, 34px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ibt-gradient-action, var(--ibt-gradient));
+  color: #fff;
+  box-shadow: 0 34px 90px rgba(77, 68, 210, .24);
+}
+
+.cta-card::before {
+  content: "";
+  position: absolute;
+  inset: -35% auto auto -10%;
+  z-index: -1;
+  width: min(34rem, 70vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .14);
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.cta-card > * {
+  min-width: 0;
+}
+
+.cta-card h2 {
+  margin: 8px 0;
+  font-family: var(--ibt-font-display, inherit);
+  font-size: var(--ibt-type-section-compact, var(--ibt-text-2xl, 2.4rem));
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+.cta-card p {
+  max-width: 56ch;
+  margin: 0;
+  color: rgba(255, 255, 255, .88);
+  line-height: 1.82;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   FLOATING SUPPORT ACTION
+   -------------------------------------------------------------------------- */
+:where(.whatsapp-float, .whatsapp) {
   position: fixed;
   left: 20px;
   bottom: 20px;
-  z-index: var(--ibt-z-sticky);
+  z-index: var(--ibt-z-sticky, 500);
   width: 56px;
   height: 56px;
   border-radius: 18px;
@@ -155,31 +361,104 @@
   font-size: 22px;
   font-weight: 900;
   box-shadow: 0 16px 36px rgba(37, 211, 102, .28);
-  transition: transform var(--ibt-duration-fast);
+  transition: transform var(--ibt-duration-fast, .2s) var(--ibt-ease, ease);
 }
 
-.whatsapp-float:hover,
-.whatsapp:hover {
-  transform: translateY(-4px);
+@media (hover: hover) and (pointer: fine) {
+  :where(.whatsapp-float, .whatsapp):hover {
+    transform: translateY(-4px);
+  }
 }
 
-@media (max-width: 768px) {
+:where(.whatsapp-float, .whatsapp):focus-visible {
+  outline: var(--ibt-focus-width, 3px) solid #fff;
+  outline-offset: var(--ibt-focus-offset, 3px);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .card-grid--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
   .card-grid--3,
   .card-grid--2 {
     grid-template-columns: 1fr;
   }
 
   .cta-card {
+    padding: 30px 22px;
     flex-direction: column;
-    text-align: center;
-    padding: 32px 24px;
+    align-items: stretch;
+    text-align: start;
+    gap: 24px;
+  }
+
+  .cta-actions,
+  .cta-actions > :where(a, button) {
+    width: 100%;
+  }
+
+  :where(.whatsapp-float, .whatsapp) {
+    left: max(14px, env(safe-area-inset-left));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  :where(.btn, .button, .platform-button, .service-cta) {
+    min-height: 48px;
+  }
+
+  .info-card {
+    padding: 24px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn:hover,
-  .whatsapp-float:hover,
-  .whatsapp:hover {
-    transform: none;
+  :where(
+    .btn,
+    .button,
+    .platform-button,
+    .service-cta,
+    .info-card,
+    .platform-card,
+    .route-card,
+    .service-related-card,
+    .commerce-service-card,
+    .library-card,
+    .goal,
+    .case-card,
+    .whatsapp-float,
+    .whatsapp
+  ) {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+
+  :where(
+    .btn,
+    .button,
+    .platform-button,
+    .service-cta,
+    .info-card,
+    .platform-card,
+    .route-card,
+    .service-related-card,
+    .commerce-service-card,
+    .library-card,
+    .goal,
+    .case-card,
+    .whatsapp-float,
+    .whatsapp
+  ):hover {
+    transform: none !important;
   }
 }
