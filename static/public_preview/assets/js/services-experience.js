@@ -14,7 +14,7 @@
     { mode:'site', index:'02', title:'المواقع وصفحات الهبوط', href:'websites.html' },
     { mode:'brand', index:'03', title:'الهوية والمحتوى', href:'brand-content.html' },
     { mode:'growth', index:'04', title:'الظهور والقياس والنمو', href:'growth.html' },
-    { mode:'app', index:'05', title:'الأنظمة والربط والأتمتة', href:'custom-systems.html#apps' }
+    { mode:'app', index:'05', title:'الأنظمة والربط والأتمتة', href:'custom-systems.html' }
   ];
 
   const DISCOVERY_SERVICES = [
@@ -63,7 +63,7 @@
     {
       family:'auto', index:'08', eyebrow:'AUTOMATION', title:'ربط وأتمتة العمليات',
       description:'ربط القنوات والبيانات والخطوات المتكررة لتقليل العمل اليدوي ضمن تدفق واضح.',
-      href:'custom-systems.html#automation', image:'/static/public_preview/assets/images/services/discovery/automation-connect.svg',
+      href:'custom-systems.html#solutions', image:'/static/public_preview/assets/images/services/discovery/automation-connect.svg',
       imageAlt:'تصميم توضيحي لربط الأنظمة والأتمتة', tags:['APIs','Automation','Webhooks']
     }
   ];
