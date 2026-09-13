@@ -1,15 +1,12 @@
 /*
- * Ibtikar Tech — UI/UX System V1
- * Transitional shared-pattern layer.
+ * Ibtikar Tech — transitional cross-page UX refinements.
+ *
+ * Canonical component behavior now lives in components.css.
  * Foundation geometry/focus/typography live in tokens.css + base.css;
  * the global header, navigation drawer, mega menu and footer live exclusively
- * in ibtikar-shell.css. Keep only cross-page content refinements here until
- * they are migrated to canonical components/page families.
+ * in ibtikar-shell.css. Keep only layout/readability refinements here until
+ * each rule is absorbed by its page family or canonical component owner.
  */
-
-:root {
-  --ibt-ux-border: color-mix(in srgb, var(--ibt-border) 82%, transparent);
-}
 
 /* ---------- Shared layout rhythm ---------- */
 .ibtx-container {
@@ -23,47 +20,6 @@
 
 :where(.section-heading, .platform-heading, .service-detail-heading, .svc-heading, .heading) > p {
   max-width: 64ch;
-}
-
-/* ---------- Buttons / calls to action ---------- */
-:where(.btn, .button, .platform-button, .service-cta, .scene-link) {
-  touch-action: manipulation;
-}
-
-:where(.btn, .button, .platform-button) {
-  min-height: var(--ibt-control-h);
-}
-
-:where(.btn, .button, .platform-button):hover {
-  transform: translateY(-1px);
-}
-
-/* ---------- Cards and content blocks ---------- */
-:where(.goal, .route-card, .service-item, .library-card) {
-  border-radius: var(--ibt-radius-panel) !important;
-}
-
-:where(.goal, .route-card, .service-item, .library-card):hover {
-  transform: translateY(-3px) !important;
-}
-
-:where(.proof-chip, .platform-proof span) {
-  border-radius: var(--ibt-radius-control) !important;
-}
-
-/* ---------- Forms ---------- */
-:where(form) :where(label) {
-  font-weight: 700;
-}
-
-:where(form) :where(input, textarea, select) {
-  width: 100%;
-  border-color: var(--ibt-ux-border);
-  transition: border-color .18s ease, background-color .18s ease;
-}
-
-:where(form) :where(input, textarea, select):focus {
-  border-color: color-mix(in srgb, var(--ibt-blue) 58%, var(--ibt-border));
 }
 
 /* ---------- Homepage and approved-source readability ---------- */
@@ -101,53 +57,18 @@ body.source-services .goal-icon {
 }
 
 .category-hub #capabilities .route-card {
-  border-radius: 20px !important;
   box-shadow: 0 12px 36px rgba(0, 0, 0, .07) !important;
 }
 
 .category-hub #capabilities .route-card:hover {
-  transform: translateY(-3px) !important;
   box-shadow: 0 18px 46px rgba(0, 0, 0, .1) !important;
 }
 
 /* ---------- Mobile content corrections ---------- */
 @media (max-width: 760px) {
-  :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) {
-    gap: 8px;
-  }
-
-  :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) > :where(a, button) {
-    min-height: 48px;
-  }
-
   body.source-home .hero__content > p,
   body.source-services .hero-copy > p {
     font-size: 16px !important;
     line-height: 1.85 !important;
-  }
-}
-
-@media (max-width: 520px) {
-  :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) {
-    display: grid !important;
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-
-  :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) > :where(a, button) {
-    width: 100%;
-  }
-}
-
-/* ---------- Motion accessibility for content patterns ---------- */
-@media (prefers-reduced-motion: reduce) {
-  :where(.goal, .route-card, .service-item, .library-card) {
-    transition: none !important;
-    animation: none !important;
-  }
-
-  :where(.btn, .button, .platform-button):hover,
-  :where(.goal, .route-card, .service-item, .library-card):hover {
-    transform: none !important;
   }
 }
