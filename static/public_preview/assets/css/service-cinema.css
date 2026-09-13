@@ -1,10 +1,43 @@
 /*
  * Ibtikar Tech — Service Category Cinematic Geometry
  * Canonical owner for scroll-travel geometry of category-page cinematic paths.
- * Visual skin remains owned by service-category.css / services-reference.css.
+ * Homepage and service categories share the same cinematic tokens and visual
+ * grammar; each family keeps only the geometry/content needed for its purpose.
  * Desktop and phone both keep the cinematic story; reduced-motion keeps the
  * complete static accessible flow.
  */
+
+@media (prefers-reduced-motion: no-preference) {
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready {
+    background:
+      radial-gradient(circle at 78% 25%, color-mix(in srgb, var(--service-accent-2) 10%, transparent), transparent 30%),
+      var(--ibt-cinema-bg, #050817) !important;
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready > .container {
+    background: var(--ibt-cinema-bg, #050817) !important;
+  }
+
+  html body #main-content.service-reference .service-cinema__index {
+    color: var(--ibt-cinema-index, #82eaf8) !important;
+  }
+
+  html body #main-content.service-reference .service-cinema__vignette {
+    box-shadow: inset 0 0 180px 54px var(--ibt-cinema-vignette, rgba(2, 4, 13, .76));
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card > p,
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child > p {
+    color: var(--ibt-cinema-copy, #b5c0d6);
+  }
+
+  /* Match the homepage orientation grammar: story copy sits on the reading
+     side while the progress rail remains peripheral on the physical left in RTL. */
+  html body #main-content.service-reference .service-cinema__rail {
+    inset-inline-start: auto !important;
+    inset-inline-end: clamp(13px, 4vw, 54px) !important;
+  }
+}
 
 @media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready {
@@ -17,6 +50,22 @@
       100svh +
       (var(--service-path-count, 6) * var(--service-cinema-step-travel))
     ) !important;
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__meta {
+    border-color: var(--ibt-cinema-panel-border, rgba(255, 255, 255, .11));
+    background: color-mix(in srgb, var(--service-accent) 7%, var(--ibt-cinema-panel, rgba(5, 10, 27, .76)));
+    backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px));
+    -webkit-backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px));
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-help {
+    border-color: var(--ibt-cinema-panel-border, rgba(255, 255, 255, .11));
+    border-radius: var(--ibt-cinema-panel-radius, 18px);
+    background: var(--ibt-cinema-panel, rgba(5, 10, 27, .76));
+    box-shadow: var(--ibt-cinema-panel-shadow, 0 20px 52px rgba(0, 0, 0, .28));
+    backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px)) saturate(1.12);
+    -webkit-backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px)) saturate(1.12);
   }
 }
 
@@ -33,7 +82,7 @@
     min-height: 0 !important;
     padding: 0 !important;
     overflow: clip;
-    background: #030611;
+    background: var(--ibt-cinema-bg, #050817) !important;
   }
 
   /* The immersive stage owns the heading on phones; avoid a duplicated source heading. */
@@ -41,16 +90,21 @@
     display: none !important;
   }
 
+  /* Full-bleed theatre on phone, matching the homepage scene. The top offset
+     remains service-family specific so the shared header/page nav never hides it. */
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready > .container {
     position: sticky;
     top: var(--service-cinema-top);
-    width: min(calc(100% - 20px), 560px);
+    width: 100% !important;
+    max-width: none !important;
     height: var(--service-cinema-height);
     min-height: 560px;
     padding: 0 !important;
     overflow: hidden;
-    border-radius: 24px;
-    background: #030611;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--ibt-cinema-bg, #050817) !important;
+    box-shadow: none !important;
   }
 
   /* Intro copy is visible only at the cinematic entrance. The runtime controls
@@ -90,6 +144,7 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header p {
     max-width: 34ch;
     margin-inline: auto;
+    color: var(--ibt-cinema-copy, #b5c0d6) !important;
     font-size: 14px;
     line-height: 1.78;
   }
@@ -103,15 +158,17 @@
     pointer-events: none;
   }
 
+  /* Same mobile caption surface used by the homepage Journey: translucent dark
+     glass, one restrained border, readable Arabic type and no nested-card noise. */
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card,
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child,
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:nth-child(2),
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:nth-child(3) {
     position: absolute;
-    inset-inline: 16px;
-    right: 16px;
-    left: 16px;
-    bottom: 48px;
+    inset-inline: 22px;
+    right: 22px;
+    left: 22px;
+    bottom: max(118px, 14svh);
     width: auto;
     min-height: 0;
     max-height: min(52svh, 430px);
@@ -121,11 +178,12 @@
     flex-direction: column;
     overflow: auto;
     overscroll-behavior: contain;
-    border: 1px solid color-mix(in srgb, var(--service-accent) 24%, rgba(255,255,255,.09));
-    border-radius: 18px;
-    background: color-mix(in srgb, #071027 88%, transparent);
-    box-shadow: 0 18px 48px rgba(0,0,0,.28);
-    backdrop-filter: blur(18px);
+    border: 1px solid var(--ibt-cinema-panel-border, rgba(255, 255, 255, .11));
+    border-radius: var(--ibt-cinema-panel-radius, 18px);
+    background: var(--ibt-cinema-panel, rgba(5, 10, 27, .76));
+    box-shadow: var(--ibt-cinema-panel-shadow, 0 20px 52px rgba(0, 0, 0, .28));
+    backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px)) saturate(1.12);
+    -webkit-backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px)) saturate(1.12);
     opacity: 0 !important;
     transform: translateY(18px) !important;
     pointer-events: none !important;
@@ -143,22 +201,25 @@
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__meta {
     margin-bottom: 10px;
-    font-size: 9px;
+    font-size: 10px;
+    color: var(--ibt-cinema-index, #82eaf8);
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card h3,
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child h3 {
     max-width: 17ch;
     margin-bottom: 8px;
-    font-size: clamp(26px, 7.4vw, 34px);
-    line-height: 1.22;
+    color: #fff;
+    font-size: clamp(25px, 7.2vw, 31px);
+    line-height: 1.18;
     letter-spacing: 0;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card > p,
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child > p {
-    font-size: 13px;
-    line-height: 1.72;
+    color: var(--ibt-cinema-copy, #b5c0d6) !important;
+    font-size: clamp(13px, 3.55vw, 15px);
+    line-height: 1.78;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__fit {
@@ -192,14 +253,17 @@
      before it is available to keyboard and assistive-technology users. */
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-help {
     position: absolute;
-    inset-inline: 16px;
+    inset-inline: 22px;
     bottom: 18px;
     width: auto;
     margin: 0;
     padding: 14px 16px;
-    border-radius: 16px;
-    background: rgba(8,13,31,.9);
-    backdrop-filter: blur(18px);
+    border: 1px solid var(--ibt-cinema-panel-border, rgba(255, 255, 255, .11));
+    border-radius: var(--ibt-radius-compact, 16px);
+    background: var(--ibt-cinema-panel-strong, rgba(8, 15, 36, .88));
+    box-shadow: var(--ibt-cinema-panel-shadow, 0 20px 52px rgba(0, 0, 0, .28));
+    backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px));
+    -webkit-backdrop-filter: blur(var(--ibt-cinema-panel-blur, 16px));
     opacity: 1 !important;
     transform: translateY(0) !important;
     visibility: visible;
@@ -214,14 +278,22 @@
   }
 
   html body #main-content.service-reference .service-cinema__top {
-    inset: 16px 18px auto;
+    inset: calc(env(safe-area-inset-top, 0px) + 18px) 18px auto;
+    opacity: .82;
+  }
+
+  html body #main-content.service-reference .service-cinema__index {
+    font-size: 10px;
+    letter-spacing: .08em;
   }
 
   html body #main-content.service-reference .service-cinema__rail {
     display: flex;
-    inset-inline-start: 10px;
+    inset-inline-start: auto !important;
+    inset-inline-end: 8px !important;
     top: 45%;
     gap: 0;
+    opacity: .68;
   }
 
   html body #main-content.service-reference .service-cinema__rail-line {
@@ -232,20 +304,55 @@
     display: none;
   }
 
+  /* Match the homepage phone scene: a small passive scroll cue stays visible
+     near the top rather than disappearing and leaving the interaction implicit. */
   html body #main-content.service-reference .service-cinema__cue {
+    display: flex;
+    inset-inline-start: 18px;
+    inset-inline-end: auto;
+    top: calc(env(safe-area-inset-top, 0px) + 48px);
+    bottom: auto;
+    width: auto;
+    justify-content: flex-start;
+    gap: 7px;
+    color: rgba(220, 228, 244, .68);
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+
+  html body #main-content.service-reference .service-cinema__cue i:last-child {
     display: none;
   }
 
   html body #main-content.service-reference .service-cinema__reading {
-    inset-inline-start: 16px;
+    inset-inline-start: auto;
+    inset-inline-end: 16px;
     top: 12px;
     min-height: 44px;
     padding: 7px 12px;
+    border-color: var(--ibt-cinema-panel-border, rgba(255, 255, 255, .11));
+    background: var(--ibt-cinema-panel-strong, rgba(8, 15, 36, .88));
     font-size: 12px;
   }
 
   html body #main-content.service-reference .service-cinema__vignette {
-    box-shadow: inset 0 0 120px 34px rgba(2,4,13,.76);
+    box-shadow: inset 0 0 120px 34px var(--ibt-cinema-vignette, rgba(2, 4, 13, .76));
+  }
+}
+
+@media (max-width: 430px) and (prefers-reduced-motion: no-preference) {
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card,
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child,
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:nth-child(2),
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:nth-child(3) {
+    inset-inline: 20px;
+    right: 20px;
+    left: 20px;
+  }
+
+  html body #main-content.service-reference .service-cinema__rail {
+    inset-inline-end: 6px !important;
+    opacity: .54;
   }
 }
 
