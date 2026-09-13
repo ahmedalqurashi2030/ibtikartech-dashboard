@@ -58,8 +58,12 @@ def test_shared_shell_owns_effective_navigation_and_reduced_motion_rules():
 
 def test_service_detail_children_cannot_drop_the_canonical_shell():
     source = _read(SERVICE_DETAIL_FAMILY)
-    styles_end = source.index("{% endblock %}", source.index("{% block service_styles %}"))
-    shell_link = '<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">'
+    styles_block = source.index("{% block service_styles %}")
+    styles_end = source.index("{% endblock %}", styles_block)
+    shell_link = (
+        '<link rel="stylesheet" '
+        'href="/static/public_preview/assets/css/ibtikar-shell.css">'
+    )
     shell_index = source.index(shell_link)
 
     assert source.count(shell_link) == 1
