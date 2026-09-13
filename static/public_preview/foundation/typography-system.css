@@ -241,6 +241,17 @@ body.article-page .article-related h2 {
   text-wrap: pretty !important;
 }
 
+/* Arabic glyph shaping should not inherit Latin display tightening. Negative
+ * tracking can make connected Arabic headings feel cramped and reduces the
+ * distinction between glyph joins. Keep the scale/line-height hierarchy but
+ * let the Arabic font's native spacing do the work. */
+html[lang="ar"] body:not(.article-page) main :is(h1, h2, h3),
+html[dir="rtl"] body:not(.article-page) main :is(h1, h2, h3),
+html[lang="ar"] body.article-page :is(.article-body, .article-end, .article-related) h2,
+html[dir="rtl"] body.article-page :is(.article-body, .article-end, .article-related) h2 {
+  letter-spacing: 0 !important;
+}
+
 /* --------------------------------------------------------------------------
    RESPONSIVE SCALE
    -------------------------------------------------------------------------- */
