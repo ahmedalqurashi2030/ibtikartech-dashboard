@@ -36,6 +36,11 @@
     background: #030611;
   }
 
+  /* The immersive stage owns the heading on phones; avoid a duplicated source heading. */
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready > .cinema-heading {
+    display: none !important;
+  }
+
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready > .container {
     position: sticky;
     top: var(--service-cinema-top);
@@ -48,15 +53,19 @@
     background: #030611;
   }
 
+  /* Keep the context visible on small screens while the lower story card changes. */
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header {
     position: absolute;
     inset: 0;
     width: 100%;
     margin: 0;
-    padding: 76px 22px 28px;
+    padding: 70px 22px 28px;
     display: grid;
-    place-items: center;
+    place-items: start center;
+    align-content: start;
     text-align: center;
+    opacity: 1 !important;
+    transform: none !important;
     pointer-events: none;
   }
 
@@ -67,7 +76,7 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header h2 {
     max-width: 15ch;
     margin: 10px auto;
-    font-size: clamp(30px, 9vw, 40px) !important;
+    font-size: clamp(28px, 8.5vw, 38px) !important;
     line-height: 1.18;
     letter-spacing: 0;
   }
@@ -75,8 +84,8 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header p {
     max-width: 34ch;
     margin-inline: auto;
-    font-size: 14px;
-    line-height: 1.8;
+    font-size: 13px;
+    line-height: 1.72;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-grid {
@@ -99,7 +108,7 @@
     bottom: 48px;
     width: auto;
     min-height: 0;
-    max-height: min(52svh, 430px);
+    max-height: min(48svh, 405px);
     margin: 0;
     padding: 18px;
     display: flex;
@@ -108,16 +117,22 @@
     overscroll-behavior: contain;
     border: 1px solid color-mix(in srgb, var(--service-accent) 24%, rgba(255,255,255,.09));
     border-radius: 18px;
-    background: color-mix(in srgb, #071027 86%, transparent);
+    background: color-mix(in srgb, #071027 88%, transparent);
     box-shadow: 0 18px 48px rgba(0,0,0,.28);
     backdrop-filter: blur(18px);
-    opacity: 0;
-    transform: translateY(22px);
-    pointer-events: none;
+    opacity: 0 !important;
+    transform: translateY(18px) !important;
+    pointer-events: none !important;
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card.is-active {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:last-child {
-    bottom: 178px;
+    bottom: 170px;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__meta {
@@ -129,7 +144,7 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child h3 {
     max-width: 17ch;
     margin-bottom: 8px;
-    font-size: clamp(26px, 7.4vw, 34px);
+    font-size: clamp(25px, 7.1vw, 33px);
     line-height: 1.22;
     letter-spacing: 0;
   }
@@ -137,21 +152,21 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card > p,
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child > p {
     font-size: 13px;
-    line-height: 1.72;
+    line-height: 1.7;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__fit {
-    margin-top: 12px;
-    padding-top: 10px;
+    margin-top: 11px;
+    padding-top: 9px;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__fit strong {
     font-size: 12px;
-    line-height: 1.55;
+    line-height: 1.5;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__scope {
-    margin-top: 10px;
+    margin-top: 9px;
     gap: 5px;
   }
 
@@ -162,8 +177,8 @@
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__action {
     min-height: 44px;
-    margin-top: 8px;
-    padding-top: 6px;
+    margin-top: 7px;
+    padding-top: 5px;
     align-items: center;
   }
 
@@ -173,17 +188,25 @@
     bottom: 18px;
     width: auto;
     margin: 0;
-    padding: 14px 16px;
+    padding: 13px 16px;
     border-radius: 16px;
-    background: rgba(8,13,31,.88);
+    background: rgba(8,13,31,.9);
     backdrop-filter: blur(18px);
-    opacity: 0;
-    transform: translateY(14px);
-    pointer-events: none;
+    opacity: 0 !important;
+    transform: translateY(12px) !important;
+    visibility: hidden;
+    pointer-events: none !important;
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready:has(.service-path-card:last-child.is-active) .service-paths-help {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible;
+    pointer-events: auto !important;
   }
 
   html body #main-content.service-reference .service-cinema__top {
-    inset: 18px 18px auto;
+    inset: 16px 18px auto;
   }
 
   html body #main-content.service-reference .service-cinema__rail {
@@ -194,7 +217,7 @@
   }
 
   html body #main-content.service-reference .service-cinema__rail-line {
-    height: min(23svh, 160px);
+    height: min(22svh, 150px);
   }
 
   html body #main-content.service-reference .service-cinema__rail-steps {
@@ -207,7 +230,7 @@
 
   html body #main-content.service-reference .service-cinema__reading {
     inset-inline-start: 16px;
-    top: 14px;
+    top: 12px;
     min-height: 44px;
     padding: 7px 12px;
     font-size: 12px;
