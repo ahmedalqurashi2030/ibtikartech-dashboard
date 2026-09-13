@@ -22,6 +22,30 @@
 {% else %}
   <link rel="icon" href="{% static 'public_preview/assets/images/ibtikar-favicon.svg' %}" type="image/svg+xml">
 {% endif %}
+
+{# The regular and display weights are responsible for almost all above-fold Arabic text. #}
+<link rel="preload" href="{% static 'public_preview/assets/generated/6010e7fd0dce5d52.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{% static 'public_preview/assets/generated/04c730b4292731cc.woff2' %}" as="font" type="font/woff2" crossorigin>
+
+{# Preload the page-specific LCP candidate before the page stylesheet graph finishes. #}
+{% if request.path == '/' %}
+<link rel="preload" href="{% static 'public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp' %}" as="image" fetchpriority="high">
+{% elif request.path == '/services/' %}
+<link rel="preload" href="{% static 'public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg' %}" as="image" fetchpriority="high">
+{% elif request.path == '/ecommerce/' %}
+<link rel="preload" href="{% static 'public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg' %}" as="image" fetchpriority="high">
+{% endif %}
+
+{# Above-fold content must remain paintable while cinematic transforms initialize. #}
+<style>
+  #main-content > .hero .reveal,
+  #main-content > .platform-hero .reveal,
+  #main-content .hero-ecosystem {
+    opacity: 1 !important;
+    visibility: visible !important;
+    clip-path: none !important;
+  }
+</style>
 <script>
   // Apply enhancement and the persisted theme before page CSS is evaluated.
   document.documentElement.classList.remove('no-js');
