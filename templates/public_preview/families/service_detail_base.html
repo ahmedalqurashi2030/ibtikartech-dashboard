@@ -5,13 +5,11 @@
 <meta name="description" content="{% block service_meta_description %}{% endblock %}">
 {% block service_styles %}
 <!--
-  NOTE: This base template automatically includes:
-  - inner.css
-  - ibtikar-shell.css
-  Do not re-include these in child templates.
+  NOTE: Child templates may replace the service-specific composition below.
+  The canonical shared shell is loaded after this block so it cannot be dropped
+  by a preserved-source service page.
 -->
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
@@ -21,6 +19,7 @@
 <!-- Phase 1: Shared Primitives (Added alongside legacy CSS during transition) -->
 <link rel="stylesheet" href="/static/public_preview/assets/css/service-primitives.css?v=20260902">
 {% endblock %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
 {% endblock %}
 
 {% block body_attrs %} class="inner-page service-detail-page" data-section="services"{% endblock %}
