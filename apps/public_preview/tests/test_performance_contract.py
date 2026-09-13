@@ -1,12 +1,10 @@
-from pathlib import Path
+DOCUMENT_HEAD = "templates/public_preview/components/document_head.html"
+THARAA_TEMPLATE = "templates/public_preview/pages/tharaa.html"
 
 
-DOCUMENT_HEAD = Path("templates/public_preview/components/document_head.html")
-THARAA_TEMPLATE = Path("templates/public_preview/pages/tharaa.html")
-
-
-def _read(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
+def _read(path):
+    with open(path, encoding="utf-8") as source_file:
+        return source_file.read()
 
 
 def test_document_head_warms_shared_render_critical_dependencies():
