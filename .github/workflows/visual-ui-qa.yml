@@ -73,7 +73,7 @@ jobs:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
         run: node scripts/visual_qa_capture.cjs
 
-      - name: Verify service category cinema and static phone flow
+      - name: Verify service category cinema on desktop and mobile
         env:
           BASE_URL: http://127.0.0.1:8000
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
