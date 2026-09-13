@@ -37,6 +37,21 @@
   --ibt-reading: 68ch;
   --ibt-control-h: 46px;
 
+  /* Canonical cinematic grammar shared by homepage and service categories.
+   * Page families keep their own content and scroll geometry; the visual
+   * theatre, caption surface, hierarchy and orientation cues remain one system. */
+  --ibt-cinema-bg: #050817;
+  --ibt-cinema-bg-soft: #080d20;
+  --ibt-cinema-panel: rgba(5, 10, 27, .76);
+  --ibt-cinema-panel-strong: rgba(8, 15, 36, .88);
+  --ibt-cinema-panel-border: rgba(255, 255, 255, .11);
+  --ibt-cinema-panel-radius: 18px;
+  --ibt-cinema-panel-shadow: 0 20px 52px rgba(0, 0, 0, .28);
+  --ibt-cinema-panel-blur: 16px;
+  --ibt-cinema-copy: #b5c0d6;
+  --ibt-cinema-index: #82eaf8;
+  --ibt-cinema-vignette: rgba(2, 4, 13, .76);
+
   --ibt-space-1: 2px;
   --ibt-space-2: 4px;
   --ibt-space-3: 8px;
