@@ -136,6 +136,7 @@ def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
     from apps.public_preview.template_contract import (
         BASE_TEMPLATE_PARENT,
         FAMILY_REQUIRED_BLOCKS,
+        extends_tag,
         page_parent,
     )
 
@@ -725,7 +726,7 @@ def test_platform_pilots_share_accessible_touch_and_preview_contracts():
     assert "ux-system-v1.css" in base
     assert "service-category-refinement-v1.css" not in base
     assert category_family.count("service-category-refinement-v1.css") == 1
-    assert "strategy-enhancements.css" in base
+    assert "strategy-enhancements.css" not in base
     assert "--ibt-target-min: 44px" in tokens
     assert "min-height: var(--ibt-target-min);" in shell
     assert "width: 40px !important;\n    height: 40px !important;" not in layout
