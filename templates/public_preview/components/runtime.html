@@ -14,15 +14,32 @@
   (() => {
     const deferredPairs = [
       ['launch-readiness.css', 'launch-readiness-deferred.css'],
+      ['continuous-flow.css', 'continuous-flow-deferred.css'],
+      ['section-layout-refinement-v2.css', 'section-layout-refinement-v2-deferred.css'],
+      ['service-related-cards.css', 'service-related-cards-deferred.css'],
+      ['service-cinema.css', 'service-cinema-deferred.css'],
+      ['homepage-surface-refinement-v1.css', 'homepage-surface-refinement-v1-deferred.css'],
+      ['home-experience-v2.css', 'home-experience-v2-deferred.css'],
+      ['home-services-fix.css', 'home-services-fix-deferred.css'],
+      ['conversion-funnel.css', 'conversion-funnel-deferred.css'],
     ];
+
+    const stylesheetLinks = () => [...document.querySelectorAll('link[rel="stylesheet"][href]')];
 
     const loadDeferredStyles = () => {
       deferredPairs.forEach(([criticalName, deferredName]) => {
-        const source = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
-          .find((link) => link.href.includes(`/assets/css/pages/${criticalName}`));
+        const source = stylesheetLinks().find((link) => {
+          try {
+            return new URL(link.href, location.href).pathname.endsWith(`/${criticalName}`);
+          } catch (_) {
+            return false;
+          }
+        });
         if (!source) return;
-        const deferredHref = source.href.replace(criticalName, deferredName);
-        if (document.querySelector(`link[href="${deferredHref}"]`)) return;
+
+        const deferredHref = source.href.replace(new RegExp(`${criticalName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`), deferredName);
+        if (stylesheetLinks().some((link) => link.href === deferredHref)) return;
+
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = deferredHref;
@@ -31,10 +48,18 @@
       });
     };
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadDeferredStyles, { timeout: 900 });
+    const scheduleDeferredStyles = () => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadDeferredStyles, { timeout: 1200 });
+      } else {
+        window.setTimeout(loadDeferredStyles, 0);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      scheduleDeferredStyles();
     } else {
-      window.setTimeout(loadDeferredStyles, 0);
+      window.addEventListener('load', scheduleDeferredStyles, { once: true });
     }
   })();
 </script>
