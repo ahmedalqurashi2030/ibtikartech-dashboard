@@ -53,20 +53,26 @@
     background: #030611;
   }
 
-  /* Keep the context visible on small screens while the lower story card changes. */
+  /* Intro copy is visible only at the cinematic entrance. The runtime controls
+     aria-hidden; these selectors keep visual and accessibility state aligned. */
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header {
     position: absolute;
     inset: 0;
     width: 100%;
     margin: 0;
-    padding: 70px 22px 28px;
+    padding: 82px 22px 28px;
     display: grid;
-    place-items: start center;
-    align-content: start;
+    place-items: center;
     text-align: center;
     opacity: 1 !important;
-    transform: none !important;
+    transform: translateY(0) !important;
     pointer-events: none;
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header[aria-hidden="true"] {
+    opacity: 0 !important;
+    transform: translateY(-18px) !important;
+    visibility: hidden;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header__copy {
@@ -76,7 +82,7 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header h2 {
     max-width: 15ch;
     margin: 10px auto;
-    font-size: clamp(28px, 8.5vw, 38px) !important;
+    font-size: clamp(30px, 9vw, 40px) !important;
     line-height: 1.18;
     letter-spacing: 0;
   }
@@ -84,8 +90,8 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-header p {
     max-width: 34ch;
     margin-inline: auto;
-    font-size: 13px;
-    line-height: 1.72;
+    font-size: 14px;
+    line-height: 1.78;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-grid {
@@ -108,7 +114,7 @@
     bottom: 48px;
     width: auto;
     min-height: 0;
-    max-height: min(48svh, 405px);
+    max-height: min(52svh, 430px);
     margin: 0;
     padding: 18px;
     display: flex;
@@ -132,7 +138,7 @@
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:last-child {
-    bottom: 170px;
+    bottom: 168px;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__meta {
@@ -144,7 +150,7 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child h3 {
     max-width: 17ch;
     margin-bottom: 8px;
-    font-size: clamp(25px, 7.1vw, 33px);
+    font-size: clamp(26px, 7.4vw, 34px);
     line-height: 1.22;
     letter-spacing: 0;
   }
@@ -152,21 +158,21 @@
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card > p,
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card:first-child > p {
     font-size: 13px;
-    line-height: 1.7;
+    line-height: 1.72;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__fit {
-    margin-top: 11px;
-    padding-top: 9px;
+    margin-top: 12px;
+    padding-top: 10px;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__fit strong {
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1.55;
   }
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__scope {
-    margin-top: 9px;
+    margin-top: 10px;
     gap: 5px;
   }
 
@@ -177,32 +183,34 @@
 
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-path-card__action {
     min-height: 44px;
-    margin-top: 7px;
-    padding-top: 5px;
+    margin-top: 8px;
+    padding-top: 6px;
     align-items: center;
   }
 
+  /* Help follows the runtime's aria-hidden threshold so it never appears visually
+     before it is available to keyboard and assistive-technology users. */
   html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-help {
     position: absolute;
     inset-inline: 16px;
     bottom: 18px;
     width: auto;
     margin: 0;
-    padding: 13px 16px;
+    padding: 14px 16px;
     border-radius: 16px;
     background: rgba(8,13,31,.9);
     backdrop-filter: blur(18px);
-    opacity: 0 !important;
-    transform: translateY(12px) !important;
-    visibility: hidden;
-    pointer-events: none !important;
-  }
-
-  html body #main-content.service-reference .service-paths-section.is-cinematic-ready:has(.service-path-card:last-child.is-active) .service-paths-help {
     opacity: 1 !important;
     transform: translateY(0) !important;
     visibility: visible;
     pointer-events: auto !important;
+  }
+
+  html body #main-content.service-reference .service-paths-section.is-cinematic-ready .service-paths-help[aria-hidden="true"] {
+    opacity: 0 !important;
+    transform: translateY(12px) !important;
+    visibility: hidden;
+    pointer-events: none !important;
   }
 
   html body #main-content.service-reference .service-cinema__top {
@@ -217,7 +225,7 @@
   }
 
   html body #main-content.service-reference .service-cinema__rail-line {
-    height: min(22svh, 150px);
+    height: min(23svh, 160px);
   }
 
   html body #main-content.service-reference .service-cinema__rail-steps {
