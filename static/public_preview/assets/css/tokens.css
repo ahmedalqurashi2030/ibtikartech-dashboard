@@ -128,6 +128,11 @@ html[data-theme="dark"] {
   --ibt-text: #f8fafc;
   --ibt-muted: #a8b1c5;
   --ibt-border: rgba(255, 255, 255, .1);
+  /* The base brand blue is tuned for light surfaces. Dark surfaces need a
+   * slightly lighter semantic blue so 13px navigation/link text clears AA
+   * contrast without changing the action gradient or decorative identity. */
+  --ibt-blue: #678dfb;
+  --ibt-info: #678dfb;
   --ibt-shadow-sm: 0 8px 30px rgba(0, 0, 0, .18);
   --ibt-shadow-md: 0 18px 55px rgba(0, 0, 0, .28);
 }
