@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block page_refinements %}
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category-refinement-v1.css">
+{% if page_key != "ecommerce" %}<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category-refinement-v1.css">{% endif %}
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/services-reference.css">
 {% endblock %}
 
