@@ -445,8 +445,10 @@ def test_services_experience_matches_current_five_family_taxonomy():
     assert all(position >= 0 for position in positions)
     assert positions == sorted(positions)
     assert "PRIMARY_FAMILIES.length" in source
-    assert "custom-systems.html#apps" in source
-    assert "custom-systems.html#automation" in source
+    assert "href:'custom-systems.html'" in source
+    assert "custom-systems.html#solutions" in source
+    assert "custom-systems.html#apps" not in source
+    assert "custom-systems.html#automation" not in source
     assert "ستة محاور" not in source
     assert "mode:'auto', index:'06'" not in source
 
@@ -459,6 +461,7 @@ def test_browser_qa_validates_semantic_services_count_not_legacy_six():
     assert "metrics.servicesAxes < 5" in source
     assert "stageTotal !== metrics.servicesAxes" in source
     assert "metrics.servicesAxes !== 6" not in source
+    assert "#related .related-card[href]" in source
 
 
 def test_deep_interaction_qa_uses_live_contact_submission_contract():
@@ -561,16 +564,27 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     assert ".ibt-mobile-menu-close" in styles
     assert ".ibt-shell-mobile-menu summary:focus-visible" in styles
 
-    assert "runs-on: [self-hosted, production, ibtikartech]" in browser_workflow
+    assert "runs-on: ubuntu-latest" in browser_workflow
     assert "browser-actions/setup-chrome@v2" in browser_workflow
-    assert "no-sudo: true" in browser_workflow
-    assert "install-dependencies: true" not in browser_workflow
+    assert "install-dependencies: true" in browser_workflow
+    assert "CHROME_PATH:" in browser_workflow
+    assert "steps.chrome.outputs.chrome-path" in browser_workflow
     assert "themeToggleVisible" in browser_qa
     assert "mainContentCount" in browser_qa
     assert "legacyShellCount" in browser_qa
     assert "points to missing #" in browser_qa
     assert "testThemeRtlAndReducedMotion" in interaction_qa
     assert "prefers-reduced-motion" in interaction_qa
+
+    for retired, current in (
+        ("/ecommerce/#paths", "/ecommerce/#start"),
+        ("/ecommerce/#platforms", "/ecommerce/#solutions"),
+        ("/ecommerce/#subservices", "/ecommerce/#solutions"),
+        ("/websites/#capabilities", "/websites/#solutions"),
+        ("/custom-systems/#apps", "/custom-systems/#solutions"),
+    ):
+        assert retired in page_shell
+        assert current in page_shell
 
     for marker in (
         "getElementById('site-header')",
