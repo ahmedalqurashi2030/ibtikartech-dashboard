@@ -1,13 +1,14 @@
 /*
  * Ibtikar Tech — UI/UX System V1
- * Shared refinement layer for patterns that are not yet family-owned.
- * Foundation geometry, focus, typography baseline and shell primitives are
- * intentionally consumed from tokens.css / base.css / ibtikar-shell.css.
+ * Transitional shared-pattern layer.
+ * Foundation geometry/focus/typography live in tokens.css + base.css;
+ * the global header, navigation drawer, mega menu and footer live exclusively
+ * in ibtikar-shell.css. Keep only cross-page content refinements here until
+ * they are migrated to canonical components/page families.
  */
 
 :root {
   --ibt-ux-border: color-mix(in srgb, var(--ibt-border) 82%, transparent);
-  --ibt-ux-hover: color-mix(in srgb, var(--ibt-blue) 7%, var(--ibt-bg-soft));
 }
 
 /* ---------- Shared layout rhythm ---------- */
@@ -22,264 +23,6 @@
 
 :where(.section-heading, .platform-heading, .service-detail-heading, .svc-heading, .heading) > p {
   max-width: 64ch;
-}
-
-/* ---------- Header / navigation ---------- */
-.ibt-shell-header,
-.header.ibt-shell-header,
-.site-header.ibt-shell-header {
-  background: color-mix(in srgb, var(--ibt-bg) 90%, transparent) !important;
-  border-block-end: 1px solid transparent !important;
-  transition: background-color .22s ease, border-color .22s ease, transform .3s var(--ibt-ease), opacity .3s var(--ibt-ease);
-}
-
-.ibt-shell-header.scrolled,
-.ibt-shell-header.is-scrolled {
-  background: color-mix(in srgb, var(--ibt-bg) 96%, transparent) !important;
-  border-block-end-color: var(--ibt-ux-border) !important;
-}
-
-.ibt-shell-nav::after {
-  display: none !important;
-}
-
-.ibt-shell-brand {
-  min-height: 48px;
-}
-
-.ibt-shell-brand-copy strong {
-  letter-spacing: -.015em;
-}
-
-.ibt-shell-desktop-nav {
-  gap: 2px !important;
-}
-
-.ibt-shell-nav-link,
-.ibt-shell-desktop-nav > a {
-  min-height: var(--ibt-target-min) !important;
-  padding-inline: 12px;
-  border-radius: var(--ibt-radius-control) !important;
-}
-
-.ibt-shell-nav-link:hover,
-.ibt-shell-nav-link.is-active,
-.ibt-shell-nav-link[aria-current="page"],
-.ibt-shell-desktop-nav > a:hover,
-.ibt-shell-desktop-nav > a.is-active,
-.ibt-shell-desktop-nav > a[aria-current="page"] {
-  background: var(--ibt-ux-hover) !important;
-  box-shadow: none !important;
-}
-
-.ibt-shell-nav-link::before {
-  bottom: 3px;
-  height: 2px;
-}
-
-.ibt-shell-mega-toggle {
-  min-width: 36px;
-  min-height: var(--ibt-target-min);
-}
-
-.ibt-shell-cta {
-  min-height: var(--ibt-control-h);
-  padding-inline: 20px;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 24px rgba(79, 125, 243, .18) !important;
-}
-
-.ibt-shell-cta:hover {
-  transform: translateY(-1px);
-}
-
-/* Desktop mega menu: reduce nested-card feeling and sharpen hierarchy. */
-@media (min-width: 1181px) {
-  .ibt-shell-mega {
-    width: min(900px, calc(100vw - 48px));
-    padding: 12px;
-    border-radius: 20px;
-    border-color: var(--ibt-ux-border);
-    box-shadow: 0 24px 70px rgba(7, 16, 43, .18);
-  }
-
-  .ibt-shell-mega-grid {
-    gap: 6px;
-  }
-
-  .ibt-shell-mega-lead,
-  .ibt-shell-mega-link {
-    min-height: 108px;
-    padding: 15px;
-    border-radius: 14px;
-  }
-
-  .ibt-shell-mega-link {
-    border-color: transparent;
-    background: transparent;
-  }
-
-  .ibt-shell-mega-link:hover,
-  .ibt-shell-mega-link:focus-visible {
-    transform: none;
-    border-color: color-mix(in srgb, var(--ibt-blue) 16%, var(--ibt-border));
-    background: var(--ibt-ux-hover);
-  }
-}
-
-/* ---------- Mobile navigation drawer ---------- */
-.ibt-mobile-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 2240;
-  border: 0;
-  padding: 0;
-  background: rgba(4, 8, 20, .48);
-  backdrop-filter: blur(3px);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity .22s ease, visibility .22s ease;
-}
-
-.ibt-mobile-backdrop.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.ibt-mobile-menu-head {
-  display: none;
-}
-
-@media (max-width: 1180px) {
-  .ibt-shell-header {
-    z-index: 2230;
-  }
-
-  .ibt-shell-menu-toggle {
-    width: var(--ibt-target-min) !important;
-    height: var(--ibt-target-min) !important;
-    min-height: var(--ibt-target-min) !important;
-    border-radius: var(--ibt-radius-control) !important;
-  }
-
-  .ibt-shell-menu-toggle:hover,
-  .ibt-shell-menu-toggle:focus-visible {
-    background: var(--ibt-ux-hover) !important;
-  }
-
-  .ibt-shell-mobile-menu,
-  .mobile-menu.ibt-shell-mobile-menu {
-    top: 0 !important;
-    right: 0 !important;
-    left: auto !important;
-    z-index: 2260;
-    width: min(390px, calc(100vw - 12px));
-    height: 100dvh;
-    max-height: none;
-    display: grid !important;
-    grid-template-rows: auto;
-    align-content: start;
-    gap: 4px;
-    padding: max(14px, env(safe-area-inset-top)) 14px max(16px, env(safe-area-inset-bottom));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    border: 0;
-    border-inline-start: 1px solid var(--ibt-ux-border);
-    border-radius: 0;
-    background: color-mix(in srgb, var(--ibt-bg) 98%, transparent);
-    box-shadow: -24px 0 70px rgba(4, 8, 24, .18);
-    backdrop-filter: blur(22px) saturate(1.2);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateX(104%);
-    transition: transform .28s var(--ibt-ease), opacity .2s ease, visibility .28s;
-  }
-
-  .ibt-shell-mobile-menu.open,
-  .ibt-shell-mobile-menu.is-open,
-  .mobile-menu.ibt-shell-mobile-menu.open,
-  .mobile-menu.ibt-shell-mobile-menu.is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateX(0);
-  }
-
-  .ibt-mobile-menu-head {
-    min-height: 62px;
-    margin-bottom: 8px;
-    padding: 4px 4px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    border-bottom: 1px solid var(--ibt-ux-border);
-  }
-
-  .ibt-mobile-menu-head > span {
-    display: grid;
-    gap: 2px;
-  }
-
-  .ibt-mobile-menu-head strong {
-    color: var(--ibt-text);
-    font-size: 16px;
-    font-weight: 900;
-  }
-
-  .ibt-mobile-menu-head small {
-    color: var(--ibt-muted);
-    font-size: 10px;
-    line-height: 1.5;
-  }
-
-  .ibt-mobile-menu-close {
-    width: var(--ibt-target-min);
-    height: var(--ibt-target-min);
-    display: grid;
-    place-items: center;
-    flex: 0 0 var(--ibt-target-min);
-    border: 1px solid var(--ibt-ux-border);
-    border-radius: var(--ibt-radius-control);
-    color: var(--ibt-text);
-    background: var(--ibt-bg-soft);
-    font-size: 24px;
-    line-height: 1;
-  }
-
-  .ibt-shell-mobile-menu > a,
-  .ibt-shell-mobile-group > summary {
-    min-height: 48px !important;
-    border-radius: var(--ibt-radius-control) !important;
-  }
-
-  .ibt-shell-mobile-menu > a:not(.ibt-shell-mobile-cta):hover,
-  .ibt-shell-mobile-menu > a:not(.ibt-shell-mobile-cta):focus-visible,
-  .ibt-shell-mobile-menu > a.is-active,
-  .ibt-shell-mobile-menu > a[aria-current="page"] {
-    background: var(--ibt-ux-hover) !important;
-  }
-
-  .ibt-shell-mobile-group {
-    border-radius: 12px !important;
-    border-color: var(--ibt-ux-border) !important;
-    background: transparent !important;
-  }
-
-  .ibt-shell-mobile-group[open] {
-    background: color-mix(in srgb, var(--ibt-bg-soft) 74%, transparent) !important;
-  }
-
-  .ibt-shell-mobile-group a {
-    min-height: var(--ibt-target-min) !important;
-  }
-
-  .ibt-shell-mobile-cta {
-    margin-top: 10px !important;
-  }
 }
 
 /* ---------- Buttons / calls to action ---------- */
@@ -321,25 +64,6 @@
 
 :where(form) :where(input, textarea, select):focus {
   border-color: color-mix(in srgb, var(--ibt-blue) 58%, var(--ibt-border));
-}
-
-/* ---------- Footer ----------
-   The shell stylesheet owns link display, hit targets and responsive alignment.
-   This global refinement layer only adjusts vertical rhythm and hover motion. */
-.ibt-shell-footer {
-  padding-top: clamp(64px, 6vw, 84px) !important;
-}
-
-.ibt-shell-footer::after {
-  opacity: .55;
-}
-
-.ibt-shell-footer a:hover {
-  transform: none !important;
-}
-
-.ibt-shell-footer-bottom {
-  margin-top: 40px !important;
 }
 
 /* ---------- Homepage and approved-source readability ---------- */
@@ -386,18 +110,8 @@ body.source-services .goal-icon {
   box-shadow: 0 18px 46px rgba(0, 0, 0, .1) !important;
 }
 
-/* ---------- Mobile-first corrections ---------- */
+/* ---------- Mobile content corrections ---------- */
 @media (max-width: 760px) {
-  .ibt-shell-nav,
-  .nav.ibt-shell-nav,
-  .nav-shell.ibt-shell-nav {
-    width: min(calc(100% - 32px), var(--ibt-container)) !important;
-  }
-
-  .ibt-shell-brand-copy small {
-    margin-top: 2px;
-  }
-
   :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) {
     gap: 8px;
   }
@@ -411,21 +125,9 @@ body.source-services .goal-icon {
     font-size: 16px !important;
     line-height: 1.85 !important;
   }
-
-  .ibt-shell-footer {
-    padding-top: 56px !important;
-  }
-
-  .ibt-shell-footer .ibt-shell-footer-grid {
-    gap: 26px !important;
-  }
 }
 
 @media (max-width: 520px) {
-  .ibt-shell-brand-copy small {
-    display: none;
-  }
-
   :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) {
     display: grid !important;
     grid-template-columns: 1fr;
@@ -435,25 +137,16 @@ body.source-services .goal-icon {
   :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) > :where(a, button) {
     width: 100%;
   }
-
-  .ibt-shell-footer .ibt-shell-footer-grid {
-    grid-template-columns: 1fr !important;
-  }
 }
 
-/* ---------- Motion accessibility ---------- */
+/* ---------- Motion accessibility for content patterns ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .ibt-mobile-backdrop,
-  .ibt-shell-mobile-menu,
-  .ibt-shell-header,
-  .ibt-shell-brand,
-  .ibt-shell-cta,
   :where(.goal, .route-card, .service-item, .library-card) {
     transition: none !important;
     animation: none !important;
   }
 
-  :where(.btn, .button, .platform-button, .ibt-shell-cta):hover,
+  :where(.btn, .button, .platform-button):hover,
   :where(.goal, .route-card, .service-item, .library-card):hover {
     transform: none !important;
   }
