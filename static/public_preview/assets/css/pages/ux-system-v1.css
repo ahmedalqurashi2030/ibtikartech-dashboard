@@ -1,75 +1,19 @@
 /*
  * Ibtikar Tech — UI/UX System V1
- * Final, frontend-only refinement layer.
- * Scope: presentation, responsive behavior, interaction states and accessibility.
- * No backend contracts, routes, form actions, template variables or business logic.
+ * Shared refinement layer for patterns that are not yet family-owned.
+ * Foundation geometry, focus, typography baseline and shell primitives are
+ * intentionally consumed from tokens.css / base.css / ibtikar-shell.css.
  */
 
 :root {
-  --ibt-ux-gutter: clamp(18px, 3vw, 28px);
-  --ibt-ux-reading: 68ch;
-  --ibt-ux-radius-sm: 10px;
-  --ibt-ux-radius-md: 16px;
-  --ibt-ux-radius-lg: 22px;
-  --ibt-ux-control-h: 46px;
   --ibt-ux-border: color-mix(in srgb, var(--ibt-border) 82%, transparent);
   --ibt-ux-hover: color-mix(in srgb, var(--ibt-blue) 7%, var(--ibt-bg-soft));
 }
 
-/* ---------- Baseline / typography ---------- */
-html {
-  text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  min-width: 0;
-}
-
-main :where(p, li) {
-  text-wrap: pretty;
-}
-
-main :where(h1, h2, h3) {
-  text-wrap: balance;
-}
-
-main :where(p) {
-  max-width: var(--ibt-ux-reading);
-}
-
-:where(button, a, input, textarea, select, summary) {
-  -webkit-tap-highlight-color: transparent;
-}
-
-:where(button, [role="button"], input, textarea, select, summary, a[href]):focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--ibt-cyan) 58%, transparent);
-  outline-offset: 3px;
-  box-shadow: none !important;
-}
-
-:where(input, textarea, select) {
-  min-height: var(--ibt-ux-control-h);
-  border-radius: var(--ibt-ux-radius-sm);
-}
-
-textarea {
-  min-height: 132px;
-  resize: vertical;
-}
-
-::placeholder {
-  opacity: .72;
-}
-
 /* ---------- Shared layout rhythm ---------- */
-:where(.container, .ibtx-container) {
-  width: min(calc(100% - (var(--ibt-ux-gutter) * 2)), var(--ibt-container));
+.ibtx-container {
+  width: min(calc(100% - (var(--ibt-gutter) * 2)), var(--ibt-container));
   margin-inline: auto;
-}
-
-:where(.section, .platform-section, .service-detail-section, .svc-section) {
-  scroll-margin-top: calc(var(--ibt-header-h) + 24px);
 }
 
 :where(.section-heading, .platform-heading, .service-detail-heading, .svc-heading, .heading) {
@@ -113,9 +57,9 @@ textarea {
 
 .ibt-shell-nav-link,
 .ibt-shell-desktop-nav > a {
-  min-height: 44px !important;
+  min-height: var(--ibt-target-min) !important;
   padding-inline: 12px;
-  border-radius: var(--ibt-ux-radius-sm) !important;
+  border-radius: var(--ibt-radius-control) !important;
 }
 
 .ibt-shell-nav-link:hover,
@@ -135,11 +79,11 @@ textarea {
 
 .ibt-shell-mega-toggle {
   min-width: 36px;
-  min-height: 44px;
+  min-height: var(--ibt-target-min);
 }
 
 .ibt-shell-cta {
-  min-height: 46px;
+  min-height: var(--ibt-control-h);
   padding-inline: 20px;
   border-radius: 12px !important;
   box-shadow: 0 10px 24px rgba(79, 125, 243, .18) !important;
@@ -214,10 +158,10 @@ textarea {
   }
 
   .ibt-shell-menu-toggle {
-    width: 44px !important;
-    height: 44px !important;
-    min-height: 44px !important;
-    border-radius: 10px !important;
+    width: var(--ibt-target-min) !important;
+    height: var(--ibt-target-min) !important;
+    min-height: var(--ibt-target-min) !important;
+    border-radius: var(--ibt-radius-control) !important;
   }
 
   .ibt-shell-menu-toggle:hover,
@@ -293,13 +237,13 @@ textarea {
   }
 
   .ibt-mobile-menu-close {
-    width: 44px;
-    height: 44px;
+    width: var(--ibt-target-min);
+    height: var(--ibt-target-min);
     display: grid;
     place-items: center;
-    flex: 0 0 44px;
+    flex: 0 0 var(--ibt-target-min);
     border: 1px solid var(--ibt-ux-border);
-    border-radius: 10px;
+    border-radius: var(--ibt-radius-control);
     color: var(--ibt-text);
     background: var(--ibt-bg-soft);
     font-size: 24px;
@@ -309,7 +253,7 @@ textarea {
   .ibt-shell-mobile-menu > a,
   .ibt-shell-mobile-group > summary {
     min-height: 48px !important;
-    border-radius: 10px !important;
+    border-radius: var(--ibt-radius-control) !important;
   }
 
   .ibt-shell-mobile-menu > a:not(.ibt-shell-mobile-cta):hover,
@@ -330,7 +274,7 @@ textarea {
   }
 
   .ibt-shell-mobile-group a {
-    min-height: 44px !important;
+    min-height: var(--ibt-target-min) !important;
   }
 
   .ibt-shell-mobile-cta {
@@ -344,7 +288,7 @@ textarea {
 }
 
 :where(.btn, .button, .platform-button) {
-  min-height: 46px;
+  min-height: var(--ibt-control-h);
 }
 
 :where(.btn, .button, .platform-button):hover {
@@ -353,7 +297,7 @@ textarea {
 
 /* ---------- Cards and content blocks ---------- */
 :where(.goal, .route-card, .service-item, .library-card) {
-  border-radius: var(--ibt-ux-radius-lg) !important;
+  border-radius: var(--ibt-radius-panel) !important;
 }
 
 :where(.goal, .route-card, .service-item, .library-card):hover {
@@ -361,7 +305,7 @@ textarea {
 }
 
 :where(.proof-chip, .platform-proof span) {
-  border-radius: 10px !important;
+  border-radius: var(--ibt-radius-control) !important;
 }
 
 /* ---------- Forms ---------- */
@@ -444,10 +388,6 @@ body.source-services .goal-icon {
 
 /* ---------- Mobile-first corrections ---------- */
 @media (max-width: 760px) {
-  :root {
-    --ibt-ux-gutter: 16px;
-  }
-
   .ibt-shell-nav,
   .nav.ibt-shell-nav,
   .nav-shell.ibt-shell-nav {
@@ -456,10 +396,6 @@ body.source-services .goal-icon {
 
   .ibt-shell-brand-copy small {
     margin-top: 2px;
-  }
-
-  :where(.section, .platform-section, .service-detail-section, .svc-section) {
-    scroll-margin-top: calc(var(--ibt-header-h) + 14px);
   }
 
   :where(.hero__actions, .hero-actions, .platform-actions, .service-actions) {
