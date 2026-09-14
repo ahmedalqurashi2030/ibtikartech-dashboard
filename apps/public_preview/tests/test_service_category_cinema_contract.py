@@ -1,9 +1,12 @@
 CATEGORY_FAMILY = "templates/public_preview/families/service_category_base.html"
 CATEGORY_STYLES = "static/public_preview/assets/css/pages/service-category.css"
-CINEMA_GEOMETRY = "static/public_preview/assets/css/service-cinema.css"
+CINEMA_BOOTSTRAP = "static/public_preview/assets/css/service-cinema.css"
+CINEMA_GEOMETRY = "static/public_preview/assets/css/service-cinema-deferred.css"
 CINEMA_RUNTIME = "static/public_preview/assets/js/service-cinema.js"
 TOKENS = "static/public_preview/assets/css/tokens.css"
-HOMEPAGE_SURFACE = "static/public_preview/assets/css/pages/homepage-surface-refinement-v1.css"
+HOMEPAGE_SURFACE = (
+    "static/public_preview/assets/css/pages/homepage-surface-refinement-v1-deferred.css"
+)
 VISUAL_WORKFLOW = ".github/workflows/visual-ui-qa.yml"
 CATEGORY_QA = "scripts/service_category_cinematic_qa.cjs"
 
@@ -48,9 +51,6 @@ def test_service_categories_share_the_homepage_cinematic_grammar():
         assert token in tokens
         assert f"var({token}" in geometry
 
-    # The shared token values intentionally match the already-approved homepage
-    # mobile cinematic surface. This keeps service scenes visually unified while
-    # preserving family-specific content and scroll geometry.
     assert "--ibt-cinema-bg: #050817" in tokens
     assert "--ibt-cinema-panel: rgba(5, 10, 27, .76)" in tokens
     assert "--ibt-cinema-panel-border: rgba(255, 255, 255, .11)" in tokens
@@ -60,8 +60,6 @@ def test_service_categories_share_the_homepage_cinematic_grammar():
     assert "border: 1px solid rgba(255, 255, 255, .11) !important" in homepage
     assert "backdrop-filter: blur(16px) saturate(1.12)" in homepage
 
-    # On Arabic mobile pages both families keep the progress rail peripheral on
-    # the physical left and expose an explicit passive scroll cue.
     assert "inset-inline-end: 8px !important" in geometry
     assert ".service-cinema__cue" in geometry
     assert "display: flex;" in geometry
@@ -78,10 +76,14 @@ def test_reading_fallback_still_exposes_all_paths_on_demand():
     assert 'reading.textContent = "عرض جميع المسارات"' in runtime
 
 
-def test_desktop_and_phone_geometry_have_explicit_travel_owners():
+def test_desktop_and_phone_geometry_have_explicit_deferred_owner():
+    bootstrap = _read(CINEMA_BOOTSTRAP)
     geometry = _read(CINEMA_GEOMETRY)
     family = _read(CATEGORY_FAMILY)
 
+    assert "service-cinema bootstrap" in bootstrap
+    assert ".service-paths-section{position:relative}" in bootstrap
+    assert "service-cinema-deferred.css" in bootstrap
     assert "Service Category Cinematic Geometry" in geometry
     assert "--service-cinema-step-travel: 30svh" in geometry
     assert "--service-cinema-step-travel: 38svh" in geometry
