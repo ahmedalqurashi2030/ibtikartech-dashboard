@@ -6,6 +6,9 @@ MOBILE_MENU = "templates/public_preview/components/mobile_menu.html"
 HOMEPAGE_SURFACE = (
     "static/public_preview/assets/css/pages/homepage-surface-refinement-v1.css"
 )
+HOMEPAGE_SURFACE_DEFERRED = (
+    "static/public_preview/assets/css/pages/homepage-surface-refinement-v1-deferred.css"
+)
 
 
 def _read(path: str) -> str:
@@ -50,7 +53,7 @@ def test_shared_components_do_not_shrink_compact_actions_below_target():
     components = _read(COMPONENTS)
 
     assert ".btn-small" in components
-    assert "min-height: var(--ibt-target-min);" in components
+    assert "min-height: var(--ibt-target-min" in components
     assert "min-height: 42px" not in components
     assert "touch-action: manipulation;" in components
     assert "@media (prefers-reduced-motion: reduce)" in components
@@ -80,8 +83,13 @@ def test_primary_navigation_has_one_justified_mega_menu():
 
 
 def test_mobile_home_keeps_real_cinematic_journey_with_safe_fallback():
-    styles = _read(HOMEPAGE_SURFACE)
+    bootstrap = _read(HOMEPAGE_SURFACE)
+    styles = _read(HOMEPAGE_SURFACE_DEFERRED)
 
+    # The first-paint bootstrap only owns the stable dark canvas; the full
+    # below-fold cinematic composition is intentionally deferred for LCP.
+    assert "homepage surface bootstrap" in bootstrap
+    assert "background-color:#050817!important" in bootstrap
     assert "MOBILE CINEMATIC JOURNEY" in styles
     assert "html.cinematic-ready:not(.no-story-motion)" in styles
     assert "height: clamp(2100px, 310svh, 2800px) !important;" in styles
