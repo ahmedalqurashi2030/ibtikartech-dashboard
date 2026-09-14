@@ -1,3 +1,19 @@
 /* Ibtikar Tech — related-service carousel bootstrap.
  * The complete image-card carousel presentation is below the initial viewport
- * and loads after window load from service-related-cards-deferred.css. */
+ * and loads after window load from service-related-cards-deferred.css.
+ * Keep the navigation controls at their accessible target size before the
+ * deferred presentation layer arrives, so fast keyboard/touch interaction
+ * never encounters undersized controls. */
+.service-related-carousel__buttons button {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+@media (max-width: 520px) {
+  .service-related-carousel__buttons button {
+    width: 44px;
+    height: 44px;
+  }
+}
