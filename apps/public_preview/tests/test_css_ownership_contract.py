@@ -27,7 +27,7 @@ def test_global_ux_layer_does_not_own_the_shared_shell():
         assert selector not in source
 
 
-def test_global_ux_layer_consumes_canonical_foundation_tokens():
+def test_global_ux_layer_consumes_layout_tokens_without_reclaiming_components():
     source = _read(UX_SYSTEM)
 
     for retired in (
@@ -41,9 +41,11 @@ def test_global_ux_layer_consumes_canonical_foundation_tokens():
         assert retired not in source
 
     assert "var(--ibt-gutter)" in source
-    assert "var(--ibt-control-h)" in source
-    assert "var(--ibt-radius-panel)" in source
-    assert "var(--ibt-radius-control)" in source
+    # Component geometry belongs to tokens/base/components, not this transitional
+    # page-rhythm layer. Keeping these out prevents a second design system.
+    assert "var(--ibt-control-h)" not in source
+    assert "var(--ibt-radius-panel)" not in source
+    assert "var(--ibt-radius-control)" not in source
 
 
 def test_shared_shell_owns_effective_navigation_and_reduced_motion_rules():
