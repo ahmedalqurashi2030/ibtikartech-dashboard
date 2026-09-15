@@ -5,6 +5,12 @@
 {% static 'public_preview/assets/css/pages/continuous-flow-deferred.css' as deferred_href %}
 {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
 
+{# Contact keeps the final polish layer, but it is not required to paint the first viewport. #}
+{% if page_key == "contact" %}
+  {% static 'public_preview/assets/css/pages/frontend-final.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% endif %}
+
 {# launch-readiness.css is used by all current public routes except the Knowledge index. #}
 {% if page_key == "index" or page_key == "services" or page_key == "ecommerce" or page_key == "websites" or page_key == "brand-content" or page_key == "growth" or page_key == "custom-systems" or page_key == "tharaa" or page_key == "portfolio" or page_key == "article-product-page" or page_key == "article-store-launch" or page_key == "article-store-redesign" or page_key == "about" or page_key == "contact" or page_key == "404" or page_key == "store-launch" or page_key == "storefront-customization" or page_key == "store-redesign" or page_key == "product-page-optimization" or page_key == "ecommerce-growth" or page_key == "ecommerce-support" %}
   {% static 'public_preview/assets/css/pages/launch-readiness-deferred.css' as deferred_href %}
