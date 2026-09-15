@@ -63,14 +63,11 @@ FAMILY_EXTENSION_BLOCKS = {
     ),
 }
 
-# Fixed family structure may be extracted into an explicitly reviewed partial.
-# This is deliberately narrow: arbitrary includes remain forbidden by the
-# template-contract verifier.
+# Family templates own their stable structure directly. Arbitrary includes
+# remain forbidden by the template-contract verifier.
 FAMILY_ALLOWED_PARTIALS = {
     SERVICE_DETAIL_FAMILY_PARENT: (),
-    SERVICE_CATEGORY_FAMILY_PARENT: (
-        "public_preview/components/service_cinema_chrome.html",
-    ),
+    SERVICE_CATEGORY_FAMILY_PARENT: (),
     ARTICLE_DETAIL_FAMILY_PARENT: (),
 }
 
