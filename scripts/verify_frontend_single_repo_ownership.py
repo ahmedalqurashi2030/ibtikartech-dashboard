@@ -18,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 from apps.public_preview.asset_contract import (  # noqa: E402
     FAMILY_ASSET_EXTENSION_BLOCKS,
-    ROUTE_SCOPED_ASSET_CONSUMERS,
+    RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS,
 )
 from apps.public_preview.content_contract import (  # noqa: E402
     PUBLIC_CONTENT_OWNER,
@@ -193,8 +193,6 @@ def conditional_asset_count(source: str, asset: str, page_key: str) -> int:
     for assets referenced inside Django ``static`` tags.
     """
     count = 0
-    # Each frame stores parent activity, whether a branch already matched, and
-    # whether the current branch is active.
     stack: list[dict[str, bool]] = []
     active = True
 
@@ -246,8 +244,6 @@ def conditional_asset_count(source: str, asset: str, page_key: str) -> int:
             active = frame["parent_active"]
             continue
 
-        # Non-control Django tags (notably {% static '...' %}) can contain the
-        # owned asset path and must be counted when their route branch is active.
         if active:
             count += token.count(asset)
 
@@ -290,7 +286,7 @@ def verify_route_scoped_asset_consumers() -> None:
     central_sources = [path.read_text(encoding="utf-8") for path in CENTRAL_ROUTE_COMPONENTS]
     invalid: list[str] = []
 
-    for asset, expected_consumers in ROUTE_SCOPED_ASSET_CONSUMERS.items():
+    for asset, expected_consumers in RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS.items():
         if asset in base_source:
             invalid.append(f"{asset}: route-scoped asset returned directly to base.html")
         actual_consumers: set[str] = set()
@@ -376,7 +372,6 @@ def verify_public_content_ownership() -> None:
 
 
 def verify_no_external_frontend_clone_contract() -> None:
-    # Build the old repository token dynamically so this guard does not trigger itself.
     old_repo = "ahmedalqurashi2030/" + "ibtikartech"
     forbidden = (
         old_repo + ".git",
@@ -413,7 +408,7 @@ def main() -> None:
         "Dashboard frontend ownership verified: "
         f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page families, "
         f"{len(REQUIRED_OWNED_ASSETS)} canonical assets, and "
-        f"{len(ROUTE_SCOPED_ASSET_CONSUMERS)} route-scoped asset contracts, and "
+        f"{len(RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS)} rendered route-scoped asset contracts, and "
         f"{len(PUBLIC_TEMPLATE_OWNED_PAGES)} template-owned content contracts "
         "are repository-owned."
     )
