@@ -16,6 +16,10 @@
   {% block page_refinements %}{% endblock %}
   {% include "public_preview/components/route_styles.html" %}
   {% include "public_preview/components/deferred_styles.html" %}
+  {# Declare the canonical reveal owner before page-level deferred scripts. Preserved source routes keep their own single engine until extraction. #}
+  {% if page_key != "index" and page_key != "services" and page_key != "tharaa" %}
+  <script src="{% static 'public_preview/assets/js/reveal.js' %}" defer data-runtime-script="reveal"></script>
+  {% endif %}
 </head>
 <body data-page="{{ page_key|default:'index' }}"{% block body_attrs %}{% endblock %}>
   <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
