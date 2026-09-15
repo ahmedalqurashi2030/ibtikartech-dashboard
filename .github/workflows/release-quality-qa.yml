@@ -86,6 +86,24 @@ jobs:
           out="$RELEASE_QA_OUTPUT/lighthouse"
           mkdir -p "$out"
           lighthouse=/tmp/ibtikar-release-qa/node_modules/.bin/lighthouse
+
+          run_lighthouse() {
+            local output="$1"
+            shift
+            local attempt
+            for attempt in 1 2; do
+              rm -f "$output"
+              if "$lighthouse" "$@" --output=json --output-path="$output"; then
+                return 0
+              fi
+              echo "Lighthouse technical attempt ${attempt}/2 failed for $output" >&2
+              if [ "$attempt" -lt 2 ]; then
+                sleep 2
+              fi
+            done
+            return 1
+          }
+
           routes=(
             "home|/"
             "services|/services/"
@@ -98,18 +116,14 @@ jobs:
           for entry in "${routes[@]}"; do
             IFS='|' read -r slug route <<<"$entry"
             url="http://127.0.0.1:8000${route}"
-            "$lighthouse" "$url" \
+            run_lighthouse "$out/${slug}-mobile.json" "$url" \
               --quiet \
               --only-categories=performance,accessibility,best-practices,seo \
-              --output=json \
-              --output-path="$out/${slug}-mobile.json" \
               --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
-            "$lighthouse" "$url" \
+            run_lighthouse "$out/${slug}-desktop.json" "$url" \
               --quiet \
               --preset=desktop \
               --only-categories=performance,accessibility,best-practices,seo \
-              --output=json \
-              --output-path="$out/${slug}-desktop.json" \
               --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
           done
 
