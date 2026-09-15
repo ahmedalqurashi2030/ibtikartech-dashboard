@@ -101,7 +101,7 @@
   document.querySelectorAll('.faq, .faq-item').forEach((item, index) => {
     const button = item.querySelector(':scope > button, :scope > * > button');
     const answer = item.querySelector('.faq-answer');
-    if (!button || !answer) return;
+    if (!button || !answer || button.dataset.ibtDisclosureReady === 'true') return;
 
     if (!answer.id) answer.id = `approved-faq-answer-${index + 1}`;
     button.setAttribute('aria-controls', answer.id);
