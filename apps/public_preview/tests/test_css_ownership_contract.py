@@ -1,5 +1,6 @@
 from pathlib import Path
 
+BASE_TEMPLATE = Path("templates/public_preview/base.html")
 UX_SYSTEM = Path("static/public_preview/assets/css/pages/ux-system-v1.css")
 SHELL = Path("static/public_preview/assets/css/ibtikar-shell.css")
 TYPOGRAPHY = Path("static/public_preview/foundation/typography-system.css")
@@ -58,18 +59,14 @@ def test_shared_shell_owns_effective_navigation_and_reduced_motion_rules():
     assert "@media (prefers-reduced-motion: reduce)" in source
 
 
-def test_service_detail_children_cannot_drop_the_canonical_shell():
-    source = _read(SERVICE_DETAIL_FAMILY)
-    styles_block = source.index("{% block service_styles %}")
-    styles_end = source.index("{% endblock %}", styles_block)
-    shell_link = (
-        '<link rel="stylesheet" '
-        'href="/static/public_preview/assets/css/ibtikar-shell.css">'
-    )
-    shell_index = source.index(shell_link)
+def test_service_detail_children_inherit_the_canonical_shell_from_base():
+    base = _read(BASE_TEMPLATE)
+    family = _read(SERVICE_DETAIL_FAMILY)
+    shell_asset = "public_preview/assets/css/ibtikar-shell.css"
 
-    assert source.count(shell_link) == 1
-    assert shell_index > styles_end
+    assert family.lstrip().startswith('{% extends "public_preview/base.html" %}')
+    assert shell_asset not in family
+    assert base.count(shell_asset) == 1
 
 
 def test_arabic_heading_spacing_override_is_after_responsive_rules():
