@@ -68,12 +68,14 @@ def test_service_categories_share_the_homepage_cinematic_grammar():
 
 
 def test_reading_fallback_still_exposes_all_paths_on_demand():
+    family = _read(CATEGORY_FAMILY)
     runtime = _read(CINEMA_RUNTIME)
 
     assert 'section.classList.contains("is-reading")' in runtime
     assert 'section.classList.remove("is-cinematic-ready")' in runtime
     assert "setVisible(card, true)" in runtime
-    assert 'reading.textContent = "عرض جميع المسارات"' in runtime
+    assert '>عرض جميع المسارات</button>' in family
+    assert "reading.textContent" not in runtime
 
 
 def test_desktop_and_phone_geometry_have_explicit_deferred_owner():
