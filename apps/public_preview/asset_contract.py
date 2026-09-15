@@ -29,9 +29,7 @@ ARTICLE_DETAIL_PAGE_NAMES = (
 SECTION_LAYOUT_ASSET = (
     "public_preview/assets/css/pages/section-layout-refinement-v2.css"
 )
-RELATED_CARDS_STYLES = (
-    "public_preview/assets/css/pages/service-related-cards.css"
-)
+RELATED_CARDS_STYLES = "public_preview/assets/css/pages/service-related-cards.css"
 RELATED_CARDS_RUNTIME = "public_preview/assets/js/service-related-cards.js"
 SERVICE_PRIMITIVES_STYLES = "public_preview/assets/css/service-primitives.css"
 SERVICE_PRIMITIVES_RUNTIME = "public_preview/assets/js/service-primitives.js"
@@ -51,6 +49,14 @@ SERVICES_SOURCE_STYLES = "public_preview/assets/css/pages/source-services.css"
 SERVICES_SOURCE_RUNTIME = "public_preview/assets/js/source-services.js"
 THARAA_SOURCE_STYLES = "public_preview/assets/css/pages/source-tharaa.css"
 THARAA_SOURCE_RUNTIME = "public_preview/assets/js/source-tharaa.js"
+SERVICES_EXPERIENCE_STYLES = (
+    "public_preview/assets/css/pages/services-experience.css"
+)
+SERVICES_EXPERIENCE_RUNTIME = "public_preview/assets/js/services-experience.js"
+ECOMMERCE_EXPERIENCE_STYLES = (
+    "public_preview/assets/css/pages/ecommerce-experience-lab.css"
+)
+ECOMMERCE_EXPERIENCE_RUNTIME = "public_preview/assets/js/ecommerce-category.js"
 
 SECTION_LAYOUT_CONSUMERS = (
     "index.html",
@@ -79,6 +85,12 @@ SERVICE_PRIMITIVE_CONSUMERS = tuple(
     if page_name != "product-page-optimization.html"
 )
 
+SERVICE_CATEGORY_REFINEMENT_CONSUMERS = tuple(
+    page_name
+    for page_name in SERVICE_CATEGORY_PAGE_NAMES
+    if page_name != "ecommerce.html"
+)
+
 ROUTE_SCOPED_ASSET_CONSUMERS = {
     SECTION_LAYOUT_ASSET: SECTION_LAYOUT_CONSUMERS,
     RELATED_CARDS_STYLES: RELATED_CARDS_CONSUMERS,
@@ -86,7 +98,7 @@ ROUTE_SCOPED_ASSET_CONSUMERS = {
     SERVICE_PRIMITIVES_STYLES: SERVICE_PRIMITIVE_CONSUMERS,
     SERVICE_PRIMITIVES_RUNTIME: SERVICE_PRIMITIVE_CONSUMERS,
     SERVICE_CINEMA_STYLES: SERVICE_CATEGORY_PAGE_NAMES,
-    SERVICE_CATEGORY_REFINEMENT_STYLES: SERVICE_CATEGORY_PAGE_NAMES,
+    SERVICE_CATEGORY_REFINEMENT_STYLES: SERVICE_CATEGORY_REFINEMENT_CONSUMERS,
     HOMEPAGE_SURFACE_ASSET: ("index.html",),
     ARTICLE_STYLES: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
     ARTICLE_RUNTIME: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
@@ -97,6 +109,10 @@ ROUTE_SCOPED_ASSET_CONSUMERS = {
     SERVICES_SOURCE_RUNTIME: ("services.html",),
     THARAA_SOURCE_STYLES: ("tharaa.html",),
     THARAA_SOURCE_RUNTIME: ("tharaa.html",),
+    SERVICES_EXPERIENCE_STYLES: ("services.html",),
+    SERVICES_EXPERIENCE_RUNTIME: ("services.html",),
+    ECOMMERCE_EXPERIENCE_STYLES: ("ecommerce.html",),
+    ECOMMERCE_EXPERIENCE_RUNTIME: ("ecommerce.html",),
 }
 
 FAMILY_ASSET_EXTENSION_BLOCKS = {
