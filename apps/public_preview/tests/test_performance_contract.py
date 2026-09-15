@@ -19,7 +19,12 @@ def test_document_head_warms_shared_render_critical_dependencies():
         assert f"href=\"{{% static '{asset}' %}}\" as=\"style\"" in source
 
     assert "request.path == '/services/'" in source
-    assert "16734a5adb27b0f3.woff2" in source
+    for font in (
+        "6010e7fd0dce5d52.woff2",
+        "04c730b4292731cc.woff2",
+    ):
+        assert font in source
+    assert "16734a5adb27b0f3.woff2" not in source
 
 
 def test_document_head_comments_cannot_leak_as_visible_page_text():
