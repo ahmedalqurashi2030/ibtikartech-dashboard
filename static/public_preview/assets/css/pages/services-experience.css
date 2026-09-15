@@ -27,7 +27,7 @@ body.source-services .services-primary-cinema .heading p{max-width:760px;color:#
 
 body.source-services .cinema-chapters{
   display:grid;
-  grid-template-columns:repeat(6,minmax(0,1fr));
+  grid-template-columns:repeat(5,minmax(0,1fr));
   gap:7px;
   margin-top:30px;
   padding:7px;
