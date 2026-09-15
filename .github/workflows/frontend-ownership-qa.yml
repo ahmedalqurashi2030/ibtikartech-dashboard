@@ -94,7 +94,6 @@ jobs:
           set -euo pipefail
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components templates/public_preview/families
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages templates/public_preview/components templates/public_preview/families
-          grep -q "href:'custom-systems.html'" static/public_preview/assets/js/services-experience.js
-          grep -q 'custom-systems.html#solutions' static/public_preview/assets/js/services-experience.js
+          ! grep -n '\.html' static/public_preview/assets/js/services-experience.js
           ! grep -q 'custom-systems.html#apps' static/public_preview/assets/js/services-experience.js
           ! grep -q 'custom-systems.html#automation' static/public_preview/assets/js/services-experience.js
