@@ -197,23 +197,6 @@
     });
   }
 
-  if (document.body.classList.contains('source-services')) {
-    if (!document.querySelector('link[data-services-experience]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/static/public_preview/assets/css/pages/services-experience.css';
-      link.dataset.servicesExperience = 'true';
-      document.head.appendChild(link);
-    }
-    if (!document.querySelector('script[data-services-experience]')) {
-      const script = document.createElement('script');
-      script.src = '/static/public_preview/assets/js/services-experience.js';
-      script.async = false;
-      script.dataset.servicesExperience = 'true';
-      document.body.appendChild(script);
-    }
-  }
-
   if (document.body.classList.contains('source-ecommerce')) {
     const detailRoutes = new Map([
       ['service-launch', 'store-launch.html'],
@@ -250,21 +233,6 @@
     if (finalSecondaryCta) {
       finalSecondaryCta.href = '#platforms';
       finalSecondaryCta.textContent = 'المنصات التي نعمل عليها';
-    }
-
-    if (!document.querySelector('link[data-ecommerce-experience]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/static/public_preview/assets/css/pages/ecommerce-experience-lab.css';
-      link.dataset.ecommerceExperience = 'true';
-      document.head.appendChild(link);
-    }
-    if (!document.querySelector('script[data-ecommerce-experience]')) {
-      const script = document.createElement('script');
-      script.src = '/static/public_preview/assets/js/ecommerce-category.js';
-      script.async = false;
-      script.dataset.ecommerceExperience = 'true';
-      document.body.appendChild(script);
     }
   }
 })();
