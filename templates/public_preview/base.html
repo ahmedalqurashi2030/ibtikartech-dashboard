@@ -5,6 +5,7 @@
   {% include "public_preview/components/document_head.html" %}
   {# Base document defaults come first so page composition can specialize layout without replacing the foundation. #}
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/base.css' %}">
+  {% include "public_preview/components/route_foundation_styles.html" %}
   {% block head %}{% endblock %}
   {% include "public_preview/components/critical_styles.html" %}
   {# Canonical design-system owners reassert shared tokens/components after preserved source composition. #}
