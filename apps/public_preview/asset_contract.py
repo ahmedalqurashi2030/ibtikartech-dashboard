@@ -65,6 +65,7 @@ ECOMMERCE_EXPERIENCE_STYLES = (
     "public_preview/assets/css/pages/ecommerce-experience-lab.css"
 )
 ECOMMERCE_EXPERIENCE_RUNTIME = "public_preview/assets/js/ecommerce-category.js"
+PLATFORM_STYLES = "public_preview/assets/css/pages/platform.css"
 
 SECTION_LAYOUT_CONSUMERS = (
     "index.html",
@@ -99,6 +100,14 @@ SERVICE_CATEGORY_REFINEMENT_CONSUMERS = tuple(
     if page_name != "ecommerce.html"
 )
 
+PLATFORM_STYLE_CONSUMERS = (
+    *SERVICE_CATEGORY_PAGE_NAMES,
+    "portfolio.html",
+    "about.html",
+    "contact.html",
+    "404.html",
+)
+
 # Static page/family ownership. The refinement reference lives in the shared
 # category family, so every category inherits the textual declaration even
 # though Ecommerce disables it with a page_key condition at render time.
@@ -131,6 +140,7 @@ RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS = {
     SERVICES_EXPERIENCE_RUNTIME: ("services.html",),
     ECOMMERCE_EXPERIENCE_STYLES: ("ecommerce.html",),
     ECOMMERCE_EXPERIENCE_RUNTIME: ("ecommerce.html",),
+    PLATFORM_STYLES: PLATFORM_STYLE_CONSUMERS,
 }
 
 FAMILY_ASSET_EXTENSION_BLOCKS = {
