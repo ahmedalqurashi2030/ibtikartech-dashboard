@@ -22,6 +22,7 @@ from apps.public_preview.manifest import (  # noqa: E402
 )
 from apps.public_preview.template_contract import (  # noqa: E402
     BASE_TEMPLATE_PARENT,
+    FAMILY_ALLOWED_PARTIALS,
     FAMILY_EXTENSION_BLOCKS,
     FAMILY_REQUIRED_BLOCKS,
     FAMILY_REQUIRED_MARKERS,
@@ -51,6 +52,9 @@ LOCAL_ROUTE_RE = re.compile(
     re.IGNORECASE,
 )
 SCRIPT_OPEN_RE = re.compile(r"<script(?P<attrs>[^>]*)>", re.IGNORECASE)
+INCLUDE_RE = re.compile(
+    r'{%\s*include\s+(["\'])(?P<path>[^"\']+)\1(?:\s+[^%]*)?%}'
+)
 
 
 def family_path(parent: str) -> Path:
@@ -166,8 +170,18 @@ def verify_family(parent: str, failures: list[str]) -> None:
         failures.append(f"{label}: family must extend {BASE_TEMPLATE_PARENT}")
     if source.count(BODY_OPEN) != 1:
         failures.append(f"{label}: expected exactly one {{% block body %}}")
-    if "{% include " in source:
-        failures.append(f"{label}: family must not import arbitrary partials")
+
+    allowed_partials = set(FAMILY_ALLOWED_PARTIALS.get(parent, ()))
+    included_partials = [match.group("path") for match in INCLUDE_RE.finditer(source)]
+    for partial in included_partials:
+        if partial not in allowed_partials:
+            failures.append(f"{label}: unapproved family partial {partial}")
+    for partial in allowed_partials:
+        if included_partials.count(partial) != 1:
+            failures.append(f"{label}: expected exactly one approved partial {partial}")
+        partial_path = ROOT / "templates" / partial
+        if not partial_path.is_file():
+            failures.append(f"{label}: approved partial is missing: {partial}")
 
     for marker in FAMILY_REQUIRED_MARKERS[parent]:
         if source.count(marker) != 1:
@@ -206,7 +220,16 @@ def verify_base(failures: list[str]) -> None:
     if PAGE_SCRIPTS_OPEN in base or "page_scripts" in base:
         failures.append("base.html: legacy page_scripts contract remains")
 
-    expected = ("document_head.html", "header.html", "footer.html", "runtime.html")
+    expected = (
+        "document_head.html",
+        "critical_styles.html",
+        "route_styles.html",
+        "deferred_styles.html",
+        "header.html",
+        "footer.html",
+        "runtime.html",
+        "runtime_scripts.html",
+    )
     for component in expected:
         include = f'{{% include "public_preview/components/{component}" %}}'
         if include not in base:
