@@ -3,11 +3,6 @@
 <script src="{% static 'public_preview/assets/js/continuous-flow.js' %}" defer data-runtime-script="continuous-flow" data-continuous-flow="true"></script>
 <script src="{% static 'public_preview/assets/js/frontend-final.js' %}" defer data-runtime-script="frontend-final" data-frontend-final="true"></script>
 
-{# Home, Services and Tharaa temporarily retain one preserved source reveal engine until source extraction. #}
-{% if page_key != "index" and page_key != "services" and page_key != "tharaa" %}
-<script src="{% static 'public_preview/assets/js/reveal.js' %}" defer data-runtime-script="reveal"></script>
-{% endif %}
-
 {% if page_key == "index" %}
 <script src="{% static 'public_preview/assets/js/home-enhancements.js' %}" defer data-runtime-script="home-enhancements" data-strategy-enhancements="true"></script>
 <script src="{% static 'public_preview/assets/js/home-experience-v2.js' %}" defer data-runtime-script="home-experience-v2" data-home-experience-v2="true"></script>
