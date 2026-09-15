@@ -1,4 +1,7 @@
+BASE_TEMPLATE = "templates/public_preview/base.html"
 DOCUMENT_HEAD = "templates/public_preview/components/document_head.html"
+ROUTE_FOUNDATION_STYLES = "templates/public_preview/components/route_foundation_styles.html"
+INNER_STYLES = "static/public_preview/assets/css/pages/inner.css"
 THARAA_TEMPLATE = "templates/public_preview/pages/tharaa.html"
 
 
@@ -27,12 +30,26 @@ def test_document_head_warms_shared_render_critical_dependencies():
     assert "16734a5adb27b0f3.woff2" not in source
 
 
+def test_route_foundation_css_is_explicit_and_inner_has_no_nested_import_graph():
+    base = _read(BASE_TEMPLATE)
+    foundation = _read(ROUTE_FOUNDATION_STYLES)
+    inner = _read(INNER_STYLES)
+    head = _read(DOCUMENT_HEAD)
+
+    assert "@import" not in inner
+    assert "category-signatures.css" not in inner
+    assert "category-signatures.css" not in head
+    assert "platform.css" in foundation
+    assert 'data-route-foundation-style="platform"' in foundation
+    assert 'include "public_preview/components/route_foundation_styles.html"' in base
+    assert base.index("route_foundation_styles.html") < base.index("{% block head %}")
+
+
 def test_document_head_comments_cannot_leak_as_visible_page_text():
     source = _read(DOCUMENT_HEAD)
 
-    assert "{% comment %}" in source
-    assert "{% endcomment %}" in source
-    assert "{# inner.css/articles.css" not in source
+    assert "inner.css/articles.css discover" not in source
+    assert "remaining foundations through @import" not in source
 
 
 def test_tharaa_parser_does_not_block_on_cinematic_runtimes():
