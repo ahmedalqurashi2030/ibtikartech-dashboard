@@ -71,6 +71,9 @@ function initMobileMenuPage() {
 }
 
 function initReveal() {
+  // Canonical reveal.js owns generic reveal state on migrated routes.
+  // Keep this only as a compatibility fallback for routes that do not load it yet.
+  if (window.__ibtikarRevealRuntime) return;
   const items = qsa('.reveal');
   if (!items.length || prefersReducedMotion || !('IntersectionObserver' in window)) {
     items.forEach((item) => item.classList.add('is-visible', 'in'));
