@@ -45,28 +45,8 @@
     link.addEventListener('click', (event) => event.preventDefault());
   });
 
-  const revealItems = [...document.querySelectorAll('.reveal')];
-  if (revealItems.length) {
-    if (reducedMotion || !('IntersectionObserver' in window)) {
-      revealItems.forEach((item) => item.classList.add('in'));
-    } else {
-      const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('in');
-          observer.unobserve(entry.target);
-        });
-      }, { rootMargin: '120px 0px', threshold: 0.04 });
-
-      revealItems.forEach((item) => revealObserver.observe(item));
-      window.setTimeout(() => {
-        document.querySelectorAll('.reveal:not(.in)').forEach((item) => {
-          const rect = item.getBoundingClientRect();
-          if (rect.top < window.innerHeight * 1.25) item.classList.add('in');
-        });
-      }, 1200);
-    }
-  }
+  // Generic reveal ownership moved to reveal.js or the preserved source runtime
+  // on Home/Services/Tharaa. This compatibility layer must not create another observer.
 
   const announcement = document.querySelector('body.source-home > .ibtx-announcement');
   if (announcement && !announcement.dataset.enhanced) {
