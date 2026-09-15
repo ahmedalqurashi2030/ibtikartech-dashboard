@@ -189,9 +189,8 @@ def conditional_asset_count(source: str, asset: str, page_key: str) -> int:
     """Count an asset only in Django page_key branches active for one route.
 
     This intentionally understands only if/elif/else/endif expressions based on
-    page_key. Other template tags are treated as ordinary markup. That keeps the
-    ownership verifier deterministic and prevents it from becoming a template
-    renderer of its own.
+    page_key. Other template tags remain countable markup, which is necessary
+    for assets referenced inside Django ``static`` tags.
     """
     count = 0
     # Each frame stores parent activity, whether a branch already matched, and
@@ -245,6 +244,12 @@ def conditional_asset_count(source: str, asset: str, page_key: str) -> int:
         if inner == "endif" and stack:
             frame = stack.pop()
             active = frame["parent_active"]
+            continue
+
+        # Non-control Django tags (notably {% static '...' %}) can contain the
+        # owned asset path and must be counted when their route branch is active.
+        if active:
+            count += token.count(asset)
 
     if stack:
         fail("Unclosed page_key conditional in route-owned template")
@@ -277,12 +282,13 @@ def verify_route_scoped_asset_consumers() -> None:
         parent: (ROOT / "templates" / parent).read_text(encoding="utf-8")
         for parent in FAMILY_REQUIRED_BLOCKS
     }
+    missing_components = [
+        str(path.relative_to(ROOT)) for path in CENTRAL_ROUTE_COMPONENTS if not path.is_file()
+    ]
+    if missing_components:
+        fail("Central route asset components missing: " + ", ".join(missing_components))
     central_sources = [path.read_text(encoding="utf-8") for path in CENTRAL_ROUTE_COMPONENTS]
     invalid: list[str] = []
-
-    for component in CENTRAL_ROUTE_COMPONENTS:
-        if not component.is_file():
-            invalid.append(f"{component.relative_to(ROOT)}: central route component missing")
 
     for asset, expected_consumers in ROUTE_SCOPED_ASSET_CONSUMERS.items():
         if asset in base_source:
