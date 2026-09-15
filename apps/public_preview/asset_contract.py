@@ -1,8 +1,16 @@
 """Explicit ownership for public-preview assets that are not site-global.
 
-Asset files may be shared by several page types, but each rendered page must opt
-in deliberately. This prevents route-specific CSS and JavaScript from drifting
-back into the global base template.
+Two complementary contracts are kept intentionally:
+
+- ``ROUTE_SCOPED_ASSET_CONSUMERS`` describes assets declared directly by page or
+  family templates. It supports the static inheritance guard used by foundation
+  tests.
+- ``RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS`` describes the effective consumers
+  after ``page_key`` conditions and central Django route components are applied.
+
+This separation lets the project verify both template ownership and final route
+ownership without pretending a conditional Django branch is an unconditional
+consumer.
 """
 
 from apps.public_preview.manifest import SERVICE_PAGE_ROUTES
@@ -91,6 +99,9 @@ SERVICE_CATEGORY_REFINEMENT_CONSUMERS = tuple(
     if page_name != "ecommerce.html"
 )
 
+# Static page/family ownership. The refinement reference lives in the shared
+# category family, so every category inherits the textual declaration even
+# though Ecommerce disables it with a page_key condition at render time.
 ROUTE_SCOPED_ASSET_CONSUMERS = {
     SECTION_LAYOUT_ASSET: SECTION_LAYOUT_CONSUMERS,
     RELATED_CARDS_STYLES: RELATED_CARDS_CONSUMERS,
@@ -98,7 +109,7 @@ ROUTE_SCOPED_ASSET_CONSUMERS = {
     SERVICE_PRIMITIVES_STYLES: SERVICE_PRIMITIVE_CONSUMERS,
     SERVICE_PRIMITIVES_RUNTIME: SERVICE_PRIMITIVE_CONSUMERS,
     SERVICE_CINEMA_STYLES: SERVICE_CATEGORY_PAGE_NAMES,
-    SERVICE_CATEGORY_REFINEMENT_STYLES: SERVICE_CATEGORY_REFINEMENT_CONSUMERS,
+    SERVICE_CATEGORY_REFINEMENT_STYLES: SERVICE_CATEGORY_PAGE_NAMES,
     HOMEPAGE_SURFACE_ASSET: ("index.html",),
     ARTICLE_STYLES: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
     ARTICLE_RUNTIME: ("knowledge.html", *ARTICLE_DETAIL_PAGE_NAMES),
@@ -109,6 +120,13 @@ ROUTE_SCOPED_ASSET_CONSUMERS = {
     SERVICES_SOURCE_RUNTIME: ("services.html",),
     THARAA_SOURCE_STYLES: ("tharaa.html",),
     THARAA_SOURCE_RUNTIME: ("tharaa.html",),
+}
+
+# Effective rendered ownership. This is the source of truth for browser-facing
+# route consumption and includes assets declared by central route components.
+RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS = {
+    **ROUTE_SCOPED_ASSET_CONSUMERS,
+    SERVICE_CATEGORY_REFINEMENT_STYLES: SERVICE_CATEGORY_REFINEMENT_CONSUMERS,
     SERVICES_EXPERIENCE_STYLES: ("services.html",),
     SERVICES_EXPERIENCE_RUNTIME: ("services.html",),
     ECOMMERCE_EXPERIENCE_STYLES: ("ecommerce.html",),
