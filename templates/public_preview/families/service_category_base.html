@@ -4,13 +4,8 @@
 <title>{% block category_page_title %}{% endblock %}</title>
 <meta name="description" content="{% block category_meta_description %}{% endblock %}">
 {% block category_styles %}
-<!--
-  NOTE: This base template automatically includes:
-  - inner.css
-  - ibtikar-shell.css
-  Do not re-include these in child templates.
--->
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
+<!-- Category composition only. The canonical foundation and shell come from base.html. -->
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
@@ -30,6 +25,7 @@
 
 {% block body %}
 <main id="main-content" class="service-reference">
+{% include "public_preview/components/service_cinema_chrome.html" %}
 {% block category_content %}{% endblock %}
 </main>
 
