@@ -42,10 +42,10 @@ BASE_TEMPLATE = TEMPLATES_DIR / "base.html"
 ASSETS_DIR = ROOT / "static" / "public_preview" / "assets"
 OWNERSHIP_WORKFLOW = ROOT / ".github" / "workflows" / "frontend-ownership-qa.yml"
 
-# Route-aware assets can now be declared by Django-owned central components.
-# These are evaluated per page_key below, so a reference inside an inactive
-# Django branch does not become a false consumer.
+# Route-aware assets can be declared by Django-owned central components. These
+# sources are evaluated per page_key so inactive branches are not consumers.
 CENTRAL_ROUTE_COMPONENTS = (
+    TEMPLATES_DIR / "components" / "route_foundation_styles.html",
     TEMPLATES_DIR / "components" / "route_styles.html",
     TEMPLATES_DIR / "components" / "runtime_scripts.html",
 )
