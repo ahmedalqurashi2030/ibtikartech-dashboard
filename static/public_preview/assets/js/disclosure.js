@@ -64,17 +64,22 @@
       });
     });
 
-    // Native details remains native. We only enforce the existing single-open
-    // accordion policy where a FAQ root groups multiple disclosures.
-    root.querySelectorAll('details').forEach((details) => {
+    // Native details remains native. FAQ roots may coordinate their own details,
+    // but the body fallback must never claim Shell or unrelated disclosures.
+    const nativeDetails = [
+      ...(root === document.body
+        ? root.querySelectorAll('details.service-faq-item, details.faq-item')
+        : root.querySelectorAll('details')),
+    ];
+    nativeDetails.forEach((details) => {
       if (details.dataset.ibtDisclosureReady === 'true') return;
       details.dataset.ibtDisclosureReady = 'true';
       details.dataset.ibtFaqReady = 'true';
       details.dataset.svcReady = 'true';
       details.addEventListener('toggle', () => {
         if (!details.open) return;
-        root.querySelectorAll('details[open]').forEach((other) => {
-          if (other !== details) other.open = false;
+        nativeDetails.forEach((other) => {
+          if (other !== details && other.open) other.open = false;
         });
       });
     });
