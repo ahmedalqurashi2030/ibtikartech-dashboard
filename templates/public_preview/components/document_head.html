@@ -1,6 +1,7 @@
-{% load wagtailimages_tags %}
+{% load static wagtailimages_tags %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{% if meta_description %}<meta name="description" content="{{ meta_description }}">{% endif %}
 <link rel="canonical" href="{{ site_config.seo.canonical_url }}">
 <meta property="og:site_name" content="{{ site_config.brand.name }}">
 {% if site_config.brand.default_social_image_url %}
@@ -19,7 +20,49 @@
 {% if site_config.brand.favicon %}
   {% image site_config.brand.favicon width-64 as favicon_image %}
   <link rel="icon" href="{{ favicon_image.url }}" sizes="64x64">
+{% else %}
+  <link rel="icon" href="{% static 'public_preview/assets/images/ibtikar-favicon.svg' %}" type="image/svg+xml">
 {% endif %}
+
+{# The regular and display weights are responsible for almost all above-fold Arabic text. #}
+<link rel="preload" href="{% static 'public_preview/assets/generated/6010e7fd0dce5d52.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{% static 'public_preview/assets/generated/04c730b4292731cc.woff2' %}" as="font" type="font/woff2" crossorigin>
+
+{# Start shared render-critical styles early without changing their cascade position. #}
+<link rel="preload" href="{% static 'public_preview/assets/css/ibtikar-shell.css' %}" as="style">
+<link rel="preload" href="{% static 'public_preview/foundation/typography-system.css' %}" as="style">
+<link rel="preload" href="{% static 'public_preview/assets/css/components.css' %}" as="style">
+<link rel="preload" href="{% static 'public_preview/assets/css/pages/ux-system-v1.css' %}" as="style">
+
+{% comment %}inner.css/articles.css discover the remaining foundations through @import. Warming them here removes a serial discovery round while preserving cascade.{% endcomment %}
+{% if request.path == '/contact/' or request.path == '/knowledge/' or request.path == '/ecommerce/' %}
+<link rel="preload" href="{% static 'public_preview/assets/css/base.css' %}" as="style">
+<link rel="preload" href="{% static 'public_preview/assets/css/pages/platform.css' %}" as="style">
+<link rel="preload" href="{% static 'public_preview/assets/css/pages/category-signatures.css' %}" as="style">
+{% endif %}
+
+{# Preload the page-specific LCP candidate before the page stylesheet graph finishes. #}
+{% if request.path == '/' %}
+<link rel="preload" href="{% static 'public_preview/assets/images/hero/ibtikar-connected-ecosystem-v1.webp' %}" as="image" fetchpriority="high">
+{% elif request.path == '/services/' %}
+<link rel="preload" href="{% static 'public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg' %}" as="image" fetchpriority="high">
+{% elif request.path == '/ecommerce/' or request.path == '/services/product-page-optimization/' %}
+<link rel="preload" href="{% static 'public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg' %}" as="image" fetchpriority="high">
+{% endif %}
+
+{# Above-fold content must remain paintable while enhancement transforms initialize. #}
+<style>
+  #main-content > .hero .reveal,
+  #main-content > .platform-hero .reveal,
+  #main-content > .articles-hero .reveal,
+  #main-content > .service-commerce-hero .reveal,
+  #main-content .hero-ecosystem {
+    opacity: 1 !important;
+    visibility: visible !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+</style>
 <script>
   // Apply enhancement and the persisted theme before page CSS is evaluated.
   document.documentElement.classList.remove('no-js');

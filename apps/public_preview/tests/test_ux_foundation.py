@@ -170,7 +170,6 @@ def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
         assert actual_consumers == set(expected_consumers), asset
 
 
-
 def test_conversion_events_are_bound_to_actions_and_success():
     contact = _read_source("templates/public_preview/pages/contact.html")
     home = _read_source("templates/public_preview/pages/index.html")
@@ -446,8 +445,10 @@ def test_services_experience_matches_current_five_family_taxonomy():
     assert all(position >= 0 for position in positions)
     assert positions == sorted(positions)
     assert "PRIMARY_FAMILIES.length" in source
-    assert "custom-systems.html#apps" in source
-    assert "custom-systems.html#automation" in source
+    assert "href:'custom-systems.html'" in source
+    assert "custom-systems.html#solutions" in source
+    assert "custom-systems.html#apps" not in source
+    assert "custom-systems.html#automation" not in source
     assert "ستة محاور" not in source
     assert "mode:'auto', index:'06'" not in source
 
@@ -460,6 +461,7 @@ def test_browser_qa_validates_semantic_services_count_not_legacy_six():
     assert "metrics.servicesAxes < 5" in source
     assert "stageTotal !== metrics.servicesAxes" in source
     assert "metrics.servicesAxes !== 6" not in source
+    assert "#related .related-card[href]" in source
 
 
 def test_deep_interaction_qa_uses_live_contact_submission_contract():
@@ -470,7 +472,6 @@ def test_deep_interaction_qa_uses_live_contact_submission_contract():
     assert "رقم المرجع:" in source
     assert "ibtikar:lastBrief" not in source
     assert "Contact local draft failed" not in source
-
 
 
 def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
@@ -529,6 +530,7 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
         }
         assert not missing, f"{page.name}: {sorted(missing)}"
 
+
 def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     header = _read_source("templates/public_preview/components/header.html")
     mobile_menu = _read_source("templates/public_preview/components/mobile_menu.html")
@@ -548,8 +550,10 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     assert "localStorage.setItem('ibtikar-theme',next)" in shell
     assert ":focus-visible" in styles
     assert "@media (prefers-reduced-motion: reduce)" in styles
-    assert header.count("data-ibt-mega-menu") == 2
-    assert header.count("aria-hidden=\"true\" inert data-ibt-mega-menu") == 2
+    assert header.count("data-ibt-mega-menu") == 1
+    assert header.count("aria-hidden=\"true\" inert data-ibt-mega-menu") == 1
+    assert header.count("data-ibt-mega-toggle") == 1
+    assert 'data-nav-key="products"' in header
     assert "link.setAttribute('aria-haspopup'" not in shell
     assert "'ArrowUp'" in shell
     assert "focusMegaItem(toggle,event.key === 'ArrowUp' ? 'last' : 'first')" in shell
@@ -560,16 +564,27 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
     assert ".ibt-mobile-menu-close" in styles
     assert ".ibt-shell-mobile-menu summary:focus-visible" in styles
 
-    assert "runs-on: [self-hosted, production, ibtikartech]" in browser_workflow
+    assert "runs-on: ubuntu-latest" in browser_workflow
     assert "browser-actions/setup-chrome@v2" in browser_workflow
-    assert "no-sudo: true" in browser_workflow
-    assert "install-dependencies: true" not in browser_workflow
+    assert "install-dependencies: true" in browser_workflow
+    assert "CHROME_PATH:" in browser_workflow
+    assert "steps.chrome.outputs.chrome-path" in browser_workflow
     assert "themeToggleVisible" in browser_qa
     assert "mainContentCount" in browser_qa
     assert "legacyShellCount" in browser_qa
     assert "points to missing #" in browser_qa
     assert "testThemeRtlAndReducedMotion" in interaction_qa
     assert "prefers-reduced-motion" in interaction_qa
+
+    for retired, current in (
+        ("/ecommerce/#paths", "/ecommerce/#start"),
+        ("/ecommerce/#platforms", "/ecommerce/#solutions"),
+        ("/ecommerce/#subservices", "/ecommerce/#solutions"),
+        ("/websites/#capabilities", "/websites/#solutions"),
+        ("/custom-systems/#apps", "/custom-systems/#solutions"),
+    ):
+        assert retired in page_shell
+        assert current in page_shell
 
     for marker in (
         "getElementById('site-header')",
@@ -586,7 +601,6 @@ def test_shared_shell_owns_theme_rtl_focus_and_reduced_motion_contract():
 
     assert "normalizeHomepageLegacyShell" not in page_shell
     assert "[data-approved-legacy-shell], .ibtx-legacy-mobile-menu" not in head
-
 
 
 def test_public_shell_reads_only_resolved_site_configuration():
@@ -683,7 +697,7 @@ def test_shared_mobile_controls_keep_minimum_touch_targets():
         "static/public_preview/assets/css/pages/service-related-cards.css"
     )
 
-    assert shell.count("min-height: 44px;") >= 2
+    assert shell.count("min-height: var(--ibt-target-min);") >= 2
     assert "width: 38px;\n    height: 38px;\n    min-height: 38px;" not in shell
     assert related.count("width: 44px;") >= 2
     assert "width: 40px;\n    height: 40px;" not in related
@@ -691,6 +705,9 @@ def test_shared_mobile_controls_keep_minimum_touch_targets():
 
 def test_platform_pilots_share_accessible_touch_and_preview_contracts():
     base = _read_source(BASE_TEMPLATE)
+    category_family = _read_source(
+        "templates/public_preview/families/service_category_base.html"
+    )
     tokens = _read_source("static/public_preview/assets/css/tokens.css")
     shell = _read_source(SHELL_STYLES)
     layout = _read_source(
@@ -706,8 +723,9 @@ def test_platform_pilots_share_accessible_touch_and_preview_contracts():
 
     assert "page_refinements" in base
     assert "ux-system-v1.css" in base
-    assert "service-category-refinement-v1.css" in base
-    assert "strategy-enhancements.css" in base
+    assert "service-category-refinement-v1.css" not in base
+    assert category_family.count("service-category-refinement-v1.css") == 1
+    assert "strategy-enhancements.css" not in base
     assert "--ibt-target-min: 44px" in tokens
     assert "min-height: var(--ibt-target-min);" in shell
     assert "width: 40px !important;\n    height: 40px !important;" not in layout

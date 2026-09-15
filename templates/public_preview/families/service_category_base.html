@@ -4,29 +4,29 @@
 <title>{% block category_page_title %}{% endblock %}</title>
 <meta name="description" content="{% block category_meta_description %}{% endblock %}">
 {% block category_styles %}
-<!--
-  NOTE: This base template automatically includes:
-  - inner.css
-  - ibtikar-shell.css
-  Do not re-include these in child templates.
--->
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/ibtikar-shell.css">
+<!-- Category composition only. The canonical foundation and shell come from base.html. -->
+<style>[data-service-cinema-chrome]:not([hidden]){display:contents}</style>
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/service-cinema.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
 {% endblock %}
-{% block page_refinements %}
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/services-reference.css">
 {% endblock %}
+
+{% block page_refinements %}
+{% if page_key != "ecommerce" %}<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category-refinement-v1.css">{% endif %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/services-reference.css">
 {% endblock %}
 
 {% block body_attrs %}{% block category_body_attrs %}{% endblock %}{% endblock %}
 
 {% block body %}
 <main id="main-content" class="service-reference">
+{% include "public_preview/components/service_cinema_chrome.html" %}
 {% block category_content %}{% endblock %}
 </main>
 

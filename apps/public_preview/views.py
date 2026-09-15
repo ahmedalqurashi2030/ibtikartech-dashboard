@@ -12,6 +12,7 @@ from apps.sales.models import Inquiry
 from apps.services.models import Service
 
 from .forms import PublicInquiryForm
+from .metadata import public_meta_description
 
 
 def _render_public_page(request, template_name: str, page_key: str):
@@ -21,6 +22,7 @@ def _render_public_page(request, template_name: str, page_key: str):
         f"public_preview/pages/{template_name}",
         {
             "page_key": page_key,
+            "meta_description": public_meta_description(page_key),
             # Kept only as internal frontend metadata for existing page-specific JS.
             # It is never used to build the browser URL.
             "source_page_name": template_name,
@@ -90,7 +92,12 @@ def contact(request):
         return render(
             request,
             "public_preview/pages/contact.html",
-            {"page_key": "contact", "source_page_name": "contact.html", "inquiry_initial": initial},
+            {
+                "page_key": "contact",
+                "source_page_name": "contact.html",
+                "meta_description": public_meta_description("contact"),
+                "inquiry_initial": initial,
+            },
         )
 
     fingerprint = (

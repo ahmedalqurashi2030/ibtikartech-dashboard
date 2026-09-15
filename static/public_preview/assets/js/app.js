@@ -71,6 +71,9 @@ function initMobileMenuPage() {
 }
 
 function initReveal() {
+  // Canonical reveal.js owns generic reveal state on migrated routes.
+  // Keep this only as a compatibility fallback for routes that do not load it yet.
+  if (window.__ibtikarRevealRuntime) return;
   const items = qsa('.reveal');
   if (!items.length || prefersReducedMotion || !('IntersectionObserver' in window)) {
     items.forEach((item) => item.classList.add('is-visible', 'in'));
@@ -87,6 +90,8 @@ function initReveal() {
 }
 
 function initFAQ() {
+  // disclosure.js owns generic FAQ/disclosure behavior on migrated routes.
+  if (window.__ibtikarDisclosureRuntime) return;
   qsa('.faq, [data-faq-item], .accordion-item').forEach((item) => {
     if (item.closest('#faq')) return;
     const button = qs('button', item);
@@ -295,7 +300,7 @@ function initContactSteps() {
     const target = panels.findIndex((panel) => panel.contains(field));
     if (target >= 0) showStep(target);
   });
-  wrap.addEventListener('reset', () => requestAnimationFrame(() => showStep(0)));
+  wrap.addEventListener('reset', () => showStep(0));
   showStep(0);
 }
 

@@ -1,4 +1,15 @@
 /* Focused accessibility and mobile guards for product-page-optimization.html. */
+
+/* This preserved source page overrides the service-family stylesheet bundle.
+ * Keep the shared navigation target at the same internal 44px contract as the
+ * canonical shell even when legacy source CSS is present later in the cascade. */
+body[data-page="product-page-optimization"] .ibt-shell-mega-toggle {
+  width: var(--ibt-target-min, 44px) !important;
+  min-width: var(--ibt-target-min, 44px) !important;
+  height: var(--ibt-target-min, 44px) !important;
+  min-height: var(--ibt-target-min, 44px) !important;
+}
+
 .hotspot {
   min-width: 44px;
   min-height: 44px;
@@ -9,6 +20,11 @@
 .hotspot[aria-pressed="true"] {
   outline: 3px solid color-mix(in srgb, currentColor 40%, transparent);
   outline-offset: 3px;
+}
+
+.service-quick-info[tabindex]:focus-visible {
+  outline: var(--ibt-focus-width, 3px) solid var(--ibt-focus-color, #10c8e8);
+  outline-offset: var(--ibt-focus-offset, 3px);
 }
 
 @media (max-width: 680px) {

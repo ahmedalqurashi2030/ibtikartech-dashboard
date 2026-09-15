@@ -1,0 +1,135 @@
+name: Release Quality QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "templates/public_preview/**"
+      - "static/public_preview/**"
+      - "apps/public_preview/**"
+      - "scripts/release_accessibility_qa.cjs"
+      - "scripts/verify_lighthouse_release.cjs"
+      - ".github/workflows/release-quality-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  release-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.test
+      DJANGO_SECRET_KEY: release-quality-only-secret
+      DJANGO_TEST_DATABASE_NAME: /tmp/ibtikar-release-quality.sqlite3
+      RELEASE_QA_OUTPUT: artifacts/release-qa
+
+    steps:
+      - name: Checkout dashboard
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Setup Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+          install-dependencies: true
+
+      - name: Install dashboard and release QA tools
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          npm install --prefix /tmp/ibtikar-release-qa --no-save axe-core@4.10.3 lighthouse@12.8.2
+
+      - name: Prepare Django
+        run: |
+          rm -f "$DJANGO_TEST_DATABASE_NAME"
+          python manage.py migrate --noinput
+
+      - name: Start local release preview
+        shell: bash
+        run: |
+          python manage.py runserver 127.0.0.1:8000 --noreload --insecure > /tmp/ibtikar-release-django.log 2>&1 &
+          echo $! > /tmp/ibtikar-release-django.pid
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then exit 0; fi
+            sleep 0.25
+          done
+          cat /tmp/ibtikar-release-django.log
+          exit 1
+
+      - name: Axe WCAG 2.2 AA release audit
+        env:
+          BASE_URL: http://127.0.0.1:8000
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          AXE_PATH: /tmp/ibtikar-release-qa/node_modules/axe-core/axe.min.js
+        run: node scripts/release_accessibility_qa.cjs
+
+      - name: Lighthouse representative mobile and desktop audits
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RELEASE_QA_OUTPUT/lighthouse"
+          mkdir -p "$out"
+          lighthouse=/tmp/ibtikar-release-qa/node_modules/.bin/lighthouse
+          routes=(
+            "home|/"
+            "services|/services/"
+            "ecommerce|/ecommerce/"
+            "tharaa|/tharaa/"
+            "knowledge|/knowledge/"
+            "contact|/contact/"
+            "product-page|/services/product-page-optimization/"
+          )
+          for entry in "${routes[@]}"; do
+            IFS='|' read -r slug route <<<"$entry"
+            url="http://127.0.0.1:8000${route}"
+            "$lighthouse" "$url" \
+              --quiet \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json \
+              --output-path="$out/${slug}-mobile.json" \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+            "$lighthouse" "$url" \
+              --quiet \
+              --preset=desktop \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json \
+              --output-path="$out/${slug}-desktop.json" \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage"
+          done
+
+      - name: Verify Lighthouse release budgets
+        run: node scripts/verify_lighthouse_release.cjs "$RELEASE_QA_OUTPUT/lighthouse"
+
+      - name: Upload release quality evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ibtikar-release-quality-qa
+          path: artifacts/release-qa
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop local release preview
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/ibtikar-release-django.pid ]; then
+            kill "$(cat /tmp/ibtikar-release-django.pid)" 2>/dev/null || true
+          fi
+          tail -n 120 /tmp/ibtikar-release-django.log 2>/dev/null || true

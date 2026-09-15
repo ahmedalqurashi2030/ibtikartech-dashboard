@@ -72,12 +72,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          failed=0
           for source in static/public_preview/dashboard/*.css; do
             filename="$(basename "$source")"
             target="static/public_preview/assets/css/pages/$filename"
-            test -f "$target"
-            cmp --silent "$source" "$target"
+            if [ ! -f "$target" ]; then
+              echo "Missing refinement mirror target: $target"
+              failed=1
+              continue
+            fi
+            if ! cmp --silent "$source" "$target"; then
+              echo "Refinement mirror mismatch: $source != $target"
+              failed=1
+            fi
           done
+          test "$failed" -eq 0
 
       - name: Verify production-safe frontend paths
         shell: bash
@@ -85,5 +94,7 @@ jobs:
           set -euo pipefail
           ! grep -R -n -E 'href="[^" ]+\.html([?#][^"]*)?"|action="[^" ]+\.html([?#][^"]*)?"' templates/public_preview/pages templates/public_preview/components templates/public_preview/families
           ! grep -R -n 'ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/' templates/public_preview/pages templates/public_preview/components templates/public_preview/families
-          grep -q 'custom-systems.html#apps' static/public_preview/assets/js/services-experience.js
-          grep -q 'custom-systems.html#automation' static/public_preview/assets/js/services-experience.js
+          grep -q "href:'custom-systems.html'" static/public_preview/assets/js/services-experience.js
+          grep -q 'custom-systems.html#solutions' static/public_preview/assets/js/services-experience.js
+          ! grep -q 'custom-systems.html#apps' static/public_preview/assets/js/services-experience.js
+          ! grep -q 'custom-systems.html#automation' static/public_preview/assets/js/services-experience.js

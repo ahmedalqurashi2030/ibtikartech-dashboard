@@ -234,8 +234,9 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
       servicesAxes: document.querySelectorAll('.service-item').length,
       servicesStageText: document.querySelector('#stageCount')?.textContent?.trim() || '',
       servicesCinema: Boolean(document.querySelector('.services-primary-cinema')),
-      relatedServiceHrefs: [...document.querySelectorAll('.service-related-cards .service-related-card__link[href]')]
-        .map((a) => a.getAttribute('href') || ''),
+      relatedServiceHrefs: [...document.querySelectorAll(
+        '.service-related-cards .service-related-card__link[href], #related .related-card[href]'
+      )].map((a) => a.getAttribute('href') || ''),
       todoVisible: document.body.innerText.includes('[TODO:'),
       contactSubmitLabel: document.querySelector('#quote-form button[type="submit"]')?.textContent?.trim() || '',
       robots: document.querySelector('meta[name="robots"]')?.content || '',

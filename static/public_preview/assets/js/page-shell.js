@@ -35,15 +35,32 @@
   ]);
 
   const retiredRoutes = new Map([
-    ['salla.html', '/ecommerce/#platforms'],
-    ['zid.html', '/ecommerce/#platforms'],
-    ['shopify.html', '/ecommerce/#platforms'],
-    ['woocommerce.html', '/ecommerce/#platforms'],
-    ['wordpress.html', '/websites/#capabilities'],
+    ['salla.html', '/ecommerce/#solutions'],
+    ['zid.html', '/ecommerce/#solutions'],
+    ['shopify.html', '/ecommerce/#solutions'],
+    ['woocommerce.html', '/ecommerce/#solutions'],
+    ['wordpress.html', '/websites/#solutions'],
+  ]);
+
+  const retiredFragments = new Map([
+    ['/ecommerce/#paths', '/ecommerce/#start'],
+    ['/ecommerce/#platforms', '/ecommerce/#solutions'],
+    ['/ecommerce/#subservices', '/ecommerce/#solutions'],
+    ['/websites/#capabilities', '/websites/#solutions'],
+    ['/custom-systems/#apps', '/custom-systems/#solutions'],
   ]);
 
   const productionOrigin = 'https://ibtikartech.co';
   const previewOrigin = 'https://ibtikar-tech-frontend-rc.dev-sakhr.chatgpt.site/site/';
+
+  const resolveRetiredFragment = (url) => {
+    const key = `${url.pathname}${url.hash}`;
+    const replacement = retiredFragments.get(key);
+    if (!replacement) return '';
+    const mapped = new URL(replacement, location.origin);
+    if (url.search) mapped.search = url.search;
+    return `${mapped.pathname}${mapped.search}${mapped.hash}`;
+  };
 
   const canonicalizePublicHref = (rawValue) => {
     const raw = String(rawValue || '').trim();
@@ -54,16 +71,18 @@
       const url = new URL(raw, location.href);
       if (url.origin !== location.origin) return raw;
 
+      const directFragmentAlias = resolveRetiredFragment(url);
+      if (directFragmentAlias) return directFragmentAlias;
+
       const basename = url.pathname.split('/').filter(Boolean).pop()?.toLowerCase() || '';
       const mappedPath = cleanPublicRoutes.get(basename) || retiredRoutes.get(basename);
       if (!mappedPath) return raw;
 
       const mapped = new URL(mappedPath, location.origin);
-      // A legacy target may already define a canonical fragment (for example
-      // retired platform pages -> #platforms). Preserve an explicit fragment
-      // from the original link when present; otherwise keep the mapped one.
       if (url.search) mapped.search = url.search;
       if (url.hash) mapped.hash = url.hash;
+      const mappedAlias = resolveRetiredFragment(mapped);
+      if (mappedAlias) return mappedAlias;
       return `${mapped.pathname}${mapped.search}${mapped.hash}`;
     } catch (_) {
       return raw;
@@ -94,8 +113,6 @@
     scope.querySelectorAll?.('[data-href]').forEach(normalizePublicDataHref);
   };
 
-  // Run before preserved enhancement bundles can attach navigation behavior.
-  // The observer also catches links/cards created later by those bundles.
   normalizePublicNavigation(document);
   const publicNavigationObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
@@ -115,9 +132,6 @@
     attributeFilter: ['href', 'data-href'],
   });
 
-  // Two preserved homepage interactions navigate through JavaScript closures
-  // rather than an anchor's href. Capture them before the legacy handlers and
-  // send them directly to the canonical Django route.
   document.addEventListener('click', (event) => {
     const target = event.target instanceof Element ? event.target : null;
     if (!target) return;
@@ -224,35 +238,5 @@
     track.style.cssText = 'width:100vw;height:1px;';
     guard.appendChild(track);
     document.body.appendChild(guard);
-  }
-
-  const ensureScript = (src, datasetKey) => {
-    if (document.querySelector(`script[data-${datasetKey}]`)) return;
-    const script = document.createElement('script');
-    script.src = src;
-    script.async = false;
-    script.dataset[datasetKey.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())] = 'true';
-    document.body.appendChild(script);
-  };
-
-  const loadEnhancements = () => {
-    ensureScript('/static/public_preview/assets/js/continuous-flow.js', 'continuous-flow');
-    ensureScript('/static/public_preview/assets/js/frontend-final.js', 'frontend-final');
-    if (pathname === 'index.html' || pathname === '') {
-      ensureScript('/static/public_preview/assets/js/home-enhancements.js', 'strategy-enhancements');
-      ensureScript('/static/public_preview/assets/js/home-experience-v2.js', 'home-experience-v2');
-    } else {
-      ensureScript('/static/public_preview/assets/js/strategy-enhancements.js', 'strategy-enhancements');
-    }
-
-    // Enhancement bundles may synchronously inject legacy relative links.
-    // Normalize once more immediately; the observer protects later mutations.
-    queueMicrotask(() => normalizePublicNavigation(document));
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadEnhancements, { once: true });
-  } else {
-    loadEnhancements();
   }
 })();
