@@ -42,8 +42,9 @@
       const button = getButton(item);
       if (!button || button.dataset.ibtDisclosureReady === 'true') return;
       button.dataset.ibtDisclosureReady = 'true';
-      // Compatibility flag consumed by the legacy shell FAQ fallback.
+      // Compatibility flags consumed by legacy shell/source fallbacks.
       button.dataset.ibtFaqReady = 'true';
+      button.dataset.svcFaqReady = 'true';
       if (!button.type) button.type = 'button';
 
       const initiallyOpen = item.classList.contains('open')
@@ -69,6 +70,7 @@
       if (details.dataset.ibtDisclosureReady === 'true') return;
       details.dataset.ibtDisclosureReady = 'true';
       details.dataset.ibtFaqReady = 'true';
+      details.dataset.svcReady = 'true';
       details.addEventListener('toggle', () => {
         if (!details.open) return;
         root.querySelectorAll('details[open]').forEach((other) => {
