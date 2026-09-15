@@ -20,10 +20,7 @@
   {% if page_key != "index" and page_key != "services" and page_key != "tharaa" %}
   <script src="{% static 'public_preview/assets/js/reveal.js' %}" defer data-runtime-script="reveal"></script>
   {% endif %}
-  {# Services temporarily retains its source-specific accordion until source extraction. #}
-  {% if page_key != "services" %}
   <script src="{% static 'public_preview/assets/js/disclosure.js' %}" defer data-runtime-script="disclosure"></script>
-  {% endif %}
 </head>
 <body data-page="{{ page_key|default:'index' }}"{% block body_attrs %}{% endblock %}>
   <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
