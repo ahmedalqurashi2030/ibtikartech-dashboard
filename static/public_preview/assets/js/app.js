@@ -90,6 +90,8 @@ function initReveal() {
 }
 
 function initFAQ() {
+  // disclosure.js owns generic FAQ/disclosure behavior on migrated routes.
+  if (window.__ibtikarDisclosureRuntime) return;
   qsa('.faq, [data-faq-item], .accordion-item').forEach((item) => {
     if (item.closest('#faq')) return;
     const button = qs('button', item);
