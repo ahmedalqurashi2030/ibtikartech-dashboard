@@ -1,0 +1,28 @@
+<div data-service-cinema-chrome hidden style="display:contents">
+  <button class="service-cinema__reading" type="button">عرض جميع المسارات</button>
+  <div class="service-cinema__canvas-layer" aria-hidden="true">
+    <canvas class="service-cinema__canvas"></canvas>
+    <div class="service-cinema__wash"></div>
+    <div class="service-cinema__vignette"></div>
+    <div class="service-cinema__grain"></div>
+  </div>
+  <div class="service-cinema__top" aria-hidden="true">
+    <span class="service-cinema__index">
+      {% if page_key == "ecommerce" %}ECOMMERCE PATHS{% elif page_key == "websites" %}WEB PATHS{% elif page_key == "brand-content" %}BRAND &amp; CONTENT{% elif page_key == "growth" %}GROWTH PATHS{% elif page_key == "custom-systems" %}SYSTEMS PATHS{% else %}SERVICE PATHS{% endif %} / 01—<span data-service-cinema-count>00</span>
+    </span>
+  </div>
+  <div class="service-cinema__rail" aria-hidden="true">
+    <div class="service-cinema__rail-line"><span></span></div>
+    <div class="service-cinema__rail-steps">
+      <span class="service-cinema__rail-step" data-service-cinema-step>01</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>02</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>03</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>04</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>05</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>06</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>07</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>08</span>
+    </div>
+  </div>
+  <div class="service-cinema__cue" aria-hidden="true"><i></i><span>مرّر لاستكشاف المسارات</span><i></i></div>
+</div>
