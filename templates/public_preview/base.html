@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/ibtikar-shell.css' %}">
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/ux-system-v1.css' %}">
   {% block page_refinements %}{% endblock %}
+  {% include "public_preview/components/route_styles.html" %}
 </head>
 <body data-page="{{ page_key|default:'index' }}"{% block body_attrs %}{% endblock %}>
   <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
@@ -24,5 +25,6 @@
 
   {% include "public_preview/components/footer.html" %}
   {% include "public_preview/components/runtime.html" %}
+  {% include "public_preview/components/runtime_scripts.html" %}
 </body>
 </html>
