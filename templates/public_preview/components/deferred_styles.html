@@ -1,0 +1,46 @@
+{% load static %}
+{# Server-declared non-blocking companions for the critical styles used by each rendered route. #}
+
+{# continuous-flow.css is part of every current public page family. #}
+{% static 'public_preview/assets/css/pages/continuous-flow-deferred.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+
+{# launch-readiness.css is used by all current public routes except the Knowledge index. #}
+{% if page_key == "index" or page_key == "services" or page_key == "ecommerce" or page_key == "websites" or page_key == "brand-content" or page_key == "growth" or page_key == "custom-systems" or page_key == "tharaa" or page_key == "portfolio" or page_key == "article-product-page" or page_key == "article-store-launch" or page_key == "article-store-redesign" or page_key == "about" or page_key == "contact" or page_key == "404" or page_key == "store-launch" or page_key == "storefront-customization" or page_key == "store-redesign" or page_key == "product-page-optimization" or page_key == "ecommerce-growth" or page_key == "ecommerce-support" %}
+  {% static 'public_preview/assets/css/pages/launch-readiness-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% endif %}
+
+{# section-layout-refinement-v2.css consumers from the explicit asset ownership contract. #}
+{% if page_key == "index" or page_key == "services" or page_key == "ecommerce" or page_key == "websites" or page_key == "brand-content" or page_key == "growth" or page_key == "custom-systems" or page_key == "store-launch" or page_key == "storefront-customization" or page_key == "store-redesign" or page_key == "product-page-optimization" or page_key == "ecommerce-growth" or page_key == "ecommerce-support" %}
+  {% static 'public_preview/assets/css/pages/section-layout-refinement-v2-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% endif %}
+
+{# service-related-cards.css consumers from the explicit asset ownership contract. #}
+{% if page_key == "portfolio" or page_key == "ecommerce" or page_key == "websites" or page_key == "brand-content" or page_key == "growth" or page_key == "custom-systems" or page_key == "store-launch" or page_key == "storefront-customization" or page_key == "store-redesign" or page_key == "product-page-optimization" or page_key == "ecommerce-growth" or page_key == "ecommerce-support" %}
+  {% static 'public_preview/assets/css/pages/service-related-cards-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% endif %}
+
+{# All service-category pages own the cinema stylesheet. #}
+{% if page_key == "ecommerce" or page_key == "websites" or page_key == "brand-content" or page_key == "growth" or page_key == "custom-systems" %}
+  {% static 'public_preview/assets/css/service-cinema-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% endif %}
+
+{# Homepage-only critical/deferred pairs. #}
+{% if page_key == "index" %}
+  {% static 'public_preview/assets/css/pages/homepage-surface-refinement-v1-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+  {% static 'public_preview/assets/css/pages/home-experience-v2-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+  {% static 'public_preview/assets/css/pages/home-services-fix-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% endif %}
+
+{# conversion-funnel.css is intentionally shared only by Home, Services and Tharaa. #}
+{% if page_key == "index" or page_key == "services" or page_key == "tharaa" %}
+  {% static 'public_preview/assets/css/pages/conversion-funnel-deferred.css' as deferred_href %}
+  {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% endif %}
