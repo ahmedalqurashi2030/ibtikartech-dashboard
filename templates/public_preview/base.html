@@ -3,14 +3,14 @@
 <html lang="ar" dir="rtl" data-theme="dark" class="no-js">
 <head>
   {% include "public_preview/components/document_head.html" %}
-  {# Canonical foundation. Page/source composition is allowed to specialize it, never replace it. #}
-  <link rel="stylesheet" href="{% static 'public_preview/assets/css/tokens.css' %}">
+  {# Base document defaults come first so page composition can specialize layout without replacing the foundation. #}
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/base.css' %}">
   {% block head %}{% endblock %}
   {% include "public_preview/components/critical_styles.html" %}
+  {# Canonical design-system owners reassert shared tokens/components after preserved source composition. #}
+  <link rel="stylesheet" href="{% static 'public_preview/assets/css/tokens.css' %}">
   <link rel="stylesheet" href="{% static 'public_preview/foundation/typography-system.css' %}">
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/components.css' %}">
-  {# The shell follows preserved source composition until source-level shell rules are extracted in the dedicated source-CSS phase. #}
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/ibtikar-shell.css' %}">
   <link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/ux-system-v1.css' %}">
   {% block page_refinements %}{% endblock %}
