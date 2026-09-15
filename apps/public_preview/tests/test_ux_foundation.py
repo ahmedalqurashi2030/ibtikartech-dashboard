@@ -431,26 +431,29 @@ def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
     assert " / 06" not in source
 
 
-def test_services_experience_matches_current_five_family_taxonomy():
-    source = _read_source(SERVICES_EXPERIENCE)
+def test_services_template_owns_current_five_family_taxonomy():
+    template = _read_source(SERVICES_TEMPLATE)
+    experience = _read_source(SERVICES_EXPERIENCE)
 
     expected_order = (
-        "mode:'store', index:'01'",
-        "mode:'site', index:'02'",
-        "mode:'brand', index:'03'",
-        "mode:'growth', index:'04'",
-        "mode:'app', index:'05'",
+        'data-mode="store"',
+        'data-mode="site"',
+        'data-mode="brand"',
+        'data-mode="growth"',
+        'data-mode="app"',
     )
-    positions = [source.find(marker) for marker in expected_order]
+    positions = [template.find(marker) for marker in expected_order]
     assert all(position >= 0 for position in positions)
     assert positions == sorted(positions)
-    assert "PRIMARY_FAMILIES.length" in source
-    assert "href:'custom-systems.html'" in source
-    assert "custom-systems.html#solutions" in source
-    assert "custom-systems.html#apps" not in source
-    assert "custom-systems.html#automation" not in source
-    assert "ستة محاور" not in source
-    assert "mode:'auto', index:'06'" not in source
+    assert template.count('class="service-item') == 5
+    assert "{% url 'public_preview:custom-systems' %}" in template
+
+    # Runtime enhances server-rendered taxonomy; it no longer owns route content.
+    assert "PRIMARY_FAMILIES" not in experience
+    assert ".html" not in experience
+    assert "innerHTML" not in experience
+    assert "initPrimaryCinemaNavigation" in experience
+    assert "initFastDiscovery" in experience
 
 
 def test_browser_qa_validates_semantic_services_count_not_legacy_six():
@@ -673,6 +676,7 @@ def test_services_page_uses_semantic_icons_and_connected_faq_controls():
 def test_service_style_overrides_preserve_the_shared_shell_and_hero_roles():
     from apps.public_preview.template_contract import page_parent
 
+    base = _read_source(BASE_TEMPLATE)
     ecommerce = _read_source("templates/public_preview/pages/ecommerce.html")
     product = _read_source(PRODUCT_PAGE_TEMPLATE)
     typography = _read_source(TYPOGRAPHY_SYSTEM)
@@ -684,9 +688,10 @@ def test_service_style_overrides_preserve_the_shared_shell_and_hero_roles():
         "templates/" + page_parent("product-page-optimization.html")
     )
 
+    assert base.count("css/ibtikar-shell.css") == 1
     for effective_source in (ecommerce_family + "\n" + ecommerce, product_family + "\n" + product):
         assert effective_source.count("pages/inner.css") == 1
-        assert effective_source.count("css/ibtikar-shell.css") == 1
+        assert "css/ibtikar-shell.css" not in effective_source
 
     assert typography.count(".svc-hero-copy,") >= 2
 
