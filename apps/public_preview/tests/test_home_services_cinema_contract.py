@@ -1,11 +1,6 @@
-from pathlib import Path
-
-
-ROOT = Path(__file__).resolve().parents[3]
-
-
 def _read(relative_path):
-    return (ROOT / relative_path).read_text(encoding="utf-8")
+    with open(relative_path, encoding="utf-8") as source_file:
+        return source_file.read()
 
 
 def test_home_solutions_services_cinema_is_server_rendered_and_has_five_scenes():
