@@ -1,0 +1,9 @@
+/* Production QA safeguards for the approved homepage.
+   Keep one announcement and one skip-link only; no layout redesign. */
+body.source-home[data-page="index"] > .announcement{
+  display:none!important;
+}
+
+body.source-home[data-page="index"] > .skip-link{
+  display:none!important;
+}

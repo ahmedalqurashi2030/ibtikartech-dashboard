@@ -1,0 +1,23 @@
+/* Article/utility completion: logical-property and small-screen safeguards. */
+body:is(
+  [data-page="article-store-launch"],
+  [data-page="article-product-page"],
+  [data-page="article-store-redesign"]
+) .article-step::before{
+  inset-inline-start:0!important;
+  inset-inline-end:auto!important;
+}
+
+/* Keep article navigation and copy action usable at 320px without overflow. */
+@media(max-width:380px){
+  body:is(
+    [data-page="article-store-launch"],
+    [data-page="article-product-page"],
+    [data-page="article-store-redesign"]
+  ) .article-toc a{max-width:78vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body:is(
+    [data-page="article-store-launch"],
+    [data-page="article-product-page"],
+    [data-page="article-store-redesign"]
+  ) .copy-link{width:100%}
+}
