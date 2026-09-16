@@ -1,0 +1,13 @@
+/* Ibtikar Tech — continuous-flow bootstrap.
+ * The complete ambient section-transition treatment is loaded after window load
+ * from continuous-flow-deferred.css. Structural page styles remain independent
+ * so delaying this decorative layer cannot hide or block content. */
+:root{
+  --ibt-flow-base:var(--ibt-bg,var(--bg,#070b18));
+  --ibt-flow-soft:var(--ibt-bg-soft,var(--bg-soft,#0d1428));
+  --ibt-flow-text:var(--ibt-text,var(--text,#f8fafc));
+  --ibt-flow-cyan:var(--ibt-cyan,var(--cyan,#10c8e8));
+  --ibt-flow-blue:var(--ibt-blue,var(--blue,#4f7df3));
+  --ibt-flow-purple:var(--ibt-purple,var(--purple,#7c3aed));
+  --ibt-flow-pink:var(--ibt-pink,var(--pink,#ec4899));
+}
