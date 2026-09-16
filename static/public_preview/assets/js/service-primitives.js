@@ -8,7 +8,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const initInlineNavigation = (root) => {
-    const links = [...root.querySelectorAll('.service-page-nav a, .service-page-nav a, .commerce-category-nav a')]
+    const links = [...root.querySelectorAll('.service-page-nav a, .commerce-category-nav a')]
       .filter((link) => link.hash && link.origin === window.location.origin && link.pathname === window.location.pathname);
     if (!links.length || !('IntersectionObserver' in window)) return;
 

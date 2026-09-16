@@ -183,7 +183,7 @@ def test_conversion_events_are_bound_to_actions_and_success():
     assert 'data-analytics="inquiry_submitted"' not in contact
     assert contact.count('data-success-event="inquiry_submitted"') == 1
     assert contact.count('data-analytics="quote_request"') == 0
-    assert home.count('data-analytics="quote_request"') == 6
+    assert home.count('data-analytics="quote_request"') == 5
     assert services.count('data-analytics="quote_request"') == 2
     assert tharaa.count('data-analytics="quote_request"') == 2
 
@@ -717,6 +717,9 @@ def test_platform_pilots_share_accessible_touch_and_preview_contracts():
     home = _read_source("templates/public_preview/pages/index.html")
     page_shell = _read_source("static/public_preview/assets/js/page-shell.js")
     home_runtime = _read_source("static/public_preview/assets/js/home-enhancements.js")
+    home_experience = _read_source(
+        "static/public_preview/assets/js/home-experience-v2.js"
+    )
     strategy_runtime = _read_source(
         "static/public_preview/assets/js/strategy-enhancements.js"
     )
@@ -735,5 +738,18 @@ def test_platform_pilots_share_accessible_touch_and_preview_contracts():
     assert "tab.setAttribute('aria-controls','v4StudioScreen')" in tharaa_runtime
     assert "['ArrowRight','ArrowLeft','Home','End']" in tharaa_runtime
     assert "ensureStylesheet" not in page_shell
+    assert "home-enhancements.js" not in page_shell
+    assert "enhanceServicesSlider();" not in home_experience
     assert "function ensureCss()" not in home_runtime
     assert "function ensureCss()" not in strategy_runtime
+
+
+def test_home_services_keeps_the_cinematic_stage_on_mobile_and_reduced_motion():
+    home_styles = _read_source(
+        "static/public_preview/assets/css/pages/source-home.css"
+    )
+
+    assert ".services-cinema{height:520svh;min-height:3600px" in home_styles
+    assert ".services-cinema__stage{display:block;position:sticky;top:0;height:100svh" in home_styles
+    assert "html.no-immersive-motion .services-cinema__stage{display:block" in home_styles
+    assert ".services-cinema__stage{display:none}.services-mobile-deck{display:block}" not in home_styles

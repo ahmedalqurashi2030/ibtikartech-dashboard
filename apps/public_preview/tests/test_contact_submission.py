@@ -88,7 +88,7 @@ def test_home_service_first_cinematic_order_and_tharaa_direct_purchase(settings)
 
 def test_unique_conversion_pages_keep_explicit_quote_measurement(settings):
     pages = {
-        "index.html": 6,
+        "index.html": 5,
         "services.html": 2,
         "tharaa.html": 2,
     }
@@ -101,4 +101,3 @@ def test_unique_conversion_pages_keep_explicit_quote_measurement(settings):
     contact = (pages_dir / "contact.html").read_text(encoding="utf-8")
     assert 'data-analytics="inquiry_submitted"' not in contact
     assert contact.count('data-success-event="inquiry_submitted"') == 1
-

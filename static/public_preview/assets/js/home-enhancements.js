@@ -212,7 +212,6 @@
     if (!main || document.body.dataset.strategyHomeClean === 'true') return;
 
     const needs = sectionOf($('.needs-grid', main));
-    const tharaa = sectionOf($('.tharaa-section, #tharaa, .thx', main));
     const faq = sectionOf($('.faq-grid', main));
 
     document.body.dataset.strategyHomeClean = 'true';
@@ -240,16 +239,6 @@
     repairHomeServices(main);
     repairHomeContact();
     repairHomeEditorial();
-
-    if (tharaa && !document.querySelector('[data-strategy-product-context]')) {
-      tharaa.classList.add('strategy-existing-section', 'strategy-existing-section--product');
-      const productLabel = html(`
-        <div class="strategy-product-context" data-strategy-product-context>
-          <div><span class="strategy-kicker">ORIGINAL PRODUCT</span><strong>ثيم ثراء — منتج من ابتكار تك لمتاجر سلة.</strong><p>ثيم يركز على الهوية وتجربة المنتج والجوال للمتاجر التي تعتمد على الصورة والعرض الراقي.</p></div>
-          <div class="strategy-actions">${action('tharaa.html','استكشف ثيم ثراء',true)}${action('portfolio.html#tharaa-case','دراسة حالة ثراء')}</div>
-        </div>`);
-      insertBefore(tharaa, productLabel);
-    }
 
     if (faq) faq.classList.add('strategy-existing-section', 'strategy-existing-section--faq');
   }

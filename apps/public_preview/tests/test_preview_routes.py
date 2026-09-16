@@ -288,12 +288,18 @@ def test_page_sections_are_inline_not_component_includes():
     assert "{% include " not in combined
 
 
-def test_homepage_content_leads_with_goals_proof_and_scope():
+def test_homepage_keeps_scope_without_injected_router_or_proof_band():
     source = _page_source("index.html")
 
-    assert 'id="goals"' in source
-    assert "ما النتيجة التي تحتاجها الآن؟" in source
-    assert "ثراء: ثيم منشور لمتاجر سلة" in source
+    assert 'id="goals"' not in source
+    assert "ما النتيجة التي تحتاجها الآن؟" not in source
+    assert "home-proof-band" not in source
+    assert "continuous-flow.css" not in source
+    assert '<div class="container">\n<section aria-label="الحلول والخدمات الرقمية في ابتكار تك" class="services-cinema" id="services">' in source
+    assert '<div class="services-cinema__heading" id="servicesHeading">' in source
+    assert "SOLUTIONS &amp; SERVICES / 01—05" in source
+    assert "خمس فئات واضحة" in source
+    assert '<h2>اختر المجال.<span>ونحن نضبط النطاق.</span></h2>' in source
     assert "01 / DISCOVER" in source
     assert "نفهم الهدف والسياق" in source
 
@@ -357,16 +363,17 @@ def test_service_category_pages_use_decision_path_contract():
         assert 'class="route-grid"' not in source
 
 
-def test_non_commerce_service_categories_offer_local_section_navigation():
+def test_non_commerce_service_categories_do_not_render_local_section_navigation():
     for page_name in NON_COMMERCE_CATEGORY_PAGES:
         source = _page_source(page_name)
-        assert 'class="service-page-nav"' in source
-        assert 'href="#start"' in source
-        assert 'href="#solutions"' in source
-        assert 'href="#approach"' in source
-        assert 'href="#deliverables"' in source
-        assert 'href="#faq"' in source
-        assert 'href="#related"' in source
+        assert 'class="service-page-nav"' not in source
+        assert 'class="service-page-nav commerce-category-nav"' not in source
+        assert 'href="#start"' not in source
+        assert 'href="#solutions"' not in source
+        assert 'href="#approach"' not in source
+        assert 'href="#deliverables"' not in source
+        assert 'href="#faq"' not in source
+        assert 'href="#related"' not in source
 
 
 def test_service_category_pages_load_shared_cinematic_runtime():

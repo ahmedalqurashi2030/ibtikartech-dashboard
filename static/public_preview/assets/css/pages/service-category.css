@@ -13,47 +13,6 @@
   min-height: min(740px, 88svh);
 }
 
-.service-page-nav {
-  position: sticky;
-  top: 88px;
-  z-index: 24;
-  padding: 12px 0;
-  border-block: 1px solid var(--ibt-border);
-  background: color-mix(in srgb, var(--ibt-bg) 88%, transparent);
-  backdrop-filter: blur(18px);
-}
-
-.service-page-nav__inner {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.service-page-nav__inner::-webkit-scrollbar { display: none; }
-
-.service-page-nav a {
-  flex: 0 0 auto;
-  min-height: 44px;
-  padding: 8px 13px;
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--ibt-border);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--ibt-surface) 90%, transparent);
-  color: var(--ibt-muted);
-  font-size: var(--ibt-text-xs, 12px);
-  font-weight: 850;
-  transition: color var(--ibt-duration), border-color var(--ibt-duration), background var(--ibt-duration);
-}
-
-.service-page-nav a:hover,
-.service-page-nav a:focus-visible {
-  color: var(--ibt-text);
-  border-color: color-mix(in srgb, var(--service-accent) 46%, var(--ibt-border));
-  background: color-mix(in srgb, var(--service-accent) 9%, var(--ibt-surface));
-}
-
 /* Shared decision FAQ for category pages. Native details keep the content usable without JS. */
 .service-category-faq {
   display: grid;
