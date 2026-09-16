@@ -4,15 +4,20 @@
 <title>{% block service_page_title %}{% endblock %}</title>
 <meta name="description" content="{% block service_meta_description %}{% endblock %}">
 {% block service_styles %}
-  {% block service_family_styles %}
-  <!-- Canonical service-detail family owners. Foundation and shell remain owned by base.html. -->
+  {% block service_family_prelude_styles %}
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css" data-service-family-style="inner">
+  {% endblock %}
+  {% block service_page_styles_before_family %}{% endblock %}
+  {% block service_family_core_styles %}
+  <!-- Canonical service-detail family owners. Foundation and shell remain owned by base.html. -->
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css" data-service-family-style="commerce-service-detail">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css" data-service-family-style="continuous-flow">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css" data-service-family-style="frontend-final">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css" data-service-family-style="launch-readiness">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css" data-service-family-style="section-layout-refinement-v2">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css" data-service-family-style="service-related-cards">
+  {% endblock %}
+  {% block service_family_primitives_styles %}
   <link rel="stylesheet" href="/static/public_preview/assets/css/service-primitives.css?v=20260902" data-service-family-style="service-primitives">
   {% endblock %}
   {% block service_page_styles %}{% endblock %}
@@ -53,14 +58,19 @@
 {% block service_after_main %}{% endblock %}
 
 {% block service_scripts %}
-  {% block service_family_scripts %}
+  {% block service_family_core_scripts %}
   <script src="/static/public_preview/assets/js/page-shell.js" defer data-service-family-script="page-shell"></script>
   <script src="/static/public_preview/assets/js/site-config.js" defer data-service-family-script="site-config"></script>
   <script src="/static/public_preview/assets/js/modules/analytics.js" defer data-service-family-script="analytics"></script>
   <script src="/static/public_preview/assets/js/ibtikar-shell.js" defer data-service-family-script="ibtikar-shell"></script>
   <script src="/static/public_preview/assets/js/app.js" defer data-service-family-script="app"></script>
   <script src="/static/public_preview/assets/js/commerce-service-detail.js" defer data-service-family-script="commerce-service-detail"></script>
+  {% endblock %}
+  {% block service_page_scripts_before_tail %}{% endblock %}
+  {% block service_family_tail_scripts %}
   <script src="/static/public_preview/assets/js/service-related-cards.js" defer data-service-family-script="service-related-cards"></script>
+  {% endblock %}
+  {% block service_family_primitives_scripts %}
   <script src="/static/public_preview/assets/js/service-primitives.js?v=20260902" defer data-service-family-script="service-primitives"></script>
   {% endblock %}
   {% block service_page_scripts %}{% endblock %}
