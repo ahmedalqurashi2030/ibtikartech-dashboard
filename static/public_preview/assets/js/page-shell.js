@@ -48,6 +48,7 @@
     ['/ecommerce/#subservices', '/ecommerce/#solutions'],
     ['/websites/#capabilities', '/websites/#solutions'],
     ['/custom-systems/#apps', '/custom-systems/#solutions'],
+    ['/custom-systems/#automation', '/custom-systems/#solutions'],
   ]);
 
   const productionOrigin = 'https://ibtikartech.co';
