@@ -76,8 +76,29 @@ jobs:
       - name: Verify service category cinema on desktop and mobile
         env:
           BASE_URL: http://127.0.0.1:8000
-          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
-        run: node scripts/service_category_cinematic_qa.cjs
+          REAL_CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        shell: bash
+        run: |
+          # Chrome 153 can expose no debuggable page for an initial about:blank
+          # in headless mode. Preserve the QA assertions, but launch its browser
+          # on a real local route so CDP always has a page target to inspect.
+          chrome_wrapper="$RUNNER_TEMP/ibtikar-service-cinema-chrome"
+          cat > "$chrome_wrapper" <<'EOF'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          args=()
+          for arg in "$@"; do
+            if [[ "$arg" == "about:blank" ]]; then
+              args+=("${BASE_URL%/}/ecommerce/")
+            else
+              args+=("$arg")
+            fi
+          done
+          exec "$REAL_CHROME_PATH" "${args[@]}"
+          EOF
+          chmod +x "$chrome_wrapper"
+          export CHROME_PATH="$chrome_wrapper"
+          node scripts/service_category_cinematic_qa.cjs
 
       - name: Verify the mobile cinematic journey scene by scene
         env:
