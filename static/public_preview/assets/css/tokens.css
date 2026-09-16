@@ -1,9 +1,4 @@
 :root {
-  color-scheme: light;
-  --ibt-focus-color: #2856c5;
-  --ibt-link: #2856c5;
-  --ibt-action-gradient: linear-gradient(135deg, #2856c5, #5146b8);
-  --ibt-heading-gradient: linear-gradient(110deg, #2856c5, #5146b8);
   --ibt-navy: #0b1026;
   --ibt-navy-2: #111a3d;
   --ibt-bg: #ffffff;
@@ -23,46 +18,39 @@
   --ibt-error: #ef4444;
   --ibt-info: #4f7df3;
   --ibt-gradient: linear-gradient(135deg, var(--ibt-cyan) 0%, var(--ibt-blue) 34%, var(--ibt-purple) 67%, var(--ibt-pink) 100%);
+  /* Action gradient keeps the brand hue progression while using darker stops
+   * so white button copy does not cross the low-contrast cyan/pink values of
+   * the decorative brand gradient. */
+  --ibt-gradient-action: linear-gradient(135deg, #08728a 0%, #315bb2 34%, #5b21b6 67%, #a11d61 100%);
   --ibt-gradient-dark: linear-gradient(145deg, #07102b 0%, #101848 45%, #28103e 100%);
-
-  /* Layout and spacing primitives. Keep page families aligned to one rhythm. */
   --ibt-container: 1180px;
   --ibt-container-wide: 1240px;
-  --ibt-container-reading: 760px;
-  --ibt-content-measure: 68ch;
-  --ibt-page-gutter: clamp(16px, 3vw, 24px);
-  --ibt-section-space: clamp(56px, 6vw, 88px);
-  --ibt-section-space-compact: clamp(48px, 5vw, 64px);
-  --ibt-grid-gap: clamp(16px, 2vw, 24px);
-  --ibt-card-padding: clamp(20px, 2.4vw, 28px);
-
-  --ibt-container-sm: 960px;
-  --ibt-section-space-xs: 24px;
-  --ibt-section-space-lg: clamp(72px, 8vw, 112px);
-  --ibt-grid-gap-sm: 12px;
-  --ibt-grid-gap-lg: clamp(24px, 4vw, 48px);
-  --ibt-card-padding-sm: 16px;
-  --ibt-card-padding-lg: clamp(24px, 4vw, 40px);
-  --ibt-control-h-sm: 44px;
-  --ibt-control-h-lg: 52px;
-  --ibt-surface-1: var(--ibt-surface);
-  --ibt-surface-2: var(--ibt-bg-soft);
-  --ibt-surface-3: color-mix(in srgb, var(--ibt-text) 5%, var(--ibt-bg-soft));
-  --ibt-border-strong: color-mix(in srgb, var(--ibt-text) 25%, var(--ibt-border));
-  --ibt-type-hero: clamp(32px, 1.5rem + 2.2vw, 56px);
-  --ibt-type-section: clamp(26px, 1.25rem + 1.25vw, 38px);
-  --ibt-type-section-compact: clamp(24px, 1.15rem + 1vw, 32px);
-  --ibt-type-section-small: clamp(22px, 1.1rem + .7vw, 28px);
-  --ibt-type-card: clamp(20px, 1.1rem + .45vw, 24px);
-  --ibt-type-lead: clamp(16px, .95rem + .2vw, 18px);
-  --ibt-type-copy: 1rem;
-
   --ibt-header-h: 72px;
   --ibt-announcement-h: 34px;
   --ibt-target-min: 44px;
-  --ibt-control-h: 48px;
-  --ibt-icon-sm: 18px;
-  --ibt-icon-md: 24px;
+
+  /* Canonical layout / readability primitives.
+   * These preserve the currently approved effective values while moving
+   * ownership into the token layer so page refinements do not invent a
+   * parallel foundation system. */
+  --ibt-gutter: clamp(18px, 3vw, 28px);
+  --ibt-reading: 68ch;
+  --ibt-control-h: 46px;
+
+  /* Canonical cinematic grammar shared by homepage and service categories.
+   * Page families keep their own content and scroll geometry; the visual
+   * theatre, caption surface, hierarchy and orientation cues remain one system. */
+  --ibt-cinema-bg: #050817;
+  --ibt-cinema-bg-soft: #080d20;
+  --ibt-cinema-panel: rgba(5, 10, 27, .76);
+  --ibt-cinema-panel-strong: rgba(8, 15, 36, .88);
+  --ibt-cinema-panel-border: rgba(255, 255, 255, .11);
+  --ibt-cinema-panel-radius: 18px;
+  --ibt-cinema-panel-shadow: 0 20px 52px rgba(0, 0, 0, .28);
+  --ibt-cinema-panel-blur: 16px;
+  --ibt-cinema-copy: #b5c0d6;
+  --ibt-cinema-index: #82eaf8;
+  --ibt-cinema-vignette: rgba(2, 4, 13, .76);
 
   --ibt-space-1: 2px;
   --ibt-space-2: 4px;
@@ -76,20 +64,23 @@
   --ibt-space-10: 80px;
   --ibt-space-11: 96px;
   --ibt-space-12: 128px;
-
   --ibt-radius-sm: 12px;
   --ibt-radius: 18px;
   --ibt-radius-lg: 26px;
   --ibt-radius-xl: 34px;
-  --ibt-radius-card: var(--ibt-radius);
-  --ibt-radius-panel: var(--ibt-radius-lg);
   --ibt-radius-pill: 999px;
+
+  /* Semantic radii used by compact controls/panels. They intentionally keep
+   * the approved visual geometry instead of forcing every component onto one
+   * radius value. */
+  --ibt-radius-control: 10px;
+  --ibt-radius-compact: 16px;
+  --ibt-radius-panel: 22px;
 
   --ibt-shadow-sm: 0 8px 30px rgba(20, 31, 67, .08);
   --ibt-shadow-md: 0 18px 55px rgba(20, 31, 67, .14);
   --ibt-shadow-lg: 0 30px 90px rgba(5, 13, 45, .24);
   --ibt-shadow-glow: 0 0 40px rgba(79, 125, 243, .18);
-
   --ibt-font: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
   --ibt-font-display: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
   --ibt-text-xs: clamp(.72rem, .69rem + .12vw, .78rem);
@@ -99,12 +90,10 @@
   --ibt-text-xl: clamp(1.45rem, 1.18rem + 1vw, 2rem);
   --ibt-text-2xl: clamp(2rem, 1.52rem + 1.9vw, 3.25rem);
   --ibt-text-3xl: clamp(2.7rem, 1.8rem + 3.6vw, 5.5rem);
-
   --ibt-ease: cubic-bezier(.22, 1, .36, 1);
   --ibt-duration-fast: .2s;
-  --ibt-duration: .24s;
-  --ibt-duration-slow: .4s;
-
+  --ibt-duration: .35s;
+  --ibt-duration-slow: .65s;
   --ibt-z-base: 1;
   --ibt-z-dropdown: 100;
   --ibt-z-sticky: 500;
@@ -112,8 +101,10 @@
   --ibt-z-overlay: 2300;
   --ibt-z-modal: 2400;
   --ibt-z-toast: 2500;
+  --ibt-focus-color: color-mix(in srgb, var(--ibt-cyan) 58%, transparent);
+  --ibt-focus-width: 3px;
+  --ibt-focus-offset: 3px;
   --ibt-focus: 0 0 0 3px rgba(16, 200, 232, .28);
-
   --color-bg: var(--ibt-bg);
   --color-bg-soft: var(--ibt-bg-soft);
   --color-surface: var(--ibt-surface);
@@ -146,16 +137,23 @@
 }
 
 html[data-theme="dark"] {
-  color-scheme: dark;
-  --ibt-focus-color: #75d9ef;
-  --ibt-link: #91b3ff;
-  --ibt-heading-gradient: linear-gradient(110deg, #91b3ff, #c4a3ff 55%, #f5a2d4);
   --ibt-bg: #090e20;
   --ibt-bg-soft: #0f162d;
   --ibt-surface: #121a33;
   --ibt-text: #f8fafc;
   --ibt-muted: #a8b1c5;
   --ibt-border: rgba(255, 255, 255, .1);
+  /* The base brand blue is tuned for light surfaces. Dark surfaces need a
+   * slightly lighter semantic blue so 13px navigation/link text clears AA
+   * contrast without changing the action gradient or decorative identity. */
+  --ibt-blue: #678dfb;
+  --ibt-info: #678dfb;
   --ibt-shadow-sm: 0 8px 30px rgba(0, 0, 0, .18);
   --ibt-shadow-md: 0 18px 55px rgba(0, 0, 0, .28);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --ibt-gutter: 16px;
+  }
 }

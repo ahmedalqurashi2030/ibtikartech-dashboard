@@ -1,5 +1,3 @@
-
-
 # Ibtikar Tech V1 — Runbook
 
 This runbook is the canonical operating guide for the Ibtikar Tech platform.

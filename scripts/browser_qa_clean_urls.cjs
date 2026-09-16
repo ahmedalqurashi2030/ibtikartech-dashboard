@@ -193,7 +193,7 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
     const visibleLinks = links.filter(visible);
     const htmlLinks = visibleLinks
       .map((a) => a.getAttribute('href') || '')
-      .filter((href) => /\\.html(?:[?#]|$)/i.test(href));
+      .filter((href) => /\.html(?:[?#]|$)/i.test(href));
     const duplicateIds = [...document.querySelectorAll('[id]')]
       .map((el) => el.id)
       .filter((id, index, all) => id && all.indexOf(id) !== index)
@@ -234,8 +234,9 @@ async function inspectPage(client, route, viewport, runtimeEvents) {
       servicesAxes: document.querySelectorAll('.service-item').length,
       servicesStageText: document.querySelector('#stageCount')?.textContent?.trim() || '',
       servicesCinema: Boolean(document.querySelector('.services-primary-cinema')),
-      relatedServiceHrefs: [...document.querySelectorAll('.service-related-cards .service-related-card__link[href]')]
-        .map((a) => a.getAttribute('href') || ''),
+      relatedServiceHrefs: [...document.querySelectorAll(
+        '.service-related-cards .service-related-card__link[href], #related .related-card[href]'
+      )].map((a) => a.getAttribute('href') || ''),
       todoVisible: document.body.innerText.includes('[TODO:'),
       contactSubmitLabel: document.querySelector('#quote-form button[type="submit"]')?.textContent?.trim() || '',
       robots: document.querySelector('meta[name="robots"]')?.content || '',
@@ -304,7 +305,7 @@ function validate(result, failures, internalLinks) {
     if (metrics.relatedServiceHrefs.length < 2) {
       failures.push(`${prefix}: expected related service cards, found ${metrics.relatedServiceHrefs.length}`);
     }
-    const legacyRelated = metrics.relatedServiceHrefs.filter((href) => /\\.html(?:[?#]|$)/i.test(href));
+    const legacyRelated = metrics.relatedServiceHrefs.filter((href) => /\.html(?:[?#]|$)/i.test(href));
     if (legacyRelated.length) {
       failures.push(`${prefix}: related cards expose .html URLs: ${legacyRelated.join(', ')}`);
     }
@@ -315,8 +316,8 @@ function validate(result, failures, internalLinks) {
   }
 
   if (route === '/contact/') {
-    if (!/noindex/i.test(metrics.robots)) {
-      failures.push(`${prefix}: contact page should remain noindex`);
+    if (/noindex/i.test(metrics.robots)) {
+      failures.push(`${prefix}: contact page must remain indexable`);
     }
     if (metrics.contactSubmitLabel !== 'إرسال طلب المشروع') {
       failures.push(`${prefix}: unexpected contact submit label: ${metrics.contactSubmitLabel}`);
@@ -438,6 +439,7 @@ async function verifyInternalLinks(internalLinks, failures) {
     await wait(350);
     safeRm(profileDir);
   }
+  process.exit(process.exitCode || 0);
 })().catch((error) => {
   console.error(error.stack || error.message);
   process.exit(1);

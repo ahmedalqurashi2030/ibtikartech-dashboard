@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from apps.public_preview.metadata import public_meta_description
+
 
 def _render_service_page(request, template_name: str, page_key: str):
     return render(
@@ -7,6 +9,7 @@ def _render_service_page(request, template_name: str, page_key: str):
         f"public_preview/pages/{template_name}",
         {
             "page_key": page_key,
+            "meta_description": public_meta_description(page_key),
             # Internal compatibility metadata only; never used as a public URL.
             "source_page_name": template_name,
         },

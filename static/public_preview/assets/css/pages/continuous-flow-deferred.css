@@ -1,0 +1,145 @@
+/* Continuous page background system — shared across all public routes.
+   Ordinary sections share one ambient page surface. Immersive/source-owned scenes
+   keep their visual identity and dissolve into that surface at their edges. */
+:root{
+  --ibt-flow-base:var(--ibt-bg,var(--bg,#070b18));
+  --ibt-flow-soft:var(--ibt-bg-soft,var(--bg-soft,#0d1428));
+  --ibt-flow-text:var(--ibt-text,var(--text,#f8fafc));
+  --ibt-flow-cyan:var(--ibt-cyan,var(--cyan,#10c8e8));
+  --ibt-flow-blue:var(--ibt-blue,var(--blue,#4f7df3));
+  --ibt-flow-purple:var(--ibt-purple,var(--purple,#7c3aed));
+  --ibt-flow-pink:var(--ibt-pink,var(--pink,#ec4899));
+  --ibt-flow-edge:rgba(7,11,24,.72);
+}
+
+body.ibt-continuous-flow{
+  background-color:var(--ibt-flow-base)!important;
+  background-image:
+    radial-gradient(ellipse 58rem 42rem at 8% 6%,color-mix(in srgb,var(--ibt-flow-cyan) 10%,transparent),transparent 69%),
+    radial-gradient(ellipse 64rem 46rem at 94% 24%,color-mix(in srgb,var(--ibt-flow-purple) 11%,transparent),transparent 70%),
+    radial-gradient(ellipse 60rem 44rem at 5% 49%,color-mix(in srgb,var(--ibt-flow-blue) 8%,transparent),transparent 72%),
+    radial-gradient(ellipse 66rem 48rem at 95% 72%,color-mix(in srgb,var(--ibt-flow-pink) 9%,transparent),transparent 72%),
+    radial-gradient(ellipse 60rem 42rem at 14% 95%,color-mix(in srgb,var(--ibt-flow-purple) 8%,transparent),transparent 72%),
+    linear-gradient(180deg,var(--ibt-flow-base),color-mix(in srgb,var(--ibt-flow-soft) 42%,var(--ibt-flow-base)) 48%,var(--ibt-flow-base));
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+}
+
+html:not([data-theme="dark"]) body.ibt-continuous-flow,
+html[data-theme="light"] body.ibt-continuous-flow{
+  --ibt-flow-edge:rgba(247,249,253,.76);
+  background-image:
+    radial-gradient(ellipse 58rem 42rem at 8% 6%,rgba(16,200,232,.075),transparent 69%),
+    radial-gradient(ellipse 64rem 46rem at 94% 24%,rgba(124,58,237,.065),transparent 70%),
+    radial-gradient(ellipse 60rem 44rem at 5% 49%,rgba(79,125,243,.055),transparent 72%),
+    radial-gradient(ellipse 66rem 48rem at 95% 72%,rgba(236,72,153,.055),transparent 72%),
+    radial-gradient(ellipse 60rem 42rem at 14% 95%,rgba(124,58,237,.05),transparent 72%),
+    linear-gradient(180deg,var(--ibt-flow-base),color-mix(in srgb,var(--ibt-flow-soft) 34%,var(--ibt-flow-base)) 48%,var(--ibt-flow-base));
+}
+
+body.ibt-continuous-flow main{
+  position:relative;
+  isolation:isolate;
+  background:transparent!important;
+}
+
+/* Top-level editorial sections no longer read as isolated full-width blocks. */
+body.ibt-continuous-flow main > .ibt-flow-section--blend{
+  position:relative;
+  background:transparent!important;
+  background-color:transparent!important;
+  border-block-color:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Keep component surfaces/cards intact; only the section canvas is unified. */
+body.ibt-continuous-flow main > .ibt-flow-section--blend > .container,
+body.ibt-continuous-flow main > .ibt-flow-section--blend > .strategy-shell,
+body.ibt-continuous-flow main > .ibt-flow-section--blend > .platform-container,
+body.ibt-continuous-flow main > .ibt-flow-section--blend > .commerce-shell{
+  position:relative;
+  z-index:1;
+}
+
+/* Soft ambient transition placed between ordinary sections. */
+.ibt-flow-transition{
+  position:absolute;
+  top:-112px;
+  right:0;
+  left:0;
+  height:224px;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+  opacity:.62;
+}
+.ibt-flow-transition::before{
+  content:"";
+  position:absolute;
+  inset:18px -10%;
+  background:
+    radial-gradient(ellipse at 26% 50%,color-mix(in srgb,var(--ibt-page-accent,var(--ibt-flow-cyan)) 10%,transparent),transparent 35%),
+    radial-gradient(ellipse at 74% 50%,color-mix(in srgb,var(--ibt-page-accent-2,var(--ibt-flow-purple)) 8%,transparent),transparent 38%),
+    linear-gradient(180deg,transparent,var(--ibt-flow-base) 48%,transparent);
+  filter:blur(18px);
+}
+
+/* Source-owned / immersive scenes retain their own art direction. A soft edge wash
+   prevents a hard rectangular cut against the global continuous surface. */
+body.ibt-continuous-flow main > .ibt-flow-section--immersive{
+  position:relative;
+  isolation:isolate;
+}
+.ibt-flow-edge{
+  position:absolute;
+  z-index:80;
+  right:0;
+  left:0;
+  height:clamp(72px,9vw,150px);
+  pointer-events:none;
+  opacity:.8;
+}
+.ibt-flow-edge--top{
+  top:0;
+  background:linear-gradient(to bottom,var(--ibt-flow-edge),transparent 92%);
+}
+.ibt-flow-edge--bottom{
+  bottom:0;
+  background:linear-gradient(to top,var(--ibt-flow-edge),transparent 92%);
+}
+
+/* The glass header remains legible without reintroducing a full section wall. */
+body.ibt-continuous-flow .ibt-shell-header{
+  background-color:color-mix(in srgb,var(--ibt-flow-base) 82%,transparent);
+}
+body.ibt-continuous-flow .platform-section--soft,
+body.ibt-continuous-flow .strategy-layer,
+body.ibt-continuous-flow .results-strip{
+  background-color:transparent!important;
+}
+
+/* Footer is a final surface, but its top dissolves into the page rather than cutting. */
+body.ibt-continuous-flow .ibt-shell-footer{
+  position:relative;
+  background:
+    linear-gradient(to bottom,transparent 0,color-mix(in srgb,var(--ibt-flow-base) 92%,#030612) 110px),
+    color-mix(in srgb,var(--ibt-flow-base) 94%,#030612)!important;
+  border-top-color:transparent!important;
+  padding-top:clamp(90px,9vw,140px);
+  margin-top:-46px;
+}
+
+@media(max-width:820px){
+  body.ibt-continuous-flow{background-image:
+    radial-gradient(ellipse 36rem 30rem at 0 7%,color-mix(in srgb,var(--ibt-flow-cyan) 9%,transparent),transparent 70%),
+    radial-gradient(ellipse 36rem 31rem at 100% 35%,color-mix(in srgb,var(--ibt-flow-purple) 9%,transparent),transparent 72%),
+    radial-gradient(ellipse 34rem 30rem at 4% 68%,color-mix(in srgb,var(--ibt-flow-pink) 7%,transparent),transparent 72%),
+    linear-gradient(180deg,var(--ibt-flow-base),var(--ibt-flow-soft) 52%,var(--ibt-flow-base));}
+  .ibt-flow-transition{top:-78px;height:156px;opacity:.48}
+  .ibt-flow-edge{height:80px;opacity:.62}
+  body.ibt-continuous-flow .ibt-shell-footer{padding-top:86px;margin-top:-30px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ibt-flow-transition::before{filter:none}
+}

@@ -1,0 +1,7 @@
+{% load static %}
+{# Route-owned styles that must be discoverable during HTML parsing. #}
+{% if page_key == "services" %}
+<link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/services-experience.css' %}" data-route-style="services-experience" data-services-experience="true">
+{% elif page_key == "ecommerce" %}
+<link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/ecommerce-experience-lab.css' %}" data-route-style="ecommerce-experience" data-ecommerce-experience="true">
+{% endif %}

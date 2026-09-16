@@ -1,0 +1,5 @@
+/* Ibtikar Tech — service-cinema bootstrap.
+ * Category heroes and proof content remain fully styled by their source family.
+ * The scroll-driven path theatre loads after window load from
+ * service-cinema-deferred.css before users reach the cinematic section. */
+.service-paths-section{position:relative}

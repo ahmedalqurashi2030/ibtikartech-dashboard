@@ -8,53 +8,42 @@
   var header = section.querySelector(".service-paths-header");
   var help = section.querySelector(".service-paths-help");
   var cards = Array.prototype.slice.call(section.querySelectorAll(".service-path-card"));
-  if (!stage || !header || !cards.length) return;
+  var chrome = document.querySelector("[data-service-cinema-chrome]");
+  if (!stage || !header || !cards.length || !chrome) return;
 
   var bodyClass = document.body.className;
   var variants = [
-    { match: "category-ecommerce", label: "ECOMMERCE PATHS", accent: "#10c8e8", accent2: "#ec4899", scene: "commerce" },
-    { match: "category-websites", label: "WEB PATHS", accent: "#10c8e8", accent2: "#4f7df3", scene: "browser" },
-    { match: "category-brand", label: "BRAND & CONTENT", accent: "#9c6bff", accent2: "#ec4899", scene: "identity" },
-    { match: "category-growth", label: "GROWTH PATHS", accent: "#11c7e7", accent2: "#20c98b", scene: "growth" },
-    { match: "category-systems", label: "SYSTEMS PATHS", accent: "#4f7df3", accent2: "#a855f7", scene: "systems" }
+    { match: "category-ecommerce", accent: "#10c8e8", accent2: "#ec4899", scene: "commerce" },
+    { match: "category-websites", accent: "#10c8e8", accent2: "#4f7df3", scene: "browser" },
+    { match: "category-brand", accent: "#9c6bff", accent2: "#ec4899", scene: "identity" },
+    { match: "category-growth", accent: "#11c7e7", accent2: "#20c98b", scene: "growth" },
+    { match: "category-systems", accent: "#4f7df3", accent2: "#a855f7", scene: "systems" }
   ];
   var variant = variants.filter(function (item) { return bodyClass.indexOf(item.match) !== -1; })[0] || variants[0];
   var count = cards.length;
-  var compactViewport = window.matchMedia("(max-width: 999px)");
-  var grid = section.querySelector(".service-paths-grid");
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (reducedMotion.matches) return;
+
+  var canvasLayer = chrome.querySelector(".service-cinema__canvas-layer");
+  var top = chrome.querySelector(".service-cinema__top");
+  var rail = chrome.querySelector(".service-cinema__rail");
+  var cue = chrome.querySelector(".service-cinema__cue");
+  var reading = chrome.querySelector(".service-cinema__reading");
+  var countLabel = chrome.querySelector("[data-service-cinema-count]");
+  var renderedSteps = Array.prototype.slice.call(chrome.querySelectorAll("[data-service-cinema-step]"));
+  if (!canvasLayer || !top || !rail || !cue || !reading || renderedSteps.length < count) return;
+
+  if (countLabel) countLabel.textContent = String(count).padStart(2, "0");
+  renderedSteps.forEach(function (step, index) { step.hidden = index >= count; });
+  var steps = renderedSteps.slice(0, count);
 
   section.dataset.cinemaInitialized = "true";
   section.dataset.count = String(count);
   section.style.setProperty("--service-path-count", String(count));
 
-  var canvasLayer = document.createElement("div");
-  canvasLayer.className = "service-cinema__canvas-layer";
-  canvasLayer.setAttribute("aria-hidden", "true");
-  canvasLayer.innerHTML = '<canvas class="service-cinema__canvas"></canvas><div class="service-cinema__wash"></div><div class="service-cinema__vignette"></div><div class="service-cinema__grain"></div>';
-
-  var top = document.createElement("div");
-  top.className = "service-cinema__top";
-  top.setAttribute("aria-hidden", "true");
-  top.innerHTML = '<span class="service-cinema__index">' + variant.label + ' / 01—' + String(count).padStart(2, "0") + "</span>";
-
-  var rail = document.createElement("div");
-  rail.className = "service-cinema__rail";
-  rail.setAttribute("aria-hidden", "true");
-  rail.innerHTML = '<div class="service-cinema__rail-line"><span></span></div><div class="service-cinema__rail-steps">' + cards.map(function (_, index) {
-    return '<span class="service-cinema__rail-step">' + String(index + 1).padStart(2, "0") + "</span>";
-  }).join("") + "</div>";
-
-  var cue = document.createElement("div");
-  cue.className = "service-cinema__cue";
-  cue.setAttribute("aria-hidden", "true");
-  cue.innerHTML = "<i></i><span>مرّر لاستكشاف المسارات</span><i></i>";
-
-  stage.insertBefore(canvasLayer, stage.firstChild);
+  chrome.hidden = false;
+  stage.insertBefore(chrome, stage.firstChild);
   if (help && help.parentElement === header) stage.insertBefore(help, header.nextSibling);
-  stage.appendChild(top);
-  stage.appendChild(rail);
-  stage.appendChild(cue);
   section.classList.add("is-cinematic-ready");
   cards.forEach(function (card) { card.classList.remove("reveal"); });
   header.classList.remove("reveal");
@@ -63,7 +52,6 @@
   var context = canvas && canvas.getContext ? canvas.getContext("2d") : null;
   var ctx = context;
   var railFill = rail.querySelector(".service-cinema__rail-line span");
-  var steps = Array.prototype.slice.call(rail.querySelectorAll(".service-cinema__rail-step"));
   var width = 0;
   var height = 0;
   var ratio = 1;
@@ -267,9 +255,6 @@
   ctx.restore();
  }
 
-
-
-
  function drawPositioningOrbit(intensity){
   ctx.save();ctx.globalAlpha=intensity;
   const cx=width*.22,cy=height*.47;
@@ -426,7 +411,7 @@
  }
 
   function draw() {
-    if (!context || !width || !height ) return;
+    if (!context || !width || !height || reducedMotion.matches) return;
     context.clearRect(0, 0, width, height);
     var background = context.createLinearGradient(0, 0, width, height);
     background.addColorStop(0, "#030611");
@@ -461,8 +446,8 @@
 
   function update() {
     frameRequested = false;
-    section.classList.toggle("is-swipe-ready", compactViewport.matches && !section.classList.contains("is-reading"));
-    if (compactViewport.matches || reducedMotion.matches || section.classList.contains("is-reading")) {
+    var isMobile = window.innerWidth <= 760;
+    if (reducedMotion.matches || section.classList.contains("is-reading")) {
       section.classList.remove("is-cinematic-ready");
       setVisible(header, true);
       if (help) setVisible(help, true);
@@ -488,6 +473,35 @@
     var scrollable = Math.max(1, section.offsetHeight - stageHeight);
     var topOffset = parseFloat(getComputedStyle(section).getPropertyValue("--service-cinema-top")) || 0;
     progress = clamp((topOffset - rect.top) / scrollable, 0, 1);
+
+    if (isMobile) {
+      var mobileStep = Math.floor(progress * count);
+      var mobileIndex = Math.min(count - 1, mobileStep);
+      activeIndex = mobileIndex;
+      header.style.opacity = progress < .05 ? "1" : "0";
+      header.style.transform = progress < .05 ? "translateY(0)" : "translateY(-18px)";
+      setVisible(header, progress < .05);
+      cards.forEach(function (card, index) {
+        var isActive = index === mobileIndex;
+        card.classList.toggle("is-active", isActive);
+        card.style.opacity = isActive ? "1" : "0";
+        card.style.transform = isActive ? "translateY(0)" : "translateY(24px)";
+        card.style.pointerEvents = isActive ? "auto" : "none";
+        setVisible(card, isActive);
+      });
+      if (help) {
+        var helpOpacity = ease(clamp((progress - .85) / .10, 0, 1));
+        help.style.opacity = String(helpOpacity);
+        help.style.transform = "translateY(" + ((1 - helpOpacity) * 18) + "px)";
+        help.style.pointerEvents = helpOpacity >= .5 ? "auto" : "none";
+        setVisible(help, helpOpacity >= .5);
+      }
+      railFill.style.height = (progress * 100) + "%";
+      steps.forEach(function (item, index) { item.classList.toggle("is-active", index === mobileIndex); });
+      cue.style.opacity = "0";
+      draw();
+      return;
+    }
 
     // Hold one readable caption at a time; never overlap Arabic text at a stopped scroll position.
     var scaled = clamp((progress - .08) / .82, 0, 1) * count;
@@ -526,10 +540,6 @@
     window.requestAnimationFrame(update);
   }
 
-  var reading = document.createElement("button");
-  reading.type = "button";
-  reading.className = "service-cinema__reading";
-  reading.textContent = "عرض جميع المسارات";
   reading.addEventListener("click", function () {
     section.classList.add("is-reading");
     update();
@@ -538,9 +548,8 @@
     header.focus({preventScroll: true});
     section.scrollIntoView({block: "start", behavior: "instant"});
   });
-  stage.insertBefore(reading, stage.firstChild);
   section.addEventListener("focusin", function (event) {
-    if (compactViewport.matches || event.target === reading || section.classList.contains("is-reading")) return;
+    if (event.target === reading || section.classList.contains("is-reading")) return;
     section.classList.add("is-reading");
     update();
   });
@@ -563,76 +572,6 @@
   window.addEventListener("pageshow", requestUpdate);
   if (reducedMotion.addEventListener) reducedMotion.addEventListener("change", function () { update(); resizeCanvas(); });
   if (window.ResizeObserver) new ResizeObserver(resizeCanvas).observe(stage);
-  // Reuse the scene renderer once per card. Mobile uses native scrolling,
-  // independent captions and static decorative previews, never a gesture loop.
-  var controls = document.createElement("div");
-  controls.className = "service-paths-controls";
-  var previous = document.createElement("button");
-  var next = document.createElement("button");
-  var status = document.createElement("span");
-  previous.type = next.type = "button";
-  previous.textContent = "السابق";
-  next.textContent = "التالي";
-  status.setAttribute("aria-live", "polite");
-  controls.append(previous, status, next);
-  grid.after(controls);
-  var currentCard = 0;
-  function updateCardPosition() {
-    var bounds = grid.getBoundingClientRect();
-    var nearest = 0, distance = Infinity;
-    cards.forEach(function (card, index) {
-      var delta = Math.abs(bounds.right - card.getBoundingClientRect().right);
-      if (delta < distance) { nearest = index; distance = delta; }
-    });
-    currentCard = nearest;
-    previous.disabled = nearest === 0;
-    next.disabled = nearest === count - 1;
-    var label = "المسار " + (nearest + 1) + " من " + count;
-    if (status.textContent !== label) status.textContent = label;
-  }
-  function moveCard(step) {
-    var card = cards[clamp(currentCard + step, 0, count - 1)];
-    var bounds = grid.getBoundingClientRect();
-    grid.scrollBy({left: card.getBoundingClientRect().right - bounds.right,
-      behavior: reducedMotion.matches ? "instant" : "smooth"});
-  }
-  previous.addEventListener("click", function () { moveCard(-1); });
-  next.addEventListener("click", function () { moveCard(1); });
-  var scrollTimer;
-  grid.addEventListener("scroll", function () {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(updateCardPosition, 100);
-  }, {passive:true});
-  function createPreviews() {
-    if (!context || section.dataset.previewsReady) return;
-    section.dataset.previewsReady = "true";
-    canvas.width = width = 640;
-    canvas.height = height = 360;
-    context.setTransform(1, 0, 0, 1, 0, 0);
-    progress = .5;
-    cards.forEach(function (card, index) {
-      activeIndex = index;
-      draw();
-      var preview = document.createElement("img");
-      preview.className = "service-path-card__preview";
-      preview.alt = "";
-      preview.width = 640;
-      preview.height = 360;
-      preview.src = canvas.toDataURL("image/webp");
-      preview.decoding = "async";
-      card.prepend(preview);
-    });
-    activeIndex = 0;
-    progress = 0;
-  }
-  function syncComposition() {
-    if (compactViewport.matches) createPreviews();
-    update();
-    resizeCanvas();
-    updateCardPosition();
-  }
-  compactViewport.addEventListener("change", syncComposition);
-  syncComposition();
   resizeCanvas();
   requestUpdate();
   revealHash();

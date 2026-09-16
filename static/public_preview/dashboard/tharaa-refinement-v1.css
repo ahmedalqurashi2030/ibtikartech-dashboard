@@ -7,13 +7,13 @@ body.source-tharaa #top .hero-grid{grid-template-columns:minmax(0,.82fr) minmax(
 body.source-tharaa #top .hero-copy{max-width:620px}
 body.source-tharaa #top .hero-kicker{color:#a9b4ca!important;font-size:12px!important}
 body.source-tharaa #top h1{margin:18px 0 16px!important;font-size:clamp(70px,8vw,104px)!important;line-height:.94!important;letter-spacing:-.05em!important}
-body.source-tharaa #top h1 small{margin-top:12px!important;font-size:10px!important;letter-spacing:.16em!important}
+body.source-tharaa #top h1 small{margin-top:12px!important;font-size:11.5px!important;letter-spacing:.12em!important}
 body.source-tharaa #top .hero-lead{max-width:56ch!important;color:#b4bfd3!important;font-size:clamp(16px,1.3vw,18px)!important;line-height:1.9!important}
 body.source-tharaa #top .hero-actions{gap:10px!important;margin-top:26px!important}
 body.source-tharaa #top .hero-actions .btn{min-height:48px!important;padding-inline:20px!important;border-radius:12px!important}
 body.source-tharaa #top .hero-actions .btn:hover{transform:translateY(-1px)!important}
 body.source-tharaa #top .hero-badges{margin-top:24px!important;display:flex!important;flex-wrap:wrap!important;gap:0!important;border-block:1px solid var(--tharaa-line)}
-body.source-tharaa #top .hero-badges span{padding:9px 12px!important;border:0!important;border-inline-end:1px solid var(--tharaa-line)!important;border-radius:0!important;background:transparent!important;color:#8f9bb4!important;font-size:11px!important}
+body.source-tharaa #top .hero-badges span{padding:9px 12px!important;border:0!important;border-inline-end:1px solid var(--tharaa-line)!important;border-radius:0!important;background:transparent!important;color:#9ba7bf!important;font-size:12px!important;line-height:1.55!important}
 body.source-tharaa #top .hero-badges span:last-child{border-inline-end:0!important}
 body.source-tharaa #top .hero-stage{transform:none!important;max-width:720px;margin-inline-start:auto}
 body.source-tharaa #top .store-window{border-radius:20px!important;box-shadow:0 30px 100px rgba(0,0,0,.3)!important}
@@ -32,13 +32,18 @@ body.source-tharaa #top .tharaa-decision__actions .btn--ghost{color:#fff}
 body.source-tharaa #customize .swatches{flex-wrap:wrap}
 body.source-tharaa #customize .swatches button{width:44px!important;height:44px!important;min-height:44px!important;flex:0 0 44px!important}
 
+/* Product preview and technical badges must retain readable contrast on their
+   fixed light/dark mockup surfaces. */
+body.source-tharaa .rating small{color:#9a651a!important;font-size:13px!important}
+body.source-tharaa .tech-card:first-child>i{color:#7294ff!important}
+
 /* Trust becomes a compact evidence rail. */
 body.source-tharaa .trust-strip{border-block:1px solid var(--tharaa-line)!important;background:#080c1b!important}
 body.source-tharaa .trust-shell{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important}
 body.source-tharaa .trust-item{min-height:92px!important;padding:18px 20px!important;border:0!important;border-inline-end:1px solid var(--tharaa-line)!important;background:transparent!important}
 body.source-tharaa .trust-item:last-child{border-inline-end:0!important}
 body.source-tharaa .trust-item strong{font-size:14px!important}
-body.source-tharaa .trust-item span{margin-top:4px!important;color:#8793ab!important;font-size:11px!important}
+body.source-tharaa .trust-item span{margin-top:4px!important;color:#97a3bb!important;font-size:12px!important;line-height:1.55!important}
 
 /* Keep cinematic storytelling, remove passive-scroll excess. */
 body.source-tharaa .story{height:300vh!important}
@@ -52,16 +57,16 @@ body.source-tharaa .section-head p{max-width:60ch!important;line-height:1.88!imp
 body.source-tharaa #v4-preview .studio-shell{border-radius:22px!important;box-shadow:0 28px 86px rgba(0,0,0,.24)!important}
 body.source-tharaa #v4-preview .studio-toolbar{padding:12px 14px!important;gap:10px 18px!important;border-bottom:1px solid var(--tharaa-line)!important}
 body.source-tharaa #v4-preview .control-group{gap:5px!important}
-body.source-tharaa #v4-preview .control-label{margin-inline-end:5px!important;color:#7f8ca6!important;font-size:10px!important}
+body.source-tharaa #v4-preview .control-label{margin-inline-end:5px!important;color:#95a1b9!important;font-size:11px!important;line-height:1.45!important}
 body.source-tharaa #v4-preview .control-group button{min-height:44px!important;padding-inline:11px!important;border-radius:9px!important}
 
 /* Component library: a readable catalogue, not a two-row horizontal maze. */
 body.source-tharaa #sections .library-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-flow:row!important;grid-auto-columns:auto!important;gap:14px!important;overflow:visible!important;padding:0!important;scroll-snap-type:none!important}
-body.source-tharaa #sections .library-card{min-width:0!important;height:auto!important;padding:14px!important;border-radius:18px!important;box-shadow:none!important;scroll-snap-align:none!important}
+body.source-tharaa #sections .library-card{min-width:0!important;height:auto!important;padding:14px!important;border-radius:var(--ibt-radius-panel,22px)!important;box-shadow:none!important;scroll-snap-align:none!important}
 body.source-tharaa #sections .library-card:hover{transform:translateY(-2px)!important;box-shadow:0 16px 42px rgba(0,0,0,.12)!important}
 body.source-tharaa #sections .library-card__preview{aspect-ratio:5/3!important;border-radius:13px!important;overflow:hidden!important}
-body.source-tharaa #sections .library-card h3{margin:14px 2px 7px!important;font-size:18px!important;line-height:1.3!important}
-body.source-tharaa #sections .library-card p{margin:0 2px!important;color:#909bb2!important;font-size:12px!important;line-height:1.75!important}
+body.source-tharaa #sections .library-card h3{margin:14px 2px 7px!important;font-size:19px!important;line-height:1.35!important}
+body.source-tharaa #sections .library-card p{margin:0 2px!important;color:#a0abc0!important;font-size:13.5px!important;line-height:1.78!important}
 body.source-tharaa #sections .library-more{margin-top:30px!important;text-align:center}
 body.source-tharaa #sections .library-more .btn{min-height:46px!important;border-radius:11px!important}
 
@@ -78,7 +83,7 @@ body.source-tharaa #customize .studio{border-radius:20px!important;box-shadow:0 
 body.source-tharaa #faq .faq-list{border-top:1px solid var(--tharaa-line)}
 body.source-tharaa #faq .faq{margin:0!important;border:0!important;border-bottom:1px solid var(--tharaa-line)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
 body.source-tharaa #faq .faq button{min-height:68px!important;padding:17px 0!important;border-radius:0!important;background:transparent!important}
-body.source-tharaa #faq .faq-answer p{padding-bottom:18px!important;line-height:1.85!important}
+body.source-tharaa #faq .faq-answer p{padding-bottom:18px!important;font-size:14px!important;line-height:1.85!important}
 body.source-tharaa .final-cta{padding:clamp(62px,7vw,88px) 0 82px!important}
 body.source-tharaa .final-cta :is(.cta-card,.final-cta__card){border-radius:24px!important;box-shadow:0 26px 76px rgba(0,0,0,.22)!important}
 
@@ -109,6 +114,7 @@ body.source-tharaa .final-cta :is(.cta-card,.final-cta__card){border-radius:24px
   body.source-tharaa .component-preview-dialog__close{min-height:var(--ibt-target-min,44px)!important}
   body.source-tharaa #v4-transfer .journey-skip,
   body.source-tharaa .final-actions > a{display:inline-flex;align-items:center;justify-content:center}
+  body.source-tharaa .rating small{font-size:12px!important}
 }
 
 @media(max-width:520px){
@@ -123,5 +129,10 @@ body.source-tharaa .final-cta :is(.cta-card,.final-cta__card){border-radius:24px
   body.source-tharaa #customize .custom-list{grid-template-columns:1fr!important}
   body.source-tharaa #customize .custom-list div{border-inline-end:0!important}
 }
+
+/* Arabic headings keep the typeface's native shaping. The preserved source
+ * used Latin-style negative tracking which is not appropriate for joined RTL
+ * glyphs and was loaded after the global typography layer. */
+html[dir="rtl"] body.source-tharaa :is(#top h1,.section-head h2,#customize .custom-copy h2){letter-spacing:0!important}
 
 @media(prefers-reduced-motion:reduce){body.source-tharaa :is(.library-card,.store-window,.phone,.studio-shell){animation:none!important;transition:none!important}}

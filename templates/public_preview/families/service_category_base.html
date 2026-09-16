@@ -4,42 +4,62 @@
 <title>{% block category_page_title %}{% endblock %}</title>
 <meta name="description" content="{% block category_meta_description %}{% endblock %}">
 {% block category_styles %}
-<!--
-  NOTE: This base template automatically includes:
-  - inner.css
-  - ibtikar-shell.css
-  Do not re-include these in child templates.
--->
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css"><link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<!-- Category composition only. The canonical foundation and shell come from base.html. -->
+<style>[data-service-cinema-chrome]:not([hidden]){display:contents}</style>
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
+<link rel="stylesheet" href="/static/public_preview/assets/css/service-cinema.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
 {% endblock %}
-{% block page_refinements %}
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/services-reference.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/service-primitives.css?v=20260911">
 {% endblock %}
+
+{% block page_refinements %}
+{% if page_key != "ecommerce" %}<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category-refinement-v1.css">{% endif %}
+<link rel="stylesheet" href="/static/public_preview/assets/css/pages/services-reference.css">
 {% endblock %}
 
 {% block body_attrs %}{% block category_body_attrs %}{% endblock %}{% endblock %}
 
 {% block body %}
 <main id="main-content" class="service-reference">
+<div data-service-cinema-chrome hidden>
+  <button class="service-cinema__reading" type="button">عرض جميع المسارات</button>
+  <div class="service-cinema__canvas-layer" aria-hidden="true">
+    <canvas class="service-cinema__canvas"></canvas>
+    <div class="service-cinema__wash"></div>
+    <div class="service-cinema__vignette"></div>
+    <div class="service-cinema__grain"></div>
+  </div>
+  <div class="service-cinema__top" aria-hidden="true">
+    <span class="service-cinema__index">
+      {% if page_key == "ecommerce" %}ECOMMERCE PATHS{% elif page_key == "websites" %}WEB PATHS{% elif page_key == "brand-content" %}BRAND &amp; CONTENT{% elif page_key == "growth" %}GROWTH PATHS{% elif page_key == "custom-systems" %}SYSTEMS PATHS{% else %}SERVICE PATHS{% endif %} / 01—<span data-service-cinema-count>00</span>
+    </span>
+  </div>
+  <div class="service-cinema__rail" aria-hidden="true">
+    <div class="service-cinema__rail-line"><span></span></div>
+    <div class="service-cinema__rail-steps">
+      <span class="service-cinema__rail-step" data-service-cinema-step>01</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>02</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>03</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>04</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>05</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>06</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>07</span>
+      <span class="service-cinema__rail-step" data-service-cinema-step>08</span>
+    </div>
+  </div>
+  <div class="service-cinema__cue" aria-hidden="true"><i></i><span>مرّر لاستكشاف المسارات</span><i></i></div>
+</div>
 {% block category_content %}{% endblock %}
 </main>
 
 {% block category_scripts %}
 <script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
-<script>
-(function () {
-  var cinema = document.createElement("script");
-  cinema.src = "/static/public_preview/assets/js/service-cinema.js";
-  cinema.async = false;
-  document.body.appendChild(cinema);
-}());
-</script>
+<script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
 <script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
-<script src="/static/public_preview/assets/js/service-primitives.js?v=20260911" defer></script>
 {% endblock %}
 {% endblock %}
