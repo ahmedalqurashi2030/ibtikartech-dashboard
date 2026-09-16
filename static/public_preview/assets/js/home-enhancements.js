@@ -158,7 +158,7 @@
       { href: 'websites.html', label: 'استكشف المواقع وصفحات الهبوط' },
       { href: 'brand-content.html', label: 'استكشف الهوية والمحتوى' },
       { href: 'growth.html', label: 'استكشف الظهور والقياس والنمو' },
-      { href: 'custom-systems.html#automation', label: 'استكشف الربط والأتمتة' },
+      { href: 'custom-systems.html#solutions', label: 'استكشف الربط والأتمتة' },
       { href: 'custom-systems.html', label: 'استكشف الأنظمة والحلول المخصصة' }
     ];
 
