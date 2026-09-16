@@ -3,16 +3,13 @@
 {% block service_page_title %}تحسين صفحة المنتج | ابتكار تك{% endblock %}
 {% block service_meta_description %}تحسين صفحة المنتج وترتيب الصور والمعلومات والخيارات والثقة والإجراء الأساسي مع مراجعة الجوال وإمكانات منصة المتجر.{% endblock %}
 
-{% block service_styles %}
-<link rel="stylesheet" href="/static/public_preview/assets/css/tokens.css">
+{% block service_family_prelude_styles %}{% endblock %}
+{% block service_page_styles_before_family %}
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/source-product-page.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/approved-source.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-related-cards.css">
+{% endblock %}
+{% block service_family_primitives_styles %}{% endblock %}
+{% block service_page_styles %}
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/product-page-accessibility.css">
 {% endblock %}
 {% block service_breadcrumb_current %}تحسين صفحة المنتج{% endblock %}
@@ -129,14 +126,8 @@
 <div class="sticky-service-cta" aria-hidden="true" inert><a class="button" href="{% url 'public_preview:contact' %}?service=product-page-optimization&source=service-sticky#quote" data-analytics="quote_request" data-analytics-label="product-page-optimization-sticky">ابدأ تقييم صفحة المنتج</a></div>
 {% endblock %}
 
-{% block service_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
-<script src="/static/public_preview/assets/js/site-config.js" defer></script>
-<script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
-<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
-<script src="/static/public_preview/assets/js/app.js" defer></script>
-<script src="/static/public_preview/assets/js/commerce-service-detail.js" defer></script>
+{% block service_page_scripts_before_tail %}
 <script src="/static/public_preview/assets/js/source-product-page.js" defer></script>
 <script src="/static/public_preview/assets/js/approved-source.js" defer></script>
-<script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
 {% endblock %}
+{% block service_family_primitives_scripts %}{% endblock %}
