@@ -299,11 +299,9 @@
     const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (page !== 'index' && pathname !== 'index.html' && pathname !== '') return;
     enhancePlatformLogos();
-    enhanceServicesSlider();
     enhanceCinematicChrome();
     setTimeout(() => {
       enhancePlatformLogos();
-      enhanceServicesSlider();
       enhanceCinematicChrome();
     }, 100);
   }
