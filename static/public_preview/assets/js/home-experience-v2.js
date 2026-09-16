@@ -2,15 +2,6 @@
   if (window.__ibtikarHomeExperienceV2) return;
   window.__ibtikarHomeExperienceV2 = true;
 
-  const ensureCss = () => {
-    if (document.querySelector('link[data-home-experience-v2]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/static/public_preview/assets/css/pages/home-experience-v2.css';
-    link.dataset.homeExperienceV2 = 'true';
-    document.head.appendChild(link);
-  };
-
   const platformAssets = new Map([
     ['سلة', { key: 'salla', src: '/static/public_preview/assets/images/platforms/salla.svg', label: 'سلة' }],
     ['زد', { key: 'zid', src: '/static/public_preview/assets/images/platforms/zid.svg', label: 'زد' }],
@@ -73,7 +64,8 @@
     const deck = section?.querySelector('.services-mobile-deck');
     const track = deck?.querySelector('.services-mobile-track');
     const cards = track ? [...track.querySelectorAll('.services-mobile-card')] : [];
-    if (!section || !deck || !track || cards.length < 2 || section.dataset.sliderV2 === 'true') return;
+    const toolbar = deck?.querySelector('.home-services-slider__toolbar');
+    if (!section || !deck || !track || !toolbar || cards.length < 2 || section.dataset.sliderV2 === 'true') return;
 
     section.dataset.sliderV2 = 'true';
     section.classList.add('home-services-slider');
@@ -84,22 +76,12 @@
 
     retireLegacyServicesMotion(section);
 
-    const heading = deck.querySelector('.section-heading');
-    const toolbar = document.createElement('div');
-    toolbar.className = 'home-services-slider__toolbar';
-    toolbar.innerHTML = `
-      <div class="home-services-slider__counter" aria-live="polite" aria-atomic="true">
-        <strong data-home-services-current>01</strong><span>/</span><span>${String(cards.length).padStart(2, '0')}</span>
-      </div>
-      <div class="home-services-slider__buttons">
-        <button class="home-services-slider__button" type="button" data-home-services-prev aria-label="الخدمة السابقة">→</button>
-        <button class="home-services-slider__button" type="button" data-home-services-next aria-label="الخدمة التالية">←</button>
-      </div>`;
-    (heading || deck).appendChild(toolbar);
-
     const current = toolbar.querySelector('[data-home-services-current]');
+    const total = toolbar.querySelector('[data-home-services-total]');
     const prev = toolbar.querySelector('[data-home-services-prev]');
     const next = toolbar.querySelector('[data-home-services-next]');
+    if (total) total.textContent = String(cards.length).padStart(2, '0');
+
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let activeIndex = 0;
     let frame = 0;
@@ -110,7 +92,6 @@
     let suppressClickUntil = 0;
     let commandedIndex = null;
     let commandTimer = 0;
-    let positioning = false;
 
     cards.forEach((card, index) => {
       card.setAttribute('aria-setsize', String(cards.length));
@@ -132,19 +113,20 @@
       else if (current) current.removeAttribute('aria-live');
     };
 
-    const alignmentDelta = (index) => {
+    const targetLeft = (index) => {
       const card = cards[index];
       if (!card) return 0;
-      const cardRect = card.getBoundingClientRect();
-      const trackRect = track.getBoundingClientRect();
-      return cardRect.right - trackRect.right;
+      const max = Math.max(0, track.scrollWidth - track.clientWidth);
+      const left = card.offsetLeft - cards[0].offsetLeft;
+      return Math.max(0, Math.min(max, left));
     };
 
     const nearestIndex = () => {
+      const left = track.scrollLeft;
       let nearest = 0;
       let distance = Infinity;
       cards.forEach((_, index) => {
-        const value = Math.abs(alignmentDelta(index));
+        const value = Math.abs(targetLeft(index) - left);
         if (value < distance) {
           distance = value;
           nearest = index;
@@ -161,15 +143,16 @@
 
     const goTo = (index, { focus = false } = {}) => {
       const target = Math.max(0, Math.min(cards.length - 1, index));
+      const left = targetLeft(target);
       commandedIndex = target;
       clearTimeout(commandTimer);
       syncState(target);
-      track.scrollBy({ left: alignmentDelta(target), behavior: reducedMotion ? 'auto' : 'smooth' });
+      track.scrollTo({ left, behavior: reducedMotion ? 'auto' : 'smooth' });
       if (focus) cards[target].focus({ preventScroll: true });
 
       commandTimer = window.setTimeout(() => {
         if (commandedIndex !== target) return;
-        track.scrollBy({ left: alignmentDelta(target), behavior: 'auto' });
+        track.scrollTo({ left, behavior: 'auto' });
         syncState(target, { announce: false });
         clearCommand();
       }, reducedMotion ? 80 : 820);
@@ -177,10 +160,11 @@
 
     const syncFromScroll = () => {
       frame = 0;
-      if (pointerId !== null || positioning) return;
+      if (pointerId !== null) return;
 
       if (commandedIndex !== null) {
-        if (Math.abs(alignmentDelta(commandedIndex)) <= 4) {
+        const target = targetLeft(commandedIndex);
+        if (Math.abs(track.scrollLeft - target) <= 4) {
           const settled = commandedIndex;
           clearCommand();
           syncState(settled, { announce: false });
@@ -260,41 +244,65 @@
       clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(() => {
         clearCommand();
-        track.scrollBy({ left: alignmentDelta(activeIndex), behavior: 'auto' });
+        track.scrollTo({ left: targetLeft(activeIndex), behavior: 'auto' });
         syncState(activeIndex, { announce: false });
       }, 100);
     }, { passive: true });
 
-    const settleInitialPosition = () => {
-      positioning = true;
-      clearCommand();
-      track.style.scrollSnapType = 'none';
-      track.scrollLeft = 0;
-      track.scrollBy({ left: alignmentDelta(0), behavior: 'auto' });
-      syncState(0, { announce: false });
-      requestAnimationFrame(() => {
-        track.style.removeProperty('scroll-snap-type');
-        positioning = false;
-        syncState(0, { announce: false });
-      });
+    track.scrollLeft = 0;
+    syncState(0, { announce: false });
+  }
+
+  function enhanceCinematicChrome() {
+    const story = document.querySelector('#journey.cinematic-story');
+    const quickDock = document.querySelector('.quick-dock');
+    if (!story || !quickDock || quickDock.dataset.cinematicChrome === 'true') return;
+
+    quickDock.dataset.cinematicChrome = 'true';
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    let active = false;
+
+    const apply = (next) => {
+      if (active === next) return;
+      active = next;
+      document.body.classList.toggle('home-cinema-active', active);
+      quickDock.toggleAttribute('inert', active);
+      if (active) quickDock.setAttribute('aria-hidden', 'true');
+      else quickDock.removeAttribute('aria-hidden');
     };
 
-    settleInitialPosition();
-    requestAnimationFrame(() => requestAnimationFrame(settleInitialPosition));
-    document.querySelector('link[data-home-experience-v2]')
-      ?.addEventListener('load', settleInitialPosition, { once: true });
+    const sync = () => {
+      frame = 0;
+      if (reducedMotion.matches || innerWidth > 820) {
+        apply(false);
+        return;
+      }
+      const rect = story.getBoundingClientRect();
+      const next = rect.top < innerHeight * .78 && rect.bottom > innerHeight * .22;
+      apply(next);
+    };
+
+    const requestSync = () => {
+      if (!frame) frame = requestAnimationFrame(sync);
+    };
+
+    addEventListener('scroll', requestSync, { passive: true });
+    addEventListener('resize', requestSync, { passive: true });
+    addEventListener('orientationchange', requestSync, { passive: true });
+    reducedMotion.addEventListener?.('change', requestSync);
+    sync();
   }
 
   function init() {
     const page = (document.body?.dataset.page || '').toLowerCase();
     const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (page !== 'index' && pathname !== 'index.html' && pathname !== '') return;
-    ensureCss();
     enhancePlatformLogos();
-    enhanceServicesSlider();
+    enhanceCinematicChrome();
     setTimeout(() => {
       enhancePlatformLogos();
-      enhanceServicesSlider();
+      enhanceCinematicChrome();
     }, 100);
   }
 

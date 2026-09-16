@@ -45,28 +45,8 @@
     link.addEventListener('click', (event) => event.preventDefault());
   });
 
-  const revealItems = [...document.querySelectorAll('.reveal')];
-  if (revealItems.length) {
-    if (reducedMotion || !('IntersectionObserver' in window)) {
-      revealItems.forEach((item) => item.classList.add('in'));
-    } else {
-      const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('in');
-          observer.unobserve(entry.target);
-        });
-      }, { rootMargin: '120px 0px', threshold: 0.04 });
-
-      revealItems.forEach((item) => revealObserver.observe(item));
-      window.setTimeout(() => {
-        document.querySelectorAll('.reveal:not(.in)').forEach((item) => {
-          const rect = item.getBoundingClientRect();
-          if (rect.top < window.innerHeight * 1.25) item.classList.add('in');
-        });
-      }, 1200);
-    }
-  }
+  // Generic reveal ownership moved to reveal.js or the preserved source runtime
+  // on Home/Services/Tharaa. This compatibility layer must not create another observer.
 
   const announcement = document.querySelector('body.source-home > .ibtx-announcement');
   if (announcement && !announcement.dataset.enhanced) {
@@ -121,7 +101,7 @@
   document.querySelectorAll('.faq, .faq-item').forEach((item, index) => {
     const button = item.querySelector(':scope > button, :scope > * > button');
     const answer = item.querySelector('.faq-answer');
-    if (!button || !answer) return;
+    if (!button || !answer || button.dataset.ibtDisclosureReady === 'true') return;
 
     if (!answer.id) answer.id = `approved-faq-answer-${index + 1}`;
     button.setAttribute('aria-controls', answer.id);
@@ -197,23 +177,6 @@
     });
   }
 
-  if (document.body.classList.contains('source-services')) {
-    if (!document.querySelector('link[data-services-experience]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/static/public_preview/assets/css/pages/services-experience.css';
-      link.dataset.servicesExperience = 'true';
-      document.head.appendChild(link);
-    }
-    if (!document.querySelector('script[data-services-experience]')) {
-      const script = document.createElement('script');
-      script.src = '/static/public_preview/assets/js/services-experience.js';
-      script.async = false;
-      script.dataset.servicesExperience = 'true';
-      document.body.appendChild(script);
-    }
-  }
-
   if (document.body.classList.contains('source-ecommerce')) {
     const detailRoutes = new Map([
       ['service-launch', 'store-launch.html'],
@@ -250,21 +213,6 @@
     if (finalSecondaryCta) {
       finalSecondaryCta.href = '#platforms';
       finalSecondaryCta.textContent = 'المنصات التي نعمل عليها';
-    }
-
-    if (!document.querySelector('link[data-ecommerce-experience]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/static/public_preview/assets/css/pages/ecommerce-experience-lab.css';
-      link.dataset.ecommerceExperience = 'true';
-      document.head.appendChild(link);
-    }
-    if (!document.querySelector('script[data-ecommerce-experience]')) {
-      const script = document.createElement('script');
-      script.src = '/static/public_preview/assets/js/ecommerce-category.js';
-      script.async = false;
-      script.dataset.ecommerceExperience = 'true';
-      document.body.appendChild(script);
     }
   }
 })();

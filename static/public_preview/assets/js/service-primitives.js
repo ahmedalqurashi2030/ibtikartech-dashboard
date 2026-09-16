@@ -136,7 +136,7 @@
   const initFaqs = (root) => {
     const faqs = [...root.querySelectorAll('details.service-faq-item')];
     faqs.forEach((faq) => {
-      if (faq.dataset.svcReady === 'true') return;
+      if (faq.dataset.ibtDisclosureReady === 'true' || faq.dataset.svcReady === 'true') return;
       faq.dataset.svcReady = 'true';
       faq.addEventListener('toggle', () => {
         if (!faq.open) return;

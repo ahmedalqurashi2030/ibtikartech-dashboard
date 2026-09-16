@@ -1,0 +1,15 @@
+{% load static %}
+{# Stable enhancement assets are declared by Django; JavaScript owns behavior, not asset discovery. #}
+<script src="{% static 'public_preview/assets/js/continuous-flow.js' %}" defer data-runtime-script="continuous-flow" data-continuous-flow="true"></script>
+<script src="{% static 'public_preview/assets/js/frontend-final.js' %}" defer data-runtime-script="frontend-final" data-frontend-final="true"></script>
+
+{% if page_key == "index" %}
+<script src="{% static 'public_preview/assets/js/home-enhancements.js' %}" defer data-runtime-script="home-enhancements" data-strategy-enhancements="true"></script>
+<script src="{% static 'public_preview/assets/js/home-experience-v2.js' %}" defer data-runtime-script="home-experience-v2" data-home-experience-v2="true"></script>
+{% endif %}
+
+{% if page_key == "services" %}
+<script src="{% static 'public_preview/assets/js/services-experience.js' %}" defer data-route-script="services-experience" data-services-experience="true"></script>
+{% elif page_key == "ecommerce" %}
+<script src="{% static 'public_preview/assets/js/ecommerce-category.js' %}" defer data-route-script="ecommerce-experience" data-ecommerce-experience="true"></script>
+{% endif %}

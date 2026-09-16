@@ -9,6 +9,7 @@ that could overwrite committed Django templates or production-served assets.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -17,7 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 from apps.public_preview.asset_contract import (  # noqa: E402
     FAMILY_ASSET_EXTENSION_BLOCKS,
-    ROUTE_SCOPED_ASSET_CONSUMERS,
+    RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS,
 )
 from apps.public_preview.content_contract import (  # noqa: E402
     PUBLIC_CONTENT_OWNER,
@@ -41,6 +42,14 @@ BASE_TEMPLATE = TEMPLATES_DIR / "base.html"
 ASSETS_DIR = ROOT / "static" / "public_preview" / "assets"
 OWNERSHIP_WORKFLOW = ROOT / ".github" / "workflows" / "frontend-ownership-qa.yml"
 
+# Route-aware assets can be declared by Django-owned central components. These
+# sources are evaluated per page_key so inactive branches are not consumers.
+CENTRAL_ROUTE_COMPONENTS = (
+    TEMPLATES_DIR / "components" / "route_foundation_styles.html",
+    TEMPLATES_DIR / "components" / "route_styles.html",
+    TEMPLATES_DIR / "components" / "runtime_scripts.html",
+)
+
 RETIRED_EXTERNAL_IMPORT_PATHS = (
     ROOT / "scripts" / "import_frontend_preview.py",
     ROOT / "scripts" / "verify_public_section_preservation.py",
@@ -56,6 +65,11 @@ REQUIRED_OWNED_ASSETS = (
     "js/source-services.js",
     "js/service-related-cards.js",
     "css/pages/service-related-cards.css",
+)
+
+DJANGO_TAG_RE = re.compile(r"({%\s*[^%]+?\s*%})")
+PAGE_KEY_COMPARISON_RE = re.compile(
+    r'^page_key\s*(?P<op>==|!=)\s*(["\'])(?P<value>[^"\']+)\2$'
 )
 
 
@@ -134,9 +148,6 @@ def verify_dashboard_owned_assets() -> None:
         fail("Dashboard-owned frontend assets missing: " + ", ".join(missing))
 
 
-
-
-
 def block_payload(source: str, block_name: str) -> str | None:
     opener = block_tag(block_name)
     start = source.find(opener)
@@ -149,21 +160,116 @@ def block_payload(source: str, block_name: str) -> str | None:
     return source[body_start:end]
 
 
+def page_key_for(page_name: str) -> str:
+    return "index" if page_name == "index.html" else page_name.removesuffix(".html")
+
+
+def evaluate_page_key_atom(expression: str, page_key: str) -> bool:
+    expression = expression.strip()
+    match = PAGE_KEY_COMPARISON_RE.fullmatch(expression)
+    if not match:
+        fail(f"Unsupported page_key condition in route-owned template: {expression!r}")
+    equals = page_key == match.group("value")
+    return equals if match.group("op") == "==" else not equals
+
+
+def evaluate_page_key_condition(expression: str, page_key: str) -> bool:
+    """Evaluate the narrow boolean grammar used by route-owned asset templates."""
+    or_parts = [part.strip() for part in expression.split(" or ")]
+    return any(
+        all(
+            evaluate_page_key_atom(atom.strip(), page_key)
+            for atom in or_part.split(" and ")
+        )
+        for or_part in or_parts
+    )
+
+
+def conditional_asset_count(source: str, asset: str, page_key: str) -> int:
+    """Count an asset only in Django page_key branches active for one route.
+
+    This intentionally understands only if/elif/else/endif expressions based on
+    page_key. Other template tags remain countable markup, which is necessary
+    for assets referenced inside Django ``static`` tags.
+    """
+    count = 0
+    stack: list[dict[str, bool]] = []
+    active = True
+
+    for token in DJANGO_TAG_RE.split(source):
+        if not token:
+            continue
+        if not token.startswith("{%"):
+            if active:
+                count += token.count(asset)
+            continue
+
+        inner = token[2:-2].strip()
+        if inner.startswith("if page_key "):
+            expression = inner[3:].strip()
+            condition = evaluate_page_key_condition(expression, page_key)
+            frame = {
+                "parent_active": active,
+                "branch_taken": condition,
+                "active": active and condition,
+            }
+            stack.append(frame)
+            active = frame["active"]
+            continue
+
+        if inner.startswith("elif page_key "):
+            if not stack:
+                fail("Unexpected elif in route-owned template")
+            frame = stack[-1]
+            expression = inner[5:].strip()
+            condition = False if frame["branch_taken"] else evaluate_page_key_condition(
+                expression,
+                page_key,
+            )
+            frame["branch_taken"] = frame["branch_taken"] or condition
+            frame["active"] = frame["parent_active"] and condition
+            active = frame["active"]
+            continue
+
+        if inner == "else" and stack:
+            frame = stack[-1]
+            condition = not frame["branch_taken"]
+            frame["branch_taken"] = True
+            frame["active"] = frame["parent_active"] and condition
+            active = frame["active"]
+            continue
+
+        if inner == "endif" and stack:
+            frame = stack.pop()
+            active = frame["parent_active"]
+            continue
+
+        if active:
+            count += token.count(asset)
+
+    if stack:
+        fail("Unclosed page_key conditional in route-owned template")
+    return count
+
+
 def effective_family_asset_count(
     page_source: str,
     family_source: str,
     parent: str,
     asset: str,
+    page_key: str,
 ) -> int:
-    block_name = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {}).get(
-        Path(asset).suffix
-    )
+    block_name = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {}).get(Path(asset).suffix)
     if block_name:
         override = block_payload(page_source, block_name)
         if override is not None:
-            return override.count(asset)
-        return family_source.count(asset)
-    return page_source.count(asset) + family_source.count(asset)
+            return conditional_asset_count(override, asset, page_key)
+        return conditional_asset_count(family_source, asset, page_key)
+    return conditional_asset_count(page_source, asset, page_key) + conditional_asset_count(
+        family_source,
+        asset,
+        page_key,
+    )
 
 
 def verify_route_scoped_asset_consumers() -> None:
@@ -172,25 +278,38 @@ def verify_route_scoped_asset_consumers() -> None:
         parent: (ROOT / "templates" / parent).read_text(encoding="utf-8")
         for parent in FAMILY_REQUIRED_BLOCKS
     }
+    missing_components = [
+        str(path.relative_to(ROOT)) for path in CENTRAL_ROUTE_COMPONENTS if not path.is_file()
+    ]
+    if missing_components:
+        fail("Central route asset components missing: " + ", ".join(missing_components))
+    central_sources = [path.read_text(encoding="utf-8") for path in CENTRAL_ROUTE_COMPONENTS]
     invalid: list[str] = []
 
-    for asset, expected_consumers in ROUTE_SCOPED_ASSET_CONSUMERS.items():
+    for asset, expected_consumers in RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS.items():
         if asset in base_source:
-            invalid.append(f"{asset}: route-scoped asset returned to base.html")
+            invalid.append(f"{asset}: route-scoped asset returned directly to base.html")
         actual_consumers: set[str] = set()
 
         for page_name in REQUIRED_PAGES:
             page_source = (PAGES_DIR / page_name).read_text(encoding="utf-8")
             parent = page_parent(page_name)
+            page_key = page_key_for(page_name)
             if parent == BASE_TEMPLATE_PARENT:
-                effective_count = page_source.count(asset)
+                effective_count = conditional_asset_count(page_source, asset, page_key)
             else:
                 effective_count = effective_family_asset_count(
                     page_source,
                     family_sources[parent],
                     parent,
                     asset,
+                    page_key,
                 )
+
+            effective_count += sum(
+                conditional_asset_count(source, asset, page_key)
+                for source in central_sources
+            )
 
             if effective_count not in (0, 1):
                 invalid.append(
@@ -210,7 +329,6 @@ def verify_route_scoped_asset_consumers() -> None:
 
     if invalid:
         fail("Route-scoped frontend asset contract failed:\n- " + "\n- ".join(invalid))
-
 
 
 def verify_public_content_ownership() -> None:
@@ -254,7 +372,6 @@ def verify_public_content_ownership() -> None:
 
 
 def verify_no_external_frontend_clone_contract() -> None:
-    # Build the old repository token dynamically so this guard does not trigger itself.
     old_repo = "ahmedalqurashi2030/" + "ibtikartech"
     forbidden = (
         old_repo + ".git",
@@ -291,7 +408,7 @@ def main() -> None:
         "Dashboard frontend ownership verified: "
         f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page families, "
         f"{len(REQUIRED_OWNED_ASSETS)} canonical assets, and "
-        f"{len(ROUTE_SCOPED_ASSET_CONSUMERS)} route-scoped asset contracts, and "
+        f"{len(RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS)} rendered route-scoped asset contracts, and "
         f"{len(PUBLIC_TEMPLATE_OWNED_PAGES)} template-owned content contracts "
         "are repository-owned."
     )

@@ -63,6 +63,14 @@ FAMILY_EXTENSION_BLOCKS = {
     ),
 }
 
+# Family templates own their stable structure directly. Arbitrary includes
+# remain forbidden by the template-contract verifier.
+FAMILY_ALLOWED_PARTIALS = {
+    SERVICE_DETAIL_FAMILY_PARENT: (),
+    SERVICE_CATEGORY_FAMILY_PARENT: (),
+    ARTICLE_DETAIL_FAMILY_PARENT: (),
+}
+
 FAMILY_REQUIRED_MARKERS = {
     SERVICE_DETAIL_FAMILY_PARENT: (
         'id="main-content"',

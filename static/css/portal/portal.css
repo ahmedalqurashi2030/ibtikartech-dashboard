@@ -83,7 +83,7 @@
 .portal-card__meta {
   color: var(--muted);
   font-size: .78rem;
-  letter-spacing: normal;
+  letter-spacing: .02em;
 }
 
 .portal-nav {
@@ -117,7 +117,7 @@
 .portal-review-card h1 {
   margin: .35rem 0 .5rem;
   font-size: clamp(1.75rem, 4vw, 2.6rem);
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 .portal-page-header p,
@@ -222,9 +222,7 @@
   border-radius: 999px;
   color: var(--muted);
   font-size: .8rem;
-  white-space: normal;
-  max-width: 100%;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
 .portal-card {
@@ -240,14 +238,14 @@
 
 .portal-button {
   display: inline-flex;
-  min-height: 2.75rem;
+  min-height: 2.65rem;
   align-items: center;
   justify-content: center;
   padding-inline: 1rem;
   border: 1px solid var(--accent);
   border-radius: .7rem;
   background: var(--accent);
-  color: var(--on-accent);
+  color: #071014;
   font: inherit;
   font-weight: 700;
   text-decoration: none;
@@ -365,7 +363,7 @@
 }
 
 .portal-field__error {
-  color: var(--error-text);
+  color: #ff9a9a;
   font-size: .82rem;
 }
 
@@ -443,9 +441,3 @@
     flex-direction: column;
   }
 }
-
-/* Let translated labels and customer content wrap without widening the page. */
-.portal-sidebar__identity, .portal-list-item > div { min-width: 0; overflow-wrap: anywhere; }
-.portal-topbar__inner, .portal-account, .portal-panel__header, .portal-list-item { flex-wrap: wrap; }
-.portal-account { padding-block: .5rem; gap: .75rem; }
-.portal-account a { display: inline-flex; align-items: center; min-height: 2.75rem; }
