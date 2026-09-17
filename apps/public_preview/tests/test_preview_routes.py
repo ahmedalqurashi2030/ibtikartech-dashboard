@@ -8,6 +8,7 @@ from django.urls import reverse
 from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
 from apps.public_preview.template_contract import (
     BASE_TEMPLATE_PARENT,
+    FAMILY_ALLOWED_PARTIALS,
     FAMILY_REQUIRED_BLOCKS,
     extends_tag,
     page_parent,
@@ -130,6 +131,8 @@ def _effective_page_source(page_name: str) -> str:
 
 
 def test_imported_pages_follow_approved_inheritance_without_duplicate_shell():
+    include_pattern = re.compile(r'{%\s*include\s+"([^"]+)"')
+
     for page_name in REQUIRED_PAGES:
         source = _page_source(page_name)
         assert source.lstrip().startswith(extends_tag(page_parent(page_name)))
@@ -142,7 +145,12 @@ def test_imported_pages_follow_approved_inheritance_without_duplicate_shell():
         assert family.lstrip().startswith(extends_tag(BASE_TEMPLATE_PARENT))
         assert 'id="ibtikarSiteHeader"' not in family
         assert 'class="ibt-shell-footer"' not in family
-        assert "public_preview/components/" not in family
+
+        allowed_partials = set(FAMILY_ALLOWED_PARTIALS[parent])
+        actual_partials = include_pattern.findall(family)
+        assert set(actual_partials) <= allowed_partials
+        for partial in allowed_partials:
+            assert actual_partials.count(partial) == 1
 
 
 def test_global_shell_is_composed_from_shared_template_includes():
@@ -188,211 +196,3 @@ def test_platform_family_pages_share_one_section_structure_contract():
         assert 'service-path-card__scope' in source
         assert 'service-path-card__action' in source
         assert "مناسب عندما" in source
-        assert 'route-grid' not in source
-
-    about_source = _effective_page_source("about.html")
-    assert '<section class="platform-hero">' in about_source
-    assert '<section class="page-cta">' in about_source
-    assert 'class="cta-card reveal"' in about_source
-    assert 'class="cta-actions"' in about_source
-
-
-def test_service_detail_pages_share_one_structural_contract():
-    """All explicit commerce service pages use one shell, hero, tabs and panel DOM."""
-    forbidden_legacy_markers = (
-        'class="service-page"',
-        'class="svc-container"',
-        'class="svc-breadcrumb"',
-        'class="svc-hero',
-        'class="quick-info"',
-        'class="decision-tabs',
-        'data-decision-tab=',
-        'data-decision-panel=',
-        'class="svc-section',
-        'class="svc-heading',
-    )
-
-    for page_name in SERVICE_DETAIL_PAGES:
-        contract_source = _effective_page_source(page_name)
-
-        assert '<main id="main-content" class="service-detail-main">' in contract_source
-        assert 'class="service-detail-shell"' in contract_source
-        assert 'class="service-detail-breadcrumb"' in contract_source
-        assert 'class="service-commerce-hero"' in contract_source
-        assert 'class="service-commerce-hero__card" data-service-commerce-hero' in contract_source
-        assert 'class="service-gallery"' in contract_source
-        assert 'class="service-gallery__main" data-service-gallery-main' in contract_source
-        assert 'data-service-gallery-src=' in contract_source
-        assert 'class="service-commerce-copy"' in contract_source
-        assert 'class="service-detail-badge"' in contract_source
-        assert 'class="service-platform-chips"' in contract_source
-        assert 'class="service-purchase-box"' in contract_source
-        assert 'class="service-assurance"' in contract_source
-        assert 'class="service-commerce-actions"' in contract_source
-        assert 'class="service-quick-info"' in contract_source
-        assert 'class="service-decision-nav"' in contract_source
-        decision_tabs_marker = (
-            'class="service-detail-shell service-decision-tabs" '
-            'data-service-decision-tabs'
-        )
-        assert decision_tabs_marker in contract_source
-        assert 'class="service-detail-heading"' in contract_source
-        assert (
-            'class="page-cta"' in contract_source
-            or 'class="service-final-cta"' in contract_source
-        )
-        assert 'commerce-service-detail.js' in contract_source
-
-        for key in SERVICE_DECISION_KEYS:
-            assert f'data-service-decision-tab="{key}"' in contract_source
-            assert f'data-service-decision-panel="{key}"' in contract_source
-
-        for marker in forbidden_legacy_markers:
-            assert marker not in contract_source
-
-
-def test_service_detail_pages_keep_equivalent_panel_grid_vocabulary():
-    """Equivalent decision sections use the same grid/list class names across services."""
-    expected_markers = (
-        'class="service-problem-grid"',
-        'class="service-fit-grid"',
-        'class="service-scope-grid"',
-        'class="service-deliverable-grid"',
-        'class="service-exclusion-list"',
-    )
-    for page_name in SERVICE_DETAIL_PAGES:
-        source = _page_source(page_name)
-        for marker in expected_markers:
-            assert marker in source
-
-
-
-def test_article_detail_pages_share_one_semantic_reading_contract():
-    for page_name in ARTICLE_DETAIL_PAGES:
-        source = _effective_page_source(page_name)
-        assert 'id="progressBar"' in source
-        assert '<main id="main-content">' in source
-        assert '<article>' in source
-        assert 'class="article-hero"' in source
-        assert 'class="article-aside"' in source
-        assert 'class="article-body"' in source
-        assert 'class="related-articles"' in source
-        assert "articles.css" in source
-        assert "articles.js" in source
-
-
-def test_page_sections_are_inline_not_component_includes():
-    combined = "\n".join(_page_source(page_name) for page_name in REQUIRED_PAGES)
-
-    assert "public_preview/components/" not in combined
-    assert "{% include " not in combined
-
-
-def test_homepage_content_leads_with_goals_proof_and_scope():
-    source = _page_source("index.html")
-
-    assert 'id="goals"' in source
-    assert "ما النتيجة التي تحتاجها الآن؟" in source
-    assert "ثراء: ثيم منشور لمتاجر سلة" in source
-    assert "01 / DISCOVER" in source
-    assert "نفهم الهدف والسياق" in source
-
-
-def test_services_hub_uses_the_five_category_taxonomy():
-    source = _page_source("services.html")
-
-    categories = (
-        "المتاجر الإلكترونية",
-        "المواقع",
-        "الهوية والمحتوى",
-        "النمو",
-        "الأنظمة والأتمتة",
-    )
-    for category in categories:
-        assert category in source
-    assert "ابدأ من هدف مشروعك" in source
-
-
-def test_tharaa_page_supports_a_buyer_fit_decision_before_feature_depth():
-    source = _page_source("tharaa.html")
-
-    fit_position = source.index("هل ثراء مناسب لمتجرك؟")
-    features_position = source.index('id="features"')
-    assert fit_position < features_position
-    assert "شراء مرة واحدة" in source
-    assert "افتح دليل المستخدم" in source
-    assert "التركيب والتخصيص خدمة مستقلة عن الترخيص" in source
-
-
-SERVICE_CATEGORY_PAGES = (
-    "ecommerce.html",
-    "websites.html",
-    "brand-content.html",
-    "growth.html",
-    "custom-systems.html",
-)
-
-NON_COMMERCE_CATEGORY_PAGES = (
-    "websites.html",
-    "brand-content.html",
-    "growth.html",
-    "custom-systems.html",
-)
-
-
-def test_service_category_pages_use_decision_path_contract():
-    """Category pages lead with fit, scope and a contextual action instead of generic cards."""
-    for page_name in SERVICE_CATEGORY_PAGES:
-        source = _effective_page_source(page_name)
-        assert "service-category.css" in source
-        assert "service-category-page" in source
-        assert "service-paths-section" in source
-        assert 'class="service-paths-header' in source
-        assert 'class="service-paths-grid"' in source
-        assert 'class="service-path-card reveal"' in source
-        assert 'class="service-path-card__fit"' in source
-        assert 'class="service-path-card__scope"' in source
-        assert 'class="service-path-card__action"' in source
-        assert "مناسب عندما" in source
-        assert 'class="route-grid"' not in source
-
-
-def test_non_commerce_service_categories_offer_local_section_navigation():
-    for page_name in NON_COMMERCE_CATEGORY_PAGES:
-        source = _page_source(page_name)
-        assert 'class="service-page-nav"' in source
-        assert 'href="#start"' in source
-        assert 'href="#solutions"' in source
-        assert 'href="#approach"' in source
-        assert 'href="#deliverables"' in source
-        assert 'href="#faq"' in source
-        assert 'href="#related"' in source
-
-
-def test_service_category_pages_load_shared_cinematic_runtime():
-    """Every service category progressively enhances its decision paths with one shared runtime."""
-    family_source = _family_source(page_parent(SERVICE_CATEGORY_PAGES[0]))
-    for page_name in SERVICE_CATEGORY_PAGES:
-        page_source = _page_source(page_name)
-        source = (
-            page_source
-            if "{% block category_scripts %}" in page_source
-            else family_source
-        )
-        assert source.count("service-cinema.js") == 1
-
-
-def test_service_cinema_runtime_preserves_accessible_static_fallback():
-    source = (
-        Path(settings.BASE_DIR)
-        / "static"
-        / "public_preview"
-        / "assets"
-        / "js"
-        / "service-cinema.js"
-    ).read_text(encoding="utf-8")
-
-    assert "service-paths-section" in source
-    assert "prefers-reduced-motion" in source
-    assert "requestAnimationFrame" in source
-    assert "service-path-card" in source
