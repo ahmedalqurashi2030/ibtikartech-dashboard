@@ -4,11 +4,15 @@ from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
+from apps.core.seo_views import page_not_found, sitemap_xml
 from apps.core.views import healthz, robots_txt
+
+handler404 = page_not_found
 
 urlpatterns = [
     path("healthz/", healthz, name="healthz"),
     path("robots.txt", robots_txt, name="robots_txt"),
+    path("sitemap.xml", sitemap_xml, name="sitemap_xml"),
     path("django-admin/", admin.site.urls),
     path("control/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
