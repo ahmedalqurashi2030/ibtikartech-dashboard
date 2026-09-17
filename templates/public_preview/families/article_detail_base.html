@@ -20,6 +20,7 @@
 </main>
 
 {% block article_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script><script src="/static/public_preview/assets/js/articles.js" defer></script>
+{% include "public_preview/components/public_runtime_core_scripts.html" %}
+<script src="/static/public_preview/assets/js/articles.js" defer></script>
 {% endblock %}
 {% endblock %}
