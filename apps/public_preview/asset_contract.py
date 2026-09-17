@@ -143,10 +143,15 @@ RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS = {
     PLATFORM_STYLES: PLATFORM_STYLE_CONSUMERS,
 }
 
+# Family-level extension ownership normally falls back to a suffix-wide block.
+# Specific assets can opt into a narrower nested block when a route intentionally
+# disables only that asset while preserving the rest of the family bundle.
 FAMILY_ASSET_EXTENSION_BLOCKS = {
     SERVICE_DETAIL_FAMILY_PARENT: {
         ".css": "service_styles",
         ".js": "service_scripts",
+        SERVICE_PRIMITIVES_STYLES: "service_family_primitives_styles",
+        SERVICE_PRIMITIVES_RUNTIME: "service_family_primitives_scripts",
     },
     SERVICE_CATEGORY_FAMILY_PARENT: {
         ".css": "category_styles",

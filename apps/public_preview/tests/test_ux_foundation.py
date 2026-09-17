@@ -52,9 +52,17 @@ def _effective_family_asset_count(page_source, family_source, parent, asset):
 
     from apps.public_preview.asset_contract import FAMILY_ASSET_EXTENSION_BLOCKS
 
-    block_name = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {}).get(
-        Path(asset).suffix
-    )
+    family_blocks = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {})
+    specific_block = family_blocks.get(asset)
+    if specific_block:
+        override = _block_payload(page_source, specific_block)
+        if override is not None:
+            return override.count(asset)
+        family_block = _block_payload(family_source, specific_block)
+        if family_block is not None:
+            return family_block.count(asset)
+
+    block_name = family_blocks.get(Path(asset).suffix)
     if block_name:
         override = _block_payload(page_source, block_name)
         if override is not None:
@@ -279,8 +287,10 @@ def test_product_page_interactions_preserve_accessible_state():
     source = _read_source(PRODUCT_PAGE_TEMPLATE)
     runtime = _read_source(PRODUCT_PAGE_RUNTIME)
     styles = _read_source(PRODUCT_PAGE_A11Y)
+    base = _read_source(BASE_TEMPLATE)
 
-    assert source.count("tokens.css") == 1
+    assert source.count("tokens.css") == 0
+    assert base.count("tokens.css") == 1
     assert source.count('id="product-hotspot-info"') == 1
     assert source.count('class="hotspot"') == 4
     assert source.count('type="button" class="hotspot"') == 4

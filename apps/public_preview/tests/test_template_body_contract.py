@@ -127,16 +127,48 @@ def test_service_detail_children_keep_explicit_asset_and_after_main_exceptions()
     product_source = (
         PAGES_DIR / "product-page-optimization.html"
     ).read_text(encoding="utf-8")
-    assert product_source.count(block_tag("service_styles")) == 1
-    assert product_source.count(block_tag("service_scripts")) == 1
+
+    # Product detail now inherits shared family owners and declares only its
+    # route-specific exceptions. It must not duplicate the full family bundle.
+    assert product_source.count(block_tag("service_styles")) == 0
+    assert product_source.count(block_tag("service_scripts")) == 0
+    assert product_source.count(block_tag("service_page_styles_before_family")) == 1
+    assert product_source.count(block_tag("service_page_styles")) == 1
+    assert product_source.count(block_tag("service_route_scripts_before_tail")) == 1
+    assert product_source.count(block_tag("service_family_primitives_styles")) == 1
+    assert product_source.count(block_tag("service_family_primitives_scripts")) == 1
+
     for asset in (
-        "source-product-page.css",
-        "tokens.css",
-        "approved-source.css",
+        "product-page.css",
         "source-product-page.js",
         "approved-source.js",
     ):
         assert product_source.count(asset) == 1, asset
+
+    # Retired legacy presentation layers must not return to Product.
+    assert "source-product-page.css" not in product_source
+    assert "approved-source.css" not in product_source
+
+    # Foundation and shared family assets have exactly one canonical owner.
+    for inherited_asset in (
+        "tokens.css",
+        "commerce-service-detail.css",
+        "continuous-flow.css",
+        "frontend-final.css",
+        "launch-readiness.css",
+        "section-layout-refinement-v2.css",
+        "service-related-cards.css",
+        "page-shell.js",
+        "site-config.js",
+        "modules/analytics.js",
+        "ibtikar-shell.js",
+        "app.js",
+        "commerce-service-detail.js",
+        "service-related-cards.js",
+        "service-primitives.css",
+        "service-primitives.js",
+    ):
+        assert inherited_asset not in product_source, inherited_asset
 
     sticky_cta_markers = {
         "storefront-customization.html": 'class="service-sticky-cta"',

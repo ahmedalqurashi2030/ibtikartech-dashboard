@@ -1,0 +1,259 @@
+/* Product-page route presentation only.
+ * Shared shell, tokens, typography, controls and service-detail composition are
+ * owned by base/components.css and commerce-service-detail.css. */
+
+@font-face {
+  font-family: "Phosphor-Duotone";
+  src: url("../../generated/93d163cd4b1f0773.woff2") format("woff2");
+  font-style: normal;
+  font-weight: normal;
+  font-display: block;
+}
+
+body[data-page="product-page-optimization"] .ph-duotone {
+  font-family: "Phosphor-Duotone" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  letter-spacing: 0;
+  font-feature-settings: "liga";
+  font-variant-ligatures: discretionary-ligatures;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body[data-page="product-page-optimization"] .ph-duotone.ph-check-circle::before{content:"\e184";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-check-circle::after{content:"\e185";margin-left:-1em}
+body[data-page="product-page-optimization"] .ph-duotone.ph-circles-four::before{content:"\e190";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-circles-four::after{content:"\e191";margin-left:-1em}
+body[data-page="product-page-optimization"] .ph-duotone.ph-device-mobile-camera::before{content:"\e1e2";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-device-mobile-camera::after{content:"\e1e3";margin-left:-1em}
+body[data-page="product-page-optimization"] .ph-duotone.ph-file-text::before{content:"\e23a";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-file-text::after{content:"\e23b";margin-left:-1em}
+body[data-page="product-page-optimization"] .ph-duotone.ph-package::before{content:"\e390";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-package::after{content:"\e391";margin-left:-1em}
+body[data-page="product-page-optimization"] .ph-duotone.ph-paint-brush-broad::before{content:"\e590";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-paint-brush-broad::after{content:"\e591";margin-left:-1em}
+body[data-page="product-page-optimization"] .ph-duotone.ph-shield-check::before{content:"\e40c";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-shield-check::after{content:"\e40f";margin-left:-1em}
+body[data-page="product-page-optimization"] .ph-duotone.ph-shopping-cart-simple::before{content:"\e420";opacity:.2}
+body[data-page="product-page-optimization"] .ph-duotone.ph-shopping-cart-simple::after{content:"\e421";margin-left:-1em}
+
+body[data-page="product-page-optimization"] .service-problem-grid i,
+body[data-page="product-page-optimization"] .service-deliverable-grid i,
+body[data-page="product-page-optimization"] .req-grid i {
+  color: var(--ibt-cyan);
+}
+
+/* Product anatomy / hotspot explanation. */
+body[data-page="product-page-optimization"] .hotspot-layout {
+  display: grid;
+  align-items: center;
+  gap: 26px;
+  grid-template-columns: 1.2fr .8fr;
+}
+body[data-page="product-page-optimization"] .hotspot-canvas { position: relative; }
+body[data-page="product-page-optimization"] .hotspot-canvas img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--ibt-border);
+  border-radius: 22px;
+}
+body[data-page="product-page-optimization"] .hotspot {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  border: 3px solid #091127;
+  background: var(--ibt-gradient);
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(75,94,236,.38);
+  cursor: pointer;
+  transition: transform .25s var(--ibt-ease), box-shadow .25s var(--ibt-ease);
+}
+body[data-page="product-page-optimization"] .hotspot[data-id="gallery"] { top: 28%; right: 22%; }
+body[data-page="product-page-optimization"] .hotspot[data-id="options"] { top: 48%; left: 33%; }
+body[data-page="product-page-optimization"] .hotspot[data-id="trust"] { bottom: 27%; left: 24%; }
+body[data-page="product-page-optimization"] .hotspot[data-id="cta"] { bottom: 17%; right: 34%; }
+body[data-page="product-page-optimization"] .hotspot-info {
+  padding: 28px;
+  border: 1px solid var(--ibt-border);
+  background: #091127;
+  border-radius: 20px;
+}
+body[data-page="product-page-optimization"] .hotspot-info h3 { margin-top: 0; }
+body[data-page="product-page-optimization"] .hotspot-info p {
+  color: var(--ibt-muted);
+  font-size: .74rem;
+  line-height: 1.75;
+}
+body[data-page="product-page-optimization"] .hotspot-cards { display: none; }
+
+/* Requirements. */
+body[data-page="product-page-optimization"] .req-grid {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  list-style: none;
+}
+body[data-page="product-page-optimization"] .req-grid li {
+  position: relative;
+  overflow: hidden;
+  padding: 17px;
+  border: 1px solid var(--ibt-border);
+  background: #091127;
+  border-radius: 13px;
+  font-size: .7rem;
+  transition: transform .25s var(--ibt-ease), border-color .25s ease;
+}
+body[data-page="product-page-optimization"] .req-grid li:nth-child(1),
+body[data-page="product-page-optimization"] .req-grid li:nth-child(8) {
+  background: linear-gradient(145deg,rgba(17,44,70,.9),rgba(29,18,59,.88));
+}
+body[data-page="product-page-optimization"] .req-grid i {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+@media (hover:hover) and (pointer:fine) {
+  body[data-page="product-page-optimization"] .req-grid li:hover {
+    border-color: color-mix(in srgb,var(--ibt-cyan) 30%,var(--ibt-border));
+    transform: translateY(-4px);
+  }
+}
+
+/* Related service cards keep the approved horizontal discovery rail. */
+body[data-page="product-page-optimization"] .related-grid {
+  display: grid !important;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 2px 2px 16px;
+  grid-auto-columns: minmax(270px,310px);
+  grid-auto-flow: column;
+  grid-template-columns: none !important;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+body[data-page="product-page-optimization"] .related-grid::-webkit-scrollbar { display: none; }
+body[data-page="product-page-optimization"] .related-grid::after { width: 1px; content: ""; }
+body[data-page="product-page-optimization"] .related-grid article {
+  min-height: 370px;
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid var(--ibt-border);
+  background: #091127;
+  border-radius: 16px;
+  scroll-snap-align: start;
+  transition: transform .3s var(--ibt-ease), border-color .3s ease;
+}
+body[data-page="product-page-optimization"] .related-grid img {
+  width: 100%;
+  aspect-ratio: 1.5/1;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform .45s var(--ibt-ease);
+}
+body[data-page="product-page-optimization"] .related-grid span {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 7px;
+  color: var(--ibt-cyan);
+  background: color-mix(in srgb,var(--ibt-cyan) 6%,transparent);
+  border-radius: 7px;
+  font-size: .57rem;
+}
+body[data-page="product-page-optimization"] .related-grid h3 { font-size: .84rem; }
+body[data-page="product-page-optimization"] .related-grid p {
+  color: var(--ibt-muted);
+  font-size: .66rem;
+  line-height: 1.65;
+}
+body[data-page="product-page-optimization"] .related-grid a {
+  color: var(--ibt-text);
+  font-size: .68rem;
+}
+@media (hover:hover) and (pointer:fine) {
+  body[data-page="product-page-optimization"] .related-grid article:hover {
+    border-color: color-mix(in srgb,var(--ibt-cyan) 32%,var(--ibt-border));
+    transform: translateY(-7px);
+  }
+  body[data-page="product-page-optimization"] .related-grid article:hover img { transform: scale(1.045); }
+}
+
+/* Product FAQ. */
+body[data-page="product-page-optimization"] .faq-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+body[data-page="product-page-optimization"] .faq-grid details {
+  border: 1px solid var(--ibt-border);
+  background: #091127;
+  border-radius: 13px;
+}
+body[data-page="product-page-optimization"] .faq-grid details[open] {
+  border-color: color-mix(in srgb,var(--ibt-purple) 32%,var(--ibt-border));
+  background: linear-gradient(145deg,rgba(18,27,56,.95),rgba(15,15,43,.95));
+}
+body[data-page="product-page-optimization"] .faq-grid summary {
+  min-height: 44px;
+  padding: 14px 17px;
+  cursor: pointer;
+  font-size: .73rem;
+  font-weight: 700;
+}
+body[data-page="product-page-optimization"] .faq-grid p {
+  margin: 0;
+  padding: 0 17px 17px;
+  color: var(--ibt-muted);
+  font-size: .68rem;
+  line-height: 1.7;
+}
+
+/* Sticky conversion action is route-owned; safe-area and motion guards live in
+ * product-page-accessibility.css, which loads after this file. */
+body[data-page="product-page-optimization"] .sticky-service-cta { display: none; }
+
+@media (max-width: 900px) {
+  body[data-page="product-page-optimization"] .req-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  body[data-page="product-page-optimization"] .hotspot-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 680px) {
+  body[data-page="product-page-optimization"] .req-grid { grid-template-columns: 1fr; }
+  body[data-page="product-page-optimization"] .faq-grid { grid-template-columns: 1fr; }
+  body[data-page="product-page-optimization"] .hotspot-layout > .hotspot-canvas,
+  body[data-page="product-page-optimization"] .hotspot-layout > .hotspot-info { display: none; }
+  body[data-page="product-page-optimization"] .hotspot-cards {
+    display: grid;
+    gap: 9px;
+  }
+  body[data-page="product-page-optimization"] .hotspot-cards article {
+    padding: 15px;
+    border: 1px solid var(--ibt-border);
+    background: #091127;
+    border-radius: 12px;
+  }
+  body[data-page="product-page-optimization"] .related-grid {
+    margin-inline: -12px;
+    padding-inline: 12px;
+    grid-auto-columns: minmax(250px,82vw);
+  }
+  body[data-page="product-page-optimization"] .related-grid article { min-height: 350px; }
+  body[data-page="product-page-optimization"] .sticky-service-cta {
+    position: fixed;
+    z-index: 999;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+  body[data-page="product-page-optimization"] .sticky-service-cta.is-visible { display: flex; }
+  body[data-page="product-page-optimization"] .sticky-service-cta .button {
+    width: 100%;
+    box-shadow: 0 15px 40px rgba(4,8,24,.55);
+  }
+}
