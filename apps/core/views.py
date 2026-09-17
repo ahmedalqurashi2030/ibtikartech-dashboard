@@ -31,7 +31,6 @@ def robots_txt(request):
         "Allow: /",
         "Disallow: /control/",
         "Disallow: /django-admin/",
-        "Disallow: /portal/",
         f"Sitemap: {PUBLIC_SITE_ORIGIN}/sitemap.xml",
     )
     return HttpResponse("\n".join(lines) + "\n", content_type="text/plain; charset=utf-8")
