@@ -259,11 +259,15 @@ def effective_family_asset_count(
     asset: str,
     page_key: str,
 ) -> int:
-    block_name = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {}).get(Path(asset).suffix)
+    family_blocks = FAMILY_ASSET_EXTENSION_BLOCKS.get(parent, {})
+    block_name = family_blocks.get(asset) or family_blocks.get(Path(asset).suffix)
     if block_name:
         override = block_payload(page_source, block_name)
         if override is not None:
             return conditional_asset_count(override, asset, page_key)
+        family_block = block_payload(family_source, block_name)
+        if family_block is not None:
+            return conditional_asset_count(family_block, asset, page_key)
         return conditional_asset_count(family_source, asset, page_key)
     return conditional_asset_count(page_source, asset, page_key) + conditional_asset_count(
         family_source,
