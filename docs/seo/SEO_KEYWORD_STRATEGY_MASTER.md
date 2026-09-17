@@ -1002,3 +1002,75 @@ Historical/working keyword documents:
 - `docs/seo/KEYWORD_INTENT_MAP.md`
 
 If ownership wording differs, this master is the canonical decision source until a newer approved version replaces it.
+
+
+# 18. Deep Saudi market evidence pass — 2026-09-18
+
+Canonical evidence file:
+- docs/seo/SAUDI_MARKET_RESEARCH_2026.md
+
+This second research pass added direct current-market evidence for:
+- Salla store design vs storefront customization;
+- store redesign;
+- product-page optimization;
+- ecommerce SEO/measurement;
+- corporate website design;
+- landing-page services;
+- generic SEO services and SEO pricing/comparison intent;
+- visual identity;
+- custom systems/API integration;
+- business automation;
+- GA4/analytics platform-help intent.
+
+## New funnel finding
+
+The Saudi market repeatedly exposes four separate query jobs:
+
+1. Learn: how-to, requirements, problems, explanation.
+2. Compare: company, best, price, cost, packages, what is included.
+3. Hire/execute: design, build, customize, redesign, improve, integrate, automate.
+4. Navigate/buy product: known brand/product such as Tharaa.
+
+Therefore cost/comparison queries are not automatically assigned to the transactional service page as its primary target. They should normally support the service as separate decision content when the subject deserves a page.
+
+## Commercial-investigation clusters added to the roadmap
+
+| Support cluster | Commercial parent | Recommended role |
+| --- | --- | --- |
+| تكلفة إنشاء متجر إلكتروني في السعودية | /services/store-launch/ | Cost/scope decision guide |
+| سعر/تكلفة تصميم متجر سلة | /ecommerce/ + store-launch depending context | Broad pricing/selection guide; avoid duplicate service target |
+| تكلفة تصميم موقع شركة في السعودية | /websites/ | Cost/scope guide |
+| كيف تختار شركة تصميم مواقع | /websites/ | Provider-selection guide |
+| تكلفة صفحة هبوط في السعودية | /websites/ interim / future landing-page service | Cost guide after specialist-page decision |
+| تكلفة تصميم هوية بصرية | /brand-content/ interim / future identity page | Cost/scope guide |
+| أسعار خدمات SEO في السعودية | future general SEO page | Cost/scope guide |
+| كيف تختار شركة سيو | future general SEO page | Provider-selection guide |
+| تكلفة تطوير نظام مخصص | /custom-systems/ | Cost/scope guide |
+| نظام جاهز أم نظام مخصص | /custom-systems/ | Comparison guide |
+| ما الذي يجب أتمتته أولًا | /custom-systems/ | Informational/commercial bridge |
+| تكلفة أتمتة الأعمال | /custom-systems/ | Scope/cost-drivers guide |
+
+## Evidence-backed architecture conclusion
+
+The strongest new-page candidate remains a dedicated generic SEO service page.
+
+The evidence for a dedicated landing-page service also strengthened because current Saudi results commonly present landing pages as an independent service with one offer, one audience, one conversion goal, and campaign tracking.
+
+Visual identity remains a strong specialist-page candidate because current Saudi results frequently separate identity work from broader branding/content services.
+
+No new public URL is created in Phase 5/6. These phases define demand, intent, ownership, and architecture; URL creation belongs to the approved implementation stage.
+
+## Phase completion status
+
+Phase 5 — COMPLETE at qualitative market-research level.
+Phase 6 — COMPLETE at keyword-to-page architecture level.
+
+Still pending by design:
+- Saudi search volume;
+- KD;
+- CPC;
+- exact Google ranking positions;
+- GSC query/impression/click data.
+
+These metrics were not fabricated. They are enrichment fields, not a reason to leave ownership undefined.
+
