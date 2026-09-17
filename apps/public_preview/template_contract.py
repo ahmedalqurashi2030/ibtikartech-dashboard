@@ -63,12 +63,13 @@ FAMILY_EXTENSION_BLOCKS = {
     ),
 }
 
-# Family templates own their stable structure directly. Arbitrary includes
-# remain forbidden by the template-contract verifier.
+# Family templates keep stable structure directly. Only explicitly allowlisted
+# shared ownership partials may be included; arbitrary includes remain forbidden.
+PUBLIC_RUNTIME_CORE_PARTIAL = "public_preview/components/public_runtime_core_scripts.html"
 FAMILY_ALLOWED_PARTIALS = {
-    SERVICE_DETAIL_FAMILY_PARENT: (),
-    SERVICE_CATEGORY_FAMILY_PARENT: (),
-    ARTICLE_DETAIL_FAMILY_PARENT: (),
+    SERVICE_DETAIL_FAMILY_PARENT: (PUBLIC_RUNTIME_CORE_PARTIAL,),
+    SERVICE_CATEGORY_FAMILY_PARENT: (PUBLIC_RUNTIME_CORE_PARTIAL,),
+    ARTICLE_DETAIL_FAMILY_PARENT: (PUBLIC_RUNTIME_CORE_PARTIAL,),
 }
 
 FAMILY_REQUIRED_MARKERS = {
