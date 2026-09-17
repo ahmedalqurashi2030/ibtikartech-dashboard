@@ -140,11 +140,13 @@ def test_service_detail_children_keep_explicit_asset_and_after_main_exceptions()
 
     for asset in (
         "source-product-page.css",
-        "approved-source.css",
         "source-product-page.js",
         "approved-source.js",
     ):
         assert product_source.count(asset) == 1, asset
+
+    # The legacy approved-source stylesheet no longer owns Product presentation.
+    assert "approved-source.css" not in product_source
 
     # Foundation and shared family assets have exactly one canonical owner.
     for inherited_asset in (
