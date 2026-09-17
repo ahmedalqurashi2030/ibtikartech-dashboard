@@ -17,6 +17,7 @@
 {% if site_config.seo.bing_site_verification %}
 <meta name="msvalidate.01" content="{{ site_config.seo.bing_site_verification }}">
 {% endif %}
+{% include "public_preview/components/site_structured_data.html" %}
 {% if site_config.brand.favicon %}
   {% image site_config.brand.favicon width-64 as favicon_image %}
   <link rel="icon" href="{{ favicon_image.url }}" sizes="64x64">
