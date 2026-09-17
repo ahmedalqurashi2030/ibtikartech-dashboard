@@ -1,5 +1,8 @@
 # Ibtikar Tech — Saudi Search Intent Research
 
+> Canonical keyword-strategy source: `docs/seo/SEO_KEYWORD_STRATEGY_MASTER.md`
+> Use this document for its specialist detail; keyword ownership and Phase 5/6 decisions are governed by the master file.
+
 Status: v1.0 qualitative research
 Market: Saudi Arabia first, Gulf second
 Research date: 2026-09-18
