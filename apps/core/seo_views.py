@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_GET
 
-from .sitemaps import public_indexable_paths
+from .sitemaps import PUBLIC_SITE_ORIGIN, public_indexable_paths
 
 
 @require_GET
@@ -13,7 +13,7 @@ from .sitemaps import public_indexable_paths
 def sitemap_xml(request):
     """Serve the approved canonical public URL set as a root XML sitemap."""
     locations = (
-        escape(request.build_absolute_uri(path), {'"': "&quot;"})
+        escape(f"{PUBLIC_SITE_ORIGIN}{path}", {'"': "&quot;"})
         for path in public_indexable_paths()
     )
     entries = "".join(f"<url><loc>{location}</loc></url>" for location in locations)
@@ -23,9 +23,7 @@ def sitemap_xml(request):
         f"{entries}"
         "</urlset>"
     )
-    response = HttpResponse(body, content_type="application/xml; charset=utf-8")
-    response.headers["X-Robots-Tag"] = "noindex"
-    return response
+    return HttpResponse(body, content_type="application/xml; charset=utf-8")
 
 
 def page_not_found(request, exception=None):
