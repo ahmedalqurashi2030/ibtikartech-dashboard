@@ -1,5 +1,8 @@
 # Ibtikar Tech — Keyword & Search Intent Map
 
+> Canonical keyword-strategy source: `docs/seo/SEO_KEYWORD_STRATEGY_MASTER.md`
+> Use this document for its specialist detail; keyword ownership and Phase 5/6 decisions are governed by the master file.
+
 Status: v0.1 — qualitative Saudi SERP / intent map
 Market priority: Saudi Arabia first, Gulf second
 Research snapshot: 2026-09-18
