@@ -5,6 +5,11 @@ Market priority: Saudi Arabia first, Gulf second
 Research snapshot: 2026-09-18
 Canonical site: `https://ibtikartech.co`
 
+> Canonical phase documents:
+> - Phase 5 — Saudi intent/SERP research: `docs/seo/SERP_INTENT_RESEARCH_SA.md`
+> - Phase 6 — keyword ownership/cannibalization map: `docs/seo/KEYWORD_TO_PAGE_MAP.md`
+> This file remains the combined working reference; ownership decisions should follow the Phase 6 map when wording differs.
+
 > Quantitative fields such as monthly search volume, keyword difficulty, and CPC are intentionally not populated in this version. Semrush API units were unavailable during this research pass. No numerical SEO metric is inferred or fabricated.
 
 ## Purpose
