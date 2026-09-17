@@ -314,3 +314,36 @@ Any future SEO change that creates or repurposes a public page must answer:
 
 If those questions are not answered, the page should not be added to the acquisition architecture.
 
+
+
+## 11. Commercial-investigation / cost / comparison map
+
+The full Saudi-market pass identified a distinct comparison layer between informational research and transactional service intent.
+
+| Query cluster | Intent | Primary/support destination | Relationship to service page |
+| --- | --- | --- | --- |
+| تكلفة إنشاء متجر إلكتروني / سعر تصميم متجر سلة | Commercial investigation | Future cost guide supporting /services/store-launch/ and /ecommerce/ | Do not replace launch service owner |
+| أفضل شركة تصميم متجر / مصمم متجر سلة | Provider comparison | Future comparison/selection content only if useful and evidence-led | Ecommerce remains service hub |
+| تكلفة تصميم موقع في السعودية / سعر موقع شركة | Commercial investigation | Future website cost guide | Supports /websites/ |
+| أفضل شركة تصميم مواقع / كيف أختار شركة تصميم مواقع | Provider comparison | Future selection guide | Supports /websites/ |
+| تكلفة صفحة هبوط | Commercial investigation | Future landing-page cost content after architecture decision | Supports current /websites/ or future specialist |
+| تكلفة تصميم هوية بصرية | Commercial investigation | Future identity cost guide | Supports /brand-content/ interim or future identity service |
+| أسعار خدمات SEO / تكلفة SEO | Commercial investigation | Future SEO pricing guide | Supports future general SEO page |
+| أفضل شركة سيو / كيف أختار شركة سيو | Provider comparison | Future neutral selection guide | Supports future general SEO page |
+| تكلفة تطوير نظام مخصص | Commercial investigation | Future cost/scope guide | Supports /custom-systems/ |
+| نظام جاهز أم مخصص | Comparison | Future comparison guide | Supports /custom-systems/ |
+| تكلفة أتمتة الأعمال | Commercial investigation | Future cost-driver guide | Supports /custom-systems/ |
+| ماذا أؤتمت أولًا | Informational/commercial bridge | Future guide | Supports /custom-systems/ |
+
+Rule:
+A service page may answer a short pricing/scope FAQ, but it should not become the primary owner of every “تكلفة / أفضل / مقارنة” cluster when that query clearly expects a decision guide.
+
+---
+
+## 12. Market-evidence source
+
+Detailed qualitative evidence and current source samples:
+- docs/seo/SAUDI_MARKET_RESEARCH_2026.md
+
+This map governs ownership. The evidence report explains why the ownership was chosen.
+
