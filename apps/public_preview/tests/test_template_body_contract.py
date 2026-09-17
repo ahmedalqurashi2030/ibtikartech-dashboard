@@ -139,13 +139,14 @@ def test_service_detail_children_keep_explicit_asset_and_after_main_exceptions()
     assert product_source.count(block_tag("service_family_primitives_scripts")) == 1
 
     for asset in (
-        "source-product-page.css",
+        "product-page.css",
         "source-product-page.js",
         "approved-source.js",
     ):
         assert product_source.count(asset) == 1, asset
 
-    # The legacy approved-source stylesheet no longer owns Product presentation.
+    # Retired legacy presentation layers must not return to Product.
+    assert "source-product-page.css" not in product_source
     assert "approved-source.css" not in product_source
 
     # Foundation and shared family assets have exactly one canonical owner.
