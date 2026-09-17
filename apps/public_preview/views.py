@@ -187,10 +187,6 @@ def contact(request):
     )
 
 
-def not_found_preview(request):
-    return _render_public_page(request, "404.html", "404")
-
-
 def legacy_page_redirect(request, route_name: str):
     """Move old *.html inbound URLs permanently to the canonical clean URL."""
     target = reverse(route_name)
