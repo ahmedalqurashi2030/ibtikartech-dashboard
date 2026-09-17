@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.cache import cache_control, never_cache
 from django.views.decorators.http import require_GET
 
+from .sitemaps import PUBLIC_SITE_ORIGIN
+
 
 def _noindex(response):
     response.headers["X-Robots-Tag"] = "noindex, nofollow"
@@ -30,6 +32,6 @@ def robots_txt(request):
         "Disallow: /control/",
         "Disallow: /django-admin/",
         "Disallow: /portal/",
-        "Sitemap: https://ibtikartech.co/sitemap.xml",
+        f"Sitemap: {PUBLIC_SITE_ORIGIN}/sitemap.xml",
     )
     return HttpResponse("\n".join(lines) + "\n", content_type="text/plain; charset=utf-8")
