@@ -33,6 +33,9 @@ The sitemap must not contain operational routes, authenticated areas, error page
 | `/knowledge/store-launch/` | Article | Yes | Index |
 | `/knowledge/product-page/` | Article | Yes | Index |
 | `/knowledge/store-redesign/` | Article | Yes | Index |
+| `/knowledge/ecommerce-cost-saudi/` | Article | Yes | Index |
+| `/knowledge/website-cost-saudi/` | Article | Yes | Index |
+| `/knowledge/automation-first/` | Article | Yes | Index |
 | `/about/` | Company information | Yes | Index |
 | `/contact/` | Contact/conversion page | Yes | Index |
 
