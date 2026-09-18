@@ -33,7 +33,7 @@
       <span aria-hidden="true">←</span>
       <a href="{% url 'services:index' %}">الحلول والخدمات</a>
       <span aria-hidden="true">←</span>
-      <a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
+      {% block service_breadcrumb_parent %}<a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>{% endblock %}
       <span aria-hidden="true">←</span>
       <b aria-current="page">{% block service_breadcrumb_current %}{% endblock %}</b>
     </nav>
