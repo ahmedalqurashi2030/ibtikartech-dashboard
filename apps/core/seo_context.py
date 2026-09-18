@@ -72,6 +72,12 @@ BREADCRUMB_TRAILS = {
         ("المتاجر الإلكترونية", "public_preview:ecommerce"),
         ("الدعم والتطوير المستمر", "services:ecommerce-support"),
     ),
+    "services:seo": (
+        ("الرئيسية", "public_preview:home"),
+        ("الحلول والخدمات", "services:index"),
+        ("الظهور والقياس والنمو", "public_preview:growth"),
+        ("تحسين محركات البحث SEO", "services:seo"),
+    ),
     "public_preview:knowledge": (
         ("الرئيسية", "public_preview:home"),
         ("المعرفة", "public_preview:knowledge"),
