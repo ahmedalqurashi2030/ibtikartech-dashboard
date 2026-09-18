@@ -155,3 +155,19 @@ Future structured-data nodes should reference these identifiers rather than crea
 ## Deferred verification gate
 
 When the project owner explicitly opens the final verification stage, validate rendered structured data with the appropriate Google tools and inspect how Google sees representative URLs. That validation is intentionally not run in this implementation phase.
+
+
+## Phase 10 implementation update — 2026-09-18
+
+Implementation is now recorded in `docs/seo/PHASE_7_10_IMPLEMENTATION.md`.
+
+Implemented entity graph:
+- Organization + dynamic SiteSettings logo/contact/social data on home.
+- WebSite linked to Organization.
+- BreadcrumbList aligned with approved user-facing IA, including the new SEO service and new knowledge pages.
+- Article schema on all six knowledge articles with consistent author/publisher/site entity relationships.
+- CollectionPage on the knowledge hub linked to WebSite/Organization IDs.
+
+Still intentionally deferred:
+- Tharaa Product/Offer until marketplace price/availability can be kept reliably synchronized.
+- Generic Service markup added only for semantics without a defined need.
