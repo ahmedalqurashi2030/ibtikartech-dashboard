@@ -26,6 +26,9 @@ PUBLIC_INDEXABLE_ROUTE_NAMES = (
     "public_preview:article-store-launch",
     "public_preview:article-product-page",
     "public_preview:article-store-redesign",
+    "public_preview:article-ecommerce-cost-saudi",
+    "public_preview:article-website-cost-saudi",
+    "public_preview:article-automation-first",
     "public_preview:about",
     "public_preview:contact",
 )
