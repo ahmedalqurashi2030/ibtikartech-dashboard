@@ -202,14 +202,13 @@ Link contextually to:
 
 ### Generic SEO rule
 
-A dedicated general SEO page is a validated architecture candidate but not yet implemented.
+The dedicated generic SEO page is implemented at `/services/seo/`.
 
-Until it exists:
-- do not create dead links;
-- do not make `/growth/` and `/services/ecommerce-growth/` compete through identical generic SEO anchors;
-- keep generic SEO references descriptive of the section rather than repeatedly exact-matching `خدمات SEO السعودية`.
-
-When the SEO page is approved, it should become the primary destination for generic SEO commercial anchors.
+Current linking rule:
+- `/growth/` links to `/services/seo/` for generic SEO commercial intent;
+- `/services/ecommerce-growth/` keeps ecommerce-specific SEO and measurement intent;
+- future SEO educational articles should link to `/services/seo/`;
+- generic SEO anchors should not be split between Growth and ecommerce-growth.
 
 ---
 
@@ -401,3 +400,21 @@ These future paths must not be linked until the pages are approved and exist.
 This document defines the target linking graph. Exact per-template insertions should be made through a safe patch/local-repository workflow because several public templates are long and the current GitHub file replacement interface cannot safely patch truncated file bodies.
 
 No runtime/browser/test verification is part of this step; that remains deferred to the final verification gate by project instruction.
+
+
+## SEO specialist `/services/seo/`
+
+### Parent
+- `/growth/` — anchor family: `تحسين محركات البحث SEO`, `خدمات SEO`.
+
+### Related implementation paths
+- `/websites/` when technical/content findings require site changes.
+- `/ecommerce/` and `/services/ecommerce-growth/` for store-specific SEO.
+- `/custom-systems/` only when measurement or data integrations require system work.
+
+### Future supporting content
+- technical SEO / indexing guides;
+- keyword research and search-intent guides;
+- SEO pricing and provider-selection guides.
+
+Do not route generic SEO commercial anchors back to `/growth/` now that a dedicated owner exists.
