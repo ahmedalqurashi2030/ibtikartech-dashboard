@@ -1037,9 +1037,9 @@ Therefore cost/comparison queries are not automatically assigned to the transact
 
 | Support cluster | Commercial parent | Recommended role |
 | --- | --- | --- |
-| تكلفة إنشاء متجر إلكتروني في السعودية | /services/store-launch/ | Cost/scope decision guide |
+| تكلفة إنشاء متجر إلكتروني في السعودية | /services/store-launch/ | Implemented at `/knowledge/ecommerce-cost-saudi/` |
 | سعر/تكلفة تصميم متجر سلة | /ecommerce/ + store-launch depending context | Broad pricing/selection guide; avoid duplicate service target |
-| تكلفة تصميم موقع شركة في السعودية | /websites/ | Cost/scope guide |
+| تكلفة تصميم موقع شركة في السعودية | /websites/ | Implemented at `/knowledge/website-cost-saudi/` |
 | كيف تختار شركة تصميم مواقع | /websites/ | Provider-selection guide |
 | تكلفة صفحة هبوط في السعودية | /websites/ interim / future landing-page service | Cost guide after specialist-page decision |
 | تكلفة تصميم هوية بصرية | /brand-content/ interim / future identity page | Cost/scope guide |
@@ -1047,7 +1047,7 @@ Therefore cost/comparison queries are not automatically assigned to the transact
 | كيف تختار شركة سيو | future general SEO page | Provider-selection guide |
 | تكلفة تطوير نظام مخصص | /custom-systems/ | Cost/scope guide |
 | نظام جاهز أم نظام مخصص | /custom-systems/ | Comparison guide |
-| ما الذي يجب أتمتته أولًا | /custom-systems/ | Informational/commercial bridge |
+| ما الذي يجب أتمتته أولًا | /custom-systems/ | Implemented at `/knowledge/automation-first/` |
 | تكلفة أتمتة الأعمال | /custom-systems/ | Scope/cost-drivers guide |
 
 ## Evidence-backed architecture conclusion
