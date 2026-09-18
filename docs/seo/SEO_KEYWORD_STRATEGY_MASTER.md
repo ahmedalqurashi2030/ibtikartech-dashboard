@@ -295,7 +295,7 @@ Current architecture:
 - no pure general SEO commercial page.
 
 #### Generic commercial SEO cluster
-Future dedicated owner: High-priority candidate
+Primary owner: `/services/seo/`
 
 Variants:
 - شركة سيو السعودية
@@ -620,7 +620,7 @@ Primary role:
 | تصميم صفحة هبوط | Transactional | `/websites/` interim | future landing page | Move ownership only after new page approval | Candidate |
 | تصميم هوية بصرية | Transactional | `/brand-content/` interim | websites/ecommerce | Move ownership only after specialist approval | Candidate |
 | محتوى/استراتيجية علامة | Commercial specialist | `/brand-content/` | websites/ecommerce/growth | Brand → implementation | Existing secondary |
-| شركة سيو / خدمات SEO / تحسين محركات البحث | Commercial/transactional | Future general SEO page | growth, ecommerce-growth, future articles | Future SEO becomes generic commercial destination | GAP / P1 |
+| شركة سيو / خدمات SEO / تحسين محركات البحث | Commercial/transactional | `/services/seo/` | growth, ecommerce-growth, future articles | Future SEO becomes generic commercial destination | GAP / P1 |
 | SEO تقني / تدقيق SEO | Mixed specialist | Future SEO architecture | future guides | Parent first | Candidate |
 | GA4 / tracking / قياس موقع | Commercial implementation | `/growth/` | ecommerce-growth | General → ecommerce when store-specific | Existing |
 | CRO / تحسين معدل التحويل | Commercial specialist | `/growth/` interim | websites/ecommerce | Growth → implementation page | Interim |
@@ -654,7 +654,7 @@ Use modifiers instead:
 
 ### 5.2 Generic SEO
 
-Future general SEO page owns:
+`/services/seo/` owns:
 - شركة سيو السعودية;
 - خدمات SEO;
 - تحسين محركات البحث;
@@ -1043,8 +1043,8 @@ Therefore cost/comparison queries are not automatically assigned to the transact
 | كيف تختار شركة تصميم مواقع | /websites/ | Provider-selection guide |
 | تكلفة صفحة هبوط في السعودية | /websites/ interim / future landing-page service | Cost guide after specialist-page decision |
 | تكلفة تصميم هوية بصرية | /brand-content/ interim / future identity page | Cost/scope guide |
-| أسعار خدمات SEO في السعودية | future general SEO page | Cost/scope guide |
-| كيف تختار شركة سيو | future general SEO page | Provider-selection guide |
+| أسعار خدمات SEO في السعودية | `/services/seo/` | Cost/scope guide |
+| كيف تختار شركة سيو | `/services/seo/` | Provider-selection guide |
 | تكلفة تطوير نظام مخصص | /custom-systems/ | Cost/scope guide |
 | نظام جاهز أم نظام مخصص | /custom-systems/ | Comparison guide |
 | ما الذي يجب أتمتته أولًا | /custom-systems/ | Implemented at `/knowledge/automation-first/` |
@@ -1052,7 +1052,7 @@ Therefore cost/comparison queries are not automatically assigned to the transact
 
 ## Evidence-backed architecture conclusion
 
-The strongest new-page candidate remains a dedicated generic SEO service page.
+The strongest architecture gap, generic SEO, is now implemented at `/services/seo/`.
 
 The evidence for a dedicated landing-page service also strengthened because current Saudi results commonly present landing pages as an independent service with one offer, one audience, one conversion goal, and campaign tracking.
 
