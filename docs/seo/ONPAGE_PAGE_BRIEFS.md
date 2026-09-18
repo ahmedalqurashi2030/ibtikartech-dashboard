@@ -327,3 +327,35 @@ No new URLs, no schema expansion, no content-cluster creation, no dedicated SEO/
 - Dedicated ecommerce SEO page — medium priority, after general SEO architecture is settled.
 
 Quantitative validation remains pending Semrush API units and later GSC data.
+
+
+## SEO service `/services/seo/`
+
+### Primary intent
+Commercial / transactional generic SEO in Saudi Arabia.
+
+### Primary cluster
+- خدمات تحسين محركات البحث
+- شركة SEO السعودية
+- شركة تحسين محركات البحث
+- SEO للمواقع والشركات
+
+### Secondary entities/topics
+- Technical SEO
+- Search Intent
+- Keyword-to-Page mapping
+- On-page SEO
+- Internal linking
+- Content system
+- Structured data
+- Search Console / Analytics when available
+
+### Guardrails
+- No first-place guarantees.
+- No link-scheme language.
+- No city doorway-page expansion.
+- Ecommerce-specific SEO remains with ecommerce-growth unless a later specialist is approved.
+
+### Internal links
+Parent: `/growth/`.
+Related: `/websites/`, `/ecommerce/`, `/services/ecommerce-growth/`, `/custom-systems/`.
