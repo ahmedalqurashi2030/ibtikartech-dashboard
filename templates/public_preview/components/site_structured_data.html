@@ -8,7 +8,8 @@
       "@id": "{{ site_config.seo.site_root_url|escapejs }}#organization",
       "name": "{{ site_config.seo.organization_name|escapejs }}",
       "alternateName": "{{ site_config.brand.name_en|escapejs }}",
-      "url": "{{ site_config.seo.site_root_url|escapejs }}"{% if site_config.contact.email %},
+      "url": "{{ site_config.seo.site_root_url|escapejs }}"{% if site_config.brand.logo_url %},
+      "logo": "{{ site_config.brand.logo_url|escapejs }}"{% endif %}{% if site_config.contact.email %},
       "email": "{{ site_config.contact.email|escapejs }}"{% endif %}{% if site_config.contact.phone %},
       "telephone": "{{ site_config.contact.phone|escapejs }}"{% endif %}{% if site_config.social_links %},
       "sameAs": [{% for social in site_config.social_links %}"{{ social.url|escapejs }}"{% if not forloop.last %}, {% endif %}{% endfor %}]{% endif %}
