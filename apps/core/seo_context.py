@@ -91,6 +91,21 @@ BREADCRUMB_TRAILS = {
         ("المعرفة", "public_preview:knowledge"),
         ("تخصيص الواجهة أم إعادة التصميم", "public_preview:article-store-redesign"),
     ),
+    "public_preview:article-ecommerce-cost-saudi": (
+        ("الرئيسية", "public_preview:home"),
+        ("المعرفة", "public_preview:knowledge"),
+        ("تكلفة إنشاء متجر إلكتروني", "public_preview:article-ecommerce-cost-saudi"),
+    ),
+    "public_preview:article-website-cost-saudi": (
+        ("الرئيسية", "public_preview:home"),
+        ("المعرفة", "public_preview:knowledge"),
+        ("تكلفة موقع شركة", "public_preview:article-website-cost-saudi"),
+    ),
+    "public_preview:article-automation-first": (
+        ("الرئيسية", "public_preview:home"),
+        ("المعرفة", "public_preview:knowledge"),
+        ("ما الذي يجب أتمتته أولًا", "public_preview:article-automation-first"),
+    ),
 }
 
 
