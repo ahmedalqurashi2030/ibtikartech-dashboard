@@ -43,8 +43,8 @@ A supporting page may mention the cluster naturally, but it must not be optimize
 | تصميم صفحة هبوط / Landing Page السعودية | Transactional | `/websites/` interim | future dedicated landing-page service | Websites owns until dedicated URL is approved | Interim / candidate |
 | تصميم هوية بصرية / تصميم هوية تجارية / شركة تصميم هوية | Transactional | `/brand-content/` interim | websites, ecommerce | Brand-content owns until dedicated URL is approved | Interim / candidate |
 | استراتيجية علامة / محتوى موقع / محتوى متجر | Commercial specialist | `/brand-content/` | websites, ecommerce, growth | Brand/content → implementation destination | Existing secondary clusters |
-| شركة سيو السعودية / خدمات SEO / تحسين محركات البحث | Transactional / commercial investigation | Future dedicated SEO service | `/growth/`, ecommerce-growth, future articles | Once created: Growth → SEO; articles → SEO; ecommerce-growth keeps ecommerce modifier | GAP — high priority |
-| SEO تقني / تدقيق SEO | Mixed specialist | Future SEO architecture | future informational guides | Parent SEO page first; specialist split only after demand proof | Candidate |
+| شركة سيو السعودية / خدمات SEO / تحسين محركات البحث | Transactional / commercial investigation | `/services/seo/` | `/growth/`, ecommerce-growth, future articles | Growth → `/services/seo/`; future SEO articles → `/services/seo/`; ecommerce-growth keeps ecommerce modifier | Implemented owner |
+| SEO تقني / تدقيق SEO | Mixed specialist | `/services/seo/` architecture | future informational guides | Parent SEO page first; specialist split only after demand proof | Candidate |
 | تحسين معدل التحويل / CRO | Commercial specialist | `/growth/` interim | websites, ecommerce-growth | Growth → implementation page when issue is page/store-specific | Existing interim |
 | إعداد GA4 / تتبع التحويلات / قياس الموقع | Commercial specialist for implementation; informational for basic setup | `/growth/` | official platform docs are informational; ecommerce-growth for stores | Growth → ecommerce-growth for store-specific work | Existing owner |
 | تطوير أنظمة مخصصة / برمجة نظام مخصص | Transactional B2B | `/custom-systems/` | websites, growth | Services → custom systems; systems → website when need is only front-end marketing | Existing owner |
@@ -328,8 +328,8 @@ The full Saudi-market pass identified a distinct comparison layer between inform
 | أفضل شركة تصميم مواقع / كيف أختار شركة تصميم مواقع | Provider comparison | Future selection guide | Supports /websites/ |
 | تكلفة صفحة هبوط | Commercial investigation | Future landing-page cost content after architecture decision | Supports current /websites/ or future specialist |
 | تكلفة تصميم هوية بصرية | Commercial investigation | Future identity cost guide | Supports /brand-content/ interim or future identity service |
-| أسعار خدمات SEO / تكلفة SEO | Commercial investigation | Future SEO pricing guide | Supports future general SEO page |
-| أفضل شركة سيو / كيف أختار شركة سيو | Provider comparison | Future neutral selection guide | Supports future general SEO page |
+| أسعار خدمات SEO / تكلفة SEO | Commercial investigation | Future SEO pricing guide | Supports `/services/seo/` |
+| أفضل شركة سيو / كيف أختار شركة سيو | Provider comparison | Future neutral selection guide | Supports `/services/seo/` |
 | تكلفة تطوير نظام مخصص | Commercial investigation | Future cost/scope guide | Supports /custom-systems/ |
 | نظام جاهز أم مخصص | Comparison | Future comparison guide | Supports /custom-systems/ |
 | تكلفة أتمتة الأعمال | Commercial investigation | Future cost-driver guide | Supports /custom-systems/ |
