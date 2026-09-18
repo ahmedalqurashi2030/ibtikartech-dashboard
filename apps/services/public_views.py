@@ -50,3 +50,7 @@ def ecommerce_growth(request):
 
 def ecommerce_support(request):
     return _render_service_page(request, "ecommerce-support.html", "ecommerce-support")
+
+
+def seo(request):
+    return _render_service_page(request, "seo.html", "seo")
