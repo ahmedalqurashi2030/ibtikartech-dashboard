@@ -78,6 +78,30 @@ def article_store_redesign(request):
     return _render_public_page(request, "article-store-redesign.html", "article-store-redesign")
 
 
+def article_ecommerce_cost_saudi(request):
+    return _render_public_page(
+        request,
+        "article-ecommerce-cost-saudi.html",
+        "article-ecommerce-cost-saudi",
+    )
+
+
+def article_website_cost_saudi(request):
+    return _render_public_page(
+        request,
+        "article-website-cost-saudi.html",
+        "article-website-cost-saudi",
+    )
+
+
+def article_automation_first(request):
+    return _render_public_page(
+        request,
+        "article-automation-first.html",
+        "article-automation-first",
+    )
+
+
 def about(request):
     return _render_public_page(request, "about.html", "about")
 
