@@ -27,6 +27,7 @@ The sitemap must not contain operational routes, authenticated areas, error page
 | `/services/product-page-optimization/` | Commercial service | Yes | Index |
 | `/services/ecommerce-growth/` | Commercial service | Yes | Index |
 | `/services/ecommerce-support/` | Commercial service | Yes | Index |
+| `/services/seo/` | Commercial SEO service | Yes | Index |
 | `/tharaa/` | Product/theme landing page | Yes | Index |
 | `/portfolio/` | Proof/portfolio | Yes | Index |
 | `/knowledge/` | Knowledge hub | Yes | Index |
