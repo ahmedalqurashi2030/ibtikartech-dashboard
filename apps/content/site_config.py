@@ -14,6 +14,7 @@ class BrandConfig:
     name_en: str
     tagline: str
     logo: object | None
+    logo_url: str
     logo_inverse: object | None
     favicon: object | None
     default_social_image: object | None
@@ -133,6 +134,7 @@ def resolve_site_config(request):
             name_en=site_settings.site_name_en or "Ibtikar Tech",
             tagline=tagline or site_settings.tagline_ar,
             logo=site_settings.logo,
+            logo_url=_absolute_media_url(request, site_settings.logo),
             logo_inverse=site_settings.logo_inverse,
             favicon=site_settings.favicon,
             default_social_image=site_settings.default_social_image,
