@@ -20,6 +20,7 @@ PUBLIC_INDEXABLE_ROUTE_NAMES = (
     "services:product-page-optimization",
     "services:ecommerce-growth",
     "services:ecommerce-support",
+    "services:seo",
     "public_preview:tharaa",
     "public_preview:portfolio",
     "public_preview:knowledge",
