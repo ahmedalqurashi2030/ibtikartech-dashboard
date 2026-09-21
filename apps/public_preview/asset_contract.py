@@ -32,6 +32,9 @@ ARTICLE_DETAIL_PAGE_NAMES = (
     "article-product-page.html",
     "article-store-launch.html",
     "article-store-redesign.html",
+    "article-ecommerce-cost-saudi.html",
+    "article-website-cost-saudi.html",
+    "article-automation-first.html",
 )
 
 SECTION_LAYOUT_ASSET = (
