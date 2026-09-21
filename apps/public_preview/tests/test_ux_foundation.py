@@ -141,7 +141,6 @@ def test_route_scoped_assets_are_opted_in_once_by_approved_consumers():
     from pathlib import Path
 
     from apps.public_preview.asset_contract import ROUTE_SCOPED_ASSET_CONSUMERS
-    from apps.public_preview.manifest import REQUIRED_PAGES
     from apps.public_preview.template_contract import (
         BASE_TEMPLATE_PARENT,
         FAMILY_REQUIRED_BLOCKS,
@@ -494,6 +493,7 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
     from collections import Counter
     from pathlib import Path
 
+    from apps.public_preview.manifest import REQUIRED_PAGES
     from apps.public_preview.template_contract import (
         BASE_TEMPLATE_PARENT,
         FAMILY_REQUIRED_BLOCKS,
