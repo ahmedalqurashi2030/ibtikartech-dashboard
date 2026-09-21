@@ -21,6 +21,9 @@ const routes = [
   { name: 'article-store-launch', path: '/knowledge/store-launch/' },
   { name: 'article-product-page', path: '/knowledge/product-page/' },
   { name: 'article-store-redesign', path: '/knowledge/store-redesign/' },
+  { name: 'article-ecommerce-cost-saudi', path: '/knowledge/ecommerce-cost-saudi/' },
+  { name: 'article-website-cost-saudi', path: '/knowledge/website-cost-saudi/' },
+  { name: 'article-automation-first', path: '/knowledge/automation-first/' },
   { name: 'about', path: '/about/' },
   { name: 'contact', path: '/contact/' },
   { name: 'store-launch', path: '/services/store-launch/' },
@@ -29,6 +32,7 @@ const routes = [
   { name: 'product-page-optimization', path: '/services/product-page-optimization/' },
   { name: 'ecommerce-growth', path: '/services/ecommerce-growth/' },
   { name: 'ecommerce-support', path: '/services/ecommerce-support/' },
+  { name: 'seo', path: '/services/seo/' },
   { name: 'not-found', path: '/404/' },
 ];
 
@@ -313,12 +317,31 @@ async function inspect(client) {
 
     const blocking = [];
     report.forEach((item) => {
+      const isExpectedNotFound = item.route === '/404/';
+
       item.runtimeEvents.forEach((event) => {
+        const expected404Console = isExpectedNotFound
+          && event.level === 'error'
+          && /status of 404|404 \(Not Found\)/i.test(event.text || '');
+        if (expected404Console) return;
+
         if (event.type === 'exception' || event.level === 'error') {
           blocking.push(`${item.route} [${item.viewport}] runtime: ${event.details || event.text}`);
         }
       });
+
       item.networkEvents.forEach((event) => {
+        const expected404Response = isExpectedNotFound
+          && event.status === 404
+          && (() => {
+            try {
+              return new URL(event.url || baseUrl, baseUrl).pathname === '/404/';
+            } catch (_) {
+              return false;
+            }
+          })();
+        if (expected404Response) return;
+
         blocking.push(`${item.route} [${item.viewport}] network: ${event.status || event.errorText} ${event.url}`);
       });
     });
