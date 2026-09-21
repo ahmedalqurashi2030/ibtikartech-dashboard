@@ -84,7 +84,10 @@ def _absolute_media_url(request, image):
         return ""
     url = image.file.url
     parts = urlsplit(url)
-    return url if parts.scheme and parts.netloc else request.build_absolute_uri(url)
+    if parts.scheme and parts.netloc:
+        return url
+    path = url if url.startswith("/") else f"/{url}"
+    return f"{PUBLIC_SITE_ORIGIN}{path}"
 
 
 def _social_links(site_settings):
