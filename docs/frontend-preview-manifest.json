@@ -20,6 +20,9 @@
     "article-product-page.html",
     "article-store-launch.html",
     "article-store-redesign.html",
+    "article-ecommerce-cost-saudi.html",
+    "article-website-cost-saudi.html",
+    "article-automation-first.html",
     "about.html",
     "contact.html",
     "store-launch.html",
@@ -28,6 +31,7 @@
     "product-page-optimization.html",
     "ecommerce-growth.html",
     "ecommerce-support.html",
+    "seo.html",
     "404.html"
   ],
   "retired_platform_pages": [

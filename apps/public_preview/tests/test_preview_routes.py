@@ -5,7 +5,12 @@ import pytest
 from django.conf import settings
 from django.urls import reverse
 
-from apps.public_preview.manifest import PAGE_URL_NAMES, REQUIRED_PAGES, RETIRED_PLATFORM_PAGES
+from apps.public_preview.manifest import (
+    LEGACY_PAGE_URL_NAMES,
+    PAGE_URL_NAMES,
+    REQUIRED_PAGES,
+    RETIRED_PLATFORM_PAGES,
+)
 from apps.public_preview.template_contract import (
     BASE_TEMPLATE_PARENT,
     FAMILY_ALLOWED_PARTIALS,
@@ -35,6 +40,9 @@ ARTICLE_DETAIL_PAGES = (
     "article-product-page.html",
     "article-store-launch.html",
     "article-store-redesign.html",
+    "article-ecommerce-cost-saudi.html",
+    "article-website-cost-saudi.html",
+    "article-automation-first.html",
 )
 
 SERVICE_DETAIL_PAGES = (
@@ -44,6 +52,7 @@ SERVICE_DETAIL_PAGES = (
     "product-page-optimization.html",
     "ecommerce-growth.html",
     "ecommerce-support.html",
+    "seo.html",
 )
 
 SERVICE_DECISION_KEYS = ("problems", "fit", "scope", "deliverables", "exclusions")
@@ -54,7 +63,8 @@ SERVICE_DECISION_KEYS = ("problems", "fit", "scope", "deliverables", "exclusions
 def test_clean_named_public_routes_render(client, page_name, pattern_name):
     response = client.get(reverse(pattern_name))
 
-    assert response.status_code == 200
+    expected_status = 404 if page_name == "404.html" else 200
+    assert response.status_code == expected_status
     html = response.content.decode()
     assert html.count('id="ibtikarSiteHeader"') == 1
     assert html.count('class="ibt-shell-footer"') == 1
@@ -64,7 +74,7 @@ def test_clean_named_public_routes_render(client, page_name, pattern_name):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("page_name,pattern_name", PAGE_URL_NAMES.items())
+@pytest.mark.parametrize("page_name,pattern_name", LEGACY_PAGE_URL_NAMES.items())
 def test_legacy_html_routes_permanently_redirect_to_clean_urls(client, page_name, pattern_name):
     response = client.get(f"/{page_name}", follow=False)
 

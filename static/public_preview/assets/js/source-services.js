@@ -2,7 +2,8 @@
 (function () {
   'use strict';
 
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+    || matchMedia('(max-width: 760px)').matches;
   const bar = document.getElementById('progressBar');
 
   if (bar) {

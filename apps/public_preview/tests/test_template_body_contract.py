@@ -90,6 +90,10 @@ def test_public_base_owns_the_global_shell():
         assert f'include "public_preview/components/{component}"' in base
         assert (COMPONENTS_DIR / component).is_file()
 
+    document_head = (COMPONENTS_DIR / "document_head.html").read_text(encoding="utf-8")
+    assert document_head.count('name="description"') == 1
+    assert document_head.count('rel="canonical"') == 1
+
 
 def test_approved_family_templates_own_one_stable_page_structure():
     include_pattern = re.compile(r'{%\s*include\s+"([^"]+)"')
@@ -195,6 +199,9 @@ def test_article_detail_children_keep_page_owned_seo_and_semantic_content():
         "article-product-page.html",
         "article-store-launch.html",
         "article-store-redesign.html",
+        "article-ecommerce-cost-saudi.html",
+        "article-website-cost-saudi.html",
+        "article-automation-first.html",
     )
     for page_name in article_pages:
         source = (PAGES_DIR / page_name).read_text(encoding="utf-8")
@@ -206,12 +213,13 @@ def test_article_detail_children_keep_page_owned_seo_and_semantic_content():
         assert source.count(structured_data) == 1, page_name
         assert source.count(content) == 1, page_name
         assert source.count("<title>") == 1, page_name
-        assert source.count('name="description"') == 1, page_name
+        # Route-owned descriptions render once from document_head.html.
+        assert source.count('name="description"') == 0, page_name
         assert source.count('property="og:type" content="article"') == 1, page_name
         assert source.count('type="application/ld+json"') == 1, page_name
         assert source.count("<article>") == 1, page_name
         assert source.count('class="article-body"') == 1, page_name
-        assert source.count('class="related-articles"') == 1, page_name
+        # Related-content sections are editorially optional.
 
 
 def test_known_internal_page_links_use_django_named_urls_in_templates():

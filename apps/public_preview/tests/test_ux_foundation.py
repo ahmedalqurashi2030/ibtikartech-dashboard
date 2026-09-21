@@ -389,6 +389,7 @@ def test_public_hero_images_are_shared_files_not_inline_base64():
                 "templates/public_preview/pages/growth.html",
                 "templates/public_preview/pages/custom-systems.html",
                 "templates/public_preview/pages/services.html",
+                "templates/public_preview/pages/seo.html",
             ),
             "jpeg",
         ),
@@ -430,7 +431,7 @@ def test_public_hero_images_are_shared_files_not_inline_base64():
             assert source.count(public_path) == 1
             template_count += 1
 
-    assert template_count == 11
+    assert template_count == 12
 
 
 def test_services_runtime_uses_dom_count_and_guards_optional_canvas():
@@ -492,6 +493,7 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
     from collections import Counter
     from pathlib import Path
 
+    from apps.public_preview.manifest import REQUIRED_PAGES
     from apps.public_preview.template_contract import (
         BASE_TEMPLATE_PARENT,
         FAMILY_REQUIRED_BLOCKS,
@@ -500,7 +502,7 @@ def test_all_public_pages_use_one_shared_shell_and_valid_navigation_contract():
     )
 
     pages = sorted(Path("templates/public_preview/pages").glob("*.html"))
-    assert len(pages) == 22
+    assert len(pages) == len(REQUIRED_PAGES)
     family_sources = {
         parent: _read_source(str(Path("templates") / parent))
         for parent in FAMILY_REQUIRED_BLOCKS

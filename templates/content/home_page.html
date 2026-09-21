@@ -3,6 +3,11 @@
 
 {% block title %}{{ page.seo_title|default:page.title }} — ابتكار تك{% endblock %}
 
+{% block head_meta %}
+  {# Wagtail catch-all pages are noindex by default until explicitly approved in SEO indexation governance. #}
+  <meta name="robots" content="noindex,follow">
+{% endblock %}
+
 {% block content %}
 <section class="container section">
   <h1>{{ page.title }}</h1>

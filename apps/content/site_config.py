@@ -1,8 +1,10 @@
 from dataclasses import dataclass
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import urlsplit
 
 from django.conf import settings as django_settings
 from django.urls import reverse
+
+from apps.core.sitemaps import PUBLIC_SITE_ORIGIN
 
 from .models import SiteSettings, TrackingSettings
 
@@ -14,6 +16,7 @@ class BrandConfig:
     name_en: str
     tagline: str
     logo: object | None
+    logo_url: str
     logo_inverse: object | None
     favicon: object | None
     default_social_image: object | None
@@ -67,13 +70,13 @@ class SiteConfig:
 
 
 def _absolute_request_path(request):
-    parts = urlsplit(request.build_absolute_uri(request.path))
-    return urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
+    """Build public canonicals on the approved production origin, never Host."""
+    return f"{PUBLIC_SITE_ORIGIN}{request.path}"
 
 
 def _site_root_url(request):
-    parts = urlsplit(request.build_absolute_uri("/"))
-    return urlunsplit((parts.scheme, parts.netloc, "/", "", ""))
+    """Keep the public entity/site origin aligned with sitemap and canonicals."""
+    return f"{PUBLIC_SITE_ORIGIN}/"
 
 
 def _absolute_media_url(request, image):
@@ -81,7 +84,10 @@ def _absolute_media_url(request, image):
         return ""
     url = image.file.url
     parts = urlsplit(url)
-    return url if parts.scheme and parts.netloc else request.build_absolute_uri(url)
+    if parts.scheme and parts.netloc:
+        return url
+    path = url if url.startswith("/") else f"/{url}"
+    return f"{PUBLIC_SITE_ORIGIN}{path}"
 
 
 def _social_links(site_settings):
@@ -133,6 +139,7 @@ def resolve_site_config(request):
             name_en=site_settings.site_name_en or "Ibtikar Tech",
             tagline=tagline or site_settings.tagline_ar,
             logo=site_settings.logo,
+            logo_url=_absolute_media_url(request, site_settings.logo),
             logo_inverse=site_settings.logo_inverse,
             favicon=site_settings.favicon,
             default_social_image=site_settings.default_social_image,

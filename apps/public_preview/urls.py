@@ -1,5 +1,7 @@
 from django.urls import path
 
+from apps.core.seo_views import page_not_found
+
 from . import views
 
 app_name = "public_preview"
@@ -29,9 +31,24 @@ urlpatterns = [
         views.article_store_redesign,
         name="article-store-redesign",
     ),
+    path(
+        "knowledge/ecommerce-cost-saudi/",
+        views.article_ecommerce_cost_saudi,
+        name="article-ecommerce-cost-saudi",
+    ),
+    path(
+        "knowledge/website-cost-saudi/",
+        views.article_website_cost_saudi,
+        name="article-website-cost-saudi",
+    ),
+    path(
+        "knowledge/automation-first/",
+        views.article_automation_first,
+        name="article-automation-first",
+    ),
     path("about/", views.about, name="about"),
     path("contact/", views.contact, name="contact"),
-    path("404/", views.not_found_preview, name="not-found-preview"),
+    path("404/", page_not_found, name="not-found-preview"),
     # Legacy inbound URLs are redirects only. They never render a *.html URL.
     path(
         "index.html",

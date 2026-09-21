@@ -12,6 +12,9 @@ REQUIRED_PAGES = (
     "article-product-page.html",
     "article-store-launch.html",
     "article-store-redesign.html",
+    "article-ecommerce-cost-saudi.html",
+    "article-website-cost-saudi.html",
+    "article-automation-first.html",
     "about.html",
     "contact.html",
     "store-launch.html",
@@ -20,6 +23,7 @@ REQUIRED_PAGES = (
     "product-page-optimization.html",
     "ecommerce-growth.html",
     "ecommerce-support.html",
+    "seo.html",
     "404.html",
 )
 
@@ -38,6 +42,18 @@ PUBLIC_PAGE_ROUTES = {
     "article-product-page.html": ("knowledge/product-page/", "article-product-page"),
     "article-store-launch.html": ("knowledge/store-launch/", "article-store-launch"),
     "article-store-redesign.html": ("knowledge/store-redesign/", "article-store-redesign"),
+    "article-ecommerce-cost-saudi.html": (
+        "knowledge/ecommerce-cost-saudi/",
+        "article-ecommerce-cost-saudi",
+    ),
+    "article-website-cost-saudi.html": (
+        "knowledge/website-cost-saudi/",
+        "article-website-cost-saudi",
+    ),
+    "article-automation-first.html": (
+        "knowledge/automation-first/",
+        "article-automation-first",
+    ),
     "about.html": ("about/", "about"),
     "contact.html": ("contact/", "contact"),
     "404.html": ("404/", "not-found-preview"),
@@ -53,6 +69,7 @@ SERVICE_PAGE_ROUTES = {
     "product-page-optimization.html": ("product-page-optimization/", "product-page-optimization"),
     "ecommerce-growth.html": ("ecommerce-growth/", "ecommerce-growth"),
     "ecommerce-support.html": ("ecommerce-support/", "ecommerce-support"),
+    "seo.html": ("seo/", "seo"),
 }
 
 PAGE_URL_NAMES = {
@@ -69,6 +86,9 @@ PAGE_URL_NAMES = {
     "article-product-page.html": "public_preview:article-product-page",
     "article-store-launch.html": "public_preview:article-store-launch",
     "article-store-redesign.html": "public_preview:article-store-redesign",
+    "article-ecommerce-cost-saudi.html": "public_preview:article-ecommerce-cost-saudi",
+    "article-website-cost-saudi.html": "public_preview:article-website-cost-saudi",
+    "article-automation-first.html": "public_preview:article-automation-first",
     "about.html": "public_preview:about",
     "contact.html": "public_preview:contact",
     "store-launch.html": "services:store-launch",
@@ -77,6 +97,7 @@ PAGE_URL_NAMES = {
     "product-page-optimization.html": "services:product-page-optimization",
     "ecommerce-growth.html": "services:ecommerce-growth",
     "ecommerce-support.html": "services:ecommerce-support",
+    "seo.html": "services:seo",
     "404.html": "public_preview:not-found-preview",
 }
 
@@ -87,3 +108,35 @@ RETIRED_PLATFORM_PAGES = (
     "woocommerce.html",
     "wordpress.html",
 )
+
+
+# Only URLs that existed in the retired *.html public surface receive
+# compatibility redirects. New SEO/content routes must not create synthetic
+# legacy aliases solely for test convenience.
+LEGACY_PAGE_URL_NAMES = {
+    page_name: PAGE_URL_NAMES[page_name]
+    for page_name in (
+        "index.html",
+        "services.html",
+        "ecommerce.html",
+        "websites.html",
+        "brand-content.html",
+        "growth.html",
+        "custom-systems.html",
+        "tharaa.html",
+        "portfolio.html",
+        "knowledge.html",
+        "article-product-page.html",
+        "article-store-launch.html",
+        "article-store-redesign.html",
+        "about.html",
+        "contact.html",
+        "store-launch.html",
+        "storefront-customization.html",
+        "store-redesign.html",
+        "product-page-optimization.html",
+        "ecommerce-growth.html",
+        "ecommerce-support.html",
+        "404.html",
+    )
+}

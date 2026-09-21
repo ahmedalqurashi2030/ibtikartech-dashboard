@@ -2,7 +2,6 @@
 
 {% block head %}
 <title>{% block service_page_title %}{% endblock %}</title>
-<meta name="description" content="{% block service_meta_description %}{% endblock %}">
 {% block service_styles %}
   {% block service_family_prelude_styles %}
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css" data-service-family-style="inner">
@@ -33,7 +32,7 @@
       <span aria-hidden="true">←</span>
       <a href="{% url 'services:index' %}">الحلول والخدمات</a>
       <span aria-hidden="true">←</span>
-      <a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>
+      {% block service_breadcrumb_parent %}<a href="{% url 'public_preview:ecommerce' %}">المتاجر الإلكترونية</a>{% endblock %}
       <span aria-hidden="true">←</span>
       <b aria-current="page">{% block service_breadcrumb_current %}{% endblock %}</b>
     </nav>

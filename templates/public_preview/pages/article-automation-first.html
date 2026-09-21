@@ -1,0 +1,72 @@
+{% extends "public_preview/families/article_detail_base.html" %}
+
+{% block article_head_metadata %}
+<title>ما الذي يجب أتمتته أولًا؟ دليل عملي قبل شراء الأدوات | ابتكار تك</title>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#060b19">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ما الذي يجب أتمتته أولًا؟">
+<meta property="og:description" content="طريقة عملية لاختيار العملية المناسبة للأتمتة: التكرار، القواعد، البيانات، الاستثناءات، المراجعة البشرية، والأثر قبل شراء أي أداة.">
+<meta property="article:published_time" content="2026-09-18">
+{% endblock %}
+
+{% block article_structured_data %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ما الذي يجب أتمتته أولًا؟ دليل عملي قبل شراء الأدوات","datePublished":"2026-09-18","dateModified":"2026-09-18","inLanguage":"ar-SA","author":{"@type":"Organization","name":"فريق ابتكار تك","url":"https://ibtikartech.co/about/"},"publisher":{"@type":"Organization","@id":"https://ibtikartech.co/#organization","name":"ابتكار تك","url":"https://ibtikartech.co/"},"isPartOf":{"@id":"https://ibtikartech.co/#website"},"mainEntityOfPage":"https://ibtikartech.co{% url 'public_preview:article-automation-first' %}"}</script>
+{% endblock %}
+
+{% block article_content %}
+<article>
+<header class="article-hero"><div class="container"><div class="article-header">
+<nav class="breadcrumbs" aria-label="مسار التنقل"><a href="{% url 'public_preview:home' %}">الرئيسية</a><span>←</span><a href="{% url 'public_preview:knowledge' %}">المعرفة</a><span>←</span><span aria-current="page">أتمتة الأعمال</span></nav>
+<span class="article-topic">الأنظمة والأتمتة</span>
+<h1>ما الذي يجب أتمتته أولًا؟ <span>ابدأ بالعملية، لا بالأداة.</span></h1>
+<p class="article-deck">ليست كل مهمة متكررة مرشحًا جيدًا للأتمتة. العملية المناسبة تكون مفهومة، مستقرة نسبيًا، لها قواعد وبيانات معروفة، ويمكن تحديد ما يحدث عند الخطأ أو الاستثناء.</p>
+<div class="article-meta"><span>7 دقائق قراءة</span><span><time datetime="2026-09-18">18 سبتمبر 2026</time></span><span>فريق ابتكار تك</span></div>
+</div><div class="article-cover" aria-hidden="true"><strong>06</strong></div></div></header>
+
+<section class="article-content-section"><div class="container article-layout">
+<aside class="article-aside"><div class="article-toc"><strong>في هذا المقال</strong><nav><a href="#candidate">مرشح جيد</a><a href="#avoid">متى لا تؤتمت</a><a href="#score">طريقة التقييم</a><a href="#solution">ربط أم أتمتة أم نظام؟</a></nav></div></aside>
+<div class="article-body">
+<p>البدء من أداة مشهورة يقود غالبًا إلى أتمتة عملية غير واضحة. الأفضل أن تبدأ بوصف العمل كما يحدث اليوم: من يبدأه، ما البيانات الداخلة، ما القرارات، أين تحدث الأخطاء، ومن يراجع النتيجة.</p>
+
+<h2 id="candidate">خمس علامات لعملية تستحق الدراسة</h2>
+<ul>
+<li><strong>متكررة:</strong> تحدث بوتيرة تكفي لتبرير وقت التصميم والتنفيذ.</li>
+<li><strong>قواعدها مفهومة:</strong> يمكن وصف متى يحدث كل إجراء.</li>
+<li><strong>بياناتها متاحة:</strong> المدخلات ليست موزعة بالكامل في محادثات غير منظمة.</li>
+<li><strong>الاستثناءات معروفة:</strong> نعرف الحالات التي تحتاج تدخلًا بشريًا.</li>
+<li><strong>الأثر واضح:</strong> وقت أقل، أخطاء أقل، متابعة أوضح، أو استجابة أسرع.</li>
+</ul>
+
+<h2 id="avoid">متى لا تكون الأتمتة هي الحل الأول؟</h2>
+<p>إذا كانت العملية نفسها تتغير كل أسبوع، أو تعتمد على قرارات بشرية معقدة، أو بياناتها غير موثوقة، فقد تضيف الأتمتة طبقة جديدة من الفوضى. أحيانًا يكون الحل الأول هو تبسيط الخطوات، إزالة موافقة غير ضرورية، أو توحيد مصدر البيانات.</p>
+
+<h2 id="score">طريقة بسيطة لترتيب فرص الأتمتة</h2>
+<div class="article-table-wrap"><table class="article-table"><thead><tr><th>السؤال</th><th>إشارة جيدة</th></tr></thead><tbody>
+<tr><td>كم مرة تتكرر العملية؟</td><td>يوميًا أو أسبوعيًا وبحجم مؤثر</td></tr>
+<tr><td>هل القواعد ثابتة؟</td><td>يمكن كتابتها بوضوح</td></tr>
+<tr><td>هل البيانات رقمية؟</td><td>موجودة في أنظمة يمكن الوصول إليها</td></tr>
+<tr><td>هل الاستثناءات معروفة؟</td><td>يمكن تحويلها لمراجعة بشرية</td></tr>
+<tr><td>هل يمكن قياس النتيجة؟</td><td>وقت، أخطاء، تأخير، أو حالة متابعة</td></tr>
+</tbody></table></div>
+
+<h2 id="solution">ربط، أتمتة، لوحة، أم نظام مخصص؟</h2>
+<p>إذا كانت الأدوات الحالية جيدة لكن البيانات لا تنتقل بينها، فابدأ بالتكامل. إذا كانت الخطوات واضحة ومتكررة، فقد تحتاج Workflow Automation. إذا كانت المشكلة أن الفريق لا يرى الحالة في مكان واحد، فقد تكفي لوحة تشغيل. أما النظام المخصص فيصبح منطقيًا عندما لا تستطيع الأدوات الجاهزة تمثيل العملية الأساسية دون حلول ملتوية.</p>
+
+<div class="article-callout"><strong>قاعدة ابتكار تك</strong><p>اختر أقل حل يحقق النتيجة ويمكن تشغيله وصيانته. بناء نظام جديد ليس نجاحًا إذا كان ربط نظامين قائمين يحل المشكلة بأقل تعقيد.</p></div>
+
+<h3>مثال: طلب عميل جديد</h3>
+<ol>
+<li>يصل الطلب من نموذج واضح.</li>
+<li>يتم التحقق من الحقول الأساسية.</li>
+<li>تُنشأ أو تُحدّث جهة الاتصال في CRM.</li>
+<li>يُرسل تنبيه للفريق المسؤول.</li>
+<li>إذا فشل الربط، تُسجل الحالة ويصل تنبيه بدل فقد الطلب بصمت.</li>
+</ol>
+
+<div class="article-end"><h2>ارسم العملية قبل اختيار الأداة</h2><p>إذا استطعت رسم البداية والقواعد والاستثناءات والنتيجة، ستعرف إن كانت المشكلة تحتاج ربطًا أو أتمتة أو واجهة أو نظامًا مخصصًا.</p>
+<a class="btn btn-primary" href="{% url 'public_preview:custom-systems' %}">استكشف الربط والأتمتة والأنظمة المخصصة</a></div>
+</div></div></section>
+</article>
+{% endblock %}

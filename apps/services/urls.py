@@ -27,5 +27,6 @@ urlpatterns = [
     ),
     path("ecommerce-growth/", public_views.ecommerce_growth, name="ecommerce-growth"),
     path("ecommerce-support/", public_views.ecommerce_support, name="ecommerce-support"),
+    path("seo/", public_views.seo, name="seo"),
     re_path(r"^.*$", _reject_unknown_public_service),
 ]

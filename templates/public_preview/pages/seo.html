@@ -1,0 +1,195 @@
+{% extends "public_preview/families/service_detail_base.html" %}
+
+{% block service_page_title %}خدمات تحسين محركات البحث SEO في السعودية | ابتكار تك{% endblock %}
+{% block service_breadcrumb_parent %}<a href="{% url 'public_preview:growth' %}">الظهور والقياس والنمو</a>{% endblock %}
+{% block service_breadcrumb_current %}تحسين محركات البحث SEO{% endblock %}
+
+{% block service_hero %}
+<section class="service-commerce-hero">
+  <div class="service-detail-shell">
+    <div class="service-commerce-hero__card" data-service-commerce-hero>
+      <div class="service-gallery" aria-label="تصور خدمة تحسين محركات البحث">
+        <div class="service-gallery__stage">
+          <img class="service-gallery__main" src="/static/public_preview/assets/images/hero/ibtikar-services-ecosystem-v1.jpg" alt="منظومة تحسين محركات البحث من الفهرسة والبنية إلى المحتوى والقياس" width="1280" height="853" fetchpriority="high">
+          <span class="service-gallery__label">SEO SYSTEM · TECHNICAL + CONTENT + MEASUREMENT</span>
+        </div>
+      </div>
+      <div class="service-commerce-copy">
+        <span class="service-detail-badge">SEO · ORGANIC GROWTH</span>
+        <h1>تحسين محركات البحث SEO. <span>من الفهرسة إلى نية البحث والقياس.</span></h1>
+        <p>نبدأ من قابلية الاكتشاف والفهرسة، ثم نربط الكلمات ونية البحث ببنية الصفحات والمحتوى والروابط الداخلية، ونقيس ما يتغير بدل الاعتماد على وعود ترتيب غير واقعية.</p>
+        <div class="service-platform-chips"><span>Technical SEO</span><span>Search Intent</span><span>On-page</span><span>Content</span><span>Internal Links</span><span>Measurement</span></div>
+        <div class="service-purchase-box">
+          <div><small>نقطة البداية</small><strong>تدقيق الوضع الحالي والأهداف</strong></div>
+          <div><small>النتائج</small><strong>لا نضمن مركزًا أو عدد زيارات محددًا</strong></div>
+        </div>
+        <ul class="service-assurance">
+          <li>أولوية للمشكلات التي تمنع الاكتشاف والفهرسة</li>
+          <li>خريطة كلمات وصفحات تمنع التنافس الداخلي</li>
+          <li>قياس وتوثيق للتغييرات بدل التعديلات العشوائية</li>
+        </ul>
+        <div class="service-commerce-actions">
+          <a class="btn btn-primary" href="{% url 'public_preview:contact' %}?service=seo&source=service-hero#quote" data-analytics="quote_request" data-analytics-label="seo hero">اطلب تدقيق SEO</a>
+          <a class="service-text-link" href="#decision-center" data-open-service-tab="problems">ما الذي نراجعه؟ ←</a>
+        </div>
+      </div>
+    </div>
+    <div class="service-quick-info">
+      <span><strong>نوع الخدمة</strong><small>تقني + محتوى + بنية</small></span>
+      <span><strong>مناسبة لـ</strong><small>مواقع ومتاجر قائمة</small></span>
+      <span><strong>السوق</strong><small>السعودية والخليج أولًا</small></span>
+      <span><strong>البداية</strong><small>Audit + Baseline</small></span>
+      <span><strong>التنفيذ</strong><small>دفعات قابلة للقياس</small></span>
+      <span><strong>القياس</strong><small>Search Console + Analytics عند التوفر</small></span>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block service_content %}
+<section class="service-detail-section service-decision-panel" data-service-decision-panel="problems">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>قبل كتابة محتوى جديد</span><h2>هل المشكلة في الظهور أم في الأساس الذي يعتمد عليه الظهور؟</h2></div>
+    <div class="service-problem-grid">
+      <article><b>01 / DISCOVERY</b><h3>صفحات مهمة لا تُكتشف جيدًا</h3><p>المسارات أو الروابط أو Sitemap أو البنية لا تقود محركات البحث بوضوح إلى الصفحات المهمة.</p></article>
+      <article><b>02 / INDEXING</b><h3>فهرسة غير مستقرة أو صفحات غير مقصودة</h3><p>نراجع canonical وrobots وnoindex والـHTTP status وتعارض الإشارات.</p></article>
+      <article><b>03 / INTENT</b><h3>الكلمات لا تملك صفحات واضحة</h3><p>صفحات متعددة تحاول استهداف الفكرة نفسها أو صفحة واحدة تحاول امتلاك مواضيع كثيرة.</p></article>
+      <article><b>04 / CONTENT</b><h3>المحتوى لا يجيب عن قرار الباحث</h3><p>قد يكون النص طويلًا لكنه لا يشرح الملاءمة والمقارنة والدليل والخطوة التالية.</p></article>
+      <article><b>05 / LINKS</b><h3>الروابط الداخلية لا تعكس الأولوية</h3><p>الصفحات المهمة قد تكون عميقة أو مرتبطة بنصوص عامة لا توضّح العلاقة بينها.</p></article>
+      <article><b>06 / MEASUREMENT</b><h3>التغييرات تحدث بلا خط أساس</h3><p>بدون Baseline وسجل تغييرات يصعب معرفة ما تحسن وما الذي يحتاج تجربة جديدة.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="service-detail-section service-decision-panel" data-service-decision-panel="fit">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>ملاءمة الخدمة</span><h2>SEO مفيد عندما يكون لديك عرض وصفحات تستحق أن تُكتشف.</h2></div>
+    <div class="service-fit-grid">
+      <article class="service-fit-card service-fit-card--good"><h3>تناسبك عندما</h3><ul>
+        <li>لديك موقع أو متجر قائم وتريد نموًا عضويًا منظمًا.</li>
+        <li>هناك خدمات أو منتجات يبحث عنها السوق بالفعل.</li>
+        <li>تحتاج إصلاح مشاكل زحف أو فهرسة أو بنية.</li>
+        <li>تريد ربط المحتوى بالتحويل والقياس لا بعدد المقالات.</li>
+      </ul></article>
+      <article class="service-fit-card"><h3>ابدأ بمسار آخر عندما</h3><ul>
+        <li>الموقع نفسه غير جاهز أو يحتاج إعادة بناء — <a href="{% url 'public_preview:websites' %}">تصميم وتطوير المواقع</a>.</li>
+        <li>المتجر لم يطلق بعد — <a href="{% url 'services:store-launch' %}">إنشاء وإطلاق متجر إلكتروني</a>.</li>
+        <li>المشكلة هي قياس وتحويل فقط — <a href="{% url 'public_preview:growth' %}">القياس والنمو</a>.</li>
+      </ul></article>
+    </div>
+  </div>
+</section>
+
+<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="scope">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>نطاق متدرج</span><h2>نبني الأساس ثم نوسّع ما تثبت الحاجة إليه.</h2></div>
+    <div class="service-scope-grid">
+      <article><b>01</b><h3>Technical SEO</h3><p>الزحف والفهرسة والـcanonical والـstatus والـsitemap والصفحات غير المقصودة.</p></article>
+      <article><b>02</b><h3>Keyword & Intent Research</h3><p>لغة السوق، نية البحث، المنافسة، والفرص المرتبطة بالعرض الفعلي.</p></article>
+      <article><b>03</b><h3>Keyword-to-Page Map</h3><p>مالك واضح لكل Cluster ومنع Cannibalization بين الصفحات.</p></article>
+      <article><b>04</b><h3>Information Architecture</h3><p>تنظيم Hubs والخدمات والمحتوى الداعم ومسارات الروابط الداخلية.</p></article>
+      <article><b>05</b><h3>On-page SEO</h3><p>Title وH1 وMeta والمحتوى والكيانات والعناوين والروابط ضمن نية الصفحة.</p></article>
+      <article><b>06</b><h3>Content System</h3><p>محتوى معلوماتي وتجاري يدعم القرار ويضيف قيمة أصلية بدل التكرار.</p></article>
+      <article><b>07</b><h3>Structured Data</h3><p>ترميز مناسب للمحتوى والكيانات حيث يكون مدعومًا ومطابقًا للصفحة.</p></article>
+      <article><b>08</b><h3>Measurement & Experiments</h3><p>Baseline وسجل تغييرات وفرضيات ومراجعة أثر التنفيذ عند توفر البيانات.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="service-detail-section service-decision-panel" data-service-decision-panel="deliverables">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>المخرجات</span><h2>ما الذي يمكن أن تستلمه ضمن مشروع SEO؟</h2></div>
+    <ul class="service-deliverable-grid">
+      <li>Technical SEO Audit</li>
+      <li>Indexation Map</li>
+      <li>Keyword & Intent Map</li>
+      <li>Keyword-to-Page Map</li>
+      <li>On-page briefs</li>
+      <li>Internal linking architecture</li>
+      <li>Content backlog</li>
+      <li>Structured-data plan</li>
+      <li>Measurement baseline</li>
+      <li>SEO changelog</li>
+    </ul>
+  </div>
+</section>
+
+<section class="service-detail-section service-detail-section--soft service-decision-panel" data-service-decision-panel="exclusions">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>حدود واضحة</span><h2>ما لا نعد به.</h2></div>
+    <ul class="service-exclusion-list">
+      <li>ضمان المركز الأول</li>
+      <li>ضمان عدد زيارات أو مبيعات</li>
+      <li>شراء روابط أو شبكات روابط</li>
+      <li>إنشاء صفحات مدن رقيقة</li>
+      <li>حشو الكلمات المفتاحية</li>
+      <li>نشر محتوى آلي بلا مراجعة</li>
+      <li>ادعاء نتائج قبل توفر البيانات</li>
+      <li>تجاوز سياسات محركات البحث</li>
+    </ul>
+  </div>
+</section>
+
+<section class="service-detail-section">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>طريقة العمل</span><h2>إصلاح الأساس → خريطة الطلب → تنفيذ → قياس.</h2></div>
+    <div class="timeline">
+      <article><h3>Baseline</h3><p>نثبت حالة الفهرسة والصفحات والبيانات المتاحة قبل التغيير.</p></article>
+      <article><h3>Audit</h3><p>نحدد العوائق والأولويات حسب الأثر والدليل والجهد والمخاطر.</p></article>
+      <article><h3>Architecture</h3><p>نوزع النيات على الصفحات ونبني الروابط والمحتوى الداعم.</p></article>
+      <article><h3>Implementation</h3><p>ننّفذ دفعات صغيرة قابلة للمراجعة والرجوع.</p></article>
+      <article><h3>Review</h3><p>نقارن التغيير بالـBaseline ونقرر الخطوة التالية.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="service-detail-section service-detail-section--soft" id="requirements">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>قبل البداية</span><h2>ما الذي يساعدنا على تشخيص SEO بدقة؟</h2></div>
+    <ul class="service-requirements">
+      <li>رابط الموقع أو المتجر وبيئة التقنية الحالية</li>
+      <li>الخدمات أو المنتجات الأعلى أولوية تجاريًا</li>
+      <li>الدول والجمهور المستهدف</li>
+      <li>وصول Search Console وAnalytics عند التوفر</li>
+      <li>أي تغييرات أو ترحيلات حديثة</li>
+      <li>المنافسون الذين تراهم في السوق</li>
+      <li>المحتوى أو الصفحات التي تعتبرها أساسية</li>
+      <li>طريقة استقبال العملاء أو الطلبات من الموقع</li>
+    </ul>
+  </div>
+</section>
+
+<section class="service-detail-section" id="faq">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>أسئلة شائعة</span><h2>SEO ليس زرًا ولا ضمان ترتيب.</h2></div>
+    <div class="service-faq">
+      <details class="service-faq-item"><summary class="service-faq-summary">هل تضمنون الوصول للمركز الأول؟</summary><p>لا. يمكننا تحسين قابلية الاكتشاف والفهرسة والملاءمة والبنية والمحتوى والقياس، لكن الترتيب يتأثر بالمنافسة والطلب وسلطة الموقع وعوامل أخرى لا يملكها طرف واحد.</p></details>
+      <details class="service-faq-item"><summary class="service-faq-summary">هل نحتاج كتابة مقالات كثيرة؟</summary><p>ليس بالضرورة. نبدأ بالصفحات التجارية والنية والبنية، ثم ننشئ محتوى عندما توجد حاجة بحث حقيقية ودور واضح في رحلة العميل.</p></details>
+      <details class="service-faq-item"><summary class="service-faq-summary">هل SEO التقني يكفي؟</summary><p>التقني يزيل العوائق لكنه لا يعوض غياب صفحات مناسبة للطلب أو محتوى مفيد أو دليل وثقة.</p></details>
+      <details class="service-faq-item"><summary class="service-faq-summary">متى تظهر النتائج؟</summary><p>لا نحدد مدة ثابتة بلا بيانات. بعض الإصلاحات تُرصد بعد إعادة الزحف، بينما النمو في الطلب العضوي يحتاج وقتًا ويتأثر بحجم الموقع والمنافسة والمحتوى والسلطة.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="service-detail-section service-detail-section--soft">
+  <div class="service-detail-shell">
+    <div class="service-detail-heading"><span>خدمات مرتبطة</span><h2>SEO يعمل ضمن المنظومة الرقمية، لا بمعزل عنها.</h2></div>
+    <nav class="related-nav">
+      <a href="{% url 'public_preview:growth' %}">القياس والنمو</a>
+      <a href="{% url 'public_preview:websites' %}">تصميم وتطوير المواقع</a>
+      <a href="{% url 'public_preview:ecommerce' %}">حلول المتاجر الإلكترونية</a>
+      <a href="{% url 'services:ecommerce-growth' %}">SEO وقياس المتاجر</a>
+      <a href="{% url 'public_preview:custom-systems' %}">الربط والأنظمة</a>
+    </nav>
+  </div>
+</section>
+
+<section class="page-cta">
+  <div class="service-detail-shell">
+    <div class="cta-card">
+      <div><span class="section-kicker">SEO AUDIT</span><h2>ابدأ من المشكلة التي تمنع موقعك من التقاط الطلب الصحيح.</h2><p>شاركنا الموقع وأهم الخدمات أو المنتجات والسوق المستهدف لنحدد نقطة البداية.</p></div>
+      <div class="cta-actions"><a class="btn btn-white" href="{% url 'public_preview:contact' %}?service=seo&source=service-final#quote" data-analytics="quote_request" data-analytics-label="seo final">اطلب تدقيق SEO</a><a class="btn btn-outline" href="{% url 'public_preview:growth' %}">القياس والنمو الأوسع</a></div>
+    </div>
+  </div>
+</section>
+{% endblock %}

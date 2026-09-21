@@ -20,6 +20,9 @@ const routes = [
   '/knowledge/store-launch/',
   '/knowledge/product-page/',
   '/knowledge/store-redesign/',
+  '/knowledge/ecommerce-cost-saudi/',
+  '/knowledge/website-cost-saudi/',
+  '/knowledge/automation-first/',
   '/about/',
   '/contact/',
   '/services/store-launch/',
@@ -28,6 +31,7 @@ const routes = [
   '/services/product-page-optimization/',
   '/services/ecommerce-growth/',
   '/services/ecommerce-support/',
+  '/services/seo/',
   '/404/',
 ];
 
@@ -279,7 +283,27 @@ function validate(result, failures, internalLinks) {
 
   const severeEvents = runtimeEvents.filter((event) => {
     if (/favicon/i.test(event.url || '')) return false;
-    if (event.type === 'network') return event.status >= 400;
+
+    const expectedNotFound = route === '/404/'
+      && (() => {
+        try {
+          return new URL(event.url || baseUrl, baseUrl).pathname === '/404/';
+        } catch (_) {
+          return false;
+        }
+      })();
+
+    if (event.type === 'network') {
+      if (expectedNotFound && event.status === 404) return false;
+      return event.status >= 400;
+    }
+    if (
+      expectedNotFound
+      && event.type === 'error'
+      && /status of 404|404 \(Not Found\)/i.test(event.text || '')
+    ) {
+      return false;
+    }
     return event.type === 'exception' || event.type === 'error';
   });
   if (severeEvents.length) {

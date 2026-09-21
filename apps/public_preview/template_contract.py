@@ -16,6 +16,7 @@ PAGE_PARENT_OVERRIDES = {
     "product-page-optimization.html": SERVICE_DETAIL_FAMILY_PARENT,
     "ecommerce-growth.html": SERVICE_DETAIL_FAMILY_PARENT,
     "ecommerce-support.html": SERVICE_DETAIL_FAMILY_PARENT,
+    "seo.html": SERVICE_DETAIL_FAMILY_PARENT,
     "ecommerce.html": SERVICE_CATEGORY_FAMILY_PARENT,
     "websites.html": SERVICE_CATEGORY_FAMILY_PARENT,
     "brand-content.html": SERVICE_CATEGORY_FAMILY_PARENT,
@@ -24,19 +25,20 @@ PAGE_PARENT_OVERRIDES = {
     "article-product-page.html": ARTICLE_DETAIL_FAMILY_PARENT,
     "article-store-launch.html": ARTICLE_DETAIL_FAMILY_PARENT,
     "article-store-redesign.html": ARTICLE_DETAIL_FAMILY_PARENT,
+    "article-ecommerce-cost-saudi.html": ARTICLE_DETAIL_FAMILY_PARENT,
+    "article-website-cost-saudi.html": ARTICLE_DETAIL_FAMILY_PARENT,
+    "article-automation-first.html": ARTICLE_DETAIL_FAMILY_PARENT,
 }
 
 FAMILY_REQUIRED_BLOCKS = {
     SERVICE_DETAIL_FAMILY_PARENT: (
         "service_page_title",
-        "service_meta_description",
         "service_breadcrumb_current",
         "service_hero",
         "service_content",
     ),
     SERVICE_CATEGORY_FAMILY_PARENT: (
         "category_page_title",
-        "category_meta_description",
         "category_body_attrs",
         "category_content",
     ),
