@@ -68,7 +68,7 @@ Wagtail is mounted as a catch-all and must not be treated as automatically index
 5. SEO metadata/content has been reviewed.
 6. It does not duplicate an existing static/service URL or another Wagtail page.
 
-Until that review exists, Wagtail pages are not automatically added to the XML sitemap.
+Until that review exists, Wagtail pages are not automatically added to the XML sitemap and the generic Wagtail public templates render `noindex,follow` by default. An approved Wagtail page must explicitly opt into indexing as part of the same reviewed change.
 
 ### `/documents/*`
 
