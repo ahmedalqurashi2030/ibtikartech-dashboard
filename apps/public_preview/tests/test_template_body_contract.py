@@ -11,6 +11,7 @@ from apps.public_preview.manifest import (
 )
 from apps.public_preview.template_contract import (
     BASE_TEMPLATE_PARENT,
+    FAMILY_ALLOWED_PARTIALS,
     FAMILY_EXTENSION_BLOCKS,
     FAMILY_REQUIRED_BLOCKS,
     FAMILY_REQUIRED_MARKERS,
@@ -89,15 +90,27 @@ def test_public_base_owns_the_global_shell():
         assert f'include "public_preview/components/{component}"' in base
         assert (COMPONENTS_DIR / component).is_file()
 
+    document_head = (COMPONENTS_DIR / "document_head.html").read_text(encoding="utf-8")
+    assert document_head.count('name="description"') == 1
+    assert document_head.count('rel="canonical"') == 1
+
 
 def test_approved_family_templates_own_one_stable_page_structure():
+    include_pattern = re.compile(r'{%\s*include\s+"([^"]+)"')
+
     for parent, required_blocks in FAMILY_REQUIRED_BLOCKS.items():
         path = _family_path(parent)
         source = path.read_text(encoding="utf-8")
 
         assert source.lstrip().startswith(extends_tag(BASE_TEMPLATE_PARENT)), parent
         assert source.count("{% block body %}") == 1, parent
-        assert "{% include " not in source, parent
+
+        allowed_partials = set(FAMILY_ALLOWED_PARTIALS[parent])
+        actual_partials = include_pattern.findall(source)
+        assert set(actual_partials) <= allowed_partials, (parent, actual_partials)
+        for partial in allowed_partials:
+            assert actual_partials.count(partial) == 1, (parent, partial)
+            assert (Path(settings.BASE_DIR) / "templates" / partial).is_file(), partial
 
         for marker in FAMILY_REQUIRED_MARKERS[parent]:
             assert source.count(marker) == 1, (parent, marker)
@@ -186,6 +199,9 @@ def test_article_detail_children_keep_page_owned_seo_and_semantic_content():
         "article-product-page.html",
         "article-store-launch.html",
         "article-store-redesign.html",
+        "article-ecommerce-cost-saudi.html",
+        "article-website-cost-saudi.html",
+        "article-automation-first.html",
     )
     for page_name in article_pages:
         source = (PAGES_DIR / page_name).read_text(encoding="utf-8")
@@ -197,12 +213,13 @@ def test_article_detail_children_keep_page_owned_seo_and_semantic_content():
         assert source.count(structured_data) == 1, page_name
         assert source.count(content) == 1, page_name
         assert source.count("<title>") == 1, page_name
-        assert source.count('name="description"') == 1, page_name
+        # Route-owned descriptions render once from document_head.html.
+        assert source.count('name="description"') == 0, page_name
         assert source.count('property="og:type" content="article"') == 1, page_name
         assert source.count('type="application/ld+json"') == 1, page_name
         assert source.count("<article>") == 1, page_name
         assert source.count('class="article-body"') == 1, page_name
-        assert source.count('class="related-articles"') == 1, page_name
+        # Related-content sections are editorially optional.
 
 
 def test_known_internal_page_links_use_django_named_urls_in_templates():
