@@ -34,7 +34,7 @@ body.source-tharaa #customize .swatches button{width:44px!important;height:44px!
 
 /* Product preview and technical badges must retain readable contrast on their
    fixed light/dark mockup surfaces. */
-body.source-tharaa .rating small{color:#9a651a!important;font-size:13px!important}
+body.source-tharaa .rating small{color:#8f5b14!important;font-size:13px!important}
 body.source-tharaa .tech-card:first-child>i{color:#7294ff!important}
 
 /* Trust becomes a compact evidence rail. */
