@@ -6,7 +6,6 @@
 <!-- Category composition only. The canonical foundation and shell come from base.html. -->
 <style>[data-service-cinema-chrome]:not([hidden]){display:contents}</style>
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/inner.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css">
 <link rel="stylesheet" href="/static/public_preview/assets/css/pages/service-category.css">
@@ -57,7 +56,7 @@
 </main>
 
 {% block category_scripts %}
-<script src="/static/public_preview/assets/js/page-shell.js" defer></script><script src="/static/public_preview/assets/js/site-config.js" defer></script><script src="/static/public_preview/assets/js/modules/analytics.js" defer></script><script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script><script src="/static/public_preview/assets/js/app.js" defer></script>
+{% include "public_preview/components/public_runtime_core_scripts.html" %}
 <script src="/static/public_preview/assets/js/service-cinema.js" defer></script>
 <script src="/static/public_preview/assets/js/service-related-cards.js" defer></script>
 {% endblock %}
