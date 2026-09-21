@@ -29,6 +29,21 @@ PUBLIC_VIEW_ROUTES = (
         public_views.article_store_redesign,
         "/knowledge/store-redesign/",
     ),
+    (
+        "public_preview:article-ecommerce-cost-saudi",
+        public_views.article_ecommerce_cost_saudi,
+        "/knowledge/ecommerce-cost-saudi/",
+    ),
+    (
+        "public_preview:article-website-cost-saudi",
+        public_views.article_website_cost_saudi,
+        "/knowledge/website-cost-saudi/",
+    ),
+    (
+        "public_preview:article-automation-first",
+        public_views.article_automation_first,
+        "/knowledge/automation-first/",
+    ),
     ("public_preview:about", public_views.about, "/about/"),
     ("public_preview:contact", public_views.contact, "/contact/"),
 )
@@ -64,6 +79,11 @@ SERVICE_VIEW_ROUTES = (
         "services:ecommerce-support",
         service_public_views.ecommerce_support,
         "/services/ecommerce-support/",
+    ),
+    (
+        "services:seo",
+        service_public_views.seo,
+        "/services/seo/",
     ),
 )
 
