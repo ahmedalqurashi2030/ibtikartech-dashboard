@@ -1,8 +1,10 @@
 from dataclasses import dataclass
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import urlsplit
 
 from django.conf import settings as django_settings
 from django.urls import reverse
+
+from apps.core.sitemaps import PUBLIC_SITE_ORIGIN
 
 from .models import SiteSettings, TrackingSettings
 
@@ -68,13 +70,13 @@ class SiteConfig:
 
 
 def _absolute_request_path(request):
-    parts = urlsplit(request.build_absolute_uri(request.path))
-    return urlunsplit((parts.scheme, parts.netloc, parts.path, "", ""))
+    """Build public canonicals on the approved production origin, never Host."""
+    return f"{PUBLIC_SITE_ORIGIN}{request.path}"
 
 
 def _site_root_url(request):
-    parts = urlsplit(request.build_absolute_uri("/"))
-    return urlunsplit((parts.scheme, parts.netloc, "/", "", ""))
+    """Keep the public entity/site origin aligned with sitemap and canonicals."""
+    return f"{PUBLIC_SITE_ORIGIN}/"
 
 
 def _absolute_media_url(request, image):
