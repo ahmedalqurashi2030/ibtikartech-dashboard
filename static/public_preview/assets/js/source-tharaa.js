@@ -1,7 +1,7 @@
 /* Preserved source runtime block 1. */
 (function(){
   'use strict';
-  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches||matchMedia('(max-width:760px)').matches;
   const hasGSAP=typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined';
   if(hasGSAP) gsap.registerPlugin(ScrollTrigger);
   let lenis=null;
