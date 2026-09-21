@@ -9,6 +9,7 @@ EXPLICIT_SERVICE_PAGES = (
     ("product-page-optimization", "/services/product-page-optimization/"),
     ("ecommerce-growth", "/services/ecommerce-growth/"),
     ("ecommerce-support", "/services/ecommerce-support/"),
+    ("seo", "/services/seo/"),
 )
 
 
@@ -41,7 +42,7 @@ def test_public_services_do_not_resolve_dynamic_model_slugs(client, path):
     assert response.status_code == 404
 
 PILOT_SERVICE_FAMILY_PAGES = (
-    ("store-launch", "إطلاق متجر إلكتروني | ابتكار تك"),
+    ("store-launch", "إنشاء وإطلاق متجر إلكتروني على سلة وزد | ابتكار تك"),
     ("ecommerce-growth", "الربط والقياس والنمو للمتاجر | ابتكار تك"),
 )
 
