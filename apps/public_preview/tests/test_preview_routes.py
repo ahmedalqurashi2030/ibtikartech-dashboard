@@ -23,6 +23,14 @@ PLATFORM_FAMILY_PAGES = (
     "about.html",
 )
 
+SERVICE_CATEGORY_PAGES = (
+    "ecommerce.html",
+    "websites.html",
+    "brand-content.html",
+    "growth.html",
+    "custom-systems.html",
+)
+
 ARTICLE_DETAIL_PAGES = (
     "article-product-page.html",
     "article-store-launch.html",
