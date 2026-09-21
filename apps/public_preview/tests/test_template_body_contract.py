@@ -11,6 +11,7 @@ from apps.public_preview.manifest import (
 )
 from apps.public_preview.template_contract import (
     BASE_TEMPLATE_PARENT,
+    FAMILY_ALLOWED_PARTIALS,
     FAMILY_EXTENSION_BLOCKS,
     FAMILY_REQUIRED_BLOCKS,
     FAMILY_REQUIRED_MARKERS,
@@ -91,13 +92,21 @@ def test_public_base_owns_the_global_shell():
 
 
 def test_approved_family_templates_own_one_stable_page_structure():
+    include_pattern = re.compile(r'{%\s*include\s+"([^"]+)"')
+
     for parent, required_blocks in FAMILY_REQUIRED_BLOCKS.items():
         path = _family_path(parent)
         source = path.read_text(encoding="utf-8")
 
         assert source.lstrip().startswith(extends_tag(BASE_TEMPLATE_PARENT)), parent
         assert source.count("{% block body %}") == 1, parent
-        assert "{% include " not in source, parent
+
+        allowed_partials = set(FAMILY_ALLOWED_PARTIALS[parent])
+        actual_partials = include_pattern.findall(source)
+        assert set(actual_partials) <= allowed_partials, (parent, actual_partials)
+        for partial in allowed_partials:
+            assert actual_partials.count(partial) == 1, (parent, partial)
+            assert (Path(settings.BASE_DIR) / "templates" / partial).is_file(), partial
 
         for marker in FAMILY_REQUIRED_MARKERS[parent]:
             assert source.count(marker) == 1, (parent, marker)

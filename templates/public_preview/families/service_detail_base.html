@@ -11,7 +11,6 @@
   {% block service_family_core_styles %}
   <!-- Canonical service-detail family owners. Foundation and shell remain owned by base.html. -->
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/commerce-service-detail.css" data-service-family-style="commerce-service-detail">
-  <link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css" data-service-family-style="continuous-flow">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css" data-service-family-style="frontend-final">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/launch-readiness.css" data-service-family-style="launch-readiness">
   <link rel="stylesheet" href="/static/public_preview/assets/css/pages/section-layout-refinement-v2.css" data-service-family-style="section-layout-refinement-v2">
@@ -59,11 +58,7 @@
 
 {% block service_scripts %}
   {% block service_family_core_scripts %}
-  <script src="/static/public_preview/assets/js/page-shell.js" defer data-service-family-script="page-shell"></script>
-  <script src="/static/public_preview/assets/js/site-config.js" defer data-service-family-script="site-config"></script>
-  <script src="/static/public_preview/assets/js/modules/analytics.js" defer data-service-family-script="analytics"></script>
-  <script src="/static/public_preview/assets/js/ibtikar-shell.js" defer data-service-family-script="ibtikar-shell"></script>
-  <script src="/static/public_preview/assets/js/app.js" defer data-service-family-script="app"></script>
+  {% include "public_preview/components/public_runtime_core_scripts.html" %}
   <script src="/static/public_preview/assets/js/commerce-service-detail.js" defer data-service-family-script="commerce-service-detail"></script>
   {% endblock %}
   {% block service_route_scripts_before_tail %}{% endblock %}
