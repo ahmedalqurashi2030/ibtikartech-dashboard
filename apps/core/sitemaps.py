@@ -1,5 +1,6 @@
 from django.urls import reverse
 
+
 PUBLIC_SITE_ORIGIN = "https://ibtikartech.co"
 
 # Single source of truth for canonical, public URLs approved for XML sitemap
