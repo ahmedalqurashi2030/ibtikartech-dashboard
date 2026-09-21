@@ -2,6 +2,7 @@ from django.urls import reverse
 
 from .sitemaps import PUBLIC_SITE_ORIGIN
 
+
 # Breadcrumb trails reflect the user-facing information architecture rather
 # than mechanically mirroring URL segments. Keep this map aligned with visible
 # breadcrumbs and the internal-linking architecture.
