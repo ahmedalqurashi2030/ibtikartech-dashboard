@@ -1,7 +1,10 @@
 /* Preserved source runtime block 1. */
 (() => {
   const revealItems = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
+  const compact = matchMedia('(max-width: 760px)').matches;
+  if (compact) {
+    revealItems.forEach(item => item.classList.add('visible'));
+  } else if ('IntersectionObserver' in window) {
     const revealObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -175,7 +178,8 @@
 // =========================================================
 (() => {
   'use strict';
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const compact = matchMedia('(max-width: 760px)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || compact;
   const hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   const clamp = (v, a=0, b=1) => Math.max(a, Math.min(b, v));
   const lerp = (a,b,t) => a + (b-a)*t;
