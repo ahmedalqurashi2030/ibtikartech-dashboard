@@ -81,14 +81,19 @@ jobs:
             / /services/ /ecommerce/ /websites/ /brand-content/ /growth/
             /custom-systems/ /tharaa/ /portfolio/ /knowledge/
             /knowledge/store-launch/ /knowledge/product-page/ /knowledge/store-redesign/
+            /knowledge/ecommerce-cost-saudi/ /knowledge/website-cost-saudi/
+            /knowledge/automation-first/
             /about/ /contact/ /services/store-launch/ /services/storefront-customization/
             /services/store-redesign/ /services/product-page-optimization/
-            /services/ecommerce-growth/ /services/ecommerce-support/ /404/
+            /services/ecommerce-growth/ /services/ecommerce-support/ /services/seo/
           )
           for route in "${clean_routes[@]}"; do
             code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000${route}")"
             test "$code" = "200" || { echo "$code $route"; exit 1; }
           done
+
+          error_code="$(curl -sS -o /dev/null -w '%{http_code}' "http://127.0.0.1:8000/404/")"
+          test "$error_code" = "404" || { echo "$error_code /404/ expected 404"; exit 1; }
 
           forbidden_dynamic_routes=(
             /services/catalog/
