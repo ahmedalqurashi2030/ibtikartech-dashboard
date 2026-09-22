@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 
+from apps.content.public_views import serve_article_detail, serve_article_index
 from apps.crm.models import Contact
 from apps.sales.models import Inquiry
 from apps.services.models import Service
@@ -63,43 +64,35 @@ def portfolio(request):
 
 
 def knowledge(request):
-    return _render_public_page(request, "knowledge.html", "knowledge")
+    return serve_article_index(request)
 
 
 def article_product_page(request):
-    return _render_public_page(request, "article-product-page.html", "article-product-page")
+    return serve_article_detail(request, "product-page")
 
 
 def article_store_launch(request):
-    return _render_public_page(request, "article-store-launch.html", "article-store-launch")
+    return serve_article_detail(request, "store-launch")
 
 
 def article_store_redesign(request):
-    return _render_public_page(request, "article-store-redesign.html", "article-store-redesign")
+    return serve_article_detail(request, "store-redesign")
 
 
 def article_ecommerce_cost_saudi(request):
-    return _render_public_page(
-        request,
-        "article-ecommerce-cost-saudi.html",
-        "article-ecommerce-cost-saudi",
-    )
+    return serve_article_detail(request, "ecommerce-cost-saudi")
 
 
 def article_website_cost_saudi(request):
-    return _render_public_page(
-        request,
-        "article-website-cost-saudi.html",
-        "article-website-cost-saudi",
-    )
+    return serve_article_detail(request, "website-cost-saudi")
 
 
 def article_automation_first(request):
-    return _render_public_page(
-        request,
-        "article-automation-first.html",
-        "article-automation-first",
-    )
+    return serve_article_detail(request, "automation-first")
+
+
+def article_detail(request, slug):
+    return serve_article_detail(request, slug)
 
 
 def about(request):

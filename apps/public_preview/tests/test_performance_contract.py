@@ -2,6 +2,8 @@ BASE_TEMPLATE = "templates/public_preview/base.html"
 DOCUMENT_HEAD = "templates/public_preview/components/document_head.html"
 ROUTE_FOUNDATION_STYLES = "templates/public_preview/components/route_foundation_styles.html"
 INNER_STYLES = "static/public_preview/assets/css/pages/inner.css"
+ARTICLE_STYLES = "static/public_preview/assets/css/pages/articles.css"
+ARTICLE_INDEX_TEMPLATE = "templates/content/article_index_page.html"
 THARAA_TEMPLATE = "templates/public_preview/pages/tharaa.html"
 
 
@@ -43,6 +45,17 @@ def test_route_foundation_css_is_explicit_and_inner_has_no_nested_import_graph()
     assert 'data-route-foundation-style="platform"' in foundation
     assert 'include "public_preview/components/route_foundation_styles.html"' in base
     assert base.index("route_foundation_styles.html") < base.index("{% block head %}")
+
+
+def test_article_index_avoids_serial_css_imports_and_defers_noncritical_bundle():
+    article_styles = _read(ARTICLE_STYLES)
+    article_index = _read(ARTICLE_INDEX_TEMPLATE)
+
+    assert "@import" not in article_styles
+    assert "deferred_stylesheet.html" in article_index
+    assert "public_preview/assets/css/pages/articles.css" in article_index
+    assert "{% block page_refinements %}" in article_index
+    assert ".articles-hero{" in article_index
 
 
 def test_document_head_comments_cannot_leak_as_visible_page_text():

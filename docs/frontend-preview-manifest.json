@@ -41,7 +41,16 @@
     "woocommerce.html",
     "wordpress.html"
   ],
-  "public_content_owner": "django-templates",
+  "public_content_owner": "declared-per-page",
   "shared_settings_owner": "wagtail-site-settings",
-  "wagtail_page_binding": false
+  "wagtail_page_binding": true,
+  "wagtail_managed_pages": [
+    "knowledge.html",
+    "article-product-page.html",
+    "article-store-launch.html",
+    "article-store-redesign.html",
+    "article-ecommerce-cost-saudi.html",
+    "article-website-cost-saudi.html",
+    "article-automation-first.html"
+  ]
 }

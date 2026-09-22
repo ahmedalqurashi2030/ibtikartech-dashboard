@@ -1,0 +1,195 @@
+{% extends "public_preview/base.html" %}
+{% load static %}
+
+{% block head %}
+<title>{% if page.seo_title %}{{ page.seo_title }}{% else %}مقالات ابتكار تك | أدلة عملية للمتاجر والتجارب الرقمية{% endif %}</title>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#060b19">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}مقالات ابتكار تك | قرارات رقمية أوضح{% endif %}">
+<meta property="og:description" content="{{ meta_description }}">
+{% static 'public_preview/assets/css/pages/inner.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% static 'public_preview/assets/css/pages/articles.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% static 'public_preview/assets/css/pages/continuous-flow.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% static 'public_preview/assets/css/pages/frontend-final.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"{{ page.title|escapejs }}","description":"{{ meta_description|escapejs }}","inLanguage":"ar-SA","url":"{{ site_config.seo.canonical_url|escapejs }}","isPartOf":{"@id":"{{ site_config.seo.site_root_url }}#website"},"publisher":{"@id":"{{ site_config.seo.site_root_url }}#organization"}}</script>
+{% endblock %}
+
+{% block page_refinements %}
+<style>
+.articles-hero{position:relative;min-height:780px;padding:calc(var(--ibt-header-h) + 88px) 0 86px;display:grid;align-items:center;isolation:isolate}
+.articles-hero::before{content:"";position:absolute;inset:12% 52% auto auto;width:38rem;aspect-ratio:1;border-radius:50%;background:color-mix(in srgb,var(--ibt-blue) 11%,transparent);filter:blur(84px);z-index:-1}
+.articles-hero__grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);gap:68px;align-items:center}
+.articles-hero h1{margin:16px 0 20px;font-family:var(--ibt-font-display);font-size:clamp(2.75rem,6.4vw,5.4rem);line-height:1.07;letter-spacing:-.055em;text-wrap:balance}
+.articles-hero h1 span{color:transparent;background:var(--ibt-gradient);-webkit-background-clip:text;background-clip:text}
+.articles-hero__lead{max-width:680px;margin:0;color:var(--ibt-muted);font-size:clamp(1rem,1.7vw,1.18rem);line-height:1.95}
+.articles-hero__actions{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+.editorial-visual{position:relative;min-height:500px;padding:30px;border:1px solid var(--ibt-border);border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.04),transparent 50%),color-mix(in srgb,var(--ibt-surface) 88%,transparent);box-shadow:var(--ibt-shadow-lg);overflow:hidden}
+.editorial-visual::before,.editorial-visual::after{content:"";position:absolute;border-radius:50%;filter:blur(18px)}
+.editorial-visual::before{width:210px;height:210px;left:-60px;top:-30px;background:rgba(236,72,153,.16)}
+.editorial-visual::after{width:250px;height:250px;right:-70px;bottom:-80px;background:rgba(16,200,232,.14)}
+.editorial-visual__paper{position:relative;z-index:1;height:100%;min-height:438px;padding:30px;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:rgba(7,13,32,.78);backdrop-filter:blur(18px)}
+.editorial-visual__top{display:flex;align-items:center;justify-content:space-between;gap:16px;color:var(--ibt-muted);font-size:12px;letter-spacing:.08em}
+.editorial-visual__mark{width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.13);border-radius:14px;color:var(--ibt-cyan);background:rgba(255,255,255,.04);font-weight:900}
+.editorial-visual__title{max-width:330px;margin:auto 0 24px;font-family:var(--ibt-font-display);font-size:clamp(2rem,4vw,3.35rem);line-height:1.18}
+.editorial-visual__title b{display:block;color:var(--ibt-cyan)}
+.editorial-visual__lines{display:grid;gap:10px}
+.editorial-visual__lines i{height:7px;border-radius:99px;background:rgba(255,255,255,.1)}
+.editorial-visual__lines i:nth-child(1){width:86%}.editorial-visual__lines i:nth-child(2){width:68%}.editorial-visual__lines i:nth-child(3){width:42%;background:var(--ibt-gradient)}
+@media(max-width:1020px){.articles-hero__grid{grid-template-columns:1fr}.editorial-visual{min-height:420px}.editorial-visual__paper{min-height:358px}}
+@media(max-width:760px){.articles-hero{min-height:auto;padding:120px 0 70px}.articles-hero__grid{gap:42px}.articles-hero h1{font-size:clamp(2.65rem,13vw,4rem)}.editorial-visual{min-height:340px;padding:16px;border-radius:24px}.editorial-visual__paper{min-height:306px;padding:22px}.editorial-visual__title{font-size:2.15rem}}
+@media(max-width:420px){.articles-hero__actions .btn{width:100%}}
+</style>
+{% endblock %}
+
+{% block body_attrs %} class="inner-page articles-page knowledge-page" data-section="knowledge"{% endblock %}
+
+{% block body %}
+<main id="main-content">
+  <section class="articles-hero">
+    <div class="container articles-hero__grid">
+      <div class="reveal">
+        <nav class="breadcrumbs" aria-label="مسار التنقل">
+          <a href="{% url 'public_preview:home' %}">الرئيسية</a>
+          <span aria-hidden="true">←</span>
+          <span aria-current="page">المقالات</span>
+        </nav>
+        <span class="section-kicker">{{ page.hero_kicker }}</span>
+        <h1>{{ page.hero_title }} <span>{{ page.hero_accent }}</span></h1>
+        <p class="articles-hero__lead">{{ page.hero_lead }}</p>
+        <div class="articles-hero__actions">
+          <a class="btn btn-primary" href="#latest">استكشف المقالات</a>
+          <a class="btn btn-outline" href="{% url 'services:index' %}">الحلول والخدمات</a>
+        </div>
+      </div>
+      <div class="editorial-visual reveal" aria-hidden="true">
+        <div class="editorial-visual__paper">
+          <div class="editorial-visual__top"><span>ISSUE / 01</span><span class="editorial-visual__mark">إت</span></div>
+          <div class="editorial-visual__title">وضوح قبل التنفيذ.<b>قياس بعد الإطلاق.</b></div>
+          <div class="editorial-visual__lines"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if featured_article %}
+  <section class="articles-section articles-section--soft" aria-labelledby="featured-title">
+    <div class="container">
+      <div class="articles-heading reveal">
+        <div><span class="section-kicker">اختيار المحرر</span><h2 id="featured-title">ابدأ من الدليل الذي يسبق أهم قرار</h2></div>
+        <p>دليل عملي يربط بين التجهيز التجاري، تجربة العميل، الاختبار، وما يجب قياسه بعد الإطلاق.</p>
+      </div>
+      <article class="featured-article reveal">
+        <div class="featured-article__visual" data-label="{{ featured_article.visual_label|default:'GUIDE' }}">
+          <span class="featured-article__step">{{ featured_article.visual_number|default:'01' }}</span>
+        </div>
+        <div class="featured-article__copy">
+          <span class="article-topic">{{ featured_article.category_label }}</span>
+          <h3>{{ featured_article.featured_heading }}</h3>
+          <p>{{ featured_article.featured_summary }}</p>
+          <div class="article-meta">
+            {% if featured_article.reading_label %}<span>{{ featured_article.reading_label }}</span>{% endif %}
+            <span>{{ featured_article.published_at|date:"j F Y" }}</span>
+          </div>
+          <a class="article-link" href="{% url 'public_preview:article-detail' slug=featured_article.slug %}">اقرأ الدليل كاملًا</a>
+        </div>
+      </article>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="articles-section" id="latest" aria-labelledby="latest-title">
+    <div class="container">
+      <div class="articles-heading reveal">
+        <div><span class="section-kicker">أحدث المقالات</span><h2 id="latest-title">{{ page.latest_title }}</h2></div>
+        <p>{{ page.latest_description }}</p>
+      </div>
+
+      {% if article_categories %}
+      <div class="article-filters" role="group" aria-label="تصفية المقالات">
+        <button class="article-filter" type="button" aria-pressed="true" data-article-filter="all">جميع المقالات</button>
+        {% for category in article_categories %}
+        <button class="article-filter" type="button" aria-pressed="false" data-article-filter="{{ category.0 }}">{{ category.1 }}</button>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="articles-grid">
+        {% for article in articles %}
+        <article class="article-card {{ article.card_css_class }} reveal" data-article-card data-category="{{ article.category }}">
+          <div class="article-card__visual" data-label="{{ article.visual_label|default:'ARTICLE' }}">
+            <span class="article-card__number">{{ article.visual_number|default:forloop.counter }}</span>
+          </div>
+          <div class="article-card__body">
+            <span class="article-topic">{{ article.category_label }}</span>
+            <h3>{{ article.card_title }}</h3>
+            <p>{{ article.excerpt }}</p>
+            <div class="article-meta">
+              {% if article.card_reading_label %}<span>{{ article.card_reading_label }}</span>{% endif %}
+              {% if article.card_meta_label %}<span>{{ article.card_meta_label }}</span>{% endif %}
+            </div>
+            <a class="article-link" href="{% url 'public_preview:article-detail' slug=article.slug %}">{{ article.card_link_label }}</a>
+          </div>
+        </article>
+        {% empty %}
+        <p>لا توجد مقالات منشورة حاليًا.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="articles-section articles-section--soft">
+    <div class="container">
+      <div class="articles-heading reveal">
+        <div><span class="section-kicker">مسارات المعرفة</span><h2>لا تقرأ أكثر؛ اقرأ ما يخدم مرحلتك</h2></div>
+        <p>اختر المسار الأقرب للمشكلة الحالية، ثم انتقل إلى المقال أو الخدمة ذات الصلة.</p>
+      </div>
+      <div class="route-grid">
+        <article class="route-card reveal">
+          <small>01 / BUILD</small><h3>الإطلاق والبناء</h3>
+          <p>التجهيز، اختيار المنصة، بنية المتجر أو الموقع، والاختبار قبل النشر.</p>
+          {% if store_launch_article %}<a href="{% url 'public_preview:article-detail' slug=store_launch_article.slug %}">ابدأ من دليل الإطلاق ←</a>{% endif %}
+        </article>
+        <article class="route-card reveal">
+          <small>02 / EXPERIENCE</small><h3>التجربة والتحويل</h3>
+          <p>التنقل، صفحات المنتجات، الثقة، الجوال، وتحسين رحلة القرار.</p>
+          {% if product_page_article %}<a href="{% url 'public_preview:article-detail' slug=product_page_article.slug %}">ابدأ من صفحة المنتج ←</a>{% endif %}
+        </article>
+        <article class="route-card reveal">
+          <small>03 / GROW</small><h3>القياس والنمو</h3>
+          <p>أسئلة القياس، الأحداث، الفرضيات، وتحويل البيانات إلى تحسينات.</p>
+          <a href="{% url 'public_preview:growth' %}">استكشف حلول النمو ←</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-cta">
+    <div class="container">
+      <div class="cta-card reveal">
+        <div>
+          <span class="section-kicker">من المعرفة إلى التنفيذ</span>
+          <h2>لديك تحدٍ واضح وتريد تحويله إلى خطة؟</h2>
+          <p>شاركنا وضع المشروع والهدف الحالي، وسنساعدك على تحديد نقطة البداية والنطاق المناسب.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-white" href="{% url 'public_preview:contact' %}#quote">ابدأ مشروعك</a>
+          <a class="btn btn-outline" href="{% url 'services:index' %}">استكشف الخدمات</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="/static/public_preview/assets/js/page-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/site-config.js" defer></script>
+<script src="/static/public_preview/assets/js/modules/analytics.js" defer></script>
+<script src="/static/public_preview/assets/js/ibtikar-shell.js" defer></script>
+<script src="/static/public_preview/assets/js/app.js" defer></script>
+<script src="/static/public_preview/assets/js/articles.js" defer></script>
+{% endblock %}
