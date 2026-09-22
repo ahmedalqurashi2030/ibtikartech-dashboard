@@ -1,3 +1,4 @@
+{% load static %}
 {% extends "public_preview/base.html" %}
 
 {% block head %}
@@ -8,9 +9,11 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}مقالات ابتكار تك | قرارات رقمية أوضح{% endif %}">
 <meta property="og:description" content="{{ meta_description }}">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/articles.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/continuous-flow.css">
-<link rel="stylesheet" href="/static/public_preview/assets/css/pages/frontend-final.css">
+<link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/articles.css' %}">
+{% static 'public_preview/assets/css/pages/continuous-flow.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
+{% static 'public_preview/assets/css/pages/frontend-final.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"{{ page.title|escapejs }}","description":"{{ meta_description|escapejs }}","inLanguage":"ar-SA","url":"{{ site_config.seo.canonical_url|escapejs }}","isPartOf":{"@id":"{{ site_config.seo.site_root_url }}#website"},"publisher":{"@id":"{{ site_config.seo.site_root_url }}#organization"}}</script>
 {% endblock %}
 
