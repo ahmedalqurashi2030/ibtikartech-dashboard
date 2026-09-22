@@ -1,4 +1,5 @@
 import pytest
+from django.test import RequestFactory
 from django.urls import reverse
 
 from apps.core.sitemaps import public_indexable_paths
@@ -88,3 +89,25 @@ def test_unpublished_article_is_not_public_or_in_sitemap(client):
     path = reverse("public_preview:article-detail", kwargs={"slug": "draft-only"})
     assert client.get(path).status_code == 404
     assert path not in public_indexable_paths()
+
+
+@pytest.mark.django_db
+def test_article_content_has_one_editorial_source_and_internal_wagtail_urls_canonicalize():
+    index_page = ArticleIndexPage.objects.get()
+    article = ArticlePage.objects.live().public().child_of(index_page).get(slug="store-launch")
+
+    assert "body" not in {field.name for field in ArticlePage._meta.get_fields()}
+    assert article.content
+
+    factory = RequestFactory()
+
+    index_response = index_page.serve(factory.get("/internal-knowledge/"))
+    assert index_response.status_code == 301
+    assert index_response["Location"] == reverse("public_preview:knowledge")
+
+    article_response = article.serve(factory.get("/internal-knowledge/store-launch/"))
+    assert article_response.status_code == 301
+    assert article_response["Location"] == reverse(
+        "public_preview:article-detail",
+        kwargs={"slug": "store-launch"},
+    )
