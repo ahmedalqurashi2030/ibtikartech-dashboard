@@ -1,7 +1,7 @@
 {% extends "public_preview/base.html" %}
 
 {% block head %}
-<title>{% block category_page_title %}{% endblock %}</title>
+<title>{% block category_page_title %}{% endblock %}</title>\n{% block category_preloads %}{% endblock %}
 {% block category_styles %}
 <!-- Category composition only. The canonical foundation and shell come from base.html. -->
 <style>[data-service-cinema-chrome]:not([hidden]){display:contents}</style>
