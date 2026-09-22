@@ -100,7 +100,7 @@
               {% if article.card_reading_label %}<span>{{ article.card_reading_label }}</span>{% endif %}
               {% if article.card_meta_label %}<span>{{ article.card_meta_label }}</span>{% endif %}
             </div>
-            <a class="article-link" href="{% url 'public_preview:article-detail' slug=article.slug %}">اقرأ المقال</a>
+            <a class="article-link" href="{% url 'public_preview:article-detail' slug=article.slug %}">{{ article.card_link_label }}</a>
           </div>
         </article>
         {% empty %}
