@@ -132,6 +132,9 @@ jobs:
             /knowledge/product-page/
             /knowledge/store-launch/
             /knowledge/store-redesign/
+            /knowledge/ecommerce-cost-saudi/
+            /knowledge/website-cost-saudi/
+            /knowledge/automation-first/
             /about/
             /contact/
             /services/store-launch/
@@ -140,6 +143,7 @@ jobs:
             /services/product-page-optimization/
             /services/ecommerce-growth/
             /services/ecommerce-support/
+            /services/seo/
           )
           response_body="$(mktemp)"
           trap 'rm -f "$response_body"' EXIT
@@ -149,6 +153,29 @@ jobs:
             test "$code" = "200" || { echo "$url returned HTTP $code"; exit 1; }
             grep -q 'id="main-content"' "$response_body" || { echo "$url is missing the main content landmark"; exit 1; }
           done
+
+      - name: Verify production SEO endpoints
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+
+          robots_code="$(curl --silent --show-error --output "$tmp/robots.txt" --write-out '%{http_code}' --max-time 30 --retry 5 --retry-delay 2 --retry-all-errors https://ibtikartech.co/robots.txt)"
+          test "$robots_code" = "200" || { echo "robots.txt returned HTTP $robots_code"; exit 1; }
+          grep -Fq 'Sitemap: https://ibtikartech.co/sitemap.xml' "$tmp/robots.txt"
+
+          sitemap_code="$(curl --silent --show-error --output "$tmp/sitemap.xml" --write-out '%{http_code}' --max-time 30 --retry 5 --retry-delay 2 --retry-all-errors https://ibtikartech.co/sitemap.xml)"
+          test "$sitemap_code" = "200" || { echo "sitemap.xml returned HTTP $sitemap_code"; exit 1; }
+          grep -Fq '<loc>https://ibtikartech.co/services/seo/</loc>' "$tmp/sitemap.xml"
+          grep -Fq '<loc>https://ibtikartech.co/knowledge/ecommerce-cost-saudi/</loc>' "$tmp/sitemap.xml"
+          grep -Fq '<loc>https://ibtikartech.co/knowledge/website-cost-saudi/</loc>' "$tmp/sitemap.xml"
+          grep -Fq '<loc>https://ibtikartech.co/knowledge/automation-first/</loc>' "$tmp/sitemap.xml"
+
+          not_found_code="$(curl --silent --show-error --output "$tmp/404.html" --write-out '%{http_code}' --max-time 30 --retry 5 --retry-delay 2 --retry-all-errors https://ibtikartech.co/404/)"
+          test "$not_found_code" = "404" || { echo "/404/ returned HTTP $not_found_code"; exit 1; }
+          grep -Eqi 'noindex' "$tmp/404.html"
 
       - name: Verify production image delivery
         if: always()
