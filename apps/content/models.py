@@ -613,6 +613,10 @@ class ArticlePage(Page):
         return self.list_title or self.title
 
     @property
+    def card_reading_label(self):
+        return self.reading_label.removesuffix(" قراءة") if self.reading_label else ""
+
+    @property
     def featured_heading(self):
         return self.featured_title or self.card_title
 
