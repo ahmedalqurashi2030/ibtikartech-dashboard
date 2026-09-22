@@ -89,6 +89,14 @@ body.source-product-service .svc-hero h1{font-size:clamp(38px,4.3vw,64px);line-h
   :is(.hero__actions,.cta-actions,.tharaa-actions,.ibtx-tharaa-split__actions,.platform-actions,.service-commerce-actions,.service-detail-actions,.service-hero-actions,.commerce-hero__actions,.contact-actions,.page-actions)>:is(a,button,.btn,.button){flex:1 1 0!important;width:auto!important;min-width:0!important;max-width:none!important;min-height:44px;padding-inline:clamp(10px,3.2vw,15px)!important;text-align:center;justify-content:center;white-space:normal!important;line-height:1.35;font-size:clamp(11px,3.25vw,13px)}
   .service-commerce-actions>.service-text-link{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding-inline:10px!important;text-align:center}
 }
+/* LCP content must be paintable immediately on compact viewports. */
+@media(max-width:760px){
+  body.source-home #home .hero__content.reveal,
+  body.source-home #home .hero-ecosystem.reveal,
+  body.source-services #top .reveal,
+  .articles-hero .reveal,
+  .platform-hero .reveal{opacity:1!important;transform:none!important}
+}
 @media(max-width:360px){
   :is(.hero__actions,.cta-actions,.tharaa-actions,.ibtx-tharaa-split__actions,.platform-actions,.service-commerce-actions,.service-detail-actions,.service-hero-actions,.commerce-hero__actions,.contact-actions,.page-actions){gap:6px!important}
   :is(.hero__actions,.cta-actions,.tharaa-actions,.ibtx-tharaa-split__actions,.platform-actions,.service-commerce-actions,.service-detail-actions,.service-hero-actions,.commerce-hero__actions,.contact-actions,.page-actions)>:is(a,button,.btn,.button){padding-inline:8px!important;font-size:11px!important}
