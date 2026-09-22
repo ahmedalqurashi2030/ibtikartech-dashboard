@@ -554,6 +554,8 @@ class ArticlePage(Page):
     reading_label = models.CharField(max_length=80, blank=True)
     card_meta_label = models.CharField(max_length=80, blank=True)
     list_title = models.CharField(max_length=220, blank=True)
+    headline_prefix = models.CharField(max_length=220, blank=True)
+    headline_accent = models.CharField(max_length=220, blank=True)
     visual_label = models.CharField(max_length=60, blank=True)
     visual_number = models.CharField(max_length=8, blank=True)
     card_style = models.CharField(
@@ -584,6 +586,8 @@ class ArticlePage(Page):
         MultiFieldPanel(
             [
                 FieldPanel("list_title"),
+                FieldPanel("headline_prefix"),
+                FieldPanel("headline_accent"),
                 FieldPanel("card_meta_label"),
                 FieldPanel("visual_label"),
                 FieldPanel("visual_number"),
