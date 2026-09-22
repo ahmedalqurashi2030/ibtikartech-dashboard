@@ -4,7 +4,7 @@ from .models import ArticleIndexPage, ArticlePage
 
 
 def _article_index():
-    page = ArticleIndexPage.objects.live().public().filter(slug="knowledge").first()
+    page = ArticleIndexPage.objects.live().public().first()
     if page is None:
         raise Http404("Article index is not configured.")
     return page
