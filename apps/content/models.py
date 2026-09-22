@@ -449,17 +449,217 @@ class TharaaPage(Page):
     max_count = 1
 
 
+class ArticleIndexPage(Page):
+    hero_kicker = models.CharField(max_length=80, default="IBTIKAR JOURNAL")
+    hero_title = models.CharField(max_length=180, default="معرفة عملية تقود إلى")
+    hero_accent = models.CharField(max_length=180, default="قرار رقمي أوضح.")
+    hero_lead = models.TextField(
+        default=(
+            "مقالات نكتبها لأصحاب المتاجر والمشاريع في السعودية والخليج. "
+            "نختصر ما تحتاج فهمه قبل الإطلاق أو التطوير، ونحوّل الخبرة التقنية "
+            "والتجارية إلى خطوات قابلة للتطبيق."
+        )
+    )
+    latest_title = models.CharField(
+        max_length=180,
+        default="أفكار مرتبة بحسب القرار الذي أمامك",
+    )
+    latest_description = models.TextField(
+        default="محتوى قليل الحشو، واضح النطاق، ويربط كل موضوع بخطوة تالية عملية."
+    )
+
+    template = "content/article_index_page.html"
+    max_count = 1
+    subpage_types = ["content.ArticlePage"]
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("hero_kicker"),
+                FieldPanel("hero_title"),
+                FieldPanel("hero_accent"),
+                FieldPanel("hero_lead"),
+            ],
+            heading="مقدمة صفحة المقالات",
+        ),
+        MultiFieldPanel(
+            [FieldPanel("latest_title"), FieldPanel("latest_description")],
+            heading="قسم أحدث المقالات",
+        ),
+    ]
+
+    class Meta:
+        verbose_name = "صفحة المقالات"
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        articles = ArticlePage.objects.live().public().child_of(self).order_by(
+            "-published_at",
+            "-first_published_at",
+        )
+        article_list = list(articles)
+        featured_article = next(
+            (article for article in article_list if article.is_featured),
+            article_list[0] if article_list else None,
+        )
+        categories_in_use = {article.category for article in article_list}
+        context.update(
+            {
+                "articles": article_list,
+                "featured_article": featured_article,
+                "article_categories": [
+                    (value, label)
+                    for value, label in ArticlePage.Category.choices
+                    if value in categories_in_use
+                ],
+                "store_launch_article": next(
+                    (article for article in article_list if article.slug == "store-launch"),
+                    None,
+                ),
+                "product_page_article": next(
+                    (article for article in article_list if article.slug == "product-page"),
+                    None,
+                ),
+                "page_key": "knowledge",
+                "meta_description": self.search_description or self.hero_lead,
+                "source_page_name": "knowledge.html",
+            }
+        )
+        return context
+
+
 class ArticlePage(Page):
+    class Category(models.TextChoices):
+        COMMERCE = "commerce", "المتاجر الإلكترونية"
+        UX = "ux", "تجربة المستخدم"
+        STRATEGY = "strategy", "الاستراتيجية"
+        WEB = "web", "المواقع الإلكترونية"
+        SYSTEMS = "systems", "الأنظمة والأتمتة"
+        OTHER = "other", "أخرى"
+
+    class CardStyle(models.TextChoices):
+        DEFAULT = "default", "افتراضي"
+        PRODUCT = "product", "منتج"
+        STRATEGY = "strategy", "استراتيجية"
+
     excerpt = models.TextField(blank=True)
     published_at = models.DateTimeField(default=timezone.now)
     body = RichTextField(blank=True)
+    category = models.CharField(
+        max_length=24,
+        choices=Category.choices,
+        default=Category.OTHER,
+    )
+    author_name = models.CharField(max_length=120, default="فريق ابتكار تك")
+    reading_label = models.CharField(max_length=80, blank=True)
+    card_meta_label = models.CharField(max_length=80, blank=True)
+    list_title = models.CharField(max_length=220, blank=True)
+    visual_label = models.CharField(max_length=60, blank=True)
+    visual_number = models.CharField(max_length=8, blank=True)
+    card_style = models.CharField(
+        max_length=16,
+        choices=CardStyle.choices,
+        default=CardStyle.DEFAULT,
+    )
+    is_featured = models.BooleanField(default=False)
+    featured_title = models.CharField(max_length=220, blank=True)
+    featured_excerpt = models.TextField(blank=True)
+    content = StreamField(ArticleContentBlock(), blank=True, use_json_field=True)
 
-    template = "content/standard_page.html"
+    template = "content/article_page.html"
+    parent_page_types = ["content.ArticleIndexPage"]
+    subpage_types = []
+
     content_panels = Page.content_panels + [
-        FieldPanel("excerpt"),
-        FieldPanel("published_at"),
-        FieldPanel("body"),
+        MultiFieldPanel(
+            [
+                FieldPanel("category"),
+                FieldPanel("excerpt"),
+                FieldPanel("published_at"),
+                FieldPanel("author_name"),
+                FieldPanel("reading_label"),
+            ],
+            heading="بيانات المقال",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("list_title"),
+                FieldPanel("card_meta_label"),
+                FieldPanel("visual_label"),
+                FieldPanel("visual_number"),
+                FieldPanel("card_style"),
+                FieldPanel("is_featured"),
+                FieldPanel("featured_title"),
+                FieldPanel("featured_excerpt"),
+            ],
+            heading="بطاقة المقال وصفحة المقالات",
+        ),
+        FieldPanel("content"),
     ]
+
+    class Meta:
+        verbose_name = "مقال"
+
+    @property
+    def category_label(self):
+        return self.get_category_display()
+
+    @property
+    def card_title(self):
+        return self.list_title or self.title
+
+    @property
+    def featured_heading(self):
+        return self.featured_title or self.card_title
+
+    @property
+    def featured_summary(self):
+        return self.featured_excerpt or self.excerpt
+
+    @property
+    def card_css_class(self):
+        if self.card_style == self.CardStyle.PRODUCT:
+            return "article-card--product"
+        if self.card_style == self.CardStyle.STRATEGY:
+            return "article-card--strategy"
+        return ""
+
+    @property
+    def toc_items(self):
+        items = []
+        for block in self.content:
+            if block.block_type == "heading":
+                anchor = block.value.get("anchor")
+                title = block.value.get("title")
+                if anchor and title:
+                    items.append({"anchor": anchor, "title": title})
+                continue
+            if block.block_type != "legacy_html":
+                continue
+            for anchor, title_html in re.findall(
+                r'<h2[^>]*\\bid=["\\\']([^"\\\']+)["\\\'][^>]*>(.*?)</h2>',
+                str(block.value),
+                flags=re.IGNORECASE | re.DOTALL,
+            ):
+                items.append(
+                    {
+                        "anchor": anchor,
+                        "title": strip_tags(title_html).strip(),
+                    }
+                )
+        return items
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context.update(
+            {
+                "page_key": f"article-{self.slug}",
+                "meta_description": self.search_description or self.excerpt,
+                "source_page_name": f"article-{self.slug}.html",
+                "toc_items": self.toc_items,
+            }
+        )
+        return context
 
 
 class CaseStudyPage(Page):
