@@ -67,6 +67,8 @@ def seed_managed_articles(apps, schema_editor):
         article.headline_accent = item["headline_accent"]
         article.visual_label = item["visual_label"]
         article.visual_number = item["visual_number"]
+        article.sort_order = item["sort_order"]
+        article.card_link_label = item["card_link_label"]
         article.card_style = item["card_style"]
         article.is_featured = item["is_featured"]
         article.featured_title = item["featured_title"]
