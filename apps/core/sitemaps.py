@@ -23,17 +23,23 @@ PUBLIC_INDEXABLE_ROUTE_NAMES = (
     "public_preview:tharaa",
     "public_preview:portfolio",
     "public_preview:knowledge",
-    "public_preview:article-store-launch",
-    "public_preview:article-product-page",
-    "public_preview:article-store-redesign",
-    "public_preview:article-ecommerce-cost-saudi",
-    "public_preview:article-website-cost-saudi",
-    "public_preview:article-automation-first",
     "public_preview:about",
     "public_preview:contact",
 )
 
 
 def public_indexable_paths():
-    """Resolve approved route names to path-only canonical URLs."""
-    return tuple(reverse(route_name) for route_name in PUBLIC_INDEXABLE_ROUTE_NAMES)
+    """Resolve approved static routes plus every live public article."""
+    from apps.content.models import ArticlePage
+
+    static_paths = [reverse(route_name) for route_name in PUBLIC_INDEXABLE_ROUTE_NAMES]
+    article_paths = [
+        reverse("public_preview:article-detail", kwargs={"slug": slug})
+        for slug in (
+            ArticlePage.objects.live()
+            .public()
+            .order_by("slug")
+            .values_list("slug", flat=True)
+        )
+    ]
+    return tuple(dict.fromkeys([*static_paths, *article_paths]))
