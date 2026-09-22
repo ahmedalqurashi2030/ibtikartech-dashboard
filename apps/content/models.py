@@ -4,6 +4,8 @@ from urllib.parse import quote
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
+from django.http import HttpResponsePermanentRedirect
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
@@ -495,6 +497,19 @@ class ArticleIndexPage(Page):
     class Meta:
         verbose_name = "صفحة المقالات"
 
+    @property
+    def public_url(self):
+        return reverse("public_preview:knowledge")
+
+    def serve(self, request, *args, **kwargs):
+        if request.path != self.public_url:
+            target = self.public_url
+            query_string = request.META.get("QUERY_STRING", "")
+            if query_string:
+                target = f"{target}?{query_string}"
+            return HttpResponsePermanentRedirect(target)
+        return super().serve(request, *args, **kwargs)
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         articles = ArticlePage.objects.live().public().child_of(self).order_by(
@@ -548,7 +563,6 @@ class ArticlePage(Page):
 
     excerpt = models.TextField(blank=True)
     published_at = models.DateTimeField(default=timezone.now)
-    body = RichTextField(blank=True)
     category = models.CharField(
         max_length=24,
         choices=Category.choices,
@@ -611,6 +625,19 @@ class ArticlePage(Page):
 
     class Meta:
         verbose_name = "مقال"
+
+    @property
+    def public_url(self):
+        return reverse("public_preview:article-detail", kwargs={"slug": self.slug})
+
+    def serve(self, request, *args, **kwargs):
+        if request.path != self.public_url:
+            target = self.public_url
+            query_string = request.META.get("QUERY_STRING", "")
+            if query_string:
+                target = f"{target}?{query_string}"
+            return HttpResponsePermanentRedirect(target)
+        return super().serve(request, *args, **kwargs)
 
     @property
     def category_label(self):
