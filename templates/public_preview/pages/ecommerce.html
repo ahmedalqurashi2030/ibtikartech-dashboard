@@ -1,5 +1,6 @@
 {% extends "public_preview/families/service_category_base.html" %}
 {% block category_page_title %}تصميم وتطوير المتاجر الإلكترونية على سلة وزد | ابتكار تك{% endblock %}
+{% block category_preloads %}<link rel="preload" as="image" href="/static/public_preview/assets/images/hero/ibtikar-ecommerce-journey-v1.jpg" fetchpriority="high">{% endblock %}
 {% block category_body_attrs %} class="inner-page platform-page approved-source-page source-ecommerce category-hub service-category-page category-ecommerce" data-section="services" data-approved-source="ecommerce.html"{% endblock %}
 {% block category_content %}
 <div class="crumb"><a href="{% url 'public_preview:home' %}">الرئيسية</a><i aria-hidden="true" class="icon">󰅁</i><a href="{% url 'services:index' %}">خدماتنا</a><i aria-hidden="true" class="icon">󰅁</i><span>المتاجر الإلكترونية</span></div>

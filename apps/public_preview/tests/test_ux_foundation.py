@@ -428,7 +428,10 @@ def test_public_hero_images_are_shared_files_not_inline_base64():
         for template_path in template_paths:
             source = _read_source(template_path)
             assert ";base64," not in source
-            assert source.count(public_path) == 1
+            # The shared hero asset must render exactly once. A matching <link
+            # rel="preload"> may legitimately reference the same file in <head>.
+            assert source.count(f'src="{public_path}"') == 1
+            assert source.count(public_path) <= 2
             template_count += 1
 
     assert template_count == 12
