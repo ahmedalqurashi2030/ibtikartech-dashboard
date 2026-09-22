@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 from pathlib import Path
 
@@ -57,7 +58,7 @@ def seed_managed_articles(apps, schema_editor):
         article.search_description = item["search_description"]
         article.category = item["category"]
         article.excerpt = item["excerpt"]
-        article.published_at = item["published_at"]
+        article.published_at = datetime.fromisoformat(item["published_at"])
         article.author_name = "فريق ابتكار تك"
         article.reading_label = item["reading_label"]
         article.card_meta_label = item["card_meta_label"]
