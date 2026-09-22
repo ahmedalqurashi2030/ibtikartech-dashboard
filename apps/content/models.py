@@ -1,17 +1,21 @@
+import re
 from urllib.parse import quote
 
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
+from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from modelcluster.fields import ParentalManyToManyField
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 
 from apps.services.models import Service
+
+from .article_blocks import ArticleContentBlock
 
 phone_validator = RegexValidator(
     regex=r"^\+?[1-9]\d{6,14}$",
