@@ -97,7 +97,7 @@
             <h3>{{ article.card_title }}</h3>
             <p>{{ article.excerpt }}</p>
             <div class="article-meta">
-              {% if article.reading_label %}<span>{{ article.reading_label }}</span>{% endif %}
+              {% if article.card_reading_label %}<span>{{ article.card_reading_label }}</span>{% endif %}
               {% if article.card_meta_label %}<span>{{ article.card_meta_label }}</span>{% endif %}
             </div>
             <a class="article-link" href="{% url 'public_preview:article-detail' slug=article.slug %}">اقرأ المقال</a>
