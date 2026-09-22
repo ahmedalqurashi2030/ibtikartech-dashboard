@@ -640,15 +640,15 @@ class ArticlePage(Page):
                 continue
             if block.block_type != "legacy_html":
                 continue
-            for anchor, title_html in re.findall(
-                r'<h2[^>]*\\bid=["\\\']([^"\\\']+)["\\\'][^>]*>(.*?)</h2>',
-                str(block.value),
+            pattern = re.compile(
+                r"""<h2[^>]*\bid=["']([^"']+)["'][^>]*>(.*?)</h2>""",
                 flags=re.IGNORECASE | re.DOTALL,
-            ):
+            )
+            for match in pattern.finditer(str(block.value)):
                 items.append(
                     {
-                        "anchor": anchor,
-                        "title": strip_tags(title_html).strip(),
+                        "anchor": match.group(1),
+                        "title": strip_tags(match.group(2)).strip(),
                     }
                 )
         return items
