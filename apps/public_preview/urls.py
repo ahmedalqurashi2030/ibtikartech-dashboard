@@ -46,6 +46,7 @@ urlpatterns = [
         views.article_automation_first,
         name="article-automation-first",
     ),
+    path("knowledge/<slug:slug>/", views.article_detail, name="article-detail"),
     path("about/", views.about, name="about"),
     path("contact/", views.contact, name="contact"),
     path("404/", page_not_found, name="not-found-preview"),
