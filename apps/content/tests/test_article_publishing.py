@@ -1,6 +1,7 @@
 import pytest
 from django.test import RequestFactory
 from django.urls import reverse
+from wagtail.models import Page
 
 from apps.core.sitemaps import public_indexable_paths
 
@@ -111,3 +112,28 @@ def test_article_content_has_one_editorial_source_and_internal_wagtail_urls_cano
         "public_preview:article-detail",
         kwargs={"slug": "store-launch"},
     )
+
+
+@pytest.mark.django_db
+def test_sitemap_ignores_article_pages_outside_the_managed_index():
+    root = Page.get_first_root_node()
+    orphan = ArticlePage(
+        title="مقال قديم خارج مجلد المقالات",
+        slug="orphan-article",
+        category=ArticlePage.Category.OTHER,
+        excerpt="يجب ألا يظهر هذا الرابط في sitemap.",
+        content=[
+            {
+                "type": "rich_text",
+                "value": "<p>محتوى قديم.</p>",
+            }
+        ],
+    )
+    root.add_child(instance=orphan)
+    orphan.save_revision().publish()
+
+    orphan_path = reverse(
+        "public_preview:article-detail",
+        kwargs={"slug": "orphan-article"},
+    )
+    assert orphan_path not in public_indexable_paths()
