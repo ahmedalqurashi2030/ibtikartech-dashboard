@@ -494,8 +494,8 @@ class ArticleIndexPage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         articles = ArticlePage.objects.live().public().child_of(self).order_by(
+            "sort_order",
             "-published_at",
-            "-first_published_at",
         )
         article_list = list(articles)
         featured_article = next(
@@ -558,6 +558,8 @@ class ArticlePage(Page):
     headline_accent = models.CharField(max_length=220, blank=True)
     visual_label = models.CharField(max_length=60, blank=True)
     visual_number = models.CharField(max_length=8, blank=True)
+    sort_order = models.PositiveIntegerField(default=100)
+    card_link_label = models.CharField(max_length=80, default="اقرأ المقال")
     card_style = models.CharField(
         max_length=16,
         choices=CardStyle.choices,
@@ -591,6 +593,8 @@ class ArticlePage(Page):
                 FieldPanel("card_meta_label"),
                 FieldPanel("visual_label"),
                 FieldPanel("visual_number"),
+                FieldPanel("sort_order"),
+                FieldPanel("card_link_label"),
                 FieldPanel("card_style"),
                 FieldPanel("is_featured"),
                 FieldPanel("featured_title"),
