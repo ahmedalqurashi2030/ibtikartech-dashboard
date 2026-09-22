@@ -71,6 +71,10 @@ class Migration(migrations.Migration):
             options={"verbose_name": "صفحة المقالات"},
             bases=("wagtailcore.page",),
         ),
+        migrations.AlterModelOptions(
+            name="articlepage",
+            options={"verbose_name": "مقال"},
+        ),
         migrations.AddField(
             model_name="articlepage",
             name="category",
