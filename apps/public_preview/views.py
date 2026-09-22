@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 
+from apps.content.public_views import serve_article_detail, serve_article_index
 from apps.crm.models import Contact
 from apps.sales.models import Inquiry
 from apps.services.models import Service
