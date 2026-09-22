@@ -9,6 +9,8 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}مقالات ابتكار تك | قرارات رقمية أوضح{% endif %}">
 <meta property="og:description" content="{{ meta_description }}">
+{% static 'public_preview/assets/css/pages/inner.css' as deferred_href %}
+{% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
 <link rel="stylesheet" href="{% static 'public_preview/assets/css/pages/articles.css' %}">
 {% static 'public_preview/assets/css/pages/continuous-flow.css' as deferred_href %}
 {% include 'public_preview/components/deferred_stylesheet.html' with href=deferred_href %}
