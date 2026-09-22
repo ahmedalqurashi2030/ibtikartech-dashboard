@@ -133,6 +133,16 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name="articlepage",
+            name="sort_order",
+            field=models.PositiveIntegerField(default=100),
+        ),
+        migrations.AddField(
+            model_name="articlepage",
+            name="card_link_label",
+            field=models.CharField(default="اقرأ المقال", max_length=80),
+        ),
+        migrations.AddField(
+            model_name="articlepage",
             name="card_style",
             field=models.CharField(
                 choices=[
