@@ -25,6 +25,7 @@ from apps.public_preview.content_contract import (  # noqa: E402
     PUBLIC_TEMPLATE_OWNED_PAGES,
     SHARED_SETTINGS_OWNER,
     WAGTAIL_PAGE_BINDING,
+    WAGTAIL_PAGE_OWNED_PAGES,
 )
 from apps.public_preview.manifest import REQUIRED_PAGES, RETIRED_PLATFORM_PAGES  # noqa: E402
 from apps.public_preview.template_contract import (  # noqa: E402
@@ -93,6 +94,8 @@ def verify_manifest() -> None:
         fail("Frontend manifest shared_settings_owner drifted from content contract.")
     if data.get("wagtail_page_binding") is not WAGTAIL_PAGE_BINDING:
         fail("Frontend manifest wagtail_page_binding drifted from content contract.")
+    if tuple(data.get("wagtail_managed_pages", ())) != tuple(WAGTAIL_PAGE_OWNED_PAGES):
+        fail("Frontend manifest wagtail_managed_pages drifted from content contract.")
     if tuple(data.get("required_pages", ())) != tuple(REQUIRED_PAGES):
         fail("Frontend manifest required_pages drifted from apps.public_preview.manifest.")
     if tuple(data.get("retired_platform_pages", ())) != tuple(RETIRED_PLATFORM_PAGES):
@@ -343,8 +346,13 @@ def verify_route_scoped_asset_consumers() -> None:
 
 
 def verify_public_content_ownership() -> None:
-    if PUBLIC_TEMPLATE_OWNED_PAGES != tuple(REQUIRED_PAGES):
-        fail("Public content ownership must cover every required page exactly once.")
+    template_owned = set(PUBLIC_TEMPLATE_OWNED_PAGES)
+    wagtail_owned = set(WAGTAIL_PAGE_OWNED_PAGES)
+    required = set(REQUIRED_PAGES)
+    if template_owned & wagtail_owned:
+        fail("Template and Wagtail content ownership must be disjoint.")
+    if template_owned | wagtail_owned != required:
+        fail("Declared content ownership must cover every required page exactly once.")
 
     forbidden_view_markers = (
         "from apps.content.models import",
@@ -420,7 +428,8 @@ def main() -> None:
         f"{len(REQUIRED_PAGES)} pages, {len(FAMILY_REQUIRED_BLOCKS)} page families, "
         f"{len(REQUIRED_OWNED_ASSETS)} canonical assets, and "
         f"{len(RENDERED_ROUTE_SCOPED_ASSET_CONSUMERS)} rendered route-scoped asset contracts, and "
-        f"{len(PUBLIC_TEMPLATE_OWNED_PAGES)} template-owned content contracts "
+        f"{len(PUBLIC_TEMPLATE_OWNED_PAGES)} template-owned and "
+        f"{len(WAGTAIL_PAGE_OWNED_PAGES)} Wagtail-owned content contracts "
         "are repository-owned."
     )
 
