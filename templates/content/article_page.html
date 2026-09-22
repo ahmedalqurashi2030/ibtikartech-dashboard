@@ -29,7 +29,7 @@
           <span aria-current="page">{{ page.title }}</span>
         </nav>
         <span class="article-topic">{{ page.category_label }}</span>
-        <h1>{{ page.title }}</h1>
+        <h1>{% if page.headline_prefix %}{{ page.headline_prefix }}{% else %}{{ page.title }}{% endif %}{% if page.headline_accent %} <span>{{ page.headline_accent }}</span>{% endif %}</h1>
         {% if page.excerpt %}<p class="article-deck">{{ page.excerpt }}</p>{% endif %}
         <div class="article-meta">
           {% if page.reading_label %}<span>{{ page.reading_label }}</span>{% endif %}
